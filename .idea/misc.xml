@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/drawable-v24/white_boarder.xml" value="0.1" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_favorites.xml" value="0.17958459979736577" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_forgot_password.xml" value="0.375" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_fsmap_about.xml" value="0.1" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.1" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_register_user.xml" value="0.375" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_themes.xml" value="0.18642350557244175" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_forgot_password.xml" value="0.33" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_map.xml" value="0.18819655521783182" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_maps.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

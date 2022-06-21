@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169409482844",
+    "project_id": "logintesting2-a6c22",
+    "storage_bucket": "logintesting2-a6c22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169409482844:android:73beda5157c56e235b9699",
+        "android_client_info": {
+          "package_name": "com.example.logintesting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169409482844-glkjrgfdc43hrbbp7pu3ti24sjr3t86j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgXi3EaBut3KMh5ElEap90MF1KAg8dy5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169409482844-glkjrgfdc43hrbbp7pu3ti24sjr3t86j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

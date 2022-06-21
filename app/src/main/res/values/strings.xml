@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">LoginTesting</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="AboutText">App created by Swift Kings:\n
+        Victoria Briceño\n
+        Ruben Lozano\n
+        Sebastian Jazmin\n\n
+        Logo created by:\n
+        Andrea Moran</string>
+    <string name="LightMode">Light mode</string>
+    <string name="DarkMode">Dark mode</string>
+
+</resources>
