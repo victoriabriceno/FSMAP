@@ -55,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-  /*  private void getDeviceLocation(){
+    private void getDeviceLocation(){
 
            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
          try{
@@ -75,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    }*/
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
