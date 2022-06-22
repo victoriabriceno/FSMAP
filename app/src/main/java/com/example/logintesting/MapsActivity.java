@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -52,28 +54,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         userIcon.setOnClickListener(this);
         getLocationPermission();
 
-
-
     }
+
     private void getDeviceLocation(){
 
-           fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-         try{
-             if (mLocationPermissionsGranted){
-               Task Location = fusedLocationClient.getLastLocation();
-               Location.addOnCompleteListener(new OnCompleteListener() {
-                   @Override
-                   public void onComplete(@NonNull Task task) {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        try {
+            if (mLocationPermissionsGranted){
+                @SuppressLint("MissingPermission") Task Location = fusedLocationClient.getLastLocation();
+                Location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
 
-                   }
-               });
 
-             }
-         }catch(SecurityException e){
+
+                    }
+                });
+            }
+
+        }catch(SecurityException e){
 
         }
-
-
 
     }
     /**
@@ -117,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
     }
 
+
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -125,6 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
     }
+
     private void getLocationPermission(){
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -145,6 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else{
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
+
+
 
 
     }
