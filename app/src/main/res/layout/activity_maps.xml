@@ -18,11 +18,19 @@ android:layout_height="50dp"
 android:layout_alignLeft="@id/search_bar"
 android:layout_marginLeft="-67dp"
 android:layout_marginTop="10dp"
-android:background="@drawable/user1"
+android:background="@drawable/user1"/>
 
-    />
+    <ImageView
+        android:id="@+id/gps"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/search_bar"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="11dp"
+        android:background="@drawable/gps" />
 
-<RelativeLayout
+    <RelativeLayout
 android:layout_width="match_parent"
 android:layout_height="50dp"
 android:layout_marginTop="10dp"
