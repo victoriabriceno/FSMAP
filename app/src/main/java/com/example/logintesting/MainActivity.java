@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView register, forgetPassword;
     private EditText editTextEmail, editTextPassword;
     private Button login;
+    private CheckBox rememberMe;
 
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         mAuth = FirebaseAuth.getInstance();
+
+        rememberMe = (CheckBox) findViewById(R.id.rememberUser);
+        
     }
 
     @Override

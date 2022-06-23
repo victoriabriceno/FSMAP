@@ -11,14 +11,14 @@
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
 
-<ImageView
-android:id="@+id/user"
-android:layout_width="50dp"
-android:layout_height="50dp"
-android:layout_alignLeft="@id/search_bar"
-android:layout_marginLeft="-67dp"
-android:layout_marginTop="10dp"
-android:background="@drawable/user1"/>
+    <ImageView
+        android:id="@+id/user"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@id/search_bar"
+        android:layout_marginLeft="-67dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/user2" />
 
     <ImageView
         android:id="@+id/gps"
@@ -26,7 +26,7 @@ android:background="@drawable/user1"/>
         android:layout_height="40dp"
         android:layout_below="@id/search_bar"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="447dp"
         android:layout_marginRight="11dp"
         android:background="@drawable/gps" />
 

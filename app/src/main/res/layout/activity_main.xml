@@ -10,7 +10,7 @@
         android:id="@+id/RegisterBTN"
         android:layout_width="123dp"
         android:layout_height="44dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:background="#9E9797"
         android:text="SIGNUP"
         android:textColor="@color/white"
@@ -59,11 +59,11 @@
         android:id="@+id/ForgotPassowrd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="112dp"
         android:text="Forgot Password?"
-        android:textSize="15dp"
         android:textColor="@color/black"
-        app:layout_constraintHorizontal_bias="0.459"
+        android:textSize="15dp"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/Password" />
@@ -72,7 +72,7 @@
         android:id="@+id/LoginBTN"
         android:layout_width="123dp"
         android:layout_height="44dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:background="#9E9797"
         android:text="Login"
         android:textColor="@color/white"
@@ -100,13 +100,25 @@
         android:id="@+id/Decoration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="76dp"
         android:text="Made by SwiftKings"
         android:textColor="@color/black"
         android:textSize="15dp"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/LoginBTN" />
+
+    <CheckBox
+        android:id="@+id/rememberUser"
+        android:layout_width="161dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="56dp"
+        android:text="Remember me"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
