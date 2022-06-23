@@ -3,6 +3,7 @@ package com.example.logintesting;
 //BY SEBASTIAN JAZMIN
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.LogoutButton:
                 FirebaseAuth.getInstance().signOut();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 //Returns to specified Screen
                 Intent i = new Intent(this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
