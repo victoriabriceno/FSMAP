@@ -114,8 +114,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
-  /*      //get latlong for corners for specified place
+        //get latlong for corners for specified place
         LatLng one = new LatLng( 28.5899089565466,-81.30689695755838);
         LatLng two = new LatLng(28.597315583066404,-81.29914504373565);
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -140,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,width,height,padding));
 
         //set zoom
-        mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);*/
+        mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
 
         if (mLocationPermissionsGranted){
             getDeviceLocation();
