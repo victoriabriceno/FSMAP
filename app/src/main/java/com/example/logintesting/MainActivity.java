@@ -2,6 +2,7 @@ package com.example.logintesting;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,13 +19,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register, forgetPassword;
     private EditText editTextEmail, editTextPassword;
     private Button login;
-
+    private DatabaseReference mdatabase;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
 
@@ -48,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         mAuth = FirebaseAuth.getInstance();
+
+        mdatabase = FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Dark Mode");
     }
 
     @Override
@@ -101,6 +110,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                  if (task.isSuccessful()){
                      FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                      if (user.isEmailVerified()){
+                         //Get theme info from database
+                         mdatabase.addValueEventListener(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                 if (snapshot.exists()) {
+                                     Boolean DarkMode = (Boolean) snapshot.getValue();
+                                     if (DarkMode) {
+                                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                                     } else {
+                                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                                     }
+                                 }
+                             }
+
+                             @Override
+                             public void onCancelled(@NonNull DatabaseError error) {
+
+                             }
+                         });
+                         //
+
                          startActivity(new Intent(MainActivity.this, MapsActivity.class));
 
 
