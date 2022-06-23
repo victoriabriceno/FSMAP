@@ -96,7 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //add them to builder
         builder.include(one);
-        
         builder.include(two);
 
         LatLngBounds bounds = builder.build();
