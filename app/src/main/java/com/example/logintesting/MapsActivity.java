@@ -6,12 +6,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,10 +34,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityMapsBinding binding;
     private ImageView userIcon;
+    private ImageView mGps;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE= 1234;
+    private static final float DEFAULT_ZOOM = 15f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,32 +55,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         userIcon = (ImageView)findViewById(R.id.user);
         userIcon.setOnClickListener(this);
+
+        mGps = (ImageView) findViewById(R.id.gps);
+
         getLocationPermission();
 
-
-
     }
-  /*  private void getDeviceLocation(){
 
-           fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-         try{
-             if (mLocationPermissionsGranted){
-               Task Location = fusedLocationClient.getLastLocation();
-               Location.addOnCompleteListener(new OnCompleteListener() {
-                   @Override
-                   public void onComplete(@NonNull Task task) {
+    private void getDeviceLocation(){
 
-                   }
-               });
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        try {
+            if (mLocationPermissionsGranted){
+                @SuppressLint("MissingPermission") Task Location = fusedLocationClient.getLastLocation();
+                Location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Location currentLocation = (Location) task.getResult();
+                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),DEFAULT_ZOOM);
+                        }else{
+                            Toast.makeText(MapsActivity.this, "Unable to get current Location", Toast.LENGTH_SHORT).show();
 
-             }
-         }catch(SecurityException e){
+                        }
+
+
+
+                    }
+                });
+            }
+
+        }catch(SecurityException e){
 
         }
 
-
-
-    }*/
+    }
+    private void moveCamera(LatLng latLng,float zoom){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    }
+    private void Init(){
+        mGps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDeviceLocation();
+            }
+        });
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -85,9 +110,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         //get latlong for corners for specified place
         LatLng one = new LatLng( 28.5899089565466,-81.30689695755838);
@@ -115,7 +142,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //set zoom
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
+
+        if (mLocationPermissionsGranted){
+            getDeviceLocation();
+            if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            this,Manifest.permission.ACCESS_COARSE_LOCATION )!= PackageManager.PERMISSION_GRANTED){
+                return;
+
+            }
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            Init();
+
+        }
     }
+
 
     @Override
     public void onClick(View view) {
@@ -125,6 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
     }
+
     private void getLocationPermission(){
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -145,6 +188,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else{
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
+
+
 
 
     }
