@@ -22,11 +22,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.example.logintesting.databinding.ActivityMapsBinding;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
@@ -40,6 +47,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE= 1234;
     private static final float DEFAULT_ZOOM = 15f;
+    ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
+    ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
+    ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +164,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             Init();
-
         }
+        //add Marker
+        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
+        Meeting119.visible(false);
+        Marker room119 = mMap.addMarker(Meeting119);
+        MarkersList.add(room119);
+        //add PathLine
+        Polyline line  = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593989,-81.304514)));
+        Polyline room119to118 =  mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593959,-81.304514)));
+        Polyline room119to117 =  mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304514)));
+        LinesList.add(room119to117);
+        LinesList.add(line);
+        LinesList.add(room119to118);
+        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
+        Marker room117 = mMap.addMarker(meeting117);
+        MarkersList.add(room117);
+        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593959,-81.304514)).title("Meeting 118");
+        Marker room118 = mMap.addMarker(Meeting118);
+        MarkersList.add(room118);
+        for (Marker marker1: MarkersList)
+        {
+            marker1.setVisible(false);
+        }
+        for (Polyline lines1: LinesList)
+        {
+            lines1.setVisible(false);
+        }
+        //set visibile after certain zoom level is reached.
+        mMap.setOnCameraMoveListener(()->
+        {
+            for (GroundOverlay Overlay : groundOverlays) {
+                Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
+            }
+            for(Marker markers : MarkersList){
+                markers.setVisible(mMap.getCameraPosition().zoom >20);
+            }
+            for(Polyline curline : LinesList) {
+                curline.setVisible(mMap.getCameraPosition().zoom>20);
+            }
+        });
     }
 
 
