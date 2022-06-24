@@ -14,9 +14,23 @@
         android:text="User email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.162" />
+
+    <ImageView
+        android:id="@+id/user"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignLeft="@id/UserEmail"
+        android:background="@drawable/user2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.145" />
 
     <Button
         android:id="@+id/FavoritesButton"

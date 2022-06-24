@@ -5,9 +5,11 @@ package com.example.logintesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -51,12 +53,18 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(this,Themes.class));
                 break;
             case R.id.LogoutButton:
+
                 FirebaseAuth.getInstance().signOut();
                 //Returns to specified Screen
                 Intent i = new Intent(this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.startActivity(i);
+                SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+                finish();
                 break;
 
         }
