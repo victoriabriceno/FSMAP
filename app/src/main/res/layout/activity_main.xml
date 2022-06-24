@@ -49,6 +49,7 @@
         android:layout_marginTop="88dp"
         android:ems="10"
         android:hint="Password"
+        android:drawableRight="@drawable/visible"
         android:inputType="textPassword"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -59,11 +60,12 @@
         android:id="@+id/ForgotPassowrd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="68dp"
+
         android:text="Forgot Password?"
         android:textColor="@color/black"
         android:textSize="15dp"
-        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintHorizontal_bias="0.797"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/Password" />
@@ -76,7 +78,7 @@
         android:background="#9E9797"
         android:text="Login"
         android:textColor="@color/white"
-        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.239"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/ForgotPassowrd" />
