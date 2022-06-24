@@ -22,7 +22,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.example.logintesting.databinding.ActivityMapsBinding;
@@ -203,6 +205,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             lines1.setVisible(false);
         }
+        //Set the bounds for overlay
+        LatLngBounds buildLibrary = new LatLngBounds(
+                new LatLng(28.59379993356988, -81.30450729197996),
+                new LatLng(28.594005193975605, -81.30415971195876));
+
+        //create map overlap
+        GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary))
+                .anchor(0.468f,0.45f)
+                .position(new LatLng(28.593907678091824, -81.3043584293843),38,28);
+
+        //add groundOverlay and create reference.
+        GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
+
+        //make it so overlay doesnt appear originally
+        buildLibraryOverlayed.setVisible(false);
+
+        //add the overlay to overlay array.
+        groundOverlays.add(buildLibraryOverlayed);
+
         //set visibile after certain zoom level is reached.
         mMap.setOnCameraMoveListener(()->
         {
