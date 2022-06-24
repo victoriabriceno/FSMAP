@@ -54,7 +54,9 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/EmailAddress" />
+        app:layout_constraintTop_toTopOf="@id/EmailAddress"
+        android:longClickable="false"
+        />
 
     <TextView
         android:id="@+id/ForgotPassowrd"
