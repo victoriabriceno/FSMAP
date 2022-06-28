@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/RegisterBTN"
+        android:layout_width="123dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="48dp"
+        android:background="#9E9797"
+        android:text="SIGNUP"
+        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ForgotPassowrd" />
+
+    <ImageView
+        android:id="@+id/FSMAP"
+        android:layout_width="321dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logomap" />
+
+    <EditText
+        android:id="@+id/EmailAddress"
+        android:layout_width="310dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="240dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/FSMAP" />
+
+    <EditText
+        android:id="@+id/Password"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="88dp"
+        android:ems="10"
+        android:hint="Password"
+        android:drawableRight="@drawable/visible"
+        android:inputType="textPassword"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/EmailAddress"
+        android:longClickable="false"
+        />
+
+    <TextView
+        android:id="@+id/ForgotPassowrd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+
+        android:text="Forgot Password?"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Password" />
+
+    <Button
+        android:id="@+id/LoginBTN"
+        android:layout_width="123dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="48dp"
+        android:background="#9E9797"
+        android:text="Login"
+        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ForgotPassowrd" />
+
+    <ProgressBar
+        android:id="@+id/ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerInParent = "true"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/Decoration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="Made by SwiftKings"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/LoginBTN" />
+
+    <CheckBox
+        android:id="@+id/rememberUser"
+        android:layout_width="161dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="56dp"
+        android:text="Remember me"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Password" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
