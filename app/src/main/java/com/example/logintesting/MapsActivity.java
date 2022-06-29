@@ -14,6 +14,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,7 +39,12 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener {
+import android.view.animation.TranslateAnimation;
+
+import org.w3c.dom.Text;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
+GoogleMap.OnMapClickListener{
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
@@ -52,6 +59,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
+    boolean opened;
+    LinearLayout view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGps = (ImageView) findViewById(R.id.gps);
 
         getLocationPermission();
+        //Slide up code
+        view = findViewById(R.id.slideup);
+        view.setVisibility(View.INVISIBLE);
+        opened = false;
+        //
 
     }
 
@@ -238,6 +252,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 curline.setVisible(mMap.getCameraPosition().zoom>20);
             }
         });
+        //slide up code
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
+        //
     }
 
 
@@ -252,8 +270,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
+        marker.showInfoWindow();
+        //Slide up code
+        TextView text = view.findViewById(R.id.roomnumber);
+        text.setText(marker.getTitle());
+        view.setVisibility(View.VISIBLE);
+        if (!opened){
+            TranslateAnimation animate = new TranslateAnimation(0, 0, view.getHeight(), 0);
+            animate.setDuration(375);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);
+            opened = true;
+        }
+        //
         return false;
+    }
+
+    @Override
+    public void onMapClick(LatLng point){
+        //slide down
+        if (opened){
+            view.setVisibility(View.INVISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
+            animate.setDuration(375);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);
+        }
+        opened = false;
+        //
     }
 
     private void getLocationPermission(){

@@ -10,7 +10,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapsActivity" />
+    <LinearLayout
+        android:id="@+id/slideup"
+        android:background = "#d3d3d3"
+        android:orientation = "vertical"
+        android:layout_alignParentBottom = "true"
+        android:layout_width = "match_parent"
+        android:layout_margin = "5dp"
+        android:layout_height = "175dp">
+        <TextView
+            android:id="@+id/roomnumber"
+            android:text= "Potato Holder"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content" />
 
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:foreground="@android:drawable/btn_star"
+            android:layout_marginHorizontal="280dp" />
+
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:text="Navigation"
+            android:layout_marginHorizontal="150dp"
+            android:layout_marginTop="-50dp"/>
+    </LinearLayout>
     <ImageView
         android:id="@+id/user"
         android:layout_width="50dp"
