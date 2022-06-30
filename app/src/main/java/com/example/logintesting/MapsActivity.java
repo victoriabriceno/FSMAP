@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +52,8 @@ GoogleMap.OnMapClickListener{
     private ActivityMapsBinding binding;
     private ImageView userIcon;
     private ImageView mGps;
+    private Button Navigation;
+    private Button NavGo;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
@@ -59,8 +62,10 @@ GoogleMap.OnMapClickListener{
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
-    boolean opened;
-    LinearLayout view;
+    boolean slideup;
+    boolean navbar;
+    LinearLayout slideupview;
+    LinearLayout navbarview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +86,19 @@ GoogleMap.OnMapClickListener{
 
         getLocationPermission();
         //Slide up code
-        view = findViewById(R.id.slideup);
-        view.setVisibility(View.INVISIBLE);
-        opened = false;
+        slideupview = findViewById(R.id.slideup);
+        slideupview.setVisibility(View.INVISIBLE);
+        slideup = false;
         //
+        //navbar code
+        navbarview = findViewById(R.id.navbar);
+        navbarview.setVisibility(View.INVISIBLE);
+        navbar = false;
+        //
+        Navigation = findViewById(R.id.NavButton);
+        Navigation.setOnClickListener(this);
+        NavGo = findViewById(R.id.navgo);
+        NavGo.setOnClickListener(this);
 
     }
 
@@ -265,6 +279,36 @@ GoogleMap.OnMapClickListener{
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
                 break;
+            case R.id.NavButton:
+                //Navbar
+
+                if (!navbar){
+                    navbarview.setVisibility(View.VISIBLE);
+                    TranslateAnimation animate = new TranslateAnimation(0, 0, 0, navbarview.getHeight());
+                    animate.setDuration(375);
+                    animate.setFillAfter(true);
+                    navbarview.startAnimation(animate);
+                    navbar = true;
+                }
+                //Turn all lines invisible
+
+                for(Polyline line: LinesList){
+                    line.setVisible(false);
+                }
+
+            case R.id.navgo:
+
+                if (navbar){
+                    navbarview.setVisibility(View.INVISIBLE);
+                    TranslateAnimation animate = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
+                    animate.setDuration(375);
+                    animate.setFillAfter(true);
+                    navbarview.startAnimation(animate);
+                    navbar = false;
+                }
+
+
+
         }
     }
 
@@ -272,15 +316,15 @@ GoogleMap.OnMapClickListener{
     public boolean onMarkerClick(Marker marker) {
         marker.showInfoWindow();
         //Slide up code
-        TextView text = view.findViewById(R.id.roomnumber);
+        TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
-        view.setVisibility(View.VISIBLE);
-        if (!opened){
-            TranslateAnimation animate = new TranslateAnimation(0, 0, view.getHeight(), 0);
+        if (!slideup){
+            slideupview.setVisibility(View.VISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(0, 0, slideupview.getHeight(), 0);
             animate.setDuration(375);
             animate.setFillAfter(true);
-            view.startAnimation(animate);
-            opened = true;
+            slideupview.startAnimation(animate);
+            slideup = true;
         }
         //
         return false;
@@ -289,15 +333,20 @@ GoogleMap.OnMapClickListener{
     @Override
     public void onMapClick(LatLng point){
         //slide down
-        if (opened){
-            view.setVisibility(View.INVISIBLE);
-            TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
+        if (slideup){
+            slideupview.setVisibility(View.INVISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
             animate.setDuration(375);
             animate.setFillAfter(true);
-            view.startAnimation(animate);
+            slideupview.startAnimation(animate);
+            slideup = false;
         }
-        opened = false;
         //
+        //Nav lines
+        for(Polyline line: LinesList){
+            line.setVisible(true);
+        }
+
     }
 
     private void getLocationPermission(){

@@ -31,11 +31,48 @@
             android:layout_marginHorizontal="280dp" />
 
         <Button
+            android:id="@+id/NavButton"
             android:layout_width="130dp"
             android:layout_height="50dp"
             android:text="Navigation"
             android:layout_marginHorizontal="150dp"
             android:layout_marginTop="-50dp"/>
+    </LinearLayout>
+//Two Markers
+    <LinearLayout
+        android:id="@+id/navbar"
+        android:translationZ="90dp"
+        android:background = "#d3d3d3"
+        android:orientation = "vertical"
+        android:layout_alignParentTop = "true"
+        android:layout_width = "match_parent"
+        android:layout_margin = "5dp"
+        android:layout_height = "175dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/From"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="75dp"
+            android:hint="From" />
+
+        <Button
+            android:id="@+id/navgo"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="300dp"
+            android:text="Go" />
+
+        <AutoCompleteTextView
+            android:id="@+id/Destination"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp"
+            android:layout_marginHorizontal="75dp"
+            android:hint="To" />
+
+
     </LinearLayout>
     <ImageView
         android:id="@+id/user"
