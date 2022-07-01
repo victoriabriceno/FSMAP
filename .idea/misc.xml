@@ -3,14 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.136" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/white_boarder.xml" value="0.136" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_fsmap_about.xml" value="0.17831813576494426" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_maps.xml" value="0.28307692307692306" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_settings.xml" value="0.17831813576494426" />
-        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_themes.xml" value="0.30833333333333335" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/drawable-v24/white_boarder.xml" value="0.1" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_favorites.xml" value="0.17958459979736577" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_forgot_password.xml" value="0.375" />
@@ -25,9 +17,23 @@
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_map.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_maps.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw320dp/activity_forgot_password.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw320dp/activity_fsmap_about.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw320dp/activity_main.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw320dp/activity_maps.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw320dp/activity_register_user.xml" value="0.38697916666666665" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw720dp/activity_forgot_password.xml" value="0.33" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw720dp/activity_fsmap_about.xml" value="0.290234375" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw720dp/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw720dp/activity_maps.xml" value="0.290234375" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw720dp/activity_register_user.xml" value="0.290234375" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw720dp/activity_settings.xml" value="0.290234375" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_favorites.xml" value="0.3392210144927536" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_forgot_password.xml" value="0.34692028985507245" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_fsmap_about.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.18819655521783182" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.33" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_register_user.xml" value="0.34692028985507245" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_settings.xml" value="0.38697916666666665" />
       </map>
     </option>

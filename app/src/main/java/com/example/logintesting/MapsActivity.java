@@ -8,11 +8,13 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,9 +37,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.view.animation.TranslateAnimation;
 
@@ -61,6 +72,14 @@ GoogleMap.OnMapClickListener{
     ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
     boolean opened;
     LinearLayout view;
+    //Favorites
+    ImageView bntFavorites;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    Marker marker;
+    boolean isInMyfavorites = false;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +103,105 @@ GoogleMap.OnMapClickListener{
         view = findViewById(R.id.slideup);
         view.setVisibility(View.INVISIBLE);
         opened = false;
-        //
+
+        //Favorites
+        bntFavorites = (ImageView) findViewById(R.id.btnFavorites);
+        bntFavorites.setOnClickListener(this);
+
+
 
     }
+
+    //FAVORITES
+    private  void checkIsFavorite() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(firebaseAuth.getUid()).child("Favorite Classes").child(marker.getTitle())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        isInMyfavorites = snapshot.exists(); // true: if exists , false if not exists
+                        if (isInMyfavorites){
+                            //exists in favorites
+
+
+                        }else{
+                            //not exists in favorite
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+    }
+
+    public static void addToFavorites(Context context , Marker marker){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser()==null){
+            Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
+        }else{
+
+            //setup data to add to firebase db of current user for favorite marker
+            HashMap<String, Object> Favorites = new HashMap<>();
+            Favorites.put("Favorite Classes ", "" +marker);
+            
+
+            //Save to db
+            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+           DatabaseReference tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
+           tdatabase.child(userID).child("Favorite Classes").child(marker.getTitle()).setValue(Favorites).
+                   addOnSuccessListener(new OnSuccessListener<Void>() {
+                       @Override
+                       public void onSuccess(Void unused) {
+                           Toast.makeText(context, "Added to you favorites list...", Toast.LENGTH_SHORT).show();
+
+                       }
+                   }).addOnFailureListener(new OnFailureListener() {
+                       @Override
+                       public void onFailure(@NonNull Exception e) {
+                           Toast.makeText(context, "Failed to add to favorite due to"+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                       }
+                   });
+
+
+
+        }
+
+    }
+    public static void removeFromFavorites(Context context,Marker marker){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser()==null){
+            Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
+        }else{
+
+            //Remove from favorites
+            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
+            tdatabase.child(userID).child("Favorite Classes").child(String.valueOf(marker)).removeValue().
+                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(context, "Remove from you favorites list...", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Failed to remove from favorites due to"+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+
+
+        }
+    }
+
 
     private void getDeviceLocation(){
 

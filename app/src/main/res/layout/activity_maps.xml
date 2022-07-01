@@ -24,11 +24,12 @@
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content" />
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/btnFavorites"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:foreground="@android:drawable/btn_star"
-            android:layout_marginHorizontal="280dp" />
+            android:layout_marginHorizontal="280dp"
+            android:foreground="@drawable/starempty" />
 
         <Button
             android:layout_width="130dp"
