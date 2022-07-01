@@ -13,6 +13,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,9 +65,9 @@ GoogleMap.OnMapClickListener{
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
     boolean slideup;
-    boolean navbar;
     LinearLayout slideupview;
     LinearLayout navbarview;
+    ArrayList<String> listfornav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +95,13 @@ GoogleMap.OnMapClickListener{
         //navbar code
         navbarview = findViewById(R.id.navbar);
         navbarview.setVisibility(View.INVISIBLE);
-        navbar = false;
         //
         Navigation = findViewById(R.id.NavButton);
         Navigation.setOnClickListener(this);
         NavGo = findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
+
+        listfornav = new ArrayList<String>();
 
     }
 
@@ -282,30 +285,64 @@ GoogleMap.OnMapClickListener{
             case R.id.NavButton:
                 //Navbar
 
-                if (!navbar){
                     navbarview.setVisibility(View.VISIBLE);
-                    TranslateAnimation animate = new TranslateAnimation(0, 0, 0, navbarview.getHeight());
-                    animate.setDuration(375);
-                    animate.setFillAfter(true);
-                    navbarview.startAnimation(animate);
-                    navbar = true;
-                }
-                //Turn all lines invisible
+                   /* TranslateAnimation animatedown = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
+                    animatedown.setDuration(375);
+                    animatedown.setFillAfter(true);
+                    navbarview.startAnimation(animatedown);*/
 
+                for (Marker m : MarkersList){
+                    if (m.getTitle() != null){
+                        listfornav.add(m.getTitle());
+                    }
+                }
+
+                ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
+                        android.R.layout.simple_dropdown_item_1line, listfornav);
+
+                AutoCompleteTextView from = findViewById(R.id.From);
+                from.setAdapter(adapterlist);
+                AutoCompleteTextView destination = findViewById(R.id.Destination);
+                destination.setAdapter(adapterlist);
+
+
+                //Turn all lines invisible
                 for(Polyline line: LinesList){
                     line.setVisible(false);
                 }
-
+                break;
             case R.id.navgo:
+                navbarview.setVisibility(View.INVISIBLE);
+/*                TranslateAnimation animateup = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
+                animateup.setDuration(375);
+                animateup.setFillAfter(true);
+                navbarview.startAnimation(animateup);*/
+                //
 
-                if (navbar){
-                    navbarview.setVisibility(View.INVISIBLE);
-                    TranslateAnimation animate = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
-                    animate.setDuration(375);
-                    animate.setFillAfter(true);
-                    navbarview.startAnimation(animate);
-                    navbar = false;
+                AutoCompleteTextView curlocation = findViewById(R.id.From);
+                AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
+                String From = curlocation.getText().toString();
+                Marker start; // Starting point marker
+                for (Marker m : MarkersList){
+                    if (From == m.getTitle()){
+                        start = m;
+                        break;
+                    }
                 }
+                String To = finaldestination.getText().toString();
+                Marker end; // Ending point marker
+                for (Marker m : MarkersList){
+                    if (From == m.getTitle()){
+                        end = m;
+                        break;
+                    }
+                }
+                //Nav lines
+                for(Polyline line: LinesList) {
+                    line.setVisible(true);
+                }
+                //
+                break;
 
 
 
@@ -340,11 +377,6 @@ GoogleMap.OnMapClickListener{
             animate.setFillAfter(true);
             slideupview.startAnimation(animate);
             slideup = false;
-        }
-        //
-        //Nav lines
-        for(Polyline line: LinesList){
-            line.setVisible(true);
         }
 
     }
