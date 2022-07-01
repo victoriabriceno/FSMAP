@@ -113,8 +113,10 @@ GoogleMap.OnMapClickListener{
     }
 
     //FAVORITES
+/*
     private  void checkIsFavorite() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/Users/" + userID);
         reference.child(firebaseAuth.getUid()).child("Favorite Classes").child(marker.getTitle())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -138,6 +140,7 @@ GoogleMap.OnMapClickListener{
                 });
 
     }
+*/
 
     public static void addToFavorites(Context context , Marker marker){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -147,12 +150,12 @@ GoogleMap.OnMapClickListener{
 
             //setup data to add to firebase db of current user for favorite marker
             HashMap<String, Object> Favorites = new HashMap<>();
-            Favorites.put("Favorite Classes ", "" +marker);
+            Favorites.put("Favorite Classes ", marker);
             
 
             //Save to db
             String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-           DatabaseReference tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
+           DatabaseReference tdatabase = FirebaseDatabase.getInstance().getReference("/Users/");
            tdatabase.child(userID).child("Favorite Classes").child(marker.getTitle()).setValue(Favorites).
                    addOnSuccessListener(new OnSuccessListener<Void>() {
                        @Override
@@ -379,6 +382,13 @@ GoogleMap.OnMapClickListener{
         switch(view.getId()){
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
+                break;
+            case R.id.btnFavorites:
+                if (isInMyfavorites){
+                    removeFromFavorites(this,marker);
+                }else{
+                    addToFavorites(this,marker);
+                }
                 break;
         }
     }

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "169409482844",
-    "project_id": "logintesting2-a6c22",
-    "storage_bucket": "logintesting2-a6c22.appspot.com"
+    "project_number": "869504543979",
+    "project_id": "fsmap-6cce5",
+    "storage_bucket": "fsmap-6cce5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:169409482844:android:73beda5157c56e235b9699",
+        "mobilesdk_app_id": "1:869504543979:android:d49d985bd648a4da6622ae",
         "android_client_info": {
           "package_name": "com.example.logintesting"
         }
       },
       "oauth_client": [
         {
-          "client_id": "169409482844-glkjrgfdc43hrbbp7pu3ti24sjr3t86j.apps.googleusercontent.com",
+          "client_id": "869504543979-b4icffblbemlb3li1590ncbm2bkss4v8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBgXi3EaBut3KMh5ElEap90MF1KAg8dy5Y"
+          "current_key": "AIzaSyAzauN9Y5ncAl3KBSbga_SE66NKhEnDWPU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "169409482844-glkjrgfdc43hrbbp7pu3ti24sjr3t86j.apps.googleusercontent.com",
+              "client_id": "869504543979-b4icffblbemlb3li1590ncbm2bkss4v8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
