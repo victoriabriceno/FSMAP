@@ -80,7 +80,8 @@ GoogleMap.OnMapClickListener{
     LinearLayout view;
 
     //Favorites
-    ImageButton bntFavorites;
+    ImageButton bntFavoritesRemove;
+    ImageButton btnFavoritesAdd;
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
@@ -110,8 +111,11 @@ GoogleMap.OnMapClickListener{
         opened = false;
 
         //Favorites
-        bntFavorites = (ImageButton) findViewById(R.id.btnFavorites);
-        bntFavorites.setOnClickListener(this);
+        bntFavoritesRemove = (ImageButton) findViewById(R.id.btnRemoveFavorites);
+        bntFavoritesRemove.setOnClickListener(this);
+
+        btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
+        btnFavoritesAdd.setOnClickListener(this);
 
 
 
@@ -326,18 +330,12 @@ GoogleMap.OnMapClickListener{
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
                 break;
-            case R.id.btnFavorites:
+            case R.id.btnRemoveFavorites:
+                Favorites.removeFromFavorite(MapsActivity.this, marker2);
 
-
-                    if (isInMyFavorites) {
-                        Favorites.removeFromFavorite(MapsActivity.this, marker2);
-
-                    } else {
-                        Favorites.addToFavorite(MapsActivity.this, marker2);
-
-                    }
-
-
+                break;
+            case R.id.btnAddFavorites:
+                Favorites.addToFavorite(MapsActivity.this,marker2);
                 break;
         }
     }
