@@ -56,6 +56,8 @@ GoogleMap.OnMapClickListener{
     private ImageView mGps;
     private Button Navigation;
     private Button NavGo;
+    private Button NavDone;
+    private AutoCompleteTextView Search;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
@@ -64,10 +66,12 @@ GoogleMap.OnMapClickListener{
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
+    ArrayList<String> LinesTitles = new ArrayList<String>();
     boolean slideup;
     LinearLayout slideupview;
     LinearLayout navbarview;
     ArrayList<String> listfornav;
+    Marker currentmarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +104,10 @@ GoogleMap.OnMapClickListener{
         Navigation.setOnClickListener(this);
         NavGo = findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
+        NavDone = findViewById(R.id.NavDone);
+        NavDone.setOnClickListener(this);
 
-        listfornav = new ArrayList<String>();
+        Search = findViewById(R.id.input_Search);
 
     }
 
@@ -220,14 +226,16 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.593929,-81.304484))
                 .add(new LatLng(28.593929,-81.304514)));
         LinesList.add(room119to117);
-        LinesList.add(line);
+        LinesTitles.add("Meeting 119Meeting 117");
         LinesList.add(room119to118);
-        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
-        Marker room117 = mMap.addMarker(meeting117);
-        MarkersList.add(room117);
+        LinesTitles.add("Meeting 119Meeting 118");
+        LinesList.add(line);
         MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593959,-81.304514)).title("Meeting 118");
         Marker room118 = mMap.addMarker(Meeting118);
         MarkersList.add(room118);
+        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
+        Marker room117 = mMap.addMarker(meeting117);
+        MarkersList.add(room117);
         for (Marker marker1: MarkersList)
         {
             marker1.setVisible(false);
@@ -265,9 +273,6 @@ GoogleMap.OnMapClickListener{
             for(Marker markers : MarkersList){
                 markers.setVisible(mMap.getCameraPosition().zoom >20);
             }
-            for(Polyline curline : LinesList) {
-                curline.setVisible(mMap.getCameraPosition().zoom>20);
-            }
         });
         //slide up code
         mMap.setOnMarkerClickListener(this);
@@ -283,13 +288,19 @@ GoogleMap.OnMapClickListener{
                 startActivity(new Intent(this,Settings.class));
                 break;
             case R.id.NavButton:
-                //Navbar
 
-                    navbarview.setVisibility(View.VISIBLE);
-                   /* TranslateAnimation animatedown = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
-                    animatedown.setDuration(375);
-                    animatedown.setFillAfter(true);
-                    navbarview.startAnimation(animatedown);*/
+                Search.setVisibility(View.GONE);
+
+                //Navbar
+                navbarview.setVisibility(View.VISIBLE);
+
+                /* TranslateAnimation animatedown = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
+                   animatedown.setDuration(375);
+                   animatedown.setFillAfter(true);
+                   navbarview.startAnimation(animatedown);*/
+
+
+                listfornav = new ArrayList<String>();
 
                 for (Marker m : MarkersList){
                     if (m.getTitle() != null){
@@ -297,14 +308,18 @@ GoogleMap.OnMapClickListener{
                     }
                 }
 
+                //Creating Suggestions for text boxes in nav
                 ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
                         android.R.layout.simple_dropdown_item_1line, listfornav);
-
                 AutoCompleteTextView from = findViewById(R.id.From);
+                from.setText("");
                 from.setAdapter(adapterlist);
                 AutoCompleteTextView destination = findViewById(R.id.Destination);
                 destination.setAdapter(adapterlist);
-
+                //
+                //Autofill Destination
+                destination.setText(currentmarker.getTitle());
+                //
 
                 //Turn all lines invisible
                 for(Polyline line: LinesList){
@@ -312,7 +327,7 @@ GoogleMap.OnMapClickListener{
                 }
                 break;
             case R.id.navgo:
-                navbarview.setVisibility(View.INVISIBLE);
+                navbarview.setVisibility(View.GONE);
 /*                TranslateAnimation animateup = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
                 animateup.setDuration(375);
                 animateup.setFillAfter(true);
@@ -321,30 +336,56 @@ GoogleMap.OnMapClickListener{
 
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
-                String From = curlocation.getText().toString();
-                Marker start; // Starting point marker
-                for (Marker m : MarkersList){
-                    if (From == m.getTitle()){
-                        start = m;
+                String stringcurlocation = curlocation.getText().toString();
+                String stringfinaldestination = finaldestination.getText().toString();
+                String RooomtoRoom = "";
+
+
+                int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
+                int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
+                if (start > end) {
+                    RooomtoRoom += curlocation.getText().toString();
+                    RooomtoRoom += finaldestination.getText().toString();
+                }
+                else {
+                    RooomtoRoom += finaldestination.getText().toString();
+                    RooomtoRoom += curlocation.getText().toString();
+                }
+                Boolean wasFound = false;
+                for (int i = 0; i<LinesTitles.size(); i++){
+                    if (RooomtoRoom.equals(LinesTitles.get(i))) {
+                        LinesList.get(i).setVisible(true);
+                        wasFound = true;
                         break;
                     }
                 }
-                String To = finaldestination.getText().toString();
-                Marker end; // Ending point marker
-                for (Marker m : MarkersList){
-                    if (From == m.getTitle()){
-                        end = m;
+                if (!wasFound){
+                    Toast.makeText(getApplicationContext(), "Invalid route", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                Marker curlocationmarker;
+                for (Marker marker: MarkersList){
+                    if (stringcurlocation.equals(marker.getTitle())){
+                        curlocationmarker = marker;
                         break;
                     }
                 }
-                //Nav lines
-                for(Polyline line: LinesList) {
-                    line.setVisible(true);
+                Marker finaldestinationmarker;
+                for (Marker marker: MarkersList){
+                    if (stringcurlocation.equals(marker.getTitle())){
+                        finaldestinationmarker = marker;
+                        break;
+                    }
                 }
-                //
+                NavDone.setVisibility(View.VISIBLE);
+
                 break;
 
-
+            case R.id.NavDone:
+                for (Polyline line: LinesList){
+                    line.setVisible(false);
+                }
+                NavDone.setVisibility(View.GONE);
 
         }
     }
@@ -364,6 +405,7 @@ GoogleMap.OnMapClickListener{
             slideup = true;
         }
         //
+        currentmarker = marker;
         return false;
     }
 
