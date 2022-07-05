@@ -81,12 +81,9 @@ GoogleMap.OnMapClickListener{
 
     //Favorites
     ImageButton bntFavorites;
-    Marker marker;
+    Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
-
-
-
 
 
     @Override
@@ -116,40 +113,40 @@ GoogleMap.OnMapClickListener{
         bntFavorites = (ImageButton) findViewById(R.id.btnFavorites);
         bntFavorites.setOnClickListener(this);
 
-      /*  firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser()==null){
-            checkISFavorites();
 
-        }*/
+
 
     }
-    private void checkISFavorites(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.child(firebaseAuth.getUid()).child("Favorites").child(String.valueOf(marker))
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        isInMyFavorites = snapshot.exists(); //true if exists false if not exits
-                        if (isInMyFavorites){
-                            //exists in favorites
-                            bntFavorites.setImageResource(R.drawable.starvisible);
-                            Toast.makeText(MapsActivity.this, "Remove from favorites.", Toast.LENGTH_SHORT).show();
+/*   public void checkISFavorites(){
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            reference.child(firebaseAuth.getUid()).child("Favorites").child(marker2.getTitle())
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            isInMyFavorites = snapshot.exists(); //true if exists false if not exits
+                            if (isInMyFavorites){
+                                //exists in favorites
+                                bntFavorites.setImageResource(R.drawable.starvisible);
+                                Toast.makeText(MapsActivity.this, "Remove from favorites.", Toast.LENGTH_SHORT).show();
 
 
-                        }else{
-                            bntFavorites.setImageResource(R.drawable.starempty);
-                            Toast.makeText(MapsActivity.this, "Add to favorites.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                bntFavorites.setImageResource(R.drawable.starempty);
+                                Toast.makeText(MapsActivity.this, "Add to favorites.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
                         }
-                    }
+                    });
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
 
-    }
+    }*/
     private void getDeviceLocation(){
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -323,18 +320,24 @@ GoogleMap.OnMapClickListener{
 
     @Override
     public void onClick(View view) {
+        //checkISFavorites();
+
         switch(view.getId()){
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
                 break;
             case R.id.btnFavorites:
-                if (isInMyFavorites){
-                    Favorites.removeFromFavorite(MapsActivity.this,marker);
 
-                }else{
-                    Favorites.addToFavorite(MapsActivity.this,marker);
 
-                }
+                    if (isInMyFavorites) {
+                        Favorites.removeFromFavorite(MapsActivity.this, marker2);
+
+                    } else {
+                        Favorites.addToFavorite(MapsActivity.this, marker2);
+
+                    }
+
+
                 break;
         }
     }
@@ -354,6 +357,7 @@ GoogleMap.OnMapClickListener{
             opened = true;
         }
         //
+        marker2 = marker;
         return false;
     }
 

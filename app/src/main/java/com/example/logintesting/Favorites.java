@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.logintesting.databinding.ActivityFavoritesBinding;
@@ -23,14 +24,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Favorites extends AppCompatActivity {
 
+    ArrayList<Marker> lstMarkers =  new ArrayList<Marker>();
+    ListView listView;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+
+        listView = (ListView) findViewById(R.id.lstPlaces);
+
 
 
     }
@@ -47,7 +54,7 @@ public class Favorites extends AppCompatActivity {
 
              //Save to db
              DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-             ref.child(firebaseAuth.getUid()).child("Favorites").child(String.valueOf(marker))
+             ref.child(firebaseAuth.getUid()).child("Favorites").child(marker.getTitle())
                      .setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                          @Override
                          public void onSuccess(Void unused) {
@@ -69,7 +76,7 @@ public class Favorites extends AppCompatActivity {
         }else{
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid()).child("Favorites").child(String.valueOf(marker))
+            ref.child(firebaseAuth.getUid()).child("Favorites").child(marker.getTitle())
                     .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
@@ -83,6 +90,10 @@ public class Favorites extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    public static void LoadFavoriteMarkers(){
+
     }
 
 

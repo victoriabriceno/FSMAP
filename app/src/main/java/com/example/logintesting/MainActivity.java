@@ -21,11 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.dynamic.IFragmentWrapper;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import io.paperdb.Paper;
 
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CheckBox rememberMe;
     //Visible password
     boolean passwordVisible;
+
 
 
     @Override
@@ -136,9 +141,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        
-    }
 
+    }
 
     @Override
     public void onClick(View view) {
