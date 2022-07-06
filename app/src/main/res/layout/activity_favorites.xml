@@ -6,23 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".Favorites">
 
-    <TextView
-        android:id="@+id/favoriteMarkerlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome to favorite list!"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="20dp"/>
+ <TextView
+     android:id="@+id/favoriteMarkerLabel"
+     android:layout_width="183dp"
+     android:layout_height="wrap_content"
+     android:padding="5dp"
+     android:text="Favorite List"
+     android:textColor="@color/black"
+     android:textSize="20dp"
+     android:textStyle="bold" />
+
+ <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/markersRV"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_below="@id/favoriteMarkerLabel"
+     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+     tools:listitem="@layout/row_favoritemarkers" />
 
 
-    <ListView
-        android:id="@+id/lstPlaces"
-        android:layout_width="match_parent"
-        android:layout_height="693dp"
-        android:layout_below="@+id/favoriteMarkerlist"
-        android:layout_marginTop="21dp"
-        android:layout_marginBottom="50dp" />-->
+
+
+
 
 
 </RelativeLayout>
