@@ -3,41 +3,31 @@ package com.example.logintesting;
 //BY SEBASTIAN JAZMIN
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.os.Binder;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.logintesting.databinding.ActivityFavoritesBinding;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Favorites extends AppCompatActivity {
 
 
-
-    private ArrayList<ModelFavorite> listplaces ;
+    /*private ArrayList<ModelFavorite> listplaces ;
     private AdapterFavoriteList adapterFavoriteList;
-    FirebaseAuth firebaseAuth;
-    private ActivityFavoritesBinding binding;
+    private FirebaseAuth firebaseAuth;
+    private ActivityFavoritesBinding binding;*/
 
+    DatabaseReference favoriteList;
+    FirebaseDatabase databaseReference = FirebaseDatabase.getInstance();
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +35,7 @@ public class Favorites extends AppCompatActivity {
         setContentView(R.layout.activity_favorites);
 
 
-        LoadFavoriteMarkers();
+
     }
 
     public static void addToFavorite(Context context,Marker marker){
@@ -97,48 +87,11 @@ public class Favorites extends AppCompatActivity {
                     });
         }
     }
-    public  void LoadFavoriteMarkers(){
-        listplaces = new ArrayList<>();
 
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser()==null){
-
-        }else {
 
 
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid()).child("Favorites").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    listplaces.clear();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Marker markerTitle = (Marker) ds.child("Markers").getValue();
 
-
-                        //added to the list
-                        ModelFavorite modelFavorite = new ModelFavorite();
-                        modelFavorite.setMarkerTitle(markerTitle);
-
-                        //add model to list
-                        listplaces.add(modelFavorite);
-                    }
-                    //set numer of favorite books
-                    adapterFavoriteList = new AdapterFavoriteList(Favorites.this, listplaces);
-                    binding.markersRV.setAdapter(adapterFavoriteList);
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
-
-    }
 
 
 

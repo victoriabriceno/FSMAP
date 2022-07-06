@@ -48,6 +48,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.FavoritesButton:
                 startActivity(new Intent(this,Favorites.class));
+
                 break;
             case R.id.ThemesButton:
                 startActivity(new Intent(this,Themes.class));

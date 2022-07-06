@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.logintesting.databinding.ActivityFavoritesBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -72,6 +73,8 @@ GoogleMap.OnMapClickListener{
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
+
+
 
 
 
@@ -316,6 +319,7 @@ GoogleMap.OnMapClickListener{
         marker2 = marker;
         return false;
     }
+
 
     @Override
     public void onMapClick(LatLng point){
