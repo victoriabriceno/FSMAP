@@ -3,6 +3,8 @@ package com.example.logintesting;
 //BY SEBASTIAN JAZMIN
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,27 +14,62 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Favorites extends AppCompatActivity {
 
 
-    /*private ArrayList<ModelFavorite> listplaces ;
-    private AdapterFavoriteList adapterFavoriteList;
-    private FirebaseAuth firebaseAuth;
-    private ActivityFavoritesBinding binding;*/
-
-    DatabaseReference favoriteList;
-    FirebaseDatabase databaseReference = FirebaseDatabase.getInstance();
+ RecyclerView recyclerView;
+ DatabaseReference databaseReference;
+ AdapterUserFavoriteList adapterUserFavoriteList;
+ ArrayList<UserFavoriteList> list;
+ FirebaseAuth firebaseAuth;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+
+        recyclerView = findViewById(R.id.markersRV);
+       // DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorites");
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        list = new ArrayList<>();
+       // adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
+        recyclerView.setAdapter(adapterUserFavoriteList);
+
+         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+         databaseReference.child(firebaseAuth.getUid()).child("Favorites").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+
+                    Marker marker1 = (Marker) dataSnapshot.child("Markers").getValue();
+                    UserFavoriteList userFavoriteList = dataSnapshot.getValue(UserFavoriteList.class);
+                    userFavoriteList.setMarkerTitle(marker1);
+                    list.add(userFavoriteList);
+                }
+
+                adapterUserFavoriteList = new AdapterUserFavoriteList(Favorites.this,list);
+
+                adapterUserFavoriteList.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
