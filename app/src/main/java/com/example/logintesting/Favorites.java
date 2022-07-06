@@ -43,23 +43,23 @@ public class Favorites extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         list = new ArrayList<>();
-       // adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
+        adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
         recyclerView.setAdapter(adapterUserFavoriteList);
 
-         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-         databaseReference.child(firebaseAuth.getUid()).child("Favorites").addValueEventListener(new ValueEventListener() {
+         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorites");
+         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
 
-                    Marker marker1 = (Marker) dataSnapshot.child("Markers").getValue();
+
                     UserFavoriteList userFavoriteList = dataSnapshot.getValue(UserFavoriteList.class);
-                    userFavoriteList.setMarkerTitle(marker1);
+
                     list.add(userFavoriteList);
                 }
 
-                adapterUserFavoriteList = new AdapterUserFavoriteList(Favorites.this,list);
+
 
                 adapterUserFavoriteList.notifyDataSetChanged();
 
