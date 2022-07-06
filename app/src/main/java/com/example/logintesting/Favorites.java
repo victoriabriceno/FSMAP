@@ -29,17 +29,18 @@ import java.util.HashMap;
 
 public class Favorites extends AppCompatActivity {
 
-    ArrayList<Marker> lstMarkers =  new ArrayList<Marker>();
-    ListView listView;
+
+    ListView listPlaces;
+    ArrayList<String> listplaces ;
+    FirebaseAuth firebaseAuth;
+
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
-        listView = (ListView) findViewById(R.id.lstPlaces);
-
-
-
+        listPlaces = findViewById(R.id.lstPlaces);
+        LoadFavoriteMarkers();
     }
 
     public static void addToFavorite(Context context,Marker marker){
@@ -91,10 +92,37 @@ public class Favorites extends AppCompatActivity {
                     });
         }
     }
+    public  void LoadFavoriteMarkers(){
+        listplaces = new ArrayList<String>();
 
-    public static void LoadFavoriteMarkers(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(firebaseAuth.getUid()).child("Favorites").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listplaces.clear();
+                for (DataSnapshot ds: snapshot.getChildren()){
+                    String markerTitle = ""+ds.child("Markers").getValue();
+
+
+                    //added to the list
+                    listplaces.add(markerTitle);
+                }
+
+                //listPlaces.setAdapter();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
     }
+
+
 
 
 }

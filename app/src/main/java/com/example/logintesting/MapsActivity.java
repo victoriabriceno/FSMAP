@@ -4,19 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,11 +35,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,12 +44,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
 
 import android.view.animation.TranslateAnimation;
-
-import org.w3c.dom.Text;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
 GoogleMap.OnMapClickListener{
@@ -85,6 +72,7 @@ GoogleMap.OnMapClickListener{
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
+
 
 
     @Override
@@ -121,36 +109,7 @@ GoogleMap.OnMapClickListener{
 
 
     }
-/*   public void checkISFavorites(){
 
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(firebaseAuth.getUid()).child("Favorites").child(marker2.getTitle())
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            isInMyFavorites = snapshot.exists(); //true if exists false if not exits
-                            if (isInMyFavorites){
-                                //exists in favorites
-                                bntFavorites.setImageResource(R.drawable.starvisible);
-                                Toast.makeText(MapsActivity.this, "Remove from favorites.", Toast.LENGTH_SHORT).show();
-
-
-                            }else{
-                                bntFavorites.setImageResource(R.drawable.starempty);
-                                Toast.makeText(MapsActivity.this, "Add to favorites.", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-
-    }*/
     private void getDeviceLocation(){
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -331,8 +290,7 @@ GoogleMap.OnMapClickListener{
                 startActivity(new Intent(this,Settings.class));
                 break;
             case R.id.btnRemoveFavorites:
-                Favorites.removeFromFavorite(MapsActivity.this, marker2);
-
+                Favorites.removeFromFavorite(MapsActivity.this,marker2);
                 break;
             case R.id.btnAddFavorites:
                 Favorites.addToFavorite(MapsActivity.this,marker2);
@@ -428,4 +386,5 @@ GoogleMap.OnMapClickListener{
 
 
     }
+
 }
