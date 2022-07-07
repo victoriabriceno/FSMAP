@@ -62,7 +62,7 @@ GoogleMap.OnMapClickListener{
     private static final int LOCATION_PERMISSION_REQUEST_CODE= 1234;
     private static final float DEFAULT_ZOOM = 15f;
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
-    ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
+    public ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
     boolean opened;
     LinearLayout view;
@@ -281,6 +281,8 @@ GoogleMap.OnMapClickListener{
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
         //
+
+
     }
 
 

@@ -6,6 +6,10 @@ public class UserFavoriteList {
 
     Marker markerTitle;
 
+    public UserFavoriteList(Marker markerTitle) {
+        this.markerTitle = markerTitle;
+    }
+
     public String getMarkerTitle() {
         return markerTitle.getTitle();
     }

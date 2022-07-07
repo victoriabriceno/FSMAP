@@ -17,6 +17,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     Context context;
     ArrayList<UserFavoriteList> listFavorite;
 
+    //Constructor
     public AdapterUserFavoriteList(Context context,ArrayList<UserFavoriteList> listFavorite) {
         this.context = context;
         this.listFavorite = listFavorite;

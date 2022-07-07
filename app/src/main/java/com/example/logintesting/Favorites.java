@@ -29,7 +29,7 @@ public class Favorites extends AppCompatActivity {
  RecyclerView recyclerView;
  DatabaseReference databaseReference;
  AdapterUserFavoriteList adapterUserFavoriteList;
- ArrayList<UserFavoriteList> list;
+ ArrayList<UserFavoriteList> list ;
  FirebaseAuth firebaseAuth;
 
      @Override
@@ -42,11 +42,11 @@ public class Favorites extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        list = new ArrayList<>();
+       list = new ArrayList<UserFavoriteList>();
         adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
         recyclerView.setAdapter(adapterUserFavoriteList);
 
-         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorites");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/"+"/Markers /");
          databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,7 +82,7 @@ public class Favorites extends AppCompatActivity {
          }else{
              //Set up the data to add in firebase of current user for favorite book
              HashMap<String,Object> hashMap = new HashMap<>();
-             hashMap.put("Markers",""+marker);
+             hashMap.put("Markers",""+marker.getTitle());
 
 
              //Save to db
@@ -124,6 +124,8 @@ public class Favorites extends AppCompatActivity {
                     });
         }
     }
+
+
 
 
 
