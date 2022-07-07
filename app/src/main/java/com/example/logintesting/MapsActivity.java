@@ -385,8 +385,8 @@ GoogleMap.OnMapClickListener{
                 for (Polyline line: LinesList){
                     line.setVisible(false);
                 }
+                Search.setVisibility(View.VISIBLE);
                 NavDone.setVisibility(View.GONE);
-
         }
     }
 
