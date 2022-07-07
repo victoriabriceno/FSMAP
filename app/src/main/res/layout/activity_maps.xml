@@ -121,7 +121,10 @@ android:id="@+id/search_bar">
     android:textColor="@color/black"
     android:id="@+id/input_Search"
     android:background="@null"
-    android:hint="Enter a classroom" />
+    android:hint="Enter a classroom"
+    android:imeOptions="actionDone"
+    android:inputType="text"
+    android:translationZ="90dp"/>
 
     </RelativeLayout>
 

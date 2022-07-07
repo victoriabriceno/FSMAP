@@ -10,9 +10,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -72,6 +75,7 @@ GoogleMap.OnMapClickListener{
     LinearLayout navbarview;
     ArrayList<String> listfornav;
     Marker currentmarker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +153,48 @@ GoogleMap.OnMapClickListener{
                 getDeviceLocation();
             }
         });
+    }
+    private void SearchReady(){
+        ArrayList<String> SearchList = new ArrayList<String>();
+        for (Marker m : MarkersList){
+            if (m.getTitle() != null){
+                SearchList.add(m.getTitle());
+            }
+        }
+        ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, SearchList);
+        Search.setAdapter(adapterlist);
+
+        Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            //Search
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || event.getAction() == KeyEvent.ACTION_DOWN
+                        || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+                    //Search Method
+                    Locate();
+                }
+                return false;
+            }
+        });
+    }
+    private void Locate(){
+        String searchstring = Search.getText().toString();
+        Marker searched = null;
+        for (Marker m: MarkersList){
+           if (searchstring.equals(m.getTitle())){
+               searched = m;
+               break;
+           }
+       }
+        if (null != searched){
+            onMarkerClick(searched);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No Results Found", Toast.LENGTH_SHORT).show();
+        }
     }
     /**
      * Manipulates the map once available.
@@ -274,10 +320,20 @@ GoogleMap.OnMapClickListener{
                 markers.setVisible(mMap.getCameraPosition().zoom >20);
             }
         });
+        mMap.setOnCameraIdleListener(()->
+        {
+            for (GroundOverlay Overlay : groundOverlays) {
+                Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
+            }
+            for(Marker markers : MarkersList){
+                markers.setVisible(mMap.getCameraPosition().zoom >20);
+            }
+        });
         //slide up code
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
         //
+        SearchReady();
     }
 
 
@@ -298,8 +354,6 @@ GoogleMap.OnMapClickListener{
                    animatedown.setDuration(375);
                    animatedown.setFillAfter(true);
                    navbarview.startAnimation(animatedown);*/
-
-
                 listfornav = new ArrayList<String>();
 
                 for (Marker m : MarkersList){
@@ -307,7 +361,6 @@ GoogleMap.OnMapClickListener{
                         listfornav.add(m.getTitle());
                     }
                 }
-
                 //Creating Suggestions for text boxes in nav
                 ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
                         android.R.layout.simple_dropdown_item_1line, listfornav);
@@ -378,6 +431,7 @@ GoogleMap.OnMapClickListener{
                     }
                 }
                 NavDone.setVisibility(View.VISIBLE);
+                Search.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -392,6 +446,11 @@ GoogleMap.OnMapClickListener{
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+
+        if(mMap.getCameraPosition().zoom < 22){
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(22));
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         marker.showInfoWindow();
         //Slide up code
         TextView text = slideupview.findViewById(R.id.roomnumber);
