@@ -73,7 +73,6 @@ GoogleMap.OnMapClickListener{
     boolean slideup;
     LinearLayout slideupview;
     LinearLayout navbarview;
-    ArrayList<String> listfornav;
     Marker currentmarker;
 
 
@@ -354,7 +353,7 @@ GoogleMap.OnMapClickListener{
                    animatedown.setDuration(375);
                    animatedown.setFillAfter(true);
                    navbarview.startAnimation(animatedown);*/
-                listfornav = new ArrayList<String>();
+                ArrayList<String> listfornav = new ArrayList<String>();
 
                 for (Marker m : MarkersList){
                     if (m.getTitle() != null){
