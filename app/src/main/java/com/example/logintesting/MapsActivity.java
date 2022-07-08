@@ -1,6 +1,7 @@
 package com.example.logintesting;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -10,8 +11,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,22 +34,44 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.example.logintesting.databinding.ActivityMapsBinding;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import android.view.animation.TranslateAnimation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
@@ -68,12 +93,19 @@ GoogleMap.OnMapClickListener{
     private static final float DEFAULT_ZOOM = 15f;
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
-    ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
+    ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
+    ArrayList<PolylineOptions> customPolyLines = new ArrayList<>();
+    ArrayList<Marker> markersClicked = new ArrayList<>();
+    int clickCount;
     ArrayList<String> LinesTitles = new ArrayList<String>();
+    List<PatternItem> pattern = Arrays.asList(
+            new Dash(30), new Gap(20), new Dot(), new Gap(20));
+    double Latitude,Longitued;
     boolean slideup;
     LinearLayout slideupview;
     LinearLayout navbarview;
     Marker currentmarker;
+    boolean DarkorLight;
 
 
     @Override
@@ -126,12 +158,12 @@ GoogleMap.OnMapClickListener{
                         if(task.isSuccessful()){
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),DEFAULT_ZOOM);
+                            Latitude = currentLocation.getLatitude();
+                            Longitued = currentLocation.getLongitude();
                         }else{
                             Toast.makeText(MapsActivity.this, "Unable to get current Location", Toast.LENGTH_SHORT).show();
 
                         }
-
-
 
                     }
                 });
@@ -250,31 +282,47 @@ GoogleMap.OnMapClickListener{
             Init();
         }
         //add Marker
-        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
-        Meeting119.visible(false);
-        Marker room119 = mMap.addMarker(Meeting119);
-        MarkersList.add(room119);
-        //add PathLine
-        Polyline line  = mMap.addPolyline(new PolylineOptions()
+        PolylineOptions outSideTo119  = new PolylineOptions()
                 .add(new LatLng(28.594075,-81.304381))
                 .add(new LatLng(28.593989,-81.304386))
                 .add(new LatLng(28.593989,-81.304484))
-                .add(new LatLng(28.593989,-81.304514)));
-        Polyline room119to118 =  mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514));
+        PolylineOptions room119to118 = new PolylineOptions()
                 .add(new LatLng(28.593989,-81.304514))
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593959,-81.304484))
-                .add(new LatLng(28.593959,-81.304514)));
-        Polyline room119to117 =  mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593959,-81.304514));
+        PolylineOptions outSideTo118 = new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593959,-81.304514));
+        PolylineOptions room119to117 =  new PolylineOptions()
                 .add(new LatLng(28.593989,-81.304514))
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593929,-81.304484))
-                .add(new LatLng(28.593929,-81.304514)));
-        LinesList.add(room119to117);
-        LinesTitles.add("Meeting 119Meeting 117");
-        LinesList.add(room119to118);
+                .add(new LatLng(28.593929,-81.304514));
+        PolylineOptions outSideTo117 = new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304514));
+        customPolyLines.add(outSideTo119);
+        LinesTitles.add("Outsideto119");
+        customPolyLines.add(room119to118);
         LinesTitles.add("Meeting 119Meeting 118");
-        LinesList.add(line);
+        customPolyLines.add(outSideTo118);
+        LinesTitles.add("Outsideto118");
+        customPolyLines.add(room119to117);
+        LinesTitles.add("Meeting 119Meeting 117");
+        customPolyLines.add(outSideTo117);
+        LinesTitles.add("Outsideto117");
+        //add Marker
+        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
+        Marker room119 = mMap.addMarker(Meeting119);
+        MarkersList.add(room119);
         MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593959,-81.304514)).title("Meeting 118");
         Marker room118 = mMap.addMarker(Meeting118);
         MarkersList.add(room118);
@@ -284,10 +332,6 @@ GoogleMap.OnMapClickListener{
         for (Marker marker1: MarkersList)
         {
             marker1.setVisible(false);
-        }
-        for (Polyline lines1: LinesList)
-        {
-            lines1.setVisible(false);
         }
         //Set the bounds for overlay
         LatLngBounds buildLibrary = new LatLngBounds(
@@ -333,6 +377,43 @@ GoogleMap.OnMapClickListener{
         mMap.setOnMapClickListener(this);
         //
         SearchReady();
+
+        //Getting Darkmode
+        DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/DarkMode/");
+        mdatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Boolean DarkMode = (boolean) snapshot.getValue();
+                    if (DarkMode) {
+                        DarkorLight = true;
+                        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(),R.raw.style_json));
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        for (PolylineOptions lines1: customPolyLines)
+                        {
+                            lines1.pattern(pattern);
+                            lines1.width(15);
+                            lines1.color(Color.BLUE);
+                        }
+                    } else {
+                        DarkorLight = false;
+                        mMap.setMapStyle(null);
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        for (PolylineOptions lines1: customPolyLines)
+                        {
+                            lines1.pattern(pattern);
+                            lines1.width(15);
+                            lines1.color(Color.parseColor("#FFA500"));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -373,10 +454,7 @@ GoogleMap.OnMapClickListener{
                 destination.setText(currentmarker.getTitle());
                 //
 
-                //Turn all lines invisible
-                for(Polyline line: LinesList){
-                    line.setVisible(false);
-                }
+
                 break;
             case R.id.navgo:
                 navbarview.setVisibility(View.GONE);
@@ -406,7 +484,7 @@ GoogleMap.OnMapClickListener{
                 Boolean wasFound = false;
                 for (int i = 0; i<LinesTitles.size(); i++){
                     if (RooomtoRoom.equals(LinesTitles.get(i))) {
-                        LinesList.get(i).setVisible(true);
+                        linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
                         wasFound = true;
                         break;
                     }
@@ -435,12 +513,39 @@ GoogleMap.OnMapClickListener{
                 break;
 
             case R.id.NavDone:
-                for (Polyline line: LinesList){
-                    line.setVisible(false);
+                for (int i = 0; i < linesShowing.size(); i++) {
+                    linesShowing.get(0).remove();
+                    linesShowing.remove(0);
                 }
                 Search.setVisibility(View.VISIBLE);
                 NavDone.setVisibility(View.GONE);
         }
+    }
+
+    private void getLocationPermission(){
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),FINE_lOCATION)== PackageManager.PERMISSION_GRANTED){
+
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+
+                //SET A BOOLEAN
+                mLocationPermissionsGranted = true;
+
+
+
+
+            }else{
+                ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        }
+
+
+
+
     }
 
     @Override
@@ -450,6 +555,30 @@ GoogleMap.OnMapClickListener{
             mMap.moveCamera(CameraUpdateFactory.zoomTo(22));
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+
+        clickCount++;
+        if (clickCount  != 1) {
+            for (int i = 0; i < linesShowing.size(); i++) {
+                linesShowing.get(0).remove();
+                linesShowing.remove(0);
+            }
+        }
+        else
+        {
+            getDirectionPoly(marker);
+        }
+        if(markersClicked.size() == 0) {
+            markersClicked.add(marker);
+        }
+        if(markersClicked.get(0) != marker) {
+            getDirectionPoly(marker);
+        }
+        else  {
+            if(clickCount != 1) {
+                Toast.makeText(getApplicationContext(), "Clicked On the Same Marker", Toast.LENGTH_SHORT).show();
+            }
+        }
+
         marker.showInfoWindow();
         //Slide up code
         TextView text = slideupview.findViewById(R.id.roomnumber);
@@ -481,59 +610,154 @@ GoogleMap.OnMapClickListener{
 
     }
 
-    private void getLocationPermission(){
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION};
-
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),FINE_lOCATION)== PackageManager.PERMISSION_GRANTED){
-
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-
-                //SET A BOOLEAN
-                mLocationPermissionsGranted = true;
-
-
-
-
-            }else{
-                ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        }else{
-            ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
-        }
-
-
-
-
+    public void getDirectionPoly(Marker marker)
+    {
+        String url = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
+        TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
+        taskRequestDirections.execute(url);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    private String getUrl(LatLng origin, LatLng dest)
+    {
+        String str_org = "origin="+ origin.latitude+","+ origin.longitude;
 
-        mLocationPermissionsGranted =false;
-        switch(requestCode){
+        String str_dest = "destination=" + dest.latitude + ","+ dest.longitude;
 
-            case LOCATION_PERMISSION_REQUEST_CODE:{
-                if (grantResults.length>0 ){
-                    for (int i = 0 ; i < grantResults.length; i++){
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
-                            mLocationPermissionsGranted = false;
-                            return;
-                        }
+        String sensor =  "sensor=false";
 
-                    }
-                    mLocationPermissionsGranted=true;
-                    //initialize our map
-                    onMapReady(mMap);
+        String mode = "mode=walking";
 
+        String param = str_org  + "&" + str_dest + "&" + sensor + "&" + mode;
 
+        String output = "json";
+
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=AIzaSyBXJ-PMOg2kDp8jXih-3ME_52znZc6A2ds ";
+
+        return url;
+    }
+
+    private String getDirectionsUrl(String reqUrl) throws IOException {
+        String responseString = "";
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        try{
+            URL url = new URL(reqUrl);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.connect();
+
+            inputStream = httpURLConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader =  new BufferedReader(inputStreamReader);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = "";
+            while ((line = bufferedReader.readLine())!=null)
+            {
+                stringBuffer.append(line);
+            }
+            responseString = stringBuffer.toString();
+            bufferedReader.close();
+            inputStreamReader.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (inputStream != null)    {
+                inputStream.close();
+            }
+            httpURLConnection.disconnect();
+        }
+        return responseString;
+    }
+    public class TaskRequestDirections extends AsyncTask<String,Void,String>{
+        Marker marker;
+        public TaskRequestDirections() {}
+        public TaskRequestDirections(Marker _marker) {
+            marker = _marker;
+        }
+        @Override
+        protected String doInBackground(String... strings) {
+            String responseString = "";
+            try {
+                responseString = getDirectionsUrl(strings[0]);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            return responseString;
+        }
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            //parse json here
+            TaskParser taskParser = new TaskParser(marker);
+            taskParser.execute(s);
+        }
+    }
+    public class TaskParser  extends AsyncTask<String, Void,List<List<HashMap<String,String>>>>{
+        Marker marker;
+        public TaskParser() {}
+        public TaskParser(Marker _marker) {
+            marker = _marker;
+        }
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+            JSONObject jsonObject= null;
+            List<List<HashMap<String, String>>> routes = null;
+            try{
+                jsonObject = new JSONObject(strings[0]);
+                DataParser dataParser = new DataParser();
+                routes = dataParser.parse(jsonObject);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            return routes;
+        }
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> lists){
+            ArrayList points = null;
+            PolylineOptions polylineOptions = null;
+
+            for (List<HashMap<String, String>> path: lists){
+                points = new ArrayList();
+                polylineOptions = new PolylineOptions();
+
+                for (HashMap<String,String>point: path){
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lon = Double.parseDouble(point.get("lon"));
+
+                    points.add(new LatLng(lat,lon));
                 }
 
+                polylineOptions.addAll(points);
+                polylineOptions.width(15);
+                if (DarkorLight){
+                    polylineOptions.color(Color.BLUE);
+                }
+                else{
+                    polylineOptions.color(Color.parseColor("#FFA500"));
+                }
+                polylineOptions.geodesic(true);
             }
-
+            if(polylineOptions!= null){
+                List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
+                polylineOptions.add(outToInPoly.get(0));
+                if (marker != null) {
+                    switch (marker.getTitle()) {
+                        case "Meeting 119":
+                            linesShowing.add(mMap.addPolyline(customPolyLines.get(0)));
+                            break;
+                        case "Meeting 118":
+                            linesShowing.add(mMap.addPolyline(customPolyLines.get(2)));
+                            break;
+                        case "Meeting 117":
+                            linesShowing.add(mMap.addPolyline(customPolyLines.get(4)));
+                            break;
+                    }
+                }
+                linesShowing.add(mMap.addPolyline(polylineOptions));
+            }else
+                Toast.makeText(getApplicationContext(),"Direction Not Found",Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }
+

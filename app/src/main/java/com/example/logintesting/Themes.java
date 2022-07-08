@@ -18,17 +18,14 @@ import java.util.Map;
 
 public class Themes extends AppCompatActivity implements View.OnClickListener {
 
-    private DatabaseReference tdatabase;
-    private String userID;
-    public Map<String, Object> DarkMode = new HashMap<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
 
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
 
         ImageButton LightMode;
         ImageButton DarkMode;
@@ -41,18 +38,22 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Map<String, Object> DarkMode = new HashMap<>();
+
+        DatabaseReference tdatabase;
+        String userID;
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
         if (view.getId() == R.id.LightModeButton) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            DarkMode.put("Dark Mode", Boolean.FALSE);
+            DarkMode.put("DarkMode", Boolean.FALSE);
             tdatabase.updateChildren(DarkMode);
-            DarkMode.clear();
 
         }
         else if (view.getId() == R.id.DarkModeButton) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            DarkMode.put("Dark Mode", Boolean.TRUE);
+            DarkMode.put("DarkMode", Boolean.TRUE);
             tdatabase.updateChildren(DarkMode);
-            DarkMode.clear();
         }
     }
 }
