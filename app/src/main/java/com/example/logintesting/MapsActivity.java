@@ -371,7 +371,7 @@ GoogleMap.OnMapClickListener{
         NavDone.setOnClickListener(this);
 
         Search = findViewById(R.id.input_Search);
-        
+
         //slide up code
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
@@ -603,10 +603,11 @@ GoogleMap.OnMapClickListener{
         text.setText(marker.getTitle());
         if (!slideup){
             slideupview.setVisibility(View.VISIBLE);
-            TranslateAnimation animate = new TranslateAnimation(0, 0, slideupview.getHeight(), 0);
+          //Animation
+            /*  TranslateAnimation animate = new TranslateAnimation(0, 0, slideupview.getHeight(), 0);
             animate.setDuration(375);
             animate.setFillAfter(true);
-            slideupview.startAnimation(animate);
+            slideupview.startAnimation(animate);*/
             slideup = true;
         }
         //
@@ -625,16 +626,18 @@ GoogleMap.OnMapClickListener{
         //slide down
         if (slideup){
             slideupview.setVisibility(View.GONE);
-            TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
+            //Animation stuff that bugs out
+            /*TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
             animate.setDuration(375);
             animate.setFillAfter(true);
-            slideupview.startAnimation(animate);
+            slideupview.startAnimation(animate);*/
             slideup = false;
         }
         for (Marker m : MarkersList)
         {
             m.setVisible(true);
         }
+        navbarview.setVisibility(View.GONE);
     }
 
     public void getDirectionPoly(Marker marker)
