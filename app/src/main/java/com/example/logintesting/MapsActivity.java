@@ -96,7 +96,7 @@ GoogleMap.OnMapClickListener{
     ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
     ArrayList<PolylineOptions> customPolyLines = new ArrayList<>();
     ArrayList<Marker> markersClicked = new ArrayList<>();
-    int clickCount;
+    int clickCount = 0;
     ArrayList<String> LinesTitles = new ArrayList<String>();
     List<PatternItem> pattern = Arrays.asList(
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
@@ -106,7 +106,6 @@ GoogleMap.OnMapClickListener{
     LinearLayout navbarview;
     Marker currentmarker;
     boolean DarkorLight;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -446,7 +445,6 @@ GoogleMap.OnMapClickListener{
 
                 //Navbar
                 navbarview.setVisibility(View.VISIBLE);
-
                 /* TranslateAnimation animatedown = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
                    animatedown.setDuration(375);
                    animatedown.setFillAfter(true);
@@ -475,7 +473,7 @@ GoogleMap.OnMapClickListener{
                 break;
             case R.id.navgo:
                 navbarview.setVisibility(View.GONE);
-/*                TranslateAnimation animateup = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
+                /*TranslateAnimation animateup = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
                 animateup.setDuration(375);
                 animateup.setFillAfter(true);
                 navbarview.startAnimation(animateup);*/
@@ -570,26 +568,21 @@ GoogleMap.OnMapClickListener{
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
         if(mMap.getCameraPosition().zoom < 22){
             mMap.moveCamera(CameraUpdateFactory.zoomTo(22));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-        clickCount++;
-        if (clickCount  != 1) {
+        if(markersClicked.size() == 0) {
+            clickCount++;
+            getDirectionPoly(marker);
+            markersClicked.add(marker);
+        }
+        if(!markersClicked.get(0).equals(marker)) {
+            clickCount++;
             for (int i = 0; i < linesShowing.size(); i++) {
                 linesShowing.get(0).remove();
                 linesShowing.remove(0);
             }
-        }
-        else
-        {
-            getDirectionPoly(marker);
-        }
-        if(markersClicked.size() == 0) {
             markersClicked.add(marker);
-        }
-        if(markersClicked.get(0) != marker) {
             getDirectionPoly(marker);
         }
         else  {
@@ -597,7 +590,11 @@ GoogleMap.OnMapClickListener{
                 Toast.makeText(getApplicationContext(), "Clicked On the Same Marker", Toast.LENGTH_SHORT).show();
             }
         }
-
+        if(markersClicked.size()>1)
+        {
+            markersClicked.remove(0);
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         marker.showInfoWindow();
         //Slide up code
         TextView text = slideupview.findViewById(R.id.roomnumber);
@@ -625,7 +622,7 @@ GoogleMap.OnMapClickListener{
     public void onMapClick(LatLng point){
         //slide down
         if (slideup){
-            slideupview.setVisibility(View.INVISIBLE);
+            slideupview.setVisibility(View.GONE);
             TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
             animate.setDuration(375);
             animate.setFillAfter(true);
