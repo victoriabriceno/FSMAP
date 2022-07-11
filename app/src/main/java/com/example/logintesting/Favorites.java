@@ -27,10 +27,11 @@ public class Favorites extends AppCompatActivity {
 
 
  RecyclerView recyclerView;
- DatabaseReference databaseReference;
+ FirebaseDatabase databaseReference ;
  AdapterUserFavoriteList adapterUserFavoriteList;
  ArrayList<UserFavoriteList> list ;
  FirebaseAuth firebaseAuth;
+    UserFavoriteList userFavoriteList;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,25 +44,29 @@ public class Favorites extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
        list = new ArrayList<UserFavoriteList>();
-        adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
+
+
+       adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
         recyclerView.setAdapter(adapterUserFavoriteList);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/"+"/Markers /");
-         databaseReference.addValueEventListener(new ValueEventListener() {
+       // DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/");
+         databaseReference = FirebaseDatabase.getInstance();
+         databaseReference.getReference().child("Markers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    list.clear();
 
+                   // Marker marker1 =  (Marker) dataSnapshot.getValue();
+                    //userFavoriteList.setMarkerTitle(marker1);
 
                     UserFavoriteList userFavoriteList = dataSnapshot.getValue(UserFavoriteList.class);
-
                     list.add(userFavoriteList);
                 }
+                adapterUserFavoriteList.notifyDataSetChanged(
 
-
-
-                adapterUserFavoriteList.notifyDataSetChanged();
+                );
 
             }
 
