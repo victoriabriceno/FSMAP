@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Favorites extends AppCompatActivity {
 
@@ -31,7 +32,8 @@ public class Favorites extends AppCompatActivity {
  AdapterUserFavoriteList adapterUserFavoriteList;
  ArrayList<UserFavoriteList> list ;
  FirebaseAuth firebaseAuth;
-    UserFavoriteList userFavoriteList;
+    UserFavoriteList userFavoriteList ;
+    List<String>markerList;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +57,12 @@ public class Favorites extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    list.clear();
 
-                   // Marker marker1 =  (Marker) dataSnapshot.getValue();
-                    //userFavoriteList.setMarkerTitle(marker1);"
-
-                    UserFavoriteList userFavoriteList = dataSnapshot.getValue(UserFavoriteList.class);
+                    String marker = dataSnapshot.getValue().toString();
+                    userFavoriteList = new UserFavoriteList(marker);
                     list.add(userFavoriteList);
+
+
                 }
                 adapterUserFavoriteList.notifyDataSetChanged();
 
@@ -125,6 +126,15 @@ public class Favorites extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    public static void setMakersList(ArrayList<Marker>markerArrayList){
+
+
+
+
+
+
     }
 
 
