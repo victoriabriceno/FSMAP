@@ -107,7 +107,6 @@ GoogleMap.OnMapClickListener{
     Marker currentmarker;
     boolean DarkorLight;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -329,10 +328,10 @@ GoogleMap.OnMapClickListener{
         MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
         Marker room117 = mMap.addMarker(meeting117);
         MarkersList.add(room117);
-        for (Marker marker1: MarkersList)
+        /*for (Marker marker1: MarkersList)
         {
             marker1.setVisible(false);
-        }
+        }*/
         //Set the bounds for overlay
         LatLngBounds buildLibrary = new LatLngBounds(
                 new LatLng(28.59379993356988, -81.30450729197996),
@@ -359,18 +358,18 @@ GoogleMap.OnMapClickListener{
             for (GroundOverlay Overlay : groundOverlays) {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
-            for(Marker markers : MarkersList){
+            /*for(Marker markers : MarkersList){
                 markers.setVisible(mMap.getCameraPosition().zoom >20);
-            }
+            }*/
         });
         mMap.setOnCameraIdleListener(()->
         {
             for (GroundOverlay Overlay : groundOverlays) {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
-            for(Marker markers : MarkersList){
+            /*for(Marker markers : MarkersList){
                 markers.setVisible(mMap.getCameraPosition().zoom >20);
-            }
+            }*/
         });
         //slide up code
         mMap.setOnMarkerClickListener(this);
@@ -414,6 +413,24 @@ GoogleMap.OnMapClickListener{
 
             }
         });
+        if(DarkorLight)
+        {
+            for (PolylineOptions lines1: customPolyLines)
+            {
+                lines1.pattern(pattern);
+                lines1.width(15);
+                lines1.color(Color.BLUE);
+            }
+        }
+        else
+        {
+            for (PolylineOptions lines1: customPolyLines)
+            {
+                lines1.pattern(pattern);
+                lines1.width(15);
+                lines1.color(Color.parseColor("#FFA500"));
+            }
+        }
     }
 
 
@@ -470,7 +487,10 @@ GoogleMap.OnMapClickListener{
                 String stringfinaldestination = finaldestination.getText().toString();
                 String RooomtoRoom = "";
 
-
+                while(linesShowing.size() != 0){
+                    linesShowing.get(0).remove();
+                    linesShowing.remove(0);
+                }
                 int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
                 int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
                 if (start > end) {
@@ -513,7 +533,7 @@ GoogleMap.OnMapClickListener{
                 break;
 
             case R.id.NavDone:
-                for (int i = 0; i < linesShowing.size(); i++) {
+                while(linesShowing.size() != 0){
                     linesShowing.get(0).remove();
                     linesShowing.remove(0);
                 }
@@ -555,7 +575,6 @@ GoogleMap.OnMapClickListener{
             mMap.moveCamera(CameraUpdateFactory.zoomTo(22));
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-
         clickCount++;
         if (clickCount  != 1) {
             for (int i = 0; i < linesShowing.size(); i++) {
@@ -593,6 +612,12 @@ GoogleMap.OnMapClickListener{
         }
         //
         currentmarker = marker;
+        for (Marker m : MarkersList)
+        {
+            if(!m.equals(marker)) {
+                m.setVisible(false);
+            }
+        }
         return false;
     }
 
@@ -607,7 +632,10 @@ GoogleMap.OnMapClickListener{
             slideupview.startAnimation(animate);
             slideup = false;
         }
-
+        for (Marker m : MarkersList)
+        {
+            m.setVisible(true);
+        }
     }
 
     public void getDirectionPoly(Marker marker)
