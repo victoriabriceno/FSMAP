@@ -124,23 +124,7 @@ GoogleMap.OnMapClickListener{
         mGps = (ImageView) findViewById(R.id.gps);
 
         getLocationPermission();
-        //Slide up code
-        slideupview = findViewById(R.id.slideup);
-        slideupview.setVisibility(View.INVISIBLE);
-        slideup = false;
-        //
-        //navbar code
-        navbarview = findViewById(R.id.navbar);
-        navbarview.setVisibility(View.INVISIBLE);
-        //
-        Navigation = findViewById(R.id.NavButton);
-        Navigation.setOnClickListener(this);
-        NavGo = findViewById(R.id.navgo);
-        NavGo.setOnClickListener(this);
-        NavDone = findViewById(R.id.NavDone);
-        NavDone.setOnClickListener(this);
 
-        Search = findViewById(R.id.input_Search);
 
     }
 
@@ -370,6 +354,24 @@ GoogleMap.OnMapClickListener{
                 markers.setVisible(mMap.getCameraPosition().zoom >20);
             }*/
         });
+        //Slide up code
+        slideupview = findViewById(R.id.slideup);
+        slideupview.setVisibility(View.INVISIBLE);
+        slideup = false;
+        //
+        //navbar code
+        navbarview = findViewById(R.id.navbar);
+        navbarview.setVisibility(View.GONE);
+        //
+        Navigation = findViewById(R.id.NavButton);
+        Navigation.setOnClickListener(this);
+        NavGo = findViewById(R.id.navgo);
+        NavGo.setOnClickListener(this);
+        NavDone = findViewById(R.id.NavDone);
+        NavDone.setOnClickListener(this);
+
+        Search = findViewById(R.id.input_Search);
+        
         //slide up code
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
