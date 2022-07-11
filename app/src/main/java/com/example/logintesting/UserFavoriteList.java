@@ -4,17 +4,17 @@ import com.google.android.gms.maps.model.Marker;
 
 public class UserFavoriteList {
 
-    Marker markerTitle;
+    String markerTitle;
 
-    public UserFavoriteList(Marker markerTitle) {
+    public UserFavoriteList(String markerTitle) {
         this.markerTitle = markerTitle;
     }
 
     public String getMarkerTitle() {
-        return markerTitle.getTitle();
+        return markerTitle;
     }
 
-    /*public void setMarkerTitle(Marker markerTitle) {
+    public void setMarkerTitle(String markerTitle) {
         this.markerTitle = markerTitle;
-    }*/
+    }
 }
