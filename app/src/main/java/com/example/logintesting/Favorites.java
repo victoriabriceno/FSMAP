@@ -49,9 +49,8 @@ public class Favorites extends AppCompatActivity {
        adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
         recyclerView.setAdapter(adapterUserFavoriteList);
 
-       // DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/");
-         databaseReference = FirebaseDatabase.getInstance();
-         databaseReference.getReference().child("Markers").addValueEventListener(new ValueEventListener() {
+       DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/");
+         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -59,14 +58,12 @@ public class Favorites extends AppCompatActivity {
                     list.clear();
 
                    // Marker marker1 =  (Marker) dataSnapshot.getValue();
-                    //userFavoriteList.setMarkerTitle(marker1);
+                    //userFavoriteList.setMarkerTitle(marker1);"
 
                     UserFavoriteList userFavoriteList = dataSnapshot.getValue(UserFavoriteList.class);
                     list.add(userFavoriteList);
                 }
-                adapterUserFavoriteList.notifyDataSetChanged(
-
-                );
+                adapterUserFavoriteList.notifyDataSetChanged();
 
             }
 
@@ -87,13 +84,13 @@ public class Favorites extends AppCompatActivity {
          }else{
              //Set up the data to add in firebase of current user for favorite book
              HashMap<String,Object> hashMap = new HashMap<>();
-             hashMap.put("Markers",""+marker.getTitle());
+             hashMap.put(marker.getTitle(), "" +marker.getTitle());
 
 
              //Save to db
              DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-             ref.child(firebaseAuth.getUid()).child("Favorites").child(marker.getTitle())
-                     .setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+             ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.updateChildren(hashMap)./*.
+                     setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
                          @Override
                          public void onSuccess(Void unused) {
                              Toast.makeText(context, "Added to Favorites.", Toast.LENGTH_SHORT).show();

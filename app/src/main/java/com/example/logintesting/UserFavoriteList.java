@@ -14,7 +14,7 @@ public class UserFavoriteList {
         return markerTitle.getTitle();
     }
 
-    public void setMarkerTitle(Marker markerTitle) {
+    /*public void setMarkerTitle(Marker markerTitle) {
         this.markerTitle = markerTitle;
-    }
+    }*/
 }
