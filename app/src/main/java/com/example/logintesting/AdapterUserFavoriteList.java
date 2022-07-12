@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
     Context context;
     ArrayList<UserFavoriteList> listFavorite;
+
 
     //Constructor
     public AdapterUserFavoriteList(Context context,ArrayList<UserFavoriteList> listFavorite) {
@@ -36,6 +40,14 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
         UserFavoriteList userFavoriteList = listFavorite.get(position);
         holder.TitleOfTheMarker.setText(userFavoriteList.getMarkerTitle());
 
+  /*      holder.removeStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });*/
+
     }
 
     @Override
@@ -46,10 +58,12 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
 
         TextView TitleOfTheMarker;
+        ImageButton removeStar;
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
 
             TitleOfTheMarker = itemView.findViewById(R.id.TitleMarker);
+            removeStar = itemView.findViewById(R.id.removeFromFavorites);
         }
     }
 
