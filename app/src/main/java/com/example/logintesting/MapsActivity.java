@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -56,6 +58,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -90,7 +93,6 @@ GoogleMap.OnMapClickListener{
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE= 1234;
-    private static final float DEFAULT_ZOOM = 15f;
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
@@ -104,7 +106,6 @@ GoogleMap.OnMapClickListener{
     boolean slideup;
     LinearLayout slideupview;
     LinearLayout navbarview;
-    Marker currentmarker;
     boolean DarkorLight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +140,7 @@ GoogleMap.OnMapClickListener{
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),DEFAULT_ZOOM);
+                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),18f);
                             Latitude = currentLocation.getLatitude();
                             Longitued = currentLocation.getLongitude();
                         }else{
@@ -311,10 +312,7 @@ GoogleMap.OnMapClickListener{
         MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
         Marker room117 = mMap.addMarker(meeting117);
         MarkersList.add(room117);
-        /*for (Marker marker1: MarkersList)
-        {
-            marker1.setVisible(false);
-        }*/
+
         //Set the bounds for overlay
         LatLngBounds buildLibrary = new LatLngBounds(
                 new LatLng(28.59379993356988, -81.30450729197996),
@@ -341,18 +339,18 @@ GoogleMap.OnMapClickListener{
             for (GroundOverlay Overlay : groundOverlays) {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
-            /*for(Marker markers : MarkersList){
-                markers.setVisible(mMap.getCameraPosition().zoom >20);
-            }*/
+            for (Marker markers : MarkersList) {
+                markers.setVisible(mMap.getCameraPosition().zoom > 16);
+            }
         });
         mMap.setOnCameraIdleListener(()->
         {
             for (GroundOverlay Overlay : groundOverlays) {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
-            /*for(Marker markers : MarkersList){
-                markers.setVisible(mMap.getCameraPosition().zoom >20);
-            }*/
+            for (Marker markers : MarkersList) {
+                markers.setVisible(mMap.getCameraPosition().zoom > 16);
+            }
         });
         //Slide up code
         slideupview = findViewById(R.id.slideup);
@@ -468,7 +466,7 @@ GoogleMap.OnMapClickListener{
                 destination.setAdapter(adapterlist);
                 //
                 //Autofill Destination
-                destination.setText(currentmarker.getTitle());
+                destination.setText(markersClicked.get(0).getTitle());
                 //
 
 
@@ -573,7 +571,7 @@ GoogleMap.OnMapClickListener{
         if(mMap.getCameraPosition().zoom < 22){
             mMap.moveCamera(CameraUpdateFactory.zoomTo(22));
         }
-        if(markersClicked.size() == 0) {
+        if(clickCount == 0) {
             clickCount++;
             getDirectionPoly(marker);
             markersClicked.add(marker);
@@ -596,8 +594,7 @@ GoogleMap.OnMapClickListener{
         {
             markersClicked.remove(0);
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-        marker.showInfoWindow();
+        /*marker.showInfoWindow();*/
         //Slide up code
         TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
@@ -611,7 +608,6 @@ GoogleMap.OnMapClickListener{
             slideup = true;
         }
         //
-        currentmarker = marker;
         for (Marker m : MarkersList)
         {
             if(!m.equals(marker)) {
@@ -623,6 +619,8 @@ GoogleMap.OnMapClickListener{
 
     @Override
     public void onMapClick(LatLng point){
+        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
         //slide down
         if (slideup){
             slideupview.setVisibility(View.GONE);
@@ -633,9 +631,9 @@ GoogleMap.OnMapClickListener{
             slideupview.startAnimation(animate);*/
             slideup = false;
         }
-        for (Marker m : MarkersList)
+        for (Marker m: MarkersList)
         {
-            m.setVisible(true);
+                m.setVisible(true);
         }
         navbarview.setVisibility(View.GONE);
     }

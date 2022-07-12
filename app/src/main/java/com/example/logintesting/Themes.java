@@ -26,7 +26,6 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
 
-
         ImageButton LightMode;
         ImageButton DarkMode;
 
@@ -48,7 +47,6 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             DarkMode.put("DarkMode", Boolean.FALSE);
             tdatabase.updateChildren(DarkMode);
-
         }
         else if (view.getId() == R.id.DarkModeButton) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
