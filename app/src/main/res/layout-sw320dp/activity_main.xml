@@ -15,19 +15,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".78"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665">
+        app:layout_constraintVertical_bias="0.719">
 
         <TextView
             android:id="@+id/LoginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/amaticscbold"
             android:text="Login"
             android:textColor="@color/black"
-            android:textSize="35dp"
+            android:textSize="45dp"
             android:textStyle="normal"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -41,6 +42,8 @@
             android:layout_marginTop="84dp"
             android:ems="10"
             android:hint="Email"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/email"
             android:inputType="textEmailAddress"
             app:layout_constraintHorizontal_bias="0.363"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -53,8 +56,10 @@
             android:layout_height="54dp"
             android:layout_marginTop="64dp"
             android:drawableRight="@drawable/visible"
+            android:drawableLeft="@drawable/padlock"
             android:ems="10"
             android:hint="Password"
+            android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:longClickable="false"
             app:layout_constraintHorizontal_bias="0.363"
@@ -67,6 +72,7 @@
             android:layout_width="161dp"
             android:layout_height="45dp"
             android:layout_marginTop="72dp"
+            android:fontFamily="@font/questrialregular"
             android:text="Remember me"
             app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -78,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="84dp"
-
+            android:fontFamily="@font/questrialregular"
             android:text="Forgot Password?"
             android:textColor="@color/black"
             android:textSize="15dp"
@@ -118,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:fontFamily="@font/questrialregular"
             android:text="Made by SwiftKings"
             android:textColor="@color/black"
             android:textSize="15dp"
@@ -149,18 +156,19 @@
         android:layout_width="307dp"
         android:layout_height="175dp"
         app:srcCompat="@drawable/finallogo"
-        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteX="58dp"
         tools:layout_editor_absoluteY="40dp" />
 
     <TextView
         android:id="@+id/WelcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/questrialregular"
         android:text="Welcome to FS Map!"
         android:textColor="@color/black"
-        android:textSize="20dp"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="228dp" />
+        android:textSize="21dp"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="215dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
