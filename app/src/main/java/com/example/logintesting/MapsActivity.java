@@ -58,7 +58,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -105,7 +104,6 @@ GoogleMap.OnMapClickListener{
     double Latitude,Longitued;
     boolean slideup;
     LinearLayout slideupview;
-    LinearLayout navbarview;
     boolean DarkorLight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -357,12 +355,6 @@ GoogleMap.OnMapClickListener{
         slideupview.setVisibility(View.INVISIBLE);
         slideup = false;
         //
-        //navbar code
-        navbarview = findViewById(R.id.navbar);
-        navbarview.setVisibility(View.GONE);
-        //
-        Navigation = findViewById(R.id.NavButton);
-        Navigation.setOnClickListener(this);
         NavGo = findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
         NavDone = findViewById(R.id.NavDone);
@@ -386,7 +378,7 @@ GoogleMap.OnMapClickListener{
                     if (DarkMode) {
                         DarkorLight = true;
                         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(),R.raw.style_json));
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         for (PolylineOptions lines1: customPolyLines)
                         {
                             lines1.pattern(pattern);
@@ -396,7 +388,7 @@ GoogleMap.OnMapClickListener{
                     } else {
                         DarkorLight = false;
                         mMap.setMapStyle(null);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         for (PolylineOptions lines1: customPolyLines)
                         {
                             lines1.pattern(pattern);
@@ -439,44 +431,8 @@ GoogleMap.OnMapClickListener{
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
                 break;
-            case R.id.NavButton:
 
-                Search.setVisibility(View.GONE);
-
-                //Navbar
-                navbarview.setVisibility(View.VISIBLE);
-                /* TranslateAnimation animatedown = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
-                   animatedown.setDuration(375);
-                   animatedown.setFillAfter(true);
-                   navbarview.startAnimation(animatedown);*/
-                ArrayList<String> listfornav = new ArrayList<String>();
-
-                for (Marker m : MarkersList){
-                    if (m.getTitle() != null){
-                        listfornav.add(m.getTitle());
-                    }
-                }
-                //Creating Suggestions for text boxes in nav
-                ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_dropdown_item_1line, listfornav);
-                AutoCompleteTextView from = findViewById(R.id.From);
-                from.setText("");
-                from.setAdapter(adapterlist);
-                AutoCompleteTextView destination = findViewById(R.id.Destination);
-                destination.setAdapter(adapterlist);
-                //
-                //Autofill Destination
-                destination.setText(markersClicked.get(0).getTitle());
-                //
-
-
-                break;
             case R.id.navgo:
-                navbarview.setVisibility(View.GONE);
-                /*TranslateAnimation animateup = new TranslateAnimation(0, 0, navbarview.getHeight(), 0);
-                animateup.setDuration(375);
-                animateup.setFillAfter(true);
-                navbarview.startAnimation(animateup);*/
                 //
 
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
@@ -525,6 +481,8 @@ GoogleMap.OnMapClickListener{
                         break;
                     }
                 }
+                slideupview.setVisibility(View.GONE);
+                slideup = false;
                 NavDone.setVisibility(View.VISIBLE);
                 Search.setVisibility(View.VISIBLE);
 
@@ -607,7 +565,26 @@ GoogleMap.OnMapClickListener{
             slideupview.startAnimation(animate);*/
             slideup = true;
         }
+
+
+        ArrayList<String> listfornav = new ArrayList<String>();
+
+        for (Marker m : MarkersList){
+            if (m.getTitle() != null){
+                listfornav.add(m.getTitle());
+            }
+        }
+        //Creating Suggestions for text boxes in nav
+        ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, listfornav);
+        AutoCompleteTextView from = findViewById(R.id.From);
+        from.setText("");
+        from.setAdapter(adapterlist);
+        AutoCompleteTextView destination = findViewById(R.id.Destination);
+        destination.setAdapter(adapterlist);
         //
+        //Autofill Destination
+        destination.setText(markersClicked.get(0).getTitle());
         for (Marker m : MarkersList)
         {
             if(!m.equals(marker)) {
@@ -631,11 +608,10 @@ GoogleMap.OnMapClickListener{
             slideupview.startAnimation(animate);*/
             slideup = false;
         }
-        for (Marker m: MarkersList)
+        for (Marker m : MarkersList)
         {
                 m.setVisible(true);
         }
-        navbarview.setVisibility(View.GONE);
     }
 
     public void getDirectionPoly(Marker marker)
