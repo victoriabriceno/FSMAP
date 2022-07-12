@@ -15,10 +15,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".78"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.719">
+        app:layout_constraintVertical_bias="0.791">
 
         <TextView
             android:id="@+id/LoginText"
@@ -40,10 +39,10 @@
             android:layout_width="315dp"
             android:layout_height="54dp"
             android:layout_marginTop="84dp"
+            android:drawableLeft="@drawable/email"
+            android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Email"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/email"
             android:inputType="textEmailAddress"
             app:layout_constraintHorizontal_bias="0.363"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -55,11 +54,11 @@
             android:layout_width="315dp"
             android:layout_height="54dp"
             android:layout_marginTop="64dp"
-            android:drawableRight="@drawable/visible"
             android:drawableLeft="@drawable/padlock"
+            android:drawableRight="@drawable/visible"
+            android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Password"
-            android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:longClickable="false"
             app:layout_constraintHorizontal_bias="0.363"
