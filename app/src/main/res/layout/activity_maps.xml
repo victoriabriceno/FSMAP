@@ -17,8 +17,11 @@
         android:orientation = "vertical"
         android:layout_alignParentBottom = "true"
         android:layout_width = "match_parent"
-        android:layout_margin = "5dp"
-        android:layout_height = "175dp">
+        android:layout_marginTop="0dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_height = "175dp"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
         <TextView
             android:id="@+id/roomnumber"
             android:text= "Potato Holder"
@@ -29,18 +32,35 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:foreground="@android:drawable/btn_star"
-            android:layout_marginHorizontal="280dp" />
+            android:layout_marginHorizontal="295dp" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/From"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-40dp"
+            android:layout_marginHorizontal="0dp"
+            android:hint="From"
+            android:layout_gravity="bottom"/>
 
         <Button
-            android:id="@+id/NavButton"
-            android:layout_width="130dp"
+            android:id="@+id/navgo"
+            android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="Navigation"
-            android:layout_marginHorizontal="150dp"
-            android:layout_marginTop="-50dp"/>
+            android:layout_marginHorizontal="270dp"
+            android:text="Go" />
+
+        <AutoCompleteTextView
+            android:id="@+id/Destination"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp"
+            android:layout_marginHorizontal="0dp"
+            android:hint="To"/>
     </LinearLayout>
-//Two Markers
-    <LinearLayout
+    //Two Markers
+    <!--<LinearLayout
         android:id="@+id/navbar"
         android:translationZ="90dp"
         android:background = "#d3d3d3"
@@ -50,31 +70,10 @@
         android:layout_margin = "5dp"
         android:layout_height = "175dp">
 
-        <AutoCompleteTextView
-            android:id="@+id/From"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="75dp"
-            android:hint="From" />
-
-        <Button
-            android:id="@+id/navgo"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="300dp"
-            android:text="Go" />
-
-        <AutoCompleteTextView
-            android:id="@+id/Destination"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-30dp"
-            android:layout_marginHorizontal="75dp"
-            android:hint="To" />
 
 
-    </LinearLayout>
+
+    </LinearLayout>-->
     <ImageView
         android:id="@+id/user"
         android:layout_width="50dp"
@@ -95,36 +94,36 @@
         android:background="@drawable/gps" />
 
     <RelativeLayout
-android:layout_width="match_parent"
-android:layout_height="50dp"
-android:layout_marginTop="10dp"
-android:layout_marginRight="10dp"
-android:layout_marginLeft="80dp"
-android:elevation="10dp"
-android:background="@drawable/white_boarder"
-android:id="@+id/search_bar">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="80dp"
+        android:elevation="10dp"
+        android:background="@drawable/white_boarder"
+        android:id="@+id/search_bar">
 
-<ImageView
-    android:layout_width="15dp"
-    android:layout_height="15dp"
-    android:id="@+id/ic_magnify"
-    android:layout_centerVertical="true"
-    android:layout_marginLeft="10dp"
-    android:background = "@drawable/search" />
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/ic_magnify"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background = "@drawable/search" />
 
-<AutoCompleteTextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_toRightOf="@id/ic_magnify"
-    android:layout_centerVertical="true"
-    android:textSize="15sp"
-    android:textColor="@color/black"
-    android:id="@+id/input_Search"
-    android:background="@null"
-    android:hint="Enter a classroom"
-    android:imeOptions="actionDone"
-    android:inputType="text"
-    android:translationZ="90dp"/>
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/ic_magnify"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:id="@+id/input_Search"
+            android:background="@null"
+            android:hint="Enter a classroom"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:translationZ="90dp"/>
 
     </RelativeLayout>
 
