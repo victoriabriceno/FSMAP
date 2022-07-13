@@ -1,5 +1,5 @@
 package com.example.logintesting;
-
+//Woohoo, imports
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -76,9 +77,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+//Main Maps Screen
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
 GoogleMap.OnMapClickListener{
-
+    //Global Variables used throughout the program,
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityMapsBinding binding;
@@ -105,6 +108,8 @@ GoogleMap.OnMapClickListener{
     boolean slideup;
     LinearLayout slideupview;
     boolean DarkorLight;
+
+    //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,8 +132,8 @@ GoogleMap.OnMapClickListener{
 
     }
 
+    //Function to obtain device location and store in Latitude and Longitued
     private void getDeviceLocation(){
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         try {
             if (mLocationPermissionsGranted){
@@ -138,7 +143,6 @@ GoogleMap.OnMapClickListener{
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),18f);
                             Latitude = currentLocation.getLatitude();
                             Longitued = currentLocation.getLongitude();
                         }else{
@@ -155,17 +159,52 @@ GoogleMap.OnMapClickListener{
         }
 
     }
-    private void moveCamera(LatLng latLng,float zoom){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    private void getDeviceLocationCameraMove(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        try {
+            if (mLocationPermissionsGranted){
+                @SuppressLint("MissingPermission") Task Location = fusedLocationClient.getLastLocation();
+                Location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Location currentLocation = (Location) task.getResult();
+                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()));
+                            Latitude = currentLocation.getLatitude();
+                            Longitued = currentLocation.getLongitude();
+                        }else{
+                            Toast.makeText(MapsActivity.this, "Unable to get current Location", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+            }
+
+        }catch(SecurityException e){
+
+        }
+
     }
+
+    //Functions for moving the cammer, overload for zoom option
+    private void moveCamera(LatLng latLng){
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+    private void moveCamera(LatLng latlng,float zoom){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
+    }
+    //Init runs on map start, used for currentlocation button
     private void Init(){
         mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDeviceLocation();
+                getDeviceLocationCameraMove();
             }
         });
     }
+
+    //Runs on map ready, used for search bar
     private void SearchReady(){
         ArrayList<String> SearchList = new ArrayList<String>();
         for (Marker m : MarkersList){
@@ -192,6 +231,7 @@ GoogleMap.OnMapClickListener{
             }
         });
     }
+    //used for searchbar search function
     private void Locate(){
         String searchstring = Search.getText().toString();
         Marker searched = null;
@@ -218,6 +258,8 @@ GoogleMap.OnMapClickListener{
      * installed Google Play services and returned to the app.
      */
     @SuppressLint("MissingPermission")
+    //On map ready sets up the map and many variables (200 lines lmao)
+    //There are comments inside the function
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -249,7 +291,7 @@ GoogleMap.OnMapClickListener{
 
         //set zoom
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
-
+        //Location tracking
         if (mLocationPermissionsGranted){
             getDeviceLocation();
             if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
@@ -262,7 +304,8 @@ GoogleMap.OnMapClickListener{
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             Init();
         }
-        //add Marker
+
+        //Creating polylines
         PolylineOptions outSideTo119  = new PolylineOptions()
                 .add(new LatLng(28.594075,-81.304381))
                 .add(new LatLng(28.593989,-81.304386))
@@ -290,6 +333,7 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593929,-81.304484))
                 .add(new LatLng(28.593929,-81.304514));
+        //Adding polylines to list for lines and string list for searching
         customPolyLines.add(outSideTo119);
         LinesTitles.add("Outsideto119");
         customPolyLines.add(room119to118);
@@ -300,7 +344,7 @@ GoogleMap.OnMapClickListener{
         LinesTitles.add("Meeting 119Meeting 117");
         customPolyLines.add(outSideTo117);
         LinesTitles.add("Outsideto117");
-        //add Marker
+        //add Markers
         MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
         Marker room119 = mMap.addMarker(Meeting119);
         MarkersList.add(room119);
@@ -331,7 +375,8 @@ GoogleMap.OnMapClickListener{
         //add the overlay to overlay array.
         groundOverlays.add(buildLibraryOverlayed);
 
-        //set visibile after certain zoom level is reached.
+        //set overlays and markers visibile after certain zoom level is reached.
+        //For camera moving
         mMap.setOnCameraMoveListener(()->
         {
             for (GroundOverlay Overlay : groundOverlays) {
@@ -341,6 +386,7 @@ GoogleMap.OnMapClickListener{
                 markers.setVisible(mMap.getCameraPosition().zoom > 16);
             }
         });
+        //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(()->
         {
             for (GroundOverlay Overlay : groundOverlays) {
@@ -350,25 +396,29 @@ GoogleMap.OnMapClickListener{
                 markers.setVisible(mMap.getCameraPosition().zoom > 16);
             }
         });
-        //Slide up code
+        //Slide up code setup
         slideupview = findViewById(R.id.slideup);
-        slideupview.setVisibility(View.INVISIBLE);
+        slideupview.setVisibility(View.GONE);
         slideup = false;
         //
+        //Navigation button Setup
         NavGo = findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
+
+        //Button for when Done is pressed while in nav mode
         NavDone = findViewById(R.id.NavDone);
         NavDone.setOnClickListener(this);
-
+        //SearchBar
         Search = findViewById(R.id.input_Search);
 
-        //slide up code
+        //Marker click function
         mMap.setOnMarkerClickListener(this);
+        //Map click function
         mMap.setOnMapClickListener(this);
-        //
+        //prepares searchbar
         SearchReady();
 
-        //Getting Darkmode
+        //Getting Darkmode option from database
         DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/DarkMode/");
         mdatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -424,27 +474,31 @@ GoogleMap.OnMapClickListener{
         }
     }
 
-
+    //handles button clicking
     @Override
     public void onClick(View view) {
+        //Switch based on what button was clicked
         switch(view.getId()){
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
                 break;
 
             case R.id.navgo:
-                //
-
+                //Setting curlocation and final destination to text boxes
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
+                //create strings from textboxes
                 String stringcurlocation = curlocation.getText().toString();
                 String stringfinaldestination = finaldestination.getText().toString();
+                //Setup string for finding path
                 String RooomtoRoom = "";
-
+                //remove all lines
                 while(linesShowing.size() != 0){
                     linesShowing.get(0).remove();
                     linesShowing.remove(0);
                 }
+
+                //Logic for deciding the order to place the strings in
                 int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
                 int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
                 if (start > end) {
@@ -455,8 +509,11 @@ GoogleMap.OnMapClickListener{
                     RooomtoRoom += finaldestination.getText().toString();
                     RooomtoRoom += curlocation.getText().toString();
                 }
+
+                //Set wasFound to false as standard, if polyline is found dont display error
                 Boolean wasFound = false;
                 for (int i = 0; i<LinesTitles.size(); i++){
+                    //Since the Linestitles and linesShowing are created together, the indexes are the same
                     if (RooomtoRoom.equals(LinesTitles.get(i))) {
                         linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
                         wasFound = true;
@@ -467,6 +524,8 @@ GoogleMap.OnMapClickListener{
                     Toast.makeText(getApplicationContext(), "Invalid route", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                //"Select" markers to be used if needed
+                //Selects "From" marker
                 Marker curlocationmarker;
                 for (Marker marker: MarkersList){
                     if (stringcurlocation.equals(marker.getTitle())){
@@ -474,6 +533,8 @@ GoogleMap.OnMapClickListener{
                         break;
                     }
                 }
+
+                //Selects "To" marker
                 Marker finaldestinationmarker;
                 for (Marker marker: MarkersList){
                     if (stringcurlocation.equals(marker.getTitle())){
@@ -481,25 +542,32 @@ GoogleMap.OnMapClickListener{
                         break;
                     }
                 }
+                //Removes slideup
                 slideupview.setVisibility(View.GONE);
                 slideup = false;
+                //Allows NavDone button to appear
                 NavDone.setVisibility(View.VISIBLE);
+                //Brings back searchbar (may be depricated, will have to test)
                 Search.setVisibility(View.VISIBLE);
+                //Removes keyboard when Go is hit
                 InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-
                 break;
 
             case R.id.NavDone:
+                //Remove all lines
                 while(linesShowing.size() != 0){
                     linesShowing.get(0).remove();
                     linesShowing.remove(0);
                 }
+                //Brings Searchbar back (again, may be depricated)
                 Search.setVisibility(View.VISIBLE);
+                //Removes navdone button
                 NavDone.setVisibility(View.GONE);
         }
     }
 
+    //Getting permission from user for location
     private void getLocationPermission(){
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -507,12 +575,8 @@ GoogleMap.OnMapClickListener{
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),FINE_lOCATION)== PackageManager.PERMISSION_GRANTED){
 
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(),COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-
                 //SET A BOOLEAN
                 mLocationPermissionsGranted = true;
-
-
-
 
             }else{
                 ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
@@ -528,14 +592,23 @@ GoogleMap.OnMapClickListener{
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        //get location for drawing line between user and marker
+        getDeviceLocation();
+        //Change camera, zoom if needed
         if(mMap.getCameraPosition().zoom < 22){
-            mMap.moveCamera(CameraUpdateFactory.zoomTo(22));
+            moveCamera(marker.getPosition(), 22f);
+        } else {
+            moveCamera(marker.getPosition());
         }
+        //Keep track of how many times a marker is clicked
         if(clickCount == 0) {
             clickCount++;
+            //draw line to marker
             getDirectionPoly(marker);
+            //add marker to markersClicked
             markersClicked.add(marker);
         }
+        //If clicking another marker, switch marker and line
         if(!markersClicked.get(0).equals(marker)) {
             clickCount++;
             for (int i = 0; i < linesShowing.size(); i++) {
@@ -545,22 +618,26 @@ GoogleMap.OnMapClickListener{
             markersClicked.add(marker);
             getDirectionPoly(marker);
         }
+        //triggers if user clicks on same marker twice
         else  {
             if(clickCount != 1) {
                 Toast.makeText(getApplicationContext(), "Clicked On the Same Marker", Toast.LENGTH_SHORT).show();
             }
         }
+        //Remove marker from markers clicked when more than 1 marker has been clicked
         if(markersClicked.size()>1)
         {
             markersClicked.remove(0);
         }
         /*marker.showInfoWindow();*/
+
         //Slide up code
         TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
         if (!slideup){
+            //Makes slideup visible
             slideupview.setVisibility(View.VISIBLE);
-          //Animation
+          //Animation (Does not function properly, cant remove slideup afterwards)
             /*  TranslateAnimation animate = new TranslateAnimation(0, 0, slideupview.getHeight(), 0);
             animate.setDuration(375);
             animate.setFillAfter(true);
@@ -568,39 +645,43 @@ GoogleMap.OnMapClickListener{
             slideup = true;
         }
 
-
+        //Creates list of all marker titles
         ArrayList<String> listfornav = new ArrayList<String>();
-
         for (Marker m : MarkersList){
             if (m.getTitle() != null){
                 listfornav.add(m.getTitle());
             }
         }
+
         //Creating Suggestions for text boxes in nav
         ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, listfornav);
         AutoCompleteTextView from = findViewById(R.id.From);
-        from.setText("");
-        from.setAdapter(adapterlist);
+        from.setText("");//Blank "from"
+        from.setAdapter(adapterlist);//set dropdown
         AutoCompleteTextView destination = findViewById(R.id.Destination);
-        destination.setAdapter(adapterlist);
-        //
+        destination.setAdapter(adapterlist);//set dropdown
         //Autofill Destination
         destination.setText(markersClicked.get(0).getTitle());
+
+        //hide markers after one is clicked
         for (Marker m : MarkersList)
         {
             if(!m.equals(marker)) {
                 m.setVisible(false);
             }
         }
+        //No clue why google decided marker click HAS to return a boolean, so here ya go google
         return false;
     }
 
+    //Handles what happens when user clicks on the map (not the same as drag)
     @Override
     public void onMapClick(LatLng point){
+        //Hide Keyboard when map is clicked
         InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-        //slide down
+        //slide down slideup when map is clicked
         if (slideup){
             slideupview.setVisibility(View.GONE);
             //Animation stuff that bugs out
@@ -610,12 +691,15 @@ GoogleMap.OnMapClickListener{
             slideupview.startAnimation(animate);*/
             slideup = false;
         }
+        //Make all markers visible
         for (Marker m : MarkersList)
         {
                 m.setVisible(true);
         }
     }
 
+    //Credit to Ruben for solving everything below here
+    //get directions to marker
     public void getDirectionPoly(Marker marker)
     {
         String url = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
@@ -623,6 +707,7 @@ GoogleMap.OnMapClickListener{
         taskRequestDirections.execute(url);
     }
 
+    //Get URL for Getting Direction
     private String getUrl(LatLng origin, LatLng dest)
     {
         String str_org = "origin="+ origin.latitude+","+ origin.longitude;

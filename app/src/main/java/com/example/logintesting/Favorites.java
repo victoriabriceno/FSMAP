@@ -1,6 +1,6 @@
 package com.example.logintesting;
 
-//BY SEBASTIAN JAZMIN
+//Favorites Screen
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
