@@ -14,9 +14,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".78"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541">
+        app:layout_constraintVertical_bias="0.45">
 
         <TextView
             android:id="@+id/LoginText"
@@ -95,30 +96,30 @@
 
     <TextView
         android:id="@+id/UserEmail"
-        android:layout_width="288dp"
-        android:layout_height="42dp"
+        android:layout_width="496dp"
+        android:layout_height="54dp"
         android:fontFamily="@font/questrialregular"
         android:text="User email"
-        android:textSize="20dp"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.287"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.176" />
+        app:layout_constraintVertical_bias="0.166" />
 
     <ImageView
         android:id="@+id/user"
-        android:layout_width="81dp"
-        android:layout_height="82dp"
+        android:layout_width="167dp"
+        android:layout_height="131dp"
         android:layout_alignLeft="@id/UserEmail"
-        android:background="@drawable/user2"
+        android:background="@drawable/userprofilefinal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintVertical_bias="0.146" />
 
     <TextView
         android:id="@+id/Decoration"
@@ -130,9 +131,8 @@
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.833" />
+        app:layout_constraintVertical_bias="0.698" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

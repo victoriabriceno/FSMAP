@@ -16,7 +16,7 @@
         app:layout_constraintHeight_percent=".78"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602">
+        app:layout_constraintVertical_bias="0.57">
 
         <TextView
             android:id="@+id/SIGNUPText"
@@ -135,34 +135,33 @@
 
     <ImageView
         android:id="@+id/FSMAP2"
-        android:layout_width="320dp"
-        android:layout_height="238dp"
+        android:layout_width="373dp"
+        android:layout_height="279dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141"
+        app:layout_constraintVertical_bias="0.098"
         app:srcCompat="@drawable/finallogo" />
 
     <TextView
         android:id="@+id/RegisterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="292dp"
+        android:layout_marginTop="288dp"
         android:fontFamily="@font/questrialregular"
         android:text="Join our team!"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.239"
         app:layout_constraintTop_toTopOf="@id/FSMAP2" />
 
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1056dp"
+        android:layout_marginTop="1092dp"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
         android:textColor="@color/black"

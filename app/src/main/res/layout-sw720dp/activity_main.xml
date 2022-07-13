@@ -8,8 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="468dp"
-        android:layout_height="486dp"
+        android:layout_width="459dp"
+        android:layout_height="509dp"
         android:background="@drawable/vie_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
             android:id="@+id/LoginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/amaticscbold"
             android:text="Login"
             android:textColor="@color/black"
@@ -34,7 +34,7 @@
 
         <EditText
             android:id="@+id/EmailAddress"
-            android:layout_width="315dp"
+            android:layout_width="340dp"
             android:layout_height="54dp"
             android:layout_marginTop="116dp"
             android:background="@drawable/custom_input"
@@ -50,7 +50,7 @@
 
         <EditText
             android:id="@+id/Password"
-            android:layout_width="315dp"
+            android:layout_width="340dp"
             android:layout_height="54dp"
             android:layout_marginTop="76dp"
             android:background="@drawable/custom_input"
@@ -71,10 +71,10 @@
             android:id="@+id/rememberUser"
             android:layout_width="161dp"
             android:layout_height="45dp"
-            android:layout_marginTop="76dp"
-            android:text="Remember me"
+            android:layout_marginTop="72dp"
             android:fontFamily="@font/questrialregular"
-            app:layout_constraintHorizontal_bias="0.25"
+            android:text="Remember me"
+            app:layout_constraintHorizontal_bias="0.201"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/Password" />
@@ -83,12 +83,12 @@
             android:id="@+id/ForgotPassowrd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="84dp"
             android:fontFamily="@font/questrialregular"
             android:text="Forgot Password?"
             android:textColor="@color/black"
             android:textSize="15dp"
-            app:layout_constraintHorizontal_bias="0.778"
+            app:layout_constraintHorizontal_bias="0.823"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/Password" />
@@ -150,7 +150,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141"
+        app:layout_constraintVertical_bias="0.085"
         app:srcCompat="@drawable/finallogo" />
 
     <TextView
@@ -165,7 +165,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/FSMAP"
-        app:layout_constraintVertical_bias="0.239" />
+        app:layout_constraintVertical_bias="0.263" />
 
     <TextView
         android:id="@+id/Decoration"
@@ -179,7 +179,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/FSMAP"
-        app:layout_constraintVertical_bias="0.772" />
+        app:layout_constraintVertical_bias="0.826" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

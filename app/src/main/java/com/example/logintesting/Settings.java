@@ -38,7 +38,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         FirebaseUser userFirebase;
         DatabaseReference reference;
-        String UseriD;
+        String useriD;
 
         About = (Button) findViewById(R.id.AboutButton);
         About.setOnClickListener(this);
@@ -54,9 +54,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         userFirebase = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
-        UseriD = userFirebase.getUid();
+        useriD = userFirebase.getUid();
 
-        reference.child(UseriD).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
