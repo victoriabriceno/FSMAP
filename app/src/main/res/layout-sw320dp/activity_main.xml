@@ -9,15 +9,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="359dp"
-        android:layout_height="405dp"
+        android:layout_width="342dp"
+        android:layout_height="391dp"
         android:background="@drawable/vie_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".78"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.791">
+        app:layout_constraintVertical_bias="0.738">
 
         <TextView
             android:id="@+id/LoginText"
@@ -39,7 +40,9 @@
             android:layout_width="315dp"
             android:layout_height="54dp"
             android:layout_marginTop="84dp"
+            android:background="@drawable/custom_input"
             android:drawableLeft="@drawable/email"
+            android:paddingLeft="10dp"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Email"
@@ -54,11 +57,14 @@
             android:layout_width="315dp"
             android:layout_height="54dp"
             android:layout_marginTop="64dp"
+            android:background="@drawable/custom_input"
             android:drawableLeft="@drawable/padlock"
             android:drawableRight="@drawable/visible"
             android:drawablePadding="10dp"
+            android:paddingLeft="10dp"
             android:ems="10"
             android:hint="Password"
+            android:paddingRight="10dp"
             android:inputType="textPassword"
             android:longClickable="false"
             app:layout_constraintHorizontal_bias="0.363"
@@ -97,10 +103,13 @@
             android:layout_width="123dp"
             android:layout_height="44dp"
             android:layout_marginTop="48dp"
-            android:background="#9E9797"
+            android:background="@drawable/custom_input"
             android:text="Login"
+            android:textSize="15dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/questrialregular"
             android:textColor="@color/white"
-            app:layout_constraintHorizontal_bias="0.182"
+            app:layout_constraintHorizontal_bias="0.168"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/ForgotPassowrd" />
@@ -110,26 +119,16 @@
             android:layout_width="123dp"
             android:layout_height="44dp"
             android:layout_marginTop="48dp"
-            android:background="#9E9797"
+            android:background="@drawable/custom_input"
             android:text="SIGNUP"
+            android:textAlignment="center"
+            android:fontFamily="@font/questrialregular"
+            android:textSize="15dp"
             android:textColor="@color/white"
-            app:layout_constraintHorizontal_bias="0.826"
+            app:layout_constraintHorizontal_bias="0.803"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/ForgotPassowrd" />
-
-        <TextView
-            android:id="@+id/Decoration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:fontFamily="@font/questrialregular"
-            android:text="Made by SwiftKings"
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/LoginBTN" />
 
         <ProgressBar
             android:id="@+id/ProgressBar"
@@ -154,20 +153,40 @@
         android:id="@+id/FSMAP"
         android:layout_width="307dp"
         android:layout_height="175dp"
-        app:srcCompat="@drawable/finallogo"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="40dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028"
+        app:srcCompat="@drawable/finallogo" />
 
     <TextView
         android:id="@+id/WelcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
         android:fontFamily="@font/questrialregular"
         android:text="Welcome to FS Map!"
         android:textColor="@color/black"
         android:textSize="21dp"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="215dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/FSMAP" />
+
+    <TextView
+        android:id="@+id/Decoration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="652dp"
+        android:fontFamily="@font/questrialregular"
+        android:text="Made by SwiftKings"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/FSMAP" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

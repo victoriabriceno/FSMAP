@@ -8,30 +8,28 @@
 
     <ImageButton
         android:id="@+id/LightModeButton"
-        android:layout_width="101dp"
-        android:layout_height="98dp"
+        android:layout_width="159dp"
+        android:layout_height="183dp"
+        android:background="@android:color/transparent"
         android:contentDescription="LightMode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@android:drawable/btn_star"
-        android:background="@android:color/transparent"/>
+        app:srcCompat="@drawable/sun" />
 
     <ImageButton
         android:id="@+id/DarkModeButton"
-        android:layout_width="101dp"
-        android:layout_height="98dp"
+        android:layout_width="124dp"
+        android:layout_height="151dp"
+        android:background="@android:color/transparent"
         android:contentDescription="DarkMode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.832"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@android:drawable/btn_dialog"
-        android:background="@android:color/transparent"/>
+        app:srcCompat="@drawable/moon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.logintesting;
 
 //BY SEBASTIAN JAZMIN
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,9 +10,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +34,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         Button Themes;
         Button Favorites;
         Button Logout;
+        TextView user;
+
+        FirebaseUser userFirebase;
+        DatabaseReference reference;
+        String UseriD;
 
         About = (Button) findViewById(R.id.AboutButton);
         About.setOnClickListener(this);
@@ -36,6 +49,33 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         Favorites.setOnClickListener(this);
         Logout = findViewById(R.id.LogoutButton);
         Logout.setOnClickListener(this);
+        user = findViewById(R.id.UserEmail);
+
+
+        userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        UseriD = userFirebase.getUid();
+
+        reference.child(UseriD).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User userProfile = snapshot.getValue(User.class);
+
+                if(userProfile != null){
+                    String email = userProfile.email;
+
+                    user.setText(email);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Settings.this, "Something wrong happened! ", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
     }

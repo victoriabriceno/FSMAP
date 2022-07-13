@@ -6,77 +6,133 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
-    <TextView
-        android:id="@+id/UserEmail"
-        android:layout_width="215dp"
-        android:layout_height="42dp"
-        android:text="User email"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrainLayout"
+        android:layout_width="468dp"
+        android:layout_height="486dp"
+        android:background="@drawable/vie_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintHeight_percent=".78"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157" />
+        app:layout_constraintVertical_bias="0.541">
+
+        <TextView
+            android:id="@+id/LoginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/amaticscbold"
+            android:text="Settings"
+            android:textColor="@color/black"
+            android:textSize="45dp"
+            android:textStyle="normal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/FavoritesButton"
+            android:layout_width="403dp"
+            android:layout_height="59dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:text="Favorites"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.264" />
+
+        <Button
+            android:id="@+id/ThemesButton"
+            android:layout_width="403dp"
+            android:layout_height="59dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:text="Themes"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.447" />
+
+        <Button
+            android:id="@+id/AboutButton"
+            android:layout_width="403dp"
+            android:layout_height="59dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:text="About"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.637" />
+
+        <Button
+            android:id="@+id/LogoutButton"
+            android:layout_width="403dp"
+            android:layout_height="59dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:text="Logout"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.829" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/UserEmail"
+        android:layout_width="288dp"
+        android:layout_height="42dp"
+        android:fontFamily="@font/questrialregular"
+        android:text="User email"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.287"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.176" />
 
     <ImageView
         android:id="@+id/user"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="81dp"
+        android:layout_height="82dp"
         android:layout_alignLeft="@id/UserEmail"
         android:background="@drawable/user2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.155" />
+        app:layout_constraintVertical_bias="0.167" />
 
-    <Button
-        android:id="@+id/FavoritesButton"
-        android:layout_width="412dp"
-        android:layout_height="70dp"
-        android:text="Favorites"
+    <TextView
+        android:id="@+id/Decoration"
+        android:layout_width="308dp"
+        android:layout_height="54dp"
+        android:fontFamily="@font/questrialregular"
+        android:text="Made by SwiftKings"
+        android:textAlignment="center"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.31" />
-
-    <Button
-        android:id="@+id/LogoutButton"
-        android:layout_width="412dp"
-        android:layout_height="70dp"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
-
-    <Button
-        android:id="@+id/ThemesButton"
-        android:layout_width="412dp"
-        android:layout_height="70dp"
-        android:text="Themes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.378" />
-
-    <Button
-        android:id="@+id/AboutButton"
-        android:layout_width="412dp"
-        android:layout_height="70dp"
-        android:text="About"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.515" />
-
+        app:layout_constraintVertical_bias="0.833" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+

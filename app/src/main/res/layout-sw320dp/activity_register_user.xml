@@ -6,108 +6,173 @@
     android:layout_height="match_parent"
     tools:context=".RegisterUser">
 
-    <EditText
-        android:id="@+id/registerPassword"
-        android:layout_width="311dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="68dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintHorizontal_bias="0.326"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ConfirmEmailAddress" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrainLayout"
+        android:layout_width="350dp"
+        android:layout_height="424dp"
+        android:background="@drawable/vie_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".78"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.798">
 
-    <EditText
-        android:id="@+id/registerEmailAddress"
-        android:layout_width="320dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="240dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintHorizontal_bias="0.366"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/FSMAP2" />
+        <TextView
+            android:id="@+id/SIGNUPText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/amaticscbold"
+            android:text="Create an account"
+            android:textColor="@color/black"
+            android:textSize="45dp"
+            android:textStyle="normal"
+            app:layout_constraintHorizontal_bias="0.46"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/registerEmailAddress"
+            android:layout_width="311dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/email"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/SIGNUPText" />
+
+        <EditText
+            android:id="@+id/ConfirmEmailAddress"
+            android:layout_width="311dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/confirmemail"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Confirmation Email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/registerEmailAddress" />
+
+        <EditText
+            android:id="@+id/ConfirmPassword"
+            android:layout_width="311dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/confirmpassword"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Confirmation Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/registerPassword" />
+
+        <Button
+            android:id="@+id/RegisterUser"
+            android:layout_width="225dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:text="Register User"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ConfirmPassword" />
+
+        <ProgressBar
+            android:id="@+id/ProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+
+            />
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="311dp"
+            android:layout_height="55dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/padlock"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.582" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/FSMAP2"
-        android:layout_width="287dp"
-        android:layout_height="206dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintHorizontal_bias="0.411"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logomap" />
-
-    <EditText
-        android:id="@+id/ConfirmEmailAddress"
-        android:layout_width="321dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="72dp"
-        android:ems="10"
-        android:hint="Confirmation Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintHorizontal_bias="0.366"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/registerEmailAddress" />
-
-    <EditText
-        android:id="@+id/ConfirmPassword"
-        android:layout_width="317dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="Confirmation Password"
-        android:inputType="textPassword"
-        app:layout_constraintHorizontal_bias="0.361"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/registerPassword" />
-
-    <Button
-        android:id="@+id/RegisterUser"
-        android:layout_width="307dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="80dp"
-        android:text="Register User"
-        android:background="#9E9797"
-        android:textColor="@color/white"
-        app:layout_constraintHorizontal_bias="0.384"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ConfirmPassword" />
-
-    <ProgressBar
-        android:id="@+id/ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_centerInParent = "true"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="243dp"
+        android:layout_height="179dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028"
+        app:srcCompat="@drawable/finallogo" />
 
-        />
+    <TextView
+        android:id="@+id/RegisterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="192dp"
+        android:fontFamily="@font/questrialregular"
+        android:text="Join our team!"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="664dp"
+        android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
         android:textColor="@color/black"
         android:textSize="15dp"
-        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/RegisterUser" />
+        app:layout_constraintTop_toTopOf="@id/FSMAP2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
