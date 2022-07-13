@@ -485,6 +485,8 @@ GoogleMap.OnMapClickListener{
                 slideup = false;
                 NavDone.setVisibility(View.VISIBLE);
                 Search.setVisibility(View.VISIBLE);
+                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
 
                 break;
 
