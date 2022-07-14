@@ -10,13 +10,13 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
-        android:layout_width="407dp"
-        android:layout_height="79dp">
+        android:layout_width="412dp"
+        android:layout_height="58dp">
 
         <RelativeLayout
             android:id="@+id/marker"
-            android:layout_width="67dp"
-            android:layout_height="64dp"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/location_marker_favoritedesign">
 
@@ -24,14 +24,15 @@
 
         <TextView
             android:id="@+id/TitleMarker"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="-1dp"
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/marker"
+            android:fontFamily="@font/questrialregular"
             android:maxLines="1"
-            android:text="Title" />
+            android:text="Title"
+            android:textSize="15dp" />
 
 
     </RelativeLayout>

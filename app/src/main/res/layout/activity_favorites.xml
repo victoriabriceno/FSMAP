@@ -8,12 +8,14 @@
 
  <TextView
      android:id="@+id/favoriteMarkerLabel"
-     android:layout_width="183dp"
+     android:layout_width="match_parent"
      android:layout_height="wrap_content"
+     android:fontFamily="@font/amaticscbold"
      android:padding="5dp"
      android:text="Favorite List"
+     android:textAlignment="center"
      android:textColor="@color/black"
-     android:textSize="20dp"
+     android:textSize="35dp"
      android:textStyle="bold" />
 
  <androidx.recyclerview.widget.RecyclerView
@@ -21,13 +23,9 @@
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:layout_below="@id/favoriteMarkerLabel"
+     android:layout_marginTop="12dp"
      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
      tools:listitem="@layout/row_favoritemarkers" />
-
-
-
-
-
 
 
 </RelativeLayout>
