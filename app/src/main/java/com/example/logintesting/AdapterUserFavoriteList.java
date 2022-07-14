@@ -63,7 +63,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
             super(itemView);
 
             TitleOfTheMarker = itemView.findViewById(R.id.TitleMarker);
-            removeStar = itemView.findViewById(R.id.removeFromFavorites);
+            //removeStar = itemView.findViewById(R.id.removeFromFavorites);
         }
     }
 

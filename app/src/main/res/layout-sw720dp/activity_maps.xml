@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -29,12 +29,13 @@
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content" />
 
+
         <ImageButton
+            android:id="@+id/btnRemoveFavorites"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:foreground="@android:drawable/btn_star"
-            android:layout_marginHorizontal="295dp" />
-
+            android:layout_marginHorizontal="295dp"
+            android:foreground="@drawable/starempty" />
 
         <AutoCompleteTextView
             android:id="@+id/From"
@@ -44,6 +45,13 @@
             android:layout_marginHorizontal="0dp"
             android:hint="From"
             android:layout_gravity="bottom"/>
+
+        <ImageButton
+            android:id="@+id/btnAddFavorites"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="280dp"
+            android:foreground="@drawable/starvisible" />
 
         <Button
             android:id="@+id/navgo"
@@ -59,6 +67,7 @@
             android:layout_marginTop="-30dp"
             android:layout_marginHorizontal="0dp"
             android:hint="To"/>
+
     </LinearLayout>
 
     <ImageView
