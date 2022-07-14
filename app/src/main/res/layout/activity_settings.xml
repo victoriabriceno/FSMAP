@@ -96,57 +96,11 @@
 
     <TextView
         android:id="@+id/UserEmail"
-<<<<<<< HEAD
-        android:layout_width="215dp"
-        android:layout_height="42dp"
-        android:gravity="center"
-        android:text="User email"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.403"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.162" />
-
-    <ImageView
-        android:id="@+id/user"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignLeft="@id/UserEmail"
-        android:background="@drawable/user2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145" />
-
-    <Button
-        android:id="@+id/FavoritesButton"
-        android:layout_width="410dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:text="Favorites"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.33" />
-
-    <Button
-        android:id="@+id/LogoutButton"
-        android:layout_width="410dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:text="Logout"
-=======
         android:layout_width="284dp"
         android:layout_height="41dp"
         android:fontFamily="@font/questrialregular"
         android:text="User email"
         android:textSize="18dp"
->>>>>>> CurrentLocation
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -154,20 +108,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.105" />
 
-<<<<<<< HEAD
-    <Button
-        android:id="@+id/ThemesButton"
-        android:layout_width="410dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:text="Themes"
-=======
+
     <ImageView
         android:id="@+id/user"
         android:layout_width="122dp"
         android:layout_height="99dp"
         android:background="@drawable/userprofilefinal"
->>>>>>> CurrentLocation
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -175,14 +121,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.058" />
 
-<<<<<<< HEAD
-    <Button
-        android:id="@+id/AboutButton"
-        android:layout_width="410dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:text="About"
-=======
+
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="308dp"
@@ -191,7 +130,6 @@
         android:text="Made by SwiftKings"
         android:textAlignment="center"
         android:textSize="15dp"
->>>>>>> CurrentLocation
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

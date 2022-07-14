@@ -352,7 +352,7 @@ GoogleMap.OnMapClickListener{
         });
         //Slide up code
         slideupview = findViewById(R.id.slideup);
-        slideupview.setVisibility(View.INVISIBLE);
+        slideupview.setVisibility(View.GONE);
         slideup = false;
         //
         NavGo = findViewById(R.id.navgo);

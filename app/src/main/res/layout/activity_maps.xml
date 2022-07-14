@@ -74,6 +74,7 @@
 
 
     </LinearLayout>-->
+
     <ImageView
         android:id="@+id/user"
         android:layout_width="50dp"
