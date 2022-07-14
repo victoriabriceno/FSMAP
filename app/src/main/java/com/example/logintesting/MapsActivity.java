@@ -451,9 +451,9 @@ GoogleMap.OnMapClickListener{
 
         //create map overlap
         GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary))
-                .anchor(0.468f,0.45f)
-                .position(new LatLng(28.593907678091824, -81.3043584293843),38,28);
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotation_140_left))
+                .anchor(0.46f,0.45f)
+                .position(new LatLng(28.593907678091824, -81.3043584293843),39,26);
 
         //add groundOverlay and create reference.
         GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
