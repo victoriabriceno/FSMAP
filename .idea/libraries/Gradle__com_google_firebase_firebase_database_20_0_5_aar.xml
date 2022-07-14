@@ -4,6 +4,7 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f968e7fe978a8944d51e976ae60cf201/transformed/firebase-database-20.0.5/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/17c85c2c401504c8a024b14f3c9e47ff/transformed/firebase-database-20.0.5/res" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/res" />
@@ -12,6 +13,11 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/jars/classes.jar!/" />
 >>>>>>> CurrentLocation
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ed8cea97bb1bf27f95a177e6f2978e1d/transformed/firebase-database-20.0.5/jars/classes.jar!/" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-database/20.0.5/dcbd1f8dbf3b2189dcbaf41f4de866719956e20c/firebase-database-20.0.5-javadoc.jar!/" />

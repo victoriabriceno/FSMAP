@@ -4,12 +4,17 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/78eda7c7564c51b09084a40df13d5543/transformed/firebase-database-collection-18.0.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f2f2cc69db0f9f76841572c45f826ccb/transformed/firebase-database-collection-18.0.1/res" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/jars/classes.jar!/" />
 =======
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/res" />
 >>>>>>> CurrentLocation
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/res" />
+>>>>>>> FavoritesList
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2be1f41118310771c689e1b823c7c617/transformed/firebase-database-collection-18.0.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>

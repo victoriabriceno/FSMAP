@@ -6,12 +6,17 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/jars/classes.jar!/" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/res" />
 =======
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/AndroidManifest.xml" />
 >>>>>>> CurrentLocation
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c8a194723b0c48cee8be21bdb4170555/transformed/recyclerview-1.1.0/AndroidManifest.xml" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC />
     <SOURCES>

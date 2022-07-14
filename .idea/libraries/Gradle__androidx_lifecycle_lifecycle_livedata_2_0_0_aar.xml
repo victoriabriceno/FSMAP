@@ -5,6 +5,7 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3293fba3ae30bb95d8fc19251b2acbf3/transformed/lifecycle-livedata-2.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3c93f08766f5e1588f04a2cc513d8d8c/transformed/lifecycle-livedata-2.0.0/res" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/res" />
@@ -13,6 +14,11 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/jars/classes.jar!/" />
 >>>>>>> CurrentLocation
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2135f5cf7311a07909a04f1da043c6fb/transformed/lifecycle-livedata-2.0.0/jars/classes.jar!/" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -5,6 +5,7 @@
     </ANNOTATIONS>
     <CLASSES>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/jars/classes.jar!/" />
@@ -13,6 +14,11 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/AndroidManifest.xml" />
 >>>>>>> CurrentLocation
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dcd0f1d4cd7a2ccad9caf610248509f9/transformed/core-1.7.0/AndroidManifest.xml" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC />
     <SOURCES>

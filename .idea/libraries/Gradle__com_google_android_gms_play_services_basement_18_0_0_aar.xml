@@ -2,6 +2,7 @@
   <library name="Gradle: com.google.android.gms:play-services-basement:18.0.0@aar">
     <CLASSES>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/jars/classes.jar!/" />
@@ -10,6 +11,11 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/res" />
 >>>>>>> CurrentLocation
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c75b65c779da39c52e1d67e8f6cd1701/transformed/play-services-basement-18.0.0/res" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-basement/18.0.0/36bdff1deaba5efcc76d7e68ea06b3c50af7bc0/play-services-basement-18.0.0-javadoc.jar!/" />

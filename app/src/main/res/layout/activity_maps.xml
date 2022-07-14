@@ -29,8 +29,10 @@
             android:layout_height = "wrap_content" />
 
         <ImageButton
+            android:id="@+id/btnRemoveFavorites"
             android:layout_width="50dp"
             android:layout_height="50dp"
+<<<<<<< HEAD
             android:foreground="@android:drawable/btn_star"
             android:layout_marginHorizontal="295dp" />
 
@@ -43,11 +45,16 @@
             android:layout_marginHorizontal="0dp"
             android:hint="From"
             android:layout_gravity="bottom"/>
+=======
+            android:layout_marginHorizontal="280dp"
+            android:foreground="@drawable/starempty" />
+>>>>>>> FavoritesList
 
         <Button
             android:id="@+id/navgo"
             android:layout_width="100dp"
             android:layout_height="50dp"
+<<<<<<< HEAD
             android:layout_marginHorizontal="270dp"
             android:text="Go" />
 
@@ -58,6 +65,18 @@
             android:layout_marginTop="-30dp"
             android:layout_marginHorizontal="0dp"
             android:hint="To"/>
+=======
+            android:layout_marginHorizontal="150dp"
+            android:layout_marginTop="-50dp"
+            android:text="Navigation" />
+
+        <ImageButton
+            android:id="@+id/btnAddFavorites"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="280dp"
+            android:foreground="@drawable/starvisible" />
+>>>>>>> FavoritesList
     </LinearLayout>
     //Two Markers
     <!--<LinearLayout

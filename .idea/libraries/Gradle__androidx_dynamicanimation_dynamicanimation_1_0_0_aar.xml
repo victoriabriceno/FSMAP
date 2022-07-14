@@ -6,12 +6,17 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e5d4a7fd45dea52bfac325774b686156/transformed/dynamicanimation-1.0.0/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/jars/classes.jar!/" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/AndroidManifest.xml" />
 =======
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/res" />
 >>>>>>> CurrentLocation
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e170561bddf0de658c915460cc8af675/transformed/dynamicanimation-1.0.0/res" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC />
     <SOURCES>

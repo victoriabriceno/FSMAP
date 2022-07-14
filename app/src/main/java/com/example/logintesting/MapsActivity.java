@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+<<<<<<< HEAD
 import android.app.Activity;
 import android.content.Context;
+=======
+>>>>>>> FavoritesList
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,16 +22,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+=======
+import android.widget.ImageButton;
+>>>>>>> FavoritesList
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.logintesting.databinding.ActivityFavoritesBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -72,10 +80,13 @@ import java.util.List;
 
 import android.view.animation.TranslateAnimation;
 
+<<<<<<< HEAD
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+=======
+>>>>>>> FavoritesList
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
 GoogleMap.OnMapClickListener{
 
@@ -93,6 +104,7 @@ GoogleMap.OnMapClickListener{
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE= 1234;
     ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
+<<<<<<< HEAD
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
     ArrayList<PolylineOptions> customPolyLines = new ArrayList<>();
@@ -105,6 +117,24 @@ GoogleMap.OnMapClickListener{
     boolean slideup;
     LinearLayout slideupview;
     boolean DarkorLight;
+=======
+    public ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
+    ArrayList<Polyline> LinesList =  new ArrayList<Polyline>();
+    boolean opened;
+    LinearLayout view;
+
+    //Favorites
+    ImageButton bntFavoritesRemove;
+    ImageButton btnFavoritesAdd;
+    Marker marker2;
+    boolean isInMyFavorites = false;
+    private FirebaseAuth firebaseAuth;
+
+
+
+
+
+>>>>>>> FavoritesList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +153,22 @@ GoogleMap.OnMapClickListener{
         mGps = (ImageView) findViewById(R.id.gps);
 
         getLocationPermission();
+<<<<<<< HEAD
+=======
+        //Slide up code
+        view = findViewById(R.id.slideup);
+        view.setVisibility(View.INVISIBLE);
+        opened = false;
+
+        //Favorites
+        bntFavoritesRemove = (ImageButton) findViewById(R.id.btnRemoveFavorites);
+        bntFavoritesRemove.setOnClickListener(this);
+
+        btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
+        btnFavoritesAdd.setOnClickListener(this);
+
+
+>>>>>>> FavoritesList
 
 
     }
@@ -366,6 +412,7 @@ GoogleMap.OnMapClickListener{
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
         //
+<<<<<<< HEAD
         SearchReady();
 
         //Getting Darkmode
@@ -422,15 +469,22 @@ GoogleMap.OnMapClickListener{
                 lines1.color(Color.parseColor("#FFA500"));
             }
         }
+=======
+
+
+>>>>>>> FavoritesList
     }
 
 
     @Override
     public void onClick(View view) {
+        //checkISFavorites();
+
         switch(view.getId()){
             case R.id.user:
                 startActivity(new Intent(this,Settings.class));
                 break;
+<<<<<<< HEAD
 
             case R.id.navgo:
                 //
@@ -497,6 +551,46 @@ GoogleMap.OnMapClickListener{
                 }
                 Search.setVisibility(View.VISIBLE);
                 NavDone.setVisibility(View.GONE);
+=======
+            case R.id.btnRemoveFavorites:
+                Favorites.removeFromFavorite(MapsActivity.this,marker2);
+                break;
+            case R.id.btnAddFavorites:
+                Favorites.addToFavorite(MapsActivity.this,marker2);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        marker.showInfoWindow();
+        //Slide up code
+        TextView text = view.findViewById(R.id.roomnumber);
+        text.setText(marker.getTitle());
+        view.setVisibility(View.VISIBLE);
+        if (!opened){
+            TranslateAnimation animate = new TranslateAnimation(0, 0, view.getHeight(), 0);
+            animate.setDuration(375);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);
+            opened = true;
+        }
+        //
+        marker2 = marker;
+        return false;
+    }
+
+
+    @Override
+    public void onMapClick(LatLng point){
+        //slide down
+        if (opened){
+            view.setVisibility(View.INVISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
+            animate.setDuration(375);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);
+>>>>>>> FavoritesList
         }
     }
 
@@ -765,5 +859,6 @@ GoogleMap.OnMapClickListener{
                 Toast.makeText(getApplicationContext(),"Direction Not Found",Toast.LENGTH_SHORT).show();
         }
     }
+
 }
 

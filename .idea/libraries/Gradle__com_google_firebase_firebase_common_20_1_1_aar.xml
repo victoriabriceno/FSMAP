@@ -2,6 +2,7 @@
   <library name="Gradle: com.google.firebase:firebase-common:20.1.1@aar">
     <CLASSES>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/res" />
@@ -10,6 +11,11 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/AndroidManifest.xml" />
 >>>>>>> CurrentLocation
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7f3f0070952e7e7c9c1e92c0a53ab3a7/transformed/firebase-common-20.1.1/AndroidManifest.xml" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-common/20.1.1/eac2b61bf0f3c17082fb4f994f6f83a53dc89e6d/firebase-common-20.1.1-javadoc.jar!/" />

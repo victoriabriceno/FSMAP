@@ -2,6 +2,7 @@
   <library name="Gradle: androidx.savedstate:savedstate:1.1.0@aar">
     <CLASSES>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/jars/classes.jar!/" />
@@ -10,6 +11,11 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/res" />
 >>>>>>> CurrentLocation
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5705ba63fe6baffd4ab6841fbe6d87c8/transformed/savedstate-1.1.0/res" />
+>>>>>>> FavoritesList
     </CLASSES>
     <JAVADOC />
     <SOURCES>
