@@ -44,9 +44,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+<<<<<<< HEAD
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.Dot;
 import com.google.android.gms.maps.model.Gap;
+=======
+>>>>>>> PolyLines_and_Markers
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -300,7 +303,7 @@ GoogleMap.OnMapClickListener{
             getDeviceLocation();
             if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            this,Manifest.permission.ACCESS_COARSE_LOCATION )!= PackageManager.PERMISSION_GRANTED){
+                    this,Manifest.permission.ACCESS_COARSE_LOCATION )!= PackageManager.PERMISSION_GRANTED){
                 return;
 
             }
@@ -313,6 +316,7 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.594075,-81.304381))
                 .add(new LatLng(28.593989,-81.304386))
                 .add(new LatLng(28.593989,-81.304484))
+<<<<<<< HEAD
                 .add(new LatLng(28.593989,-81.304514));
         PolylineOptions room119to118 = new PolylineOptions()
                 .add(new LatLng(28.593989,-81.304514))
@@ -357,6 +361,97 @@ GoogleMap.OnMapClickListener{
         Marker room117 = mMap.addMarker(meeting117);
         MarkersList.add(room117);
 
+=======
+                .add(new LatLng(28.593989,-81.304514)));
+       Polyline room119to118 =  mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593959,-81.304514)));
+       Polyline room119to117 =  mMap.addPolyline(new PolylineOptions()
+               .add(new LatLng(28.593989,-81.304514))
+               .add(new LatLng(28.593989,-81.304484))
+               .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304514)));
+        Polyline room119to116 = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593898, -81.304514)));
+        Polyline room119to115 = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+               .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858, -81.304514)));
+        Polyline room119to113 = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593838,-81.304400))
+                .add(new LatLng(28.593838,-81.304444))
+        );
+        Polyline room119toWaterZone = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400))
+        );
+
+       LinesList.add(room119to117);
+        LinesList.add(line);
+        LinesList.add(room119to118);
+        LinesList.add(room119to116);
+        LinesList.add(room119to115);
+        LinesList.add(room119to113);
+        LinesList.add(room119toWaterZone);
+
+        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
+        Marker room117 = mMap.addMarker(meeting117);
+        MarkersList.add(room117);
+
+        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593959,-81.304514)).title("Meeting 118");
+        Marker room118 = mMap.addMarker(Meeting118);
+        MarkersList.add(room118);
+
+        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593898,-81.304514)).title("Meeting 116");
+        Marker room116 = mMap.addMarker(Meeting116);
+        MarkersList.add(room116);
+
+        MarkerOptions Meeting115 = new MarkerOptions().position(new LatLng(28.593858, -81.304514)).title("Meeting 115");
+        Marker room115 = mMap.addMarker(Meeting115);
+        MarkersList.add(room115);
+
+        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593838,-81.304444)).title("Boys bathroom").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
+        MarkersList.add(boysBathroom113);
+
+        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        Marker waterZone = mMap.addMarker(WaterZone);
+        MarkersList.add(waterZone);
+
+
+
+        for (Marker marker1: MarkersList)
+        {
+            marker1.setVisible(false);
+        }
+        for (Polyline lines1: LinesList)
+        {
+            lines1.setVisible(false);
+        }
+>>>>>>> PolyLines_and_Markers
         //Set the bounds for overlay
         LatLngBounds buildLibrary = new LatLngBounds(
                 new LatLng(28.59379993356988, -81.30450729197996),
@@ -474,6 +569,8 @@ GoogleMap.OnMapClickListener{
 
 >>>>>>> FavoritesList
     }
+
+
 
 
     @Override

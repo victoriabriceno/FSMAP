@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
+<<<<<<< HEAD
     <LinearLayout
         android:id="@+id/slideup"
         android:background = "#d3d3d3"
@@ -93,6 +94,8 @@
 
 
     </LinearLayout>-->
+=======
+>>>>>>> PolyLines_and_Markers
 
     <ImageView
         android:id="@+id/user"
