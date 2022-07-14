@@ -3,10 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.136" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/white_boarder.xml" value="0.136" />
+        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout-sw320dp/activity_maps.xml" value="0.18802083333333333" />
+        <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout-sw720dp/activity_maps.xml" value="0.41025641025641024" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_favorites.xml" value="0.36666666666666664" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_forgot_password.xml" value="0.36666666666666664" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_fsmap_about.xml" value="0.17831813576494426" />
@@ -15,9 +16,6 @@
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_register_user.xml" value="0.18802083333333333" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_settings.xml" value="0.17831813576494426" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/layout/activity_themes.xml" value="0.30833333333333335" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_forgot_password.xml" value="0.34739583333333335" />
-=======
->>>>>>> FavoritesList
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/drawable-v24/white_boarder.xml" value="0.1" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_favorites.xml" value="0.17958459979736577" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting - Copy/app/src/main/res/layout/activity_forgot_password.xml" value="0.375" />
@@ -32,6 +30,7 @@
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_map.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_maps.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/drawable-v24/white_boarder.xml" value="0.3215" />
@@ -94,10 +93,12 @@
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.33" />
 >>>>>>> PolyLines_and_Markers
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_register_user.xml" value="0.34692028985507245" />
+=======
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_fsmap_about.xml" value="0.18819655521783182" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.18819655521783182" />
+>>>>>>> ce6b99b9a9ed8a6f71b1a68380dd37804557eca3
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_settings.xml" value="0.38697916666666665" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/favorite_row.xml" value="0.14173680183626625" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/row_favoritemarkers.xml" value="0.25" />
->>>>>>> FavoritesList
       </map>
     </option>
   </component>
@@ -106,16 +107,5 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-<<<<<<< HEAD
-        <option name="scale" value="0.33" />
-=======
-        <option name="scale" value="0.22" />
->>>>>>> FavoritesList
-      </ProjectState>
-    </option>
   </component>
 </project>
