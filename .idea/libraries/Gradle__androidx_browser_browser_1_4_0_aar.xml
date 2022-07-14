@@ -4,9 +4,15 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/res" />
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/19f4983c633826a13b69f15526e8675b/transformed/browser-1.4.0/AndroidManifest.xml" />
+>>>>>>> CurrentLocation
     </CLASSES>
     <JAVADOC />
     <SOURCES>

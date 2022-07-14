@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapsActivity" />
+
+    <ImageView
+        android:id="@+id/user"
+        android:layout_width="156dp"
+        android:layout_height="115dp"
+        android:layout_alignLeft="@id/search_bar"
+        android:layout_marginLeft="-133dp"
+        android:background="@drawable/userprofilefinal" />
+
+    <ImageView
+        android:id="@+id/gps"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/search_bar"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="1028dp"
+        android:layout_marginRight="13dp"
+        android:background="@drawable/gps" />
+
+    <RelativeLayout
+        android:id="@+id/search_bar"
+        android:layout_width="834dp"
+        android:layout_height="59dp"
+        android:layout_marginLeft="115dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/white_boarder"
+        android:elevation="10dp">
+
+        <ImageView
+            android:id="@+id/ic_magnify"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/search"
+
+            />
+
+        <EditText
+            android:id="@+id/input_Search"
+            android:layout_width="739dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13dp"
+            android:layout_toRightOf="@id/ic_magnify"
+            android:background="@null"
+            android:hint="Enter a classroom"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -2,9 +2,15 @@
   <library name="Gradle: io.github.pilgr:paperdb:2.7.2@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/18d370fd0c23185eae91665099226554/transformed/paperdb-2.7.2/res" />
+<<<<<<< HEAD
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/jars/classes.jar!/" />
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/AndroidManifest.xml" />
+>>>>>>> CurrentLocation
     </CLASSES>
     <JAVADOC />
     <SOURCES>
