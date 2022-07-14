@@ -1,6 +1,6 @@
 package com.example.logintesting;
 
-//BY SEBASTIAN JAZMIN
+//Settings Screen
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +30,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //Binding Buttons
         Button About;
         Button Themes;
         Button Favorites;
@@ -83,6 +84,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch(view.getId()){
+            //Starts activity corresponding to button
             case R.id.AboutButton:
                 startActivity(new Intent(this,FSMapAbout.class));
                 break;
@@ -94,7 +96,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(this,Themes.class));
                 break;
             case R.id.LogoutButton:
-
+                //Logs user out and returns to login
                 FirebaseAuth.getInstance().signOut();
                 //Returns to specified Screen
                 Intent i = new Intent(this, MainActivity.class);
