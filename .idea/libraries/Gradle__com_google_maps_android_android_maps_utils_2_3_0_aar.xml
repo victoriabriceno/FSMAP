@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.maps.android:android-maps-utils:2.3.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5a1861a5b9a62b39cc3c6d1b8ba3213e/transformed/android-maps-utils-2.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5a1861a5b9a62b39cc3c6d1b8ba3213e/transformed/android-maps-utils-2.3.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5a1861a5b9a62b39cc3c6d1b8ba3213e/transformed/android-maps-utils-2.3.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/2.3.0/399e247c3ec5628753747c9242b019a712505d9/android-maps-utils-2.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/2.3.0/65e44aa0a98ae9d219c61f2c7a14af874c9e5481/android-maps-utils-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
