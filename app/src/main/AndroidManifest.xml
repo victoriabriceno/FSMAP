@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.logintesting">
 
-
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginTesting"
         tools:targetApi="31">
+        <activity
+            android:name=".EditProfile"
+            android:exported="false" />
         <activity
             android:name=".Themes"
             android:exported="false" />
@@ -52,7 +53,7 @@
             android:name=".MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ForgotPassword"
             android:exported="false" />
