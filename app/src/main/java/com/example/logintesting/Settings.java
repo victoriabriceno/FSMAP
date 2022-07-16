@@ -2,9 +2,6 @@ package com.example.logintesting;
 
 //Settings Screen
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +36,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         Button Favorites;
         Button Logout;
         TextView user;
+        Button editProfile;
 
         FirebaseUser userFirebase;
         DatabaseReference reference;
@@ -51,6 +52,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         Logout = findViewById(R.id.LogoutButton);
         Logout.setOnClickListener(this);
         user = findViewById(R.id.UserEmail);
+        editProfile = findViewById(R.id.EditProfile);
+        editProfile.setOnClickListener(this);
 
 
         userFirebase = FirebaseAuth.getInstance().getCurrentUser();
@@ -108,6 +111,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 editor.putString("remember","false");
                 editor.apply();
                 finish();
+                break;
+
+            case R.id.EditProfile:
+                startActivity(new Intent(this,EditProfile.class));
                 break;
 
         }
