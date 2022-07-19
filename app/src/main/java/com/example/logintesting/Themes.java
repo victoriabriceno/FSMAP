@@ -35,6 +35,7 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         LightMode.setOnClickListener(this);
         DarkMode = findViewById(R.id.DarkModeButton);
         DarkMode.setOnClickListener(this);
+
     }
 
     @Override
@@ -46,16 +47,19 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         String userID;
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
+
         if (view.getId() == R.id.LightModeButton) {
             //Need to find alternative to below
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            setTheme(AppCompatDelegate.MODE_NIGHT_NO);
 
             //Add data to firebase
             DarkMode.put("DarkMode", Boolean.FALSE);
             tdatabase.updateChildren(DarkMode);
         }
         else if (view.getId() == R.id.DarkModeButton) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            setTheme((AppCompatDelegate.MODE_NIGHT_YES));
             //Add data to firebase
             DarkMode.put("DarkMode", Boolean.TRUE);
             tdatabase.updateChildren(DarkMode);
