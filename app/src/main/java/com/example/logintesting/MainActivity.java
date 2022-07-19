@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CheckBox rememberMe;
     //Visible password
     boolean passwordVisible;
+    boolean firstload = false;
 
 
 
@@ -68,39 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         mAuth = FirebaseAuth.getInstance();
 
-        //SAVE THE USER AND PASSWORD
-        rememberMe = (CheckBox) findViewById(R.id.rememberUser);
-        SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
-        String checkBox = preferences.getString("remember","");
-        if (checkBox.equals("true")){
-           Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-           startActivity(intent);
 
-        }else if (checkBox.equals("false")){
-            Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
-
-        }
-
-        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-               if (compoundButton.isChecked()){
-                   SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
-                   SharedPreferences.Editor editor = preferences.edit();
-                   editor.putString("remember","true");
-                   editor.apply();
-                   Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-               }else if(!compoundButton.isChecked()){
-                   SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
-                   SharedPreferences.Editor editor = preferences.edit();
-                   editor.putString("remember","false");
-                   editor.apply();
-                   Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-               }
-
-
-            }
-        });
 
         //PASSWORD VISIBLE
 
@@ -141,6 +110,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
+
+    }
+    //Creates a save instance of the previous ui
+    //Runs right before everything is destroyed
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("firstload", firstload);
+    }
+    //run right before onPostCreate
+    @Override
+    protected void onRestoreInstanceState(Bundle inState){
+        super.onRestoreInstanceState(inState);
+        firstload = inState.getBoolean("firstload");
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        //SAVE THE USER AND PASSWORD
+        rememberMe = (CheckBox) findViewById(R.id.rememberUser);
+        SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
+        String checkBox = preferences.getString("remember","");
+        if (!firstload){
+            if (checkBox.equals("true")){
+                Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                startActivity(intent);
+
+            }else if (checkBox.equals("false")){
+                Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
+            }
+            firstload = true;
+        }
+
+
+
+        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember","true");
+                    editor.apply();
+                    Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+                }else if(!compoundButton.isChecked()){
+                    SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember","false");
+                    editor.apply();
+                    Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
 
     }
 

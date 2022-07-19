@@ -517,7 +517,7 @@ GoogleMap.OnMapClickListener{
                     if (DarkMode) {
                         DarkorLight = true;
                         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(),R.raw.style_json));
-                        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         for (PolylineOptions lines1: customPolyLines)
                         {
                             lines1.pattern(pattern);
@@ -527,7 +527,7 @@ GoogleMap.OnMapClickListener{
                     } else {
                         DarkorLight = false;
                         mMap.setMapStyle(null);
-                        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         for (PolylineOptions lines1: customPolyLines)
                         {
                             lines1.pattern(pattern);
