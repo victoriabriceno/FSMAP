@@ -102,6 +102,7 @@ TextView userNameSettings;
                     String userName = userProfile.fullName;
 
                     user.setText(email);
+                    userNameSettings.setText(userName);
 
 
                 }
@@ -151,6 +152,7 @@ TextView userNameSettings;
 
             case R.id.userSettings:
                 Intent intent =new Intent(view.getContext(),EditProfile.class);
+                intent.putExtra("fullName",userNameSettings.getText().toString());
                 startActivity(intent);
                 break;
 

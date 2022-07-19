@@ -93,7 +93,10 @@ DatabaseReference databaseReference;
             }
         });
 
+      Intent data = getIntent();
+      String fullName = data.getStringExtra("fullName");
 
+      changeUser.setText(fullName);
 
 
 

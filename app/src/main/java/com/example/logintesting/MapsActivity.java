@@ -166,7 +166,6 @@ GoogleMap.OnMapClickListener{
             }
         });
 
-
     }
 
     //Function to obtain device location and store in Latitude and Longitued
