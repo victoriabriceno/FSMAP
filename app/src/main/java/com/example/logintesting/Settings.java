@@ -101,7 +101,7 @@ TextView userNameSettings;
                     String email = userProfile.email;
                     String userName = userProfile.fullName;
 
-                    user.setText(email);
+
                     userNameSettings.setText(userName);
 
 

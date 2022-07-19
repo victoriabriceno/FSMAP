@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -33,9 +39,13 @@ Button saveProfile, closeProfile;
 Uri imageUri, imageUriSave;
 StorageReference storageReference;
 FirebaseAuth fAuth;
+FirebaseUser firebaseAuth;
 ImageView pencilProfilechange;
 EditText changeUser;
 DatabaseReference databaseReference;
+    String fullName;
+    String useriD;
+    TextView emailProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +58,13 @@ DatabaseReference databaseReference;
         closeProfile = findViewById(R.id.Closebtn);
         pencilProfilechange = findViewById(R.id.pencil_change_profile);
         changeUser = findViewById(R.id.UserChange);
-
+        emailProfile = findViewById(R.id.EmailEditprofile);
 
 
     //FIREBASE
-
+        firebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
+        useriD = firebaseAuth.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         fAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("Users/"+fAuth.getCurrentUser().getUid()+"/ProfilePicture.jpg");
@@ -78,8 +90,14 @@ DatabaseReference databaseReference;
          @Override
          public void onClick(View view) {
 
+             if (isNameChanged() && isImageChanged()){
+                 Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
+             }else if (isNameChanged() || isImageChanged()){
+                 //UploadImageToFirebase(imageUriSave);
+                 Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
+             }
 
-             UploadImageToFirebase(imageUriSave);
+            // UploadImageToFirebase(imageUriSave);
          }
      });
 
@@ -93,21 +111,75 @@ DatabaseReference databaseReference;
             }
         });
 
+        //SHOWING USER DATA
       Intent data = getIntent();
-      String fullName = data.getStringExtra("fullName");
+       fullName = data.getStringExtra("fullName");
 
       changeUser.setText(fullName);
 
+
+        databaseReference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User userProfile = snapshot.getValue(User.class);
+
+                if(userProfile != null){
+                    String email = userProfile.email;
+
+                    emailProfile.setText(email);
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(EditProfile
+                        .this, "Something wrong happened! ", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
 
 
     }
 
+    private boolean isImageChanged() {
+
+        UploadImageToFirebase(imageUri);
+        return  true;
+    }
 
 
+  /*  private void UpdateUser(){
 
-    //Before you have as a paramete Uri uri
+        if (isNameChanged()){
+
+            Toast.makeText(this, "Profile has been updated", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(this, "Data is the same and there are not changes", Toast.LENGTH_SHORT).show();
+        }
+    }*/
+
+    private boolean isNameChanged() {
+
+         if (!fullName.equals(changeUser.getText().toString())){
+            // Toast.makeText(this, "User name changed", Toast.LENGTH_SHORT).show();
+             databaseReference.child(fAuth.getUid()).child("fullName").setValue(changeUser.getText().toString());
+             fullName = changeUser.getText().toString();
+             return true;
+         }else{
+            // Toast.makeText(this, "User name not updated", Toast.LENGTH_SHORT).show();
+             return false;
+         }
+    }
+
+
     private void UploadImageToFirebase(Uri uri) {
 
 
