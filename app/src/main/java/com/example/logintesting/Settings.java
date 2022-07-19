@@ -4,15 +4,18 @@ package com.example.logintesting;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,10 +23,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
 
+TextView userNameSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +40,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_settings);
 
         //Binding Buttons
+        //CircleImageView userProfileSetting;
         Button About;
         Button Themes;
         Button Favorites;
         Button Logout;
         TextView user;
         Button editProfile;
+        CircleImageView userProfileSetting;
+        ImageView backButton;
 
+        //FIREBASE
+        FirebaseAuth fAuth;
+        StorageReference storageReference;
         FirebaseUser userFirebase;
         DatabaseReference reference;
         String useriD;
@@ -52,13 +67,29 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         Logout = findViewById(R.id.LogoutButton);
         Logout.setOnClickListener(this);
         user = findViewById(R.id.UserEmail);
-        editProfile = findViewById(R.id.EditProfile);
-        editProfile.setOnClickListener(this);
+        userProfileSetting = findViewById(R.id.userSettings);
+       userProfileSetting.setOnClickListener(this);
+       backButton  =(ImageView) findViewById(R.id.backBTN);
+       backButton.setOnClickListener(this);
+
+       userNameSettings = findViewById(R.id.userNamesettings);
 
 
+       //FIREBASE
         userFirebase = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         useriD = userFirebase.getUid();
+
+       //PROFILE PICTURE THIS CODE IS GOOD IF EVERYTHING GOES TO SHIT UNCOMMENT THIS
+        fAuth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("Users/"+fAuth.getCurrentUser().getUid()+"/ProfilePicture.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(userProfileSetting);
+            }
+        });
 
         reference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,8 +99,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
                 if(userProfile != null){
                     String email = userProfile.email;
+                    String userName = userProfile.fullName;
 
                     user.setText(email);
+
+
                 }
 
             }
@@ -80,6 +114,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
             }
         });
+
+
 
 
     }
@@ -113,8 +149,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 finish();
                 break;
 
-            case R.id.EditProfile:
-                startActivity(new Intent(this,EditProfile.class));
+            case R.id.userSettings:
+                Intent intent =new Intent(view.getContext(),EditProfile.class);
+                startActivity(intent);
+                break;
+
+            case R.id.backBTN:
+                startActivity(new Intent(this,MapsActivity.class));
                 break;
 
         }

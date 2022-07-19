@@ -70,7 +70,7 @@
 
     </LinearLayout>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user"
         android:layout_width="156dp"
         android:layout_height="115dp"

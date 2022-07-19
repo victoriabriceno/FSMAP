@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -19,11 +20,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -50,6 +51,7 @@ import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +59,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +77,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 //Main Maps Screen
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
@@ -80,7 +87,7 @@ GoogleMap.OnMapClickListener{
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityMapsBinding binding;
-    private ImageView userIcon;
+    private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Navigation;
     private Button NavGo;
@@ -101,7 +108,7 @@ GoogleMap.OnMapClickListener{
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
     boolean slideup;
-    LinearLayout slideupview;
+    ConstraintLayout slideupview;
     boolean DarkorLight;
 
     //Favorites
@@ -111,6 +118,10 @@ GoogleMap.OnMapClickListener{
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
 
+    //Variables from profile Picture
+
+    FirebaseAuth fAuth;
+    StorageReference storageReference;
 
 
     //onCreate gets rebuilt each time the map is created
@@ -126,8 +137,8 @@ GoogleMap.OnMapClickListener{
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        userIcon = (ImageView)findViewById(R.id.user);
-        userIcon.setOnClickListener(this);
+        userIconMaps = findViewById(R.id.userMaps);
+        userIconMaps.setOnClickListener(this);
 
         mGps = (ImageView) findViewById(R.id.gps);
 
@@ -143,6 +154,17 @@ GoogleMap.OnMapClickListener{
 
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
+
+        //PROFILE PICTURE
+        fAuth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("Users/"+fAuth.getCurrentUser().getUid()+"/ProfilePicture.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(userIconMaps);
+            }
+        });
 
 
     }
@@ -561,7 +583,7 @@ GoogleMap.OnMapClickListener{
     public void onClick(View view) {
         //Switch based on what button was clicked
         switch(view.getId()){
-            case R.id.user:
+            case R.id.userMaps:
                 startActivity(new Intent(this,Settings.class));
                 break;
             case R.id.navgo:
