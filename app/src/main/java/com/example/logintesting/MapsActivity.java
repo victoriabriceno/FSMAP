@@ -1,10 +1,12 @@
 package com.example.logintesting;
 //Woohoo, imports
 import androidx.annotation.NonNull;
+import androidx.annotation.PluralsRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.loader.content.Loader;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -15,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,9 +28,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListPopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -54,6 +61,7 @@ import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -82,14 +90,18 @@ import org.w3c.dom.Text;
 //Main Maps Screen
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
-GoogleMap.OnMapClickListener{
+GoogleMap.OnMapClickListener {
     //Global Variables used throughout the program,
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityMapsBinding binding;
     private ImageView userIcon;
     private ImageView mGps;
-    private Button Navigation;
+    private Button Set;
+    private Button SavePoint;
+    private Button RemovePoint;
+    private ImageView ZoomIn;
+    private ImageView ZoomOut;
     private Button NavGo;
     private Button NavDone;
     private AutoCompleteTextView Search;
@@ -102,23 +114,27 @@ GoogleMap.OnMapClickListener{
     ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
     ArrayList<PolylineOptions> customPolyLines = new ArrayList<>();
     ArrayList<Marker> markersClicked = new ArrayList<>();
+    ArrayList<Marker> createdMarkers;
+    ArrayList<Marker> favoritedMarkers;
     int clickCount = 0;
     ArrayList<String> LinesTitles = new ArrayList<String>();
     List<PatternItem> pattern = Arrays.asList(
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
     boolean slideup;
-    LinearLayout slideupview;
+    RelativeLayout slideupview;
     boolean DarkorLight;
-
+    RelativeLayout saveSpotLayout;
     //Favorites
     ImageButton bntFavoritesRemove;
     ImageButton btnFavoritesAdd;
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
-
-
+    Marker createdMarker;
+    boolean wasRemoveHit = false;
+    private boolean FollowUser= false;
+    boolean wasMarkerClicked = false;
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -144,6 +160,8 @@ GoogleMap.OnMapClickListener{
         slideupview.setVisibility(View.INVISIBLE);
         slideup = false;
 
+        //save spot code
+        saveSpotLayout = findViewById(R.id.saveSpotLayout);
         //Favorites
         bntFavoritesRemove = (ImageButton) findViewById(R.id.btnRemoveFavorites);
         bntFavoritesRemove.setOnClickListener(this);
@@ -151,7 +169,12 @@ GoogleMap.OnMapClickListener{
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
-
+        if(createdMarkers== null) {
+            LoadMarkers();
+        }
+        if(favoritedMarkers == null){
+            LoadFavoriteMarkers();
+        }
     }
 
     //Function to obtain device location and store in Latitude and Longitued
@@ -196,9 +219,7 @@ GoogleMap.OnMapClickListener{
                             Longitued = currentLocation.getLongitude();
                         }else{
                             Toast.makeText(MapsActivity.this, "Unable to get current Location", Toast.LENGTH_SHORT).show();
-
                         }
-
                     }
                 });
             }
@@ -234,8 +255,7 @@ GoogleMap.OnMapClickListener{
                 SearchList.add(m.getTitle());
             }
         }
-        ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, SearchList);
+        ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SearchList);
         Search.setAdapter(adapterlist);
 
         Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -270,6 +290,79 @@ GoogleMap.OnMapClickListener{
             Toast.makeText(getApplicationContext(), "No Results Found", Toast.LENGTH_SHORT).show();
         }
     }
+    private void LoadMarkers()
+    {
+        createdMarkers = new ArrayList<>();
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomMarkers/");
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+
+                    String markerTitle = dataSnapshot.getKey().toString();
+                    double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
+                    double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
+                    LatLng newLatLng = new LatLng(latitude1,longitude1);
+                    MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
+                    if(!wasRemoveHit) {
+                        Marker newMarker = mMap.addMarker(newMarkerOption);
+                        newMarker.showInfoWindow();
+                        if(FindTheMarker(markerTitle) == null) {
+                            createdMarkers.add(newMarker);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void LoadFavoriteMarkers()
+    {
+        favoritedMarkers= new ArrayList<>();
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/");
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Marker found = FindTheMarker(dataSnapshot.getValue().toString());
+                    if(found != null)
+                    {
+                        if(CheckMarkerType(found))
+                        {
+                            for (Marker m: createdMarkers)
+                            {
+                                if(m.getTitle().equals(found.getTitle()))
+                                {
+                                    favoritedMarkers.add(found);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for(Marker m: MarkersList)
+                            {
+                                if(m.getTitle().equals(found.getTitle()))
+                                {
+                                    favoritedMarkers.add(found);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -285,7 +378,6 @@ GoogleMap.OnMapClickListener{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         //get latlong for corners for specified place
         LatLng one = new LatLng( 28.5899089565466,-81.30689695755838);
@@ -326,7 +418,6 @@ GoogleMap.OnMapClickListener{
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             Init();
         }
-
         //Creating polylines
         PolylineOptions outSideTo119  = new PolylineOptions()
                 .add(new LatLng(28.594075,-81.304381))
@@ -344,6 +435,43 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593959,-81.304484))
                 .add(new LatLng(28.593959,-81.304514));
+        PolylineOptions room118to117 = new PolylineOptions()
+                .add(new LatLng(28.593959,-81.304514))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304514));
+        PolylineOptions room118to116 = new PolylineOptions()
+                .add(new LatLng(28.593959,-81.304514))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593898, -81.304514));
+        PolylineOptions room118to115 = new PolylineOptions()
+                .add(new LatLng(28.593959,-81.304514))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858, -81.304514));
+        PolylineOptions room118to113 = new PolylineOptions()
+                .add(new LatLng(28.593959,-81.304514))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions room118toWaterZone = new PolylineOptions()
+                .add(new LatLng(28.593959,-81.304514))
+                .add(new LatLng(28.593959,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
         PolylineOptions room119to117 =  new PolylineOptions()
                 .add(new LatLng(28.593989,-81.304514))
                 .add(new LatLng(28.593989,-81.304484))
@@ -355,8 +483,63 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593929,-81.304484))
                 .add(new LatLng(28.593929,-81.304514));
+        PolylineOptions room117To116 = new PolylineOptions()
+                .add(new LatLng(28.593929,-81.304514))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593898, -81.304514));
+        PolylineOptions room117to115 = new PolylineOptions()
+                .add(new LatLng(28.593929,-81.304514))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858, -81.304514));
+        PolylineOptions room117to113 = new PolylineOptions()
+                .add(new LatLng(28.593929,-81.304514))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593838,-81.304400))
+                .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room117toWater = new PolylineOptions()
+                .add(new LatLng(28.593929,-81.304514))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
         PolylineOptions room119to116 = new PolylineOptions()
                 .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593898, -81.304514));
+        PolylineOptions room116to115 = new PolylineOptions()
+                .add(new LatLng(28.593898, -81.304514))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858, -81.304514));
+        PolylineOptions room116to113 = new PolylineOptions()
+                .add(new LatLng(28.593898, -81.304514))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593838,-81.304400))
+                .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room116toWaterZone = new PolylineOptions()
+                .add(new LatLng(28.593898, -81.304514))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions outsideTo116 = new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593929,-81.304484))
                 .add(new LatLng(28.593929,-81.304464))
@@ -369,8 +552,42 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.593929,-81.304464))
                 .add(new LatLng(28.593858,-81.304464))
                 .add(new LatLng(28.593858, -81.304514));
+        PolylineOptions room115to113 = new PolylineOptions()
+                .add(new LatLng(28.593858, -81.304514))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593838,-81.304400))
+                .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room115toWaterZone = new PolylineOptions()
+                .add(new LatLng(28.593858, -81.304514))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions outsideTo115 = new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858, -81.304514));
         PolylineOptions room119to113 = new PolylineOptions()
                 .add(new LatLng(28.593989,-81.304514))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593838,-81.304400))
+                .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions outsideTo113 = new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
                 .add(new LatLng(28.593989,-81.304484))
                 .add(new LatLng(28.593929,-81.304484))
                 .add(new LatLng(28.593929,-81.304464))
@@ -388,27 +605,80 @@ GoogleMap.OnMapClickListener{
                 .add(new LatLng(28.593858,-81.304464))
                 .add(new LatLng(28.593858,-81.304400))
                 .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions room113ToWaterZone = new PolylineOptions()
+                .add(new LatLng(28.593838,-81.304444))
+                .add(new LatLng(28.593838,-81.304400))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions outsideToWaterZone = new PolylineOptions()
+                .add(new LatLng(28.594075,-81.304381))
+                .add(new LatLng(28.593989,-81.304386))
+                .add(new LatLng(28.593989,-81.304484))
+                .add(new LatLng(28.593929,-81.304484))
+                .add(new LatLng(28.593929,-81.304464))
+                .add(new LatLng(28.593898,-81.304464))
+                .add(new LatLng(28.593858,-81.304464))
+                .add(new LatLng(28.593858,-81.304400))
+                .add(new LatLng(28.593818,-81.304400));
         //Adding polylines to list for lines and string list for searching
         customPolyLines.add(outSideTo119);
-        LinesTitles.add("Outsideto119");
+        LinesTitles.add("outsideToMeeting 119");
         customPolyLines.add(room119to118);
         LinesTitles.add("Meeting 119Meeting 118");
         customPolyLines.add(outSideTo118);
-        LinesTitles.add("Outsideto118");
+        LinesTitles.add("outsideToMeeting 118");
+        customPolyLines.add(room118to117);
+        LinesTitles.add("Meeting 118Meeting 117");
+        customPolyLines.add(room118to116);
+        LinesTitles.add("Meeting 118Meeting 116");
+        customPolyLines.add(room118to115);
+        LinesTitles.add("Meeting 118Meeting 115");
+        customPolyLines.add(room118to113);
+        LinesTitles.add("Meeting 118Boys Bathroom (113)");
+        customPolyLines.add(room118toWaterZone);
+        LinesTitles.add("Meeting 118Water Zone(112)");
         customPolyLines.add(room119to117);
         LinesTitles.add("Meeting 119Meeting 117");
         customPolyLines.add(outSideTo117);
-        LinesTitles.add("Outsideto117");
+        LinesTitles.add("outsideToMeeting 117");
         customPolyLines.add(room119to117);
         LinesTitles.add("Meeting 119Meeting 117");
+        customPolyLines.add(room117To116);
+        LinesTitles.add("Meeting 117Meeting 116");
+        customPolyLines.add(room117to115);
+        LinesTitles.add("Meeting 117Meeting 115");
+        customPolyLines.add(room117to113);
+        LinesTitles.add("Meeting 117Boys Bathroom (113)");
+        customPolyLines.add(room117toWater);
+        LinesTitles.add("Meeting 117Water Zone (112)");
+        customPolyLines.add(room116to115);
+        LinesTitles.add("Meeting 116Meeting 115");
+        customPolyLines.add(room116to113);
+        LinesTitles.add("Meeting 116Boys Bathroom (113)");
+        customPolyLines.add(room116toWaterZone);
+        LinesTitles.add("Meeting 116Water Zone (112)");
         customPolyLines.add(room119to116);
         LinesTitles.add("Meeting 119Meeting 116");
+        customPolyLines.add(outsideTo116);
+        LinesTitles.add("outsideToMeeting 116");
+        customPolyLines.add(outsideTo115);
+        LinesTitles.add("outsideToMeeting 115");
+        customPolyLines.add(room115to113);
+        LinesTitles.add("Meeting 115Boys Bathroom (113)");
+        customPolyLines.add(room115toWaterZone);
+        LinesTitles.add("Meeting 115Water Zone (112)");
         customPolyLines.add(room119to115);
         LinesTitles.add("Meeting 119Meeting 115");
         customPolyLines.add(room119to113);
-        LinesTitles.add("Meeting 119Boys Bathroom");
+        LinesTitles.add("Meeting 119Boys Bathroom (113)");
+        customPolyLines.add(outsideTo113);
+        LinesTitles.add("outsideToBoys Bathroom (113)");
+        customPolyLines.add(room113ToWaterZone);
+        LinesTitles.add("Boys Bathroom (113)Water Zone (112)");
         customPolyLines.add(room119toWaterZone);
-        LinesTitles.add("Meeting 119Water Zone");
+        LinesTitles.add("Meeting 119Water Zone (112)");
+        customPolyLines.add(outsideToWaterZone);
+        LinesTitles.add("outsideToWater Zone (112)");
         //add Marker
         MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
         Marker room119 = mMap.addMarker(Meeting119);
@@ -430,14 +700,13 @@ GoogleMap.OnMapClickListener{
         Marker room115 = mMap.addMarker(Meeting115);
         MarkersList.add(room115);
 
-        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593838,-81.304444)).title("Boys Bathroom").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593838,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
         MarkersList.add(boysBathroom113);
 
-        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
         Marker waterZone = mMap.addMarker(WaterZone);
         MarkersList.add(waterZone);
-
 
 
         for (Marker marker1: MarkersList)
@@ -451,9 +720,9 @@ GoogleMap.OnMapClickListener{
 
         //create map overlap
         GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotation_140_left))
-                .anchor(0.46f,0.45f)
-                .position(new LatLng(28.593907678091824, -81.3043584293843),39,26);
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
+                .anchor(0.43f,0.45f)
+                .position(new LatLng(28.593907678091824, -81.3043584293843),39.6f,27.8f);
 
         //add groundOverlay and create reference.
         GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
@@ -468,28 +737,81 @@ GoogleMap.OnMapClickListener{
         //For camera moving
         mMap.setOnCameraMoveListener(()->
         {
+            if(FollowUser)
+            {
+                navloc();
+            }
+            if(wasRemoveHit)
+            {
+                for (int i = 0; i <createdMarkers.size() ; i++)
+                {
+                    if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
+                    {
+                        createdMarkers.get(i).remove();
+                        createdMarkers.remove(i);
+                    }
+                }
+            }
             for (GroundOverlay Overlay : groundOverlays) {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                markers.setVisible(mMap.getCameraPosition().zoom > 16);
+                markers.setVisible(mMap.getCameraPosition().zoom > 18);
             }
         });
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(()->
         {
+            if(FollowUser && !wasMarkerClicked)
+            {
+                navloc();
+            }
+            if(wasMarkerClicked)
+            {
+                RemoveAllLines();
+                getDirectionPoly(marker2);
+            }
+            if(wasRemoveHit)
+            {
+                for (int i = 0; i <createdMarkers.size() ; i++)
+                {
+                    if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
+                    {
+                        createdMarkers.get(i).remove();
+                        createdMarkers.remove(i);
+                    }
+                }
+                for (int i = 0; i < favoritedMarkers.size(); i++) {
+                    if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
+                    {
+                        favoritedMarkers.remove(i);
+                    }
+                }
+            }
             for (GroundOverlay Overlay : groundOverlays) {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                markers.setVisible(mMap.getCameraPosition().zoom > 16);
+                markers.setVisible(mMap.getCameraPosition().zoom > 18);
             }
         });
         //Slide up code setup
         slideupview = findViewById(R.id.slideup);
         slideupview.setVisibility(View.GONE);
         slideup = false;
-        //
+
+        //Save Spot button
+        SavePoint = findViewById(R.id.SaveSpot);
+        SavePoint.setOnClickListener(this);
+
+        //Set Button for save spot
+        Set = findViewById(R.id.OkMarkerTitle);
+        Set.setOnClickListener(this);
+
+        //Remove Spot button
+        RemovePoint = findViewById(R.id.RemoveSpot);
+        RemovePoint.setOnClickListener(this);
+
         //Navigation button Setup
         NavGo = findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
@@ -497,6 +819,14 @@ GoogleMap.OnMapClickListener{
         //Button for when Done is pressed while in nav mode
         NavDone = findViewById(R.id.NavDone);
         NavDone.setOnClickListener(this);
+
+        //zoom in
+        ZoomIn = findViewById(R.id.ZoomIn);
+        ZoomIn.setOnClickListener(this);
+
+        //zoom out
+        ZoomOut = findViewById(R.id.ZoomOut);
+        ZoomOut.setOnClickListener(this);
         //SearchBar
         Search = findViewById(R.id.input_Search);
 
@@ -563,73 +893,105 @@ GoogleMap.OnMapClickListener{
         }
     }
 
+    public void navloc()
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            FollowUser = false;
+            return;
+        }
+        try {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (mLocationPermissionsGranted) {
+                @SuppressLint("MissingPermission") Task location = fusedLocationClient.getLastLocation();
+                location.addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+
+                        if (location != null) {
+                            getDeviceLocation();
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude())));
+                            if (location.getLatitude() != Latitude || location.getLongitude() != Longitued) {
+                                RemoveAllLines();
+                                getDirectionPoly(marker2);
+                                Latitude = location.getLatitude();
+                                Longitued = location.getLongitude();
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                            }
+                        } else {
+                        }
+                    }
+                });
+            }
+        }catch(SecurityException e){
+
+    }
+    }
+
+    public boolean isItInMyFavorites(Marker marker){
+        for (int i = 0; i < favoritedMarkers.size(); i++) {
+            if(favoritedMarkers.get(i).getTitle().equals(marker.getTitle()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void onClick(View view) {
         //Switch based on what button was clicked
-        switch(view.getId()){
+        switch(view.getId()) {
             case R.id.user:
-                startActivity(new Intent(this,Settings.class));
+                startActivity(new Intent(this, Settings.class));
                 break;
             case R.id.navgo:
+                FollowUser =true;
                 //Setting curlocation and final destination to text boxes
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
                 //create strings from textboxes
                 String stringcurlocation = curlocation.getText().toString();
                 String stringfinaldestination = finaldestination.getText().toString();
+                //get the markers
+                Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
                 //Setup string for finding path
                 String RooomtoRoom = "";
-                //remove all lines
-                while(linesShowing.size() != 0){
-                    linesShowing.get(0).remove();
-                    linesShowing.remove(0);
-                }
+                if(!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty())
+                {
+                    //remove all lines
+                    RemoveAllLines();
+                    //Logic for deciding the order to place the strings in
+                    int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
+                    int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
+                    if (start > end) {
+                        RooomtoRoom += curlocation.getText().toString();
+                        RooomtoRoom += finaldestination.getText().toString();
+                    }
+                    else {
+                        RooomtoRoom += finaldestination.getText().toString();
+                        RooomtoRoom += curlocation.getText().toString();
+                    }
 
-                //Logic for deciding the order to place the strings in
-                int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
-                int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
-                if (start > end) {
-                    RooomtoRoom += curlocation.getText().toString();
-                    RooomtoRoom += finaldestination.getText().toString();
-                }
-                else {
-                    RooomtoRoom += finaldestination.getText().toString();
-                    RooomtoRoom += curlocation.getText().toString();
-                }
-
-                //Set wasFound to false as standard, if polyline is found dont display error
-                Boolean wasFound = false;
-                for (int i = 0; i<LinesTitles.size(); i++){
-                    //Since the Linestitles and linesShowing are created together, the indexes are the same
-                    if (RooomtoRoom.equals(LinesTitles.get(i))) {
-                        linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                        wasFound = true;
+                    //Set wasFound to false as standard, if polyline is found dont display error
+                    Boolean wasFound = false;
+                    for (int i = 0; i < LinesTitles.size(); i++) {
+                        //Since the Linestitles and linesShowing are created together, the indexes are the same
+                        if (RooomtoRoom.equals(LinesTitles.get(i))) {
+                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                            wasFound = true;
+                            break;
+                        }
+                    }
+                    if (!wasFound) {
+                        Toast.makeText(getApplicationContext(), "Invalid route", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
-                if (!wasFound){
-                    Toast.makeText(getApplicationContext(), "Invalid route", Toast.LENGTH_SHORT).show();
-                    break;
+                else
+                {
+                    navloc();
                 }
                 //"Select" markers to be used if needed
-                //Selects "From" marker
-                Marker curlocationmarker;
-                for (Marker marker: MarkersList){
-                    if (stringcurlocation.equals(marker.getTitle())){
-                        curlocationmarker = marker;
-                        break;
-                    }
-                }
-
-                //Selects "To" marker
-                Marker finaldestinationmarker;
-                for (Marker marker: MarkersList){
-                    if (stringcurlocation.equals(marker.getTitle())){
-                        finaldestinationmarker = marker;
-                        break;
-                    }
-                }
                 //Removes slideup
                 slideupview.setVisibility(View.GONE);
                 slideup = false;
@@ -643,23 +1005,108 @@ GoogleMap.OnMapClickListener{
                 break;
 
             case R.id.NavDone:
+                FollowUser = false;
+                wasMarkerClicked = false;
                 //Remove all lines
-                while(linesShowing.size() != 0){
-                    linesShowing.get(0).remove();
-                    linesShowing.remove(0);
-                }
+                RemoveAllLines();
+                markersClicked.remove(0);
                 //Brings Searchbar back (again, may be depricated)
                 Search.setVisibility(View.VISIBLE);
                 //Removes navdone button
                 NavDone.setVisibility(View.GONE);
                 break;
-
             case R.id.btnRemoveFavorites:
-                Favorites.removeFromFavorite(MapsActivity.this,marker2);
+                Favorites.removeFromFavorite(MapsActivity.this, marker2);
+                favoritedMarkers.remove(marker2);
+                bntFavoritesRemove.setVisibility(View.GONE);
+                btnFavoritesAdd.setVisibility(View.VISIBLE);
                 break;
-
+            case R.id.SaveSpot:
+                getDeviceLocation();
+                wasRemoveHit =false;
+                saveSpotLayout.setVisibility(View.VISIBLE);
+                break;
+            case R.id.RemoveSpot:
+                wasRemoveHit = true;
+                CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
+                for (int i = 0; i <createdMarkers.size() ; i++)
+                {
+                    if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
+                    {
+                        createdMarkers.get(i).remove();
+                        createdMarkers.remove(i);
+                    }
+                }
+                for (int i = 0; i < favoritedMarkers.size(); i++) {
+                    if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
+                    {
+                        Favorites.removeFromFavorite(MapsActivity.this,createdMarker);
+                        favoritedMarkers.remove(i);
+                    }
+                }
+                slideupview.setVisibility(View.GONE);
+                RemoveAllLines();
+                RemovePoint.setVisibility(View.GONE);
+                SavePoint.setVisibility(View.VISIBLE);
+                break;
+            case R.id.OkMarkerTitle:
+                getDeviceLocation();
+                boolean wasItCreatedAlready = false;
+                boolean nameExistAlready = false;
+                TextView markerName = findViewById(R.id.MarkerName);
+                String name = markerName.getText().toString();
+                markerName.setText(null);
+                if(createdMarkers != null)
+                {
+                    for (Marker marker1: createdMarkers)
+                    {
+                        String createdNamecheck = marker1.getTitle();
+                        if(marker1.getTitle().equals(name))
+                        {
+                            wasItCreatedAlready = true;
+                        }
+                    }
+                    for(Marker marker: MarkersList)
+                    {
+                        if(marker.getTitle().equals(name))
+                        {
+                            nameExistAlready = true;
+                        }
+                    }
+                }
+                Marker newMarker = null;
+                if(wasItCreatedAlready || nameExistAlready)
+                {
+                    Toast.makeText(getApplicationContext(), "Marker Already Exists", Toast.LENGTH_SHORT).show();
+                    saveSpotLayout.setVisibility(View.GONE);
+                }
+                else {
+                    if(!wasRemoveHit) {
+                        if(!name.isEmpty()) {
+                            newMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(Latitude,Longitued)).title(name));
+                            newMarker.showInfoWindow();
+                        }
+                        else{
+                            newMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(Latitude,Longitued)).title(name));
+                            newMarker.showInfoWindow();
+                        }
+                    }
+                    CustomMarker.addToCustomMarkers(MapsActivity.this, newMarker);
+                    saveSpotLayout.setVisibility(View.GONE);
+                }
+                InputMethodManager manager1 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                manager1.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+                break;
             case R.id.btnAddFavorites:
                 Favorites.addToFavorite(MapsActivity.this,marker2);
+                bntFavoritesRemove.setVisibility(View.VISIBLE);
+                btnFavoritesAdd.setVisibility(View.GONE);
+                break;
+            case R.id.ZoomIn:
+                mMap.moveCamera(CameraUpdateFactory.zoomIn());
+                break;
+            case R.id.ZoomOut:
+                mMap.moveCamera(CameraUpdateFactory.zoomOut());
                 break;
         }
     }
@@ -684,21 +1131,48 @@ GoogleMap.OnMapClickListener{
 
 
 
-
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         //get location for drawing line between user and marker
         getDeviceLocation();
+        if(!wasRemoveHit){
+            wasRemoveHit = true;
+        }
+        if(isItInMyFavorites(marker))
+        {
+            btnFavoritesAdd.setVisibility(View.GONE);
+            bntFavoritesRemove.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            bntFavoritesRemove.setVisibility(View.GONE);
+            btnFavoritesAdd.setVisibility(View.VISIBLE);
+        }
+        wasRemoveHit = false;
+        wasMarkerClicked = true;
+        NavDone.setVisibility(View.VISIBLE);
+        //check for marker in original Marker list
+        if(CheckMarkerType(marker))
+        {
+            SavePoint.setVisibility(View.GONE);
+            RemovePoint.setVisibility(View.VISIBLE);
+            createdMarker = marker;
+        }
+        else
+        {
+            RemovePoint.setVisibility(View.GONE);
+            SavePoint.setVisibility(View.GONE);
+        }
         //Change camera, zoom if needed
-        if(mMap.getCameraPosition().zoom < 22){
-            moveCamera(marker.getPosition(), 22f);
+        if (mMap.getCameraPosition().zoom < 18) {
+                moveCamera(marker.getPosition(), 20f);
         } else {
-            moveCamera(marker.getPosition());
+                moveCamera(marker.getPosition());
         }
         //Keep track of how many times a marker is clicked
-        if(clickCount == 0) {
+        if (clickCount == 0) {
             clickCount++;
             //draw line to marker
             getDirectionPoly(marker);
@@ -706,24 +1180,28 @@ GoogleMap.OnMapClickListener{
             markersClicked.add(marker);
         }
         //If clicking another marker, switch marker and line
-        if(!markersClicked.get(0).equals(marker)) {
-            clickCount++;
-            for (int i = 0; i < linesShowing.size(); i++) {
-                linesShowing.get(0).remove();
-                linesShowing.remove(0);
+        if(markersClicked.size()!= 0) {
+            if (!markersClicked.get(0).equals(marker)) {
+                clickCount++;
+                RemoveAllLines();
+                markersClicked.add(marker);
+                getDirectionPoly(marker);
             }
+            //triggers if user clicks on same marker twice
+            else {
+                if (clickCount != 1) {
+                    Toast.makeText(getApplicationContext(), "Clicked On the Same Marker", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        else
+        {
+            RemoveAllLines();
             markersClicked.add(marker);
             getDirectionPoly(marker);
         }
-        //triggers if user clicks on same marker twice
-        else  {
-            if(clickCount != 1) {
-                Toast.makeText(getApplicationContext(), "Clicked On the Same Marker", Toast.LENGTH_SHORT).show();
-            }
-        }
         //Remove marker from markers clicked when more than 1 marker has been clicked
-        if(markersClicked.size()>1)
-        {
+        if (markersClicked.size() > 1) {
             markersClicked.remove(0);
         }
         /*marker.showInfoWindow();*/
@@ -749,22 +1227,42 @@ GoogleMap.OnMapClickListener{
                 listfornav.add(m.getTitle());
             }
         }
-
-        //Creating Suggestions for text boxes in nav
-        ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, listfornav);
         AutoCompleteTextView from = findViewById(R.id.From);
-        from.setText("");//Blank "from"
-        from.setAdapter(adapterlist);//set dropdown
-        AutoCompleteTextView destination = findViewById(R.id.Destination);
-        destination.setAdapter(adapterlist);//set dropdown
-        //Autofill Destination
-        destination.setText(markersClicked.get(0).getTitle());
+        AutoCompleteTextView To = findViewById(R.id.Destination);
+        if(!CheckMarkerType(marker)) {
+            from.setEnabled(true);
+            from.setFocusableInTouchMode(true);
+            from.setBackgroundColor(Color.GRAY);
+            To.setBackgroundColor(Color.GRAY);
+            To.setEnabled(true);
+            To.setFocusableInTouchMode(true);
+            //Creating Suggestions for text boxes in nav
+            ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_dropdown_item_1line, listfornav);
+            from = findViewById(R.id.From);
+            from.setText("");//Blank "from"
+            from.setAdapter(adapterlist);//set dropdown
+            AutoCompleteTextView destination = findViewById(R.id.Destination);
+            destination.setAdapter(adapterlist);//set dropdown
+            //Autofill Destination
+            destination.setText(markersClicked.get(0).getTitle());
+        }
+        else
+        {
+            from.setEnabled(false);
+            from.setText("Current Location");
+            from.setFocusable(false);
+            from.setBackgroundColor(Color.TRANSPARENT);
+            To.setEnabled(false);
+            To.setText(marker.getTitle());
+            To.setFocusable(false);
+            To.setBackgroundColor(Color.TRANSPARENT);
 
+        }
         //hide markers after one is clicked
         for (Marker m : MarkersList)
         {
-            if(!m.equals(marker)) {
+            if(!m.getTitle().equals(marker.getTitle())) {
                 m.setVisible(false);
             }
         }
@@ -789,22 +1287,85 @@ GoogleMap.OnMapClickListener{
             slideupview.startAnimation(animate);*/
             slideup = false;
         }
+        if(RemovePoint.getVisibility() == View.VISIBLE)
+        {
+            RemovePoint.setVisibility(View.GONE);
+            SavePoint.setVisibility(View.VISIBLE);
+        }
+        if(SavePoint.getVisibility() == View.GONE)
+        {
+            SavePoint.setVisibility(View.VISIBLE);
+        }
+        if(saveSpotLayout.getVisibility() == View.VISIBLE)
+        {
+            saveSpotLayout.setVisibility(View.GONE);
+        }
         //Make all markers visible
         for (Marker m : MarkersList)
         {
-                m.setVisible(true);
+            m.setVisible(true);
         }
+    }
+
+    public void RemoveAllLines()
+    {
+        while(linesShowing.size() > 0){
+            linesShowing.get(0).remove();
+            linesShowing.remove(0);
+        }
+    }
+
+    public Marker FindTheMarker(String title)
+    {
+        Marker foundMarker = null;
+        for (Marker m: createdMarkers)
+        {
+            if(m.getTitle().equals(title))
+            {
+                foundMarker = m;
+            }
+         }
+        for(Marker m1: MarkersList)
+        {
+            if(m1.getTitle().equals(title))
+            {
+                foundMarker = m1;
+            }
+        }
+        return foundMarker;
+    }
+    public boolean CheckMarkerType(Marker marker)
+    {
+        boolean isItCreatedMarker = false;
+        for (Marker m: createdMarkers)
+        {
+            if(m.getTitle().equals(marker.getTitle()))
+            {
+                isItCreatedMarker =true;
+            }
+        }
+        return isItCreatedMarker;
     }
 
     //Credit to Ruben for solving everything below here
     //get directions to marker
     public void getDirectionPoly(Marker marker)
     {
-        String url = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
+        getDeviceLocation();
+        String url1 = "";
+        if(!CheckMarkerType(marker))
+        {
+            url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
+        }
+        else
+        {
+            url1 = getUrl(new LatLng(Latitude, Longitued),marker.getPosition());
+        }
+        String url = url1;
+
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
         taskRequestDirections.execute(url);
     }
-
     //Get URL for Getting Direction
     private String getUrl(LatLng origin, LatLng dest)
     {
@@ -928,19 +1489,15 @@ GoogleMap.OnMapClickListener{
                 polylineOptions.geodesic(true);
             }
             if(polylineOptions!= null){
-                List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
-                polylineOptions.add(outToInPoly.get(0));
-                if (marker != null) {
-                    switch (marker.getTitle()) {
-                        case "Meeting 119":
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(0)));
-                            break;
-                        case "Meeting 118":
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(2)));
-                            break;
-                        case "Meeting 117":
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(4)));
-                            break;
+                if(!CheckMarkerType(marker)) {
+                    List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
+                    polylineOptions.add(outToInPoly.get(0));
+                }
+                String outToPolys = "outsideTo" + marker.getTitle();
+                for (int i = 0; i < LinesTitles.size() ; i++) {
+                    if(LinesTitles.get(i).equals(outToPolys))
+                    {
+                        linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
                     }
                 }
                 linesShowing.add(mMap.addPolyline(polylineOptions));

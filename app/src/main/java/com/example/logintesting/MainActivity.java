@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Visible password
     boolean passwordVisible;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -131,11 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editTextPassword.setSelection(selection);
                         return true;
                     }
-
                 }
-
-
-
                 return false;
             }
         });

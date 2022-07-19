@@ -45,7 +45,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.264" />
+            app:layout_constraintVertical_bias="0.244" />
+
+        <Button
+            android:id="@+id/CustomMarkersButton"
+            android:layout_width="403dp"
+            android:layout_height="59dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:text="CustomMarkers"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.413" />
 
         <Button
             android:id="@+id/ThemesButton"
@@ -60,7 +74,7 @@
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.447" />
+            app:layout_constraintVertical_bias="0.58" />
 
         <Button
             android:id="@+id/AboutButton"
@@ -75,7 +89,7 @@
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.637" />
+            app:layout_constraintVertical_bias="0.75" />
 
         <Button
             android:id="@+id/LogoutButton"
@@ -90,7 +104,7 @@
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.829" />
+            app:layout_constraintVertical_bias="0.93" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -33,6 +33,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         //Binding Buttons
         Button About;
         Button Themes;
+        Button CreatedMarkers;
         Button Favorites;
         Button Logout;
         TextView user;
@@ -43,6 +44,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         About = (Button) findViewById(R.id.AboutButton);
         About.setOnClickListener(this);
+
+        CreatedMarkers =findViewById(R.id.CustomMarkersButton);
+        CreatedMarkers.setOnClickListener(this);
 
         Themes = findViewById(R.id.ThemesButton);
         Themes.setOnClickListener(this);
@@ -90,7 +94,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.FavoritesButton:
                 startActivity(new Intent(this,Favorites.class));
-
+                break;
+            case R.id.CustomMarkersButton:
+                startActivity(new Intent(this,CustomMarker.class));
                 break;
             case R.id.ThemesButton:
                 startActivity(new Intent(this,Themes.class));

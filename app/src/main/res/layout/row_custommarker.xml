@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0dp"
+    app:contentPadding="5dp">
+
+    <RelativeLayout
+        android:layout_width="407dp"
+        android:layout_height="79dp">
+
+        <RelativeLayout
+            android:id="@+id/marker1"
+            android:layout_width="67dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/location_marker_favoritedesign">
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/TitleMarker1"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-1dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/marker1"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:text="Title" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

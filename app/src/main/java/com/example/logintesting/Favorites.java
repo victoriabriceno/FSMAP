@@ -64,8 +64,6 @@ public class Favorites extends AppCompatActivity {
                     String marker = dataSnapshot.getValue().toString();
                     userFavoriteList = new UserFavoriteList(marker);
                     list.add(userFavoriteList);
-
-
                 }
                 adapterUserFavoriteList.notifyDataSetChanged();
 
@@ -132,11 +130,6 @@ public class Favorites extends AppCompatActivity {
     }
 
     public static void setMakersList(ArrayList<Marker>markerArrayList){
-
-
-
-
-
 
     }
 
