@@ -1,9 +1,15 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.gms:play-services-maps:18.0.2@aar">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1feddcdb6b04ec2004b1d0df6f5de3f5/transformed/play-services-maps-18.0.2/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1feddcdb6b04ec2004b1d0df6f5de3f5/transformed/play-services-maps-18.0.2/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1feddcdb6b04ec2004b1d0df6f5de3f5/transformed/play-services-maps-18.0.2/AndroidManifest.xml" />
+=======
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8c216ab59f2bce6d653c7e6fe9e0c693/transformed/play-services-maps-18.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8c216ab59f2bce6d653c7e6fe9e0c693/transformed/play-services-maps-18.0.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/8c216ab59f2bce6d653c7e6fe9e0c693/transformed/play-services-maps-18.0.2/jars/classes.jar!/" />
+>>>>>>> Design
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-maps/18.0.2/b21c7a3eb0f99d941e7d6a1f7ec27846c3b74ae/play-services-maps-18.0.2-javadoc.jar!/" />

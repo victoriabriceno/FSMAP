@@ -1,5 +1,6 @@
 package com.example.logintesting;
 //Woohoo, imports
+<<<<<<< HEAD
 import androidx.annotation.NonNull;
 import androidx.annotation.PluralsRes;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -7,18 +8,22 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.loader.content.Loader;
+=======
+>>>>>>> Design
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Geocoder;
 import android.location.Location;
+<<<<<<< HEAD
 import android.location.LocationListener;
 import android.location.LocationManager;
+=======
+import android.net.Uri;
+>>>>>>> Design
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -31,13 +36,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+<<<<<<< HEAD
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
+=======
+>>>>>>> Design
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.logintesting.databinding.ActivityFavoritesBinding;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+
+import com.example.logintesting.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,7 +67,6 @@ import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.example.logintesting.databinding.ActivityMapsBinding;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -69,6 +82,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -81,11 +100,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import android.view.animation.TranslateAnimation;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 //Main Maps Screen
 
@@ -95,7 +110,7 @@ GoogleMap.OnMapClickListener {
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityMapsBinding binding;
-    private ImageView userIcon;
+    private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Set;
     private Button SavePoint;
@@ -122,7 +137,11 @@ GoogleMap.OnMapClickListener {
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
     boolean slideup;
+<<<<<<< HEAD
     RelativeLayout slideupview;
+=======
+    ConstraintLayout slideupview;
+>>>>>>> Design
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
     //Favorites
@@ -131,10 +150,19 @@ GoogleMap.OnMapClickListener {
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
+<<<<<<< HEAD
     Marker createdMarker;
     boolean wasRemoveHit = false;
     private boolean FollowUser= false;
     boolean wasMarkerClicked = false;
+=======
+
+    //Variables from profile Picture
+
+    FirebaseAuth fAuth;
+    StorageReference storageReference;
+
+>>>>>>> Design
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -149,8 +177,8 @@ GoogleMap.OnMapClickListener {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        userIcon = (ImageView)findViewById(R.id.user);
-        userIcon.setOnClickListener(this);
+        userIconMaps = findViewById(R.id.userMaps);
+        userIconMaps.setOnClickListener(this);
 
         mGps = (ImageView) findViewById(R.id.gps);
 
@@ -169,12 +197,26 @@ GoogleMap.OnMapClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+<<<<<<< HEAD
         if(createdMarkers== null) {
             LoadMarkers();
         }
         if(favoritedMarkers == null){
             LoadFavoriteMarkers();
         }
+=======
+        //PROFILE PICTURE
+        fAuth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("Users/"+fAuth.getCurrentUser().getUid()+"/ProfilePicture.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(userIconMaps);
+            }
+        });
+
+>>>>>>> Design
     }
 
     //Function to obtain device location and store in Latitude and Longitued
@@ -940,9 +982,15 @@ GoogleMap.OnMapClickListener {
     @Override
     public void onClick(View view) {
         //Switch based on what button was clicked
+<<<<<<< HEAD
         switch(view.getId()) {
             case R.id.user:
                 startActivity(new Intent(this, Settings.class));
+=======
+        switch(view.getId()){
+            case R.id.userMaps:
+                startActivity(new Intent(this,Settings.class));
+>>>>>>> Design
                 break;
             case R.id.navgo:
                 FollowUser =true;
