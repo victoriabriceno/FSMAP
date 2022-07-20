@@ -1,6 +1,6 @@
 package com.example.logintesting;
 //Woohoo, imports
-<<<<<<< HEAD
+
 import androidx.annotation.NonNull;
 import androidx.annotation.PluralsRes;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -8,9 +8,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.loader.content.Loader;
-=======
->>>>>>> Design
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,12 +15,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-<<<<<<< HEAD
 import android.location.LocationListener;
 import android.location.LocationManager;
-=======
 import android.net.Uri;
->>>>>>> Design
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -36,12 +30,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-<<<<<<< HEAD
+
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
-=======
->>>>>>> Design
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -137,11 +130,9 @@ GoogleMap.OnMapClickListener {
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
     boolean slideup;
-<<<<<<< HEAD
+
     RelativeLayout slideupview;
-=======
-    ConstraintLayout slideupview;
->>>>>>> Design
+
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
     //Favorites
@@ -150,19 +141,16 @@ GoogleMap.OnMapClickListener {
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
-<<<<<<< HEAD
     Marker createdMarker;
     boolean wasRemoveHit = false;
     private boolean FollowUser= false;
     boolean wasMarkerClicked = false;
-=======
 
     //Variables from profile Picture
 
     FirebaseAuth fAuth;
     StorageReference storageReference;
 
->>>>>>> Design
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -197,14 +185,12 @@ GoogleMap.OnMapClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
-<<<<<<< HEAD
         if(createdMarkers== null) {
             LoadMarkers();
         }
         if(favoritedMarkers == null){
             LoadFavoriteMarkers();
         }
-=======
         //PROFILE PICTURE
         fAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -216,7 +202,7 @@ GoogleMap.OnMapClickListener {
             }
         });
 
->>>>>>> Design
+
     }
 
     //Function to obtain device location and store in Latitude and Longitued
@@ -982,15 +968,9 @@ GoogleMap.OnMapClickListener {
     @Override
     public void onClick(View view) {
         //Switch based on what button was clicked
-<<<<<<< HEAD
-        switch(view.getId()) {
-            case R.id.user:
-                startActivity(new Intent(this, Settings.class));
-=======
         switch(view.getId()){
             case R.id.userMaps:
                 startActivity(new Intent(this,Settings.class));
->>>>>>> Design
                 break;
             case R.id.navgo:
                 FollowUser =true;

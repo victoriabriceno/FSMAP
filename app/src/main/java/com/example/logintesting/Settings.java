@@ -70,7 +70,6 @@ TextView userNameSettings;
         Favorites.setOnClickListener(this);
         Logout = findViewById(R.id.LogoutButton);
         Logout.setOnClickListener(this);
-        user = findViewById(R.id.UserEmail);
         userProfileSetting = findViewById(R.id.userSettings);
        userProfileSetting.setOnClickListener(this);
        backButton  =(ImageView) findViewById(R.id.backBTN);

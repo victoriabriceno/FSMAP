@@ -59,43 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         mAuth = FirebaseAuth.getInstance();
 
-<<<<<<< HEAD
 
-=======
-        //SAVE THE USER AND PASSWORD
-        rememberMe = (CheckBox) findViewById(R.id.rememberUser);
-        SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
-        String checkBox = preferences.getString("remember","");
-       /* if (checkBox.equals("true")){
-           Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-           startActivity(intent);
-
-        }else if (checkBox.equals("false")){
-            Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
-
-        }*/
-
-        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-               if (compoundButton.isChecked()){
-                   SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
-                   SharedPreferences.Editor editor = preferences.edit();
-                   editor.putString("remember","true");
-                   editor.apply();
-                   Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-               }else if(!compoundButton.isChecked()){
-                   SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
-                   SharedPreferences.Editor editor = preferences.edit();
-                   editor.putString("remember","false");
-                   editor.apply();
-                   Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-               }
-
-
-            }
-        });
->>>>>>> Design
 
         //PASSWORD VISIBLE
 

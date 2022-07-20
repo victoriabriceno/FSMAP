@@ -13,14 +13,9 @@
      android:fontFamily="@font/amaticscbold"
      android:padding="5dp"
      android:text="Favorite List"
-<<<<<<< HEAD
-     android:textColor="@color/orange"
-     android:textSize="20dp"
-=======
      android:textAlignment="center"
      android:textColor="@color/black"
      android:textSize="35dp"
->>>>>>> Design
      android:textStyle="bold" />
 
  <androidx.recyclerview.widget.RecyclerView

@@ -9,27 +9,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout"
-<<<<<<< HEAD
-        android:layout_width="304dp"
         android:layout_height="365dp"
-=======
         android:layout_width="311dp"
-        android:layout_height="332dp"
->>>>>>> Design
         android:background="@drawable/vie_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".78"
-<<<<<<< HEAD
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.455">
-=======
+        app:layout_constraintVertical_bias="0.568">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.606">
->>>>>>> Design
+
 
         <TextView
             android:id="@+id/LoginText"
@@ -59,13 +51,12 @@
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-<<<<<<< HEAD
             app:layout_constraintVertical_bias="0.214" />
 
         <Button
             android:id="@+id/CustomMarkersButton"
-            android:layout_width="256dp"
-            android:layout_height="42dp"
+            android:layout_width="259dp"
+            android:layout_height="39dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="CustomMarkers"
@@ -74,10 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.38" />
-=======
-            app:layout_constraintVertical_bias="0.286" />
->>>>>>> Design
+            app:layout_constraintVertical_bias="0.374" />
 
         <Button
             android:id="@+id/ThemesButton"
@@ -107,11 +95,8 @@
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-<<<<<<< HEAD
-            app:layout_constraintVertical_bias="0.691" />
-=======
             app:layout_constraintVertical_bias="0.702" />
->>>>>>> Design
+
 
         <Button
             android:id="@+id/LogoutButton"
@@ -123,10 +108,10 @@
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintHorizontal_bias="0.538"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.902" />
+            app:layout_constraintVertical_bias="0.858" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -170,16 +155,10 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.855" />
-=======
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
 
     <ImageView
         android:id="@+id/backBTN"
@@ -192,6 +171,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.051" />
->>>>>>> Design
 
 </androidx.constraintlayout.widget.ConstraintLayout>

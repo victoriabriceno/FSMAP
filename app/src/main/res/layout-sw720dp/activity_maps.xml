@@ -81,12 +81,13 @@
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user"
-        android:layout_width="156dp"
-        android:layout_height="115dp"
+        android:id="@+id/userMaps"
+        android:layout_width="61dp"
+        android:layout_height="56dp"
         android:layout_alignLeft="@id/search_bar"
-        android:layout_marginLeft="-133dp"
-        android:background="@drawable/userprofilefinal" />
+        android:layout_marginLeft="-85dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/user2" />
 
     <ImageView
         android:id="@+id/gps"

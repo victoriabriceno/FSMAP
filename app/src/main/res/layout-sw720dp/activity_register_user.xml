@@ -8,36 +8,53 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="468dp"
-        android:layout_height="486dp"
+        android:layout_width="350dp"
+        android:layout_height="430dp"
         android:background="@drawable/vie_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".78"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.57">
+        app:layout_constraintVertical_bias="0.472">
 
         <TextView
             android:id="@+id/SIGNUPText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/amaticscbold"
             android:text="Create an account"
             android:textColor="@color/black"
             android:textSize="45dp"
             android:textStyle="normal"
-            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintHorizontal_bias="0.46"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/Username"
+            android:layout_width="307dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="76dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/usericon"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="User"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/registerEmailAddress"
-            android:layout_width="311dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="92dp"
+            android:layout_width="307dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="128dp"
             android:background="@drawable/custom_input"
             android:drawableLeft="@drawable/email"
             android:drawablePadding="10dp"
@@ -45,15 +62,16 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/SIGNUPText" />
 
         <EditText
             android:id="@+id/ConfirmEmailAddress"
-            android:layout_width="311dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="76dp"
+            android:layout_width="307dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="56dp"
             android:background="@drawable/custom_input"
             android:drawableLeft="@drawable/confirmemail"
             android:drawablePadding="10dp"
@@ -61,16 +79,16 @@
             android:hint="Confirmation Email"
             android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
-            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/registerEmailAddress" />
 
         <EditText
             android:id="@+id/ConfirmPassword"
-            android:layout_width="311dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="76dp"
+            android:layout_width="307dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/custom_input"
             android:drawableLeft="@drawable/confirmpassword"
             android:drawablePadding="10dp"
@@ -78,7 +96,7 @@
             android:hint="Confirmation Password"
             android:inputType="textPassword"
             android:paddingLeft="10dp"
-            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/registerPassword" />
@@ -87,13 +105,13 @@
             android:id="@+id/RegisterUser"
             android:layout_width="225dp"
             android:layout_height="44dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="Register User"
             android:textColor="@color/white"
             android:textSize="15dp"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/ConfirmPassword" />
@@ -115,8 +133,8 @@
 
         <EditText
             android:id="@+id/registerPassword"
-            android:layout_width="311dp"
-            android:layout_height="55dp"
+            android:layout_width="307dp"
+            android:layout_height="47dp"
             android:background="@drawable/custom_input"
             android:drawableLeft="@drawable/padlock"
             android:drawablePadding="10dp"
@@ -125,47 +143,50 @@
             android:inputType="textPassword"
             android:paddingLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.626" />
+            app:layout_constraintVertical_bias="0.637" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/FSMAP2"
-        android:layout_width="373dp"
-        android:layout_height="279dp"
+        android:layout_width="243dp"
+        android:layout_height="179dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098"
+        app:layout_constraintVertical_bias="0.141"
         app:srcCompat="@drawable/finallogo" />
 
     <TextView
         android:id="@+id/RegisterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="288dp"
+        android:layout_marginTop="464dp"
         android:fontFamily="@font/questrialregular"
         android:text="Join our team!"
         android:textColor="@color/black"
         android:textSize="25dp"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/FSMAP2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1092dp"
+        android:layout_marginTop="936dp"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
         android:textColor="@color/black"
-        android:textSize="25dp"
+        android:textSize="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/FSMAP2" />

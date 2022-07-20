@@ -109,31 +109,33 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/UserEmail"
-        android:layout_width="496dp"
-        android:layout_height="54dp"
+        android:id="@+id/userNamesettings"
+        android:layout_width="284dp"
+        android:layout_height="41dp"
         android:fontFamily="@font/questrialregular"
-        android:text="User email"
-        android:textSize="25dp"
+        android:text="User"
+        android:textAlignment="center"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintVertical_bias="0.242" />
 
-    <ImageView
-        android:id="@+id/user"
-        android:layout_width="212dp"
-        android:layout_height="167dp"
-        android:layout_alignLeft="@id/UserEmail"
-        android:background="@drawable/userprofilefinal"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userSettings"
+        android:layout_width="146dp"
+        android:layout_height="109dp"
+        android:src="@drawable/user2"
+        app:civ_border_color="@color/light_gray"
+        app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <TextView
         android:id="@+id/Decoration"
