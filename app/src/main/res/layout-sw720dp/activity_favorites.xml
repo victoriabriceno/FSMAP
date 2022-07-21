@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,24 +8,31 @@
 
  <TextView
      android:id="@+id/favoriteMarkerLabel"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
+     android:layout_width="765dp"
+     android:layout_height="80dp"
      android:fontFamily="@font/amaticscbold"
      android:padding="5dp"
      android:text="Favorite List"
      android:textAlignment="center"
      android:textColor="@color/black"
-     android:textSize="35dp"
-     android:textStyle="bold" />
+     android:textSize="50dp"
+     android:textStyle="bold"
+     app:layout_constraintBottom_toTopOf="@+id/markersRV"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent" />
 
  <androidx.recyclerview.widget.RecyclerView
      android:id="@+id/markersRV"
      android:layout_width="match_parent"
-     android:layout_height="match_parent"
+     android:layout_height="1531dp"
      android:layout_below="@id/favoriteMarkerLabel"
-     android:layout_marginTop="12dp"
      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="1.0"
+     tools:layout_editor_absoluteX="0dp"
      tools:listitem="@layout/row_favoritemarkers" />
 
 
-</RelativeLayout>
+</>
