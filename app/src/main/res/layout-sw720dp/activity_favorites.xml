@@ -35,4 +35,4 @@
      tools:listitem="@layout/row_favoritemarkers" />
 
 
-</>
+</androidx.constraintlayout.widget.ConstraintLayout>
