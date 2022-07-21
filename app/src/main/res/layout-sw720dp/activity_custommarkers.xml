@@ -8,26 +8,27 @@
 
     <TextView
         android:id="@+id/customMarkerLabel"
-        android:layout_width="183dp"
-        android:layout_height="wrap_content"
+        android:layout_width="499dp"
+        android:layout_height="90dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/amaticscbold"
         android:padding="5dp"
         android:text="Custom Markers"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="25dp"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.583"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.008" />
+        app:layout_constraintVertical_bias="0.024" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/markersRV1"
-        android:layout_width="429dp"
-        android:layout_height="652dp"
+        android:layout_width="1000dp"
+        android:layout_height="1530dp"
         android:layout_below="@id/customMarkerLabel"
         android:layout_marginTop="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
