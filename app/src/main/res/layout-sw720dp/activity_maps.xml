@@ -178,9 +178,11 @@
         android:layout_above="@+id/ZoomOut"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="5dp"
-        android:background="@drawable/orange_plus" />
+        android:layout_marginVertical="0dp"
+        android:background="@drawable/zoom_in_transparent_expanded"
+        android:scaleType="fitCenter" />
+
     <ImageView
         android:id="@+id/ZoomOut"
         android:layout_width="40dp"
@@ -189,7 +191,10 @@
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="5dp"
-        android:background="@drawable/orange_minus" />
+        android:layout_marginVertical="5dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/zoom_out_transparent_extended" />
 
     <RelativeLayout
         android:layout_width="280dp"
@@ -236,4 +241,13 @@
             android:backgroundTint="@color/orange"
             android:text="Set" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/NavLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/NavDone"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="@color/orange"
+        android:text="Nav Lock" />
 </RelativeLayout>
