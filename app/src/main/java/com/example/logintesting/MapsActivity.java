@@ -13,7 +13,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -112,6 +114,7 @@ GoogleMap.OnMapClickListener {
     private ImageView ZoomOut;
     private Button NavGo;
     private Button NavDone;
+    private Button NacLock;
     private AutoCompleteTextView Search;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -124,6 +127,10 @@ GoogleMap.OnMapClickListener {
     ArrayList<Marker> markersClicked = new ArrayList<>();
     ArrayList<Marker> createdMarkers;
     ArrayList<Marker> favoritedMarkers;
+    ArrayList<Marker> BathroomMarkers = new ArrayList<>();
+    ArrayList<Marker> ClassRoomMarkers = new ArrayList<>();
+    ArrayList<Marker> AdminMarkers = new ArrayList<>();
+    ArrayList<Marker> WaterZones = new ArrayList<>();
     int clickCount = 0;
     ArrayList<String> LinesTitles = new ArrayList<String>();
     List<PatternItem> pattern = Arrays.asList(
@@ -710,30 +717,37 @@ GoogleMap.OnMapClickListener {
         //add Marker
         MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
         Marker room119 = mMap.addMarker(Meeting119);
+        ClassRoomMarkers.add(room119);
         MarkersList.add(room119);
 
         MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593959,-81.304514)).title("Meeting 118");
         Marker room118 = mMap.addMarker(Meeting118);
+        ClassRoomMarkers.add(room118);
         MarkersList.add(room118);
 
         MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
         Marker room117 = mMap.addMarker(meeting117);
+        ClassRoomMarkers.add(room117);
         MarkersList.add(room117);
 
         MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593898,-81.304514)).title("Meeting 116");
         Marker room116 = mMap.addMarker(Meeting116);
+        ClassRoomMarkers.add(room116);
         MarkersList.add(room116);
 
         MarkerOptions Meeting115 = new MarkerOptions().position(new LatLng(28.593858, -81.304514)).title("Meeting 115");
         Marker room115 = mMap.addMarker(Meeting115);
+        ClassRoomMarkers.add(room115);
         MarkersList.add(room115);
 
         MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593838,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
+        BathroomMarkers.add(boysBathroom113);
         MarkersList.add(boysBathroom113);
 
         MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
         Marker waterZone = mMap.addMarker(WaterZone);
+        WaterZones.add(waterZone);
         MarkersList.add(waterZone);
 
 
@@ -761,14 +775,47 @@ GoogleMap.OnMapClickListener {
         //add the overlay to overlay array.
         groundOverlays.add(buildLibraryOverlayed);
 
+        //Markers for classrooms
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.classroom_marker_expand);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 140, 200, false);
+
+        //Markers for Bathrooms
+        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.bathroom_marker_expanded);
+        Bitmap b2=bitmapdraw2.getBitmap();
+        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 140, 200, false);
+
+        //Markers for WaterZones
+        BitmapDrawable bitmapdraw3=(BitmapDrawable)getResources().getDrawable(R.drawable.water_station_marker_expanded);
+        Bitmap b3=bitmapdraw3.getBitmap();
+        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 140, 200, false);
+
+        //Markers for AdminRooms (Unused as of now)
+        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.admin_rooms_marker_expanded);
+        Bitmap b4=bitmapdraw4.getBitmap();
+        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 140, 200, false);
+
+        //Set Markers image for classrooms
+        for (Marker ClassRoom: ClassRoomMarkers)
+        {
+            ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+        }
+
+        //Set Markers image for bathrooms
+        for(Marker Bathrooms: BathroomMarkers)
+        {
+            Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+        }
+
+        //Set Markers image for Waterzones
+        for(Marker WaterStation: WaterZones)
+        {
+            WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+        }
         //set overlays and markers visibile after certain zoom level is reached.
         //For camera moving
         mMap.setOnCameraMoveListener(()->
         {
-            if(FollowUser)
-            {
-                navloc();
-            }
             if(wasRemoveHit)
             {
                 for (int i = 0; i <createdMarkers.size() ; i++)
@@ -784,20 +831,22 @@ GoogleMap.OnMapClickListener {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                if(marker2 != null) {
+                    if (markers.getTitle().equals(marker2.getTitle())) {
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
+                }
+                else{
+                    markers.setVisible(mMap.getCameraPosition().zoom>18);
+                }
             }
         });
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(()->
         {
-            if(FollowUser && !wasMarkerClicked)
+            if(FollowUser || wasMarkerClicked)
             {
                 navloc();
-            }
-            if(wasMarkerClicked)
-            {
-                RemoveAllLines();
-                getDirectionPoly(marker2);
             }
             if(wasRemoveHit)
             {
@@ -820,7 +869,15 @@ GoogleMap.OnMapClickListener {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                if(marker2 != null) {
+                    if (markers.getTitle().equals(marker2.getTitle())) {
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
+                    boolean isIt = markers.isVisible();
+                }
+                else{
+                    markers.setVisible(mMap.getCameraPosition().zoom>18);
+                }
             }
         });
         //Slide up code setup
@@ -858,6 +915,9 @@ GoogleMap.OnMapClickListener {
         //SearchBar
         Search = findViewById(R.id.input_Search);
 
+        //Nav Lock Button
+        NacLock = findViewById(R.id.NavLock);
+        NacLock.setOnClickListener(this);
         //Marker click function
         mMap.setOnMarkerClickListener(this);
         //Map click function
@@ -923,10 +983,6 @@ GoogleMap.OnMapClickListener {
 
     public void navloc()
     {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            FollowUser = false;
-            return;
-        }
         try {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
             if (mLocationPermissionsGranted) {
@@ -937,13 +993,20 @@ GoogleMap.OnMapClickListener {
 
                         if (location != null) {
                             getDeviceLocation();
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude())));
-                            if (location.getLatitude() != Latitude || location.getLongitude() != Longitued) {
-                                RemoveAllLines();
-                                getDirectionPoly(marker2);
-                                Latitude = location.getLatitude();
-                                Longitued = location.getLongitude();
+                            if(FollowUser) {
+                                moveCamera(new LatLng(Latitude,Longitued),19f);
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                            }
+                            if (location.getLatitude() != Latitude || location.getLongitude() != Longitued) {
+                                if(wasMarkerClicked) {
+                                    RemoveAllLines();
+                                    getDirectionPoly(marker2);
+                                }
+                                if(FollowUser) {
+                                    Latitude = location.getLatitude();
+                                    Longitued = location.getLongitude();
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                                }
                             }
                         } else {
                         }
@@ -972,8 +1035,19 @@ GoogleMap.OnMapClickListener {
             case R.id.userMaps:
                 startActivity(new Intent(this,Settings.class));
                 break;
+            case R.id.NavLock:
+                if(!FollowUser)
+                {
+                    FollowUser = true;
+                    Toast.makeText(MapsActivity.this,"Nav Lock ON",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    FollowUser = false;
+                    Toast.makeText(MapsActivity.this,"Nav Lock OFF",Toast.LENGTH_SHORT).show();
+                }
+                break;
             case R.id.navgo:
-                FollowUser =true;
                 //Setting curlocation and final destination to text boxes
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
@@ -1015,10 +1089,6 @@ GoogleMap.OnMapClickListener {
                         break;
                     }
                 }
-                else
-                {
-                    navloc();
-                }
                 //"Select" markers to be used if needed
                 //Removes slideup
                 slideupview.setVisibility(View.GONE);
@@ -1033,7 +1103,6 @@ GoogleMap.OnMapClickListener {
                 break;
 
             case R.id.NavDone:
-                FollowUser = false;
                 wasMarkerClicked = false;
                 //Remove all lines
                 RemoveAllLines();
