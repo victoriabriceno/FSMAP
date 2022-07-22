@@ -1117,6 +1117,7 @@ GoogleMap.OnMapClickListener {
                 wasMarkerClicked = false;
                 //Remove all lines
                 RemoveAllLines();
+                checkIfMarkerNeedVisible();
                 markersClicked.remove(0);
                 //Brings Searchbar back (again, may be depricated)
                 Search.setVisibility(View.VISIBLE);
@@ -1383,15 +1384,38 @@ GoogleMap.OnMapClickListener {
 
     public void checkIfMarkerNeedVisible()
     {
-        if(mMap.getCameraPosition().zoom >18) {
-            for (Marker m : MarkersList) {
-                m.setVisible(true);
+        if(!wasMarkerClicked) {
+            if (mMap.getCameraPosition().zoom > 18) {
+                for (Marker m : MarkersList) {
+                    m.setVisible(true);
+                }
+            } else {
+                for (Marker m2 : MarkersList) {
+                    m2.setVisible(false);
+                }
+            }
+            for (Marker mC : createdMarkers)
+            {
+                mC.setVisible(true);
             }
         }
         else
         {
-            for (Marker m2 : MarkersList) {
-                m2.setVisible(false);
+            for(Marker m3: MarkersList)
+            {
+                if(!m3.getTitle().equals(marker2.getTitle()))
+                {
+                    if(mMap.getCameraPosition().zoom>18) {
+                        m3.setVisible(false);
+                    }
+                }
+            }
+            for(Marker m3C: createdMarkers)
+            {
+                if(!m3C.getTitle().equals(marker2.getTitle()))
+                {
+                    m3C.setVisible(false);
+                }
             }
         }
     }

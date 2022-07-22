@@ -13,7 +13,7 @@
         android:layout_height="486dp"
         android:layout_below="@id/userSettings"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/vie_bg">
 
         <TextView
