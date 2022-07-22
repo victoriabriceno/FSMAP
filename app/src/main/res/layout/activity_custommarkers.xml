@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CustomMarker">
-
+    <ImageView
+        android:id="@+id/backBTN"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/back" />
     <TextView
         android:id="@+id/customMarkerLabel"
         android:layout_width="183dp"
@@ -15,7 +21,7 @@
         android:padding="5dp"
         android:text="Custom Markers"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textSize="25dp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"

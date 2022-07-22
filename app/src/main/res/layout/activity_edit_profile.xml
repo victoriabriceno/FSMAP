@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".EditProfile">
 
+    <ImageView
+        android:id="@+id/backBTN"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:background="@drawable/back"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.592" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -26,13 +37,13 @@
         android:id="@+id/pencil_change_profile"
         android:layout_width="22dp"
         android:layout_height="25dp"
-        android:background="@drawable/pencil"
+        android:background="@drawable/pencilgrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.367"
+        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintVertical_bias="0.225" />
 
     <Button
         android:id="@+id/Closebtn"
@@ -72,7 +83,8 @@
         android:id="@+id/UserChange"
         android:layout_width="390dp"
         android:layout_height="55dp"
-        android:background="@drawable/custom_input"
+        android:background="@null"
+        android:foreground="@drawable/custom_input"
         android:drawableLeft="@drawable/usericon"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -114,8 +126,9 @@
             android:id="@+id/EmailEditprofile"
             android:layout_width="266dp"
             android:layout_height="37dp"
-            android:text="email "
+            android:text="email"
             android:textSize="18dp"
+            android:textColor="@color/dark_gray"
             android:fontFamily="@font/questrialregular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

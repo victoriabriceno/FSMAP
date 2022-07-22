@@ -27,6 +27,7 @@
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_maps.xml" value="0.25" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_register_user.xml" value="0.2578125" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_custommarkers.xml" value="0.33" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_edit_profile.xml" value="0.33" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_favorites.xml" value="0.25972222222222224" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_forgot_password.xml" value="0.271875" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_fsmap_about.xml" value="0.193359375" />
@@ -36,6 +37,7 @@
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_themes.xml" value="0.271875" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_custommarkers.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_favorites.xml" value="0.2578125" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_forgot_password.xml" value="0.34739583333333335" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_fsmap_about.xml" value="1.0903083700440528" />

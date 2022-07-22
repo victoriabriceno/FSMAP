@@ -3,6 +3,7 @@ package com.example.logintesting;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,13 +23,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private TextView registerUser;
     private EditText editEmail, editPassword,confirmEmail , confirmPassword, editUser;
     private ProgressBar progressBar;
+    private Button registerBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
         mAuth = FirebaseAuth.getInstance();
-
 
         registerUser = (TextView) findViewById(R.id.RegisterUser);
         registerUser.setOnClickListener(this);

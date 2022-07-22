@@ -6,7 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".EditProfile">
 
-
+    <ImageView
+        android:id="@+id/backBTN"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:background="@drawable/back"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21" />
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="165dp"
@@ -24,15 +34,15 @@
 
     <ImageView
         android:id="@+id/pencil_change_profile"
-        android:layout_width="22dp"
-        android:layout_height="25dp"
-        android:background="@drawable/pencil"
+        android:layout_width="37dp"
+        android:layout_height="26dp"
+        android:background="@drawable/pencilgrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintHorizontal_bias="0.241"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
+        app:layout_constraintVertical_bias="0.235" />
 
     <Button
         android:id="@+id/Closebtn"
@@ -116,6 +126,7 @@
             android:layout_height="37dp"
             android:fontFamily="@font/questrialregular"
             android:text="email "
+            android:textColor="@color/dark_gray"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
