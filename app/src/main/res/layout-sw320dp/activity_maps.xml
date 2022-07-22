@@ -52,6 +52,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="10dp"
             android:layout_toRightOf="@id/Destination"
+            android:background="@null"
             android:foreground="@drawable/starfull" />
 
         <AutoCompleteTextView
@@ -63,8 +64,8 @@
             android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="20dp"
             android:background="@null"
-            android:foreground="@drawable/custom_imput2"
             android:fontFamily="@font/questrialregular"
+            android:foreground="@drawable/custom_imput2"
             android:hint="From"
             android:paddingLeft="10dp" />
 
@@ -77,6 +78,7 @@
             android:layout_marginVertical="10dp"
             android:layout_toRightOf="@id/Destination"
             android:foreground="@drawable/star"
+            android:background="@null"
             android:visibility="gone" />
 
         <Button
@@ -86,6 +88,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="30dp"
+            android:backgroundTint="@color/orange"
             android:layout_toRightOf="@id/From"
             android:background="@drawable/custom_imput2"
             android:fontFamily="@font/questrialregular"
@@ -100,7 +103,7 @@
             android:background="@null"
             android:foreground="@drawable/custom_imput2"
             android:hint="To"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp" />
 
     </RelativeLayout>
 
@@ -112,6 +115,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginVertical="5dp"
         android:backgroundTint="@color/orange"
+        android:background="@drawable/custom_input"
         android:gravity="center"
         android:text="Done"
         android:visibility="gone"
@@ -134,8 +138,8 @@
 
     <Button
         android:id="@+id/RemoveSpot"
-        android:layout_width="135dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
         android:layout_alignWithParentIfMissing="true"
         android:layout_above="@+id/slideup"
         android:layout_marginHorizontal="8dp"
@@ -143,7 +147,6 @@
         android:background="@drawable/custom_input"
         android:backgroundTint="@color/orange"
         android:gravity="center"
-        android:paddingLeft="10dp"
         android:text="Remove Spot"
         android:visibility="gone"/>
 
@@ -238,6 +241,7 @@
         android:layout_height="180dp"
         android:layout_centerInParent="true"
         android:background="@drawable/vie_bg"
+        android:backgroundTint="@color/gray"
         android:visibility="gone"
         android:id="@+id/saveSpotLayout">
 
@@ -251,7 +255,7 @@
             android:textColor="@color/black"
             android:textSize="15dp"
             android:hint="Type In Marker Name"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/light_gray"
             android:gravity="center"
             android:inputType="text"/>
 
@@ -287,5 +291,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginHorizontal="5dp"
         android:backgroundTint="@color/orange"
+        android:background="@drawable/custom_input"
         android:text="Nav Lock" />
 </RelativeLayout>
