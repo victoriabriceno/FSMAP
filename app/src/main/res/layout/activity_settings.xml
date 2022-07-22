@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,12 +9,16 @@
 
     <RelativeLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="368dp"
-        android:layout_height="486dp"
+        android:layout_width="319dp"
+        android:layout_height="466dp"
         android:layout_below="@id/userSettings"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/vie_bg">
+        android:background="@drawable/vie_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.655">
 
         <TextView
             android:id="@+id/LoginText"
@@ -98,20 +102,29 @@
         android:layout_height="41dp"
         android:layout_below="@id/userSettings"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="596dp"
         android:fontFamily="@font/questrialregular"
         android:gravity="center"
         android:text="User"
-        android:textColor="@color/gray"
         android:textAlignment="center"
-        android:textSize="25dp" />
+        android:textColor="@color/gray"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userSettings"
-        android:layout_width="228dp"
-        android:layout_height="175dp"
+        android:layout_width="209dp"
+        android:layout_height="151dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/userprofilefinalexpanded" />
+        android:src="@drawable/userprofilefinalexpanded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.057" />
 
     <TextView
         android:id="@+id/Decoration"
@@ -119,17 +132,24 @@
         android:layout_height="54dp"
         android:layout_below="@id/constrainLayout"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
         android:fontFamily="@font/questrialregular"
         android:gravity="center"
         android:text="Made by SwiftKings"
         android:textColor="@color/gray"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/backBTN"
         android:layout_width="30dp"
         android:layout_height="29dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/back" />
+        android:layout_marginEnd="344dp"
+        android:background="@drawable/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="31dp" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

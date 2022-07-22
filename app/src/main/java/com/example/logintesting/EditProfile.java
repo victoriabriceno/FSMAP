@@ -40,7 +40,7 @@ Uri imageUri, imageUriSave;
 StorageReference storageReference;
 FirebaseAuth fAuth;
 FirebaseUser firebaseAuth;
-ImageView pencilProfilechange;
+ImageView pencilProfilechange , backEditPROFILE;
 EditText changeUser;
 DatabaseReference databaseReference;
     String fullName;
@@ -59,6 +59,13 @@ DatabaseReference databaseReference;
         pencilProfilechange = findViewById(R.id.pencil_change_profile);
         changeUser = findViewById(R.id.UserChange);
         emailProfile = findViewById(R.id.EmailEditprofile);
+        backEditPROFILE =findViewById(R.id.backBTN);
+        backEditPROFILE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditProfile.this,Settings.class));
+            }
+        });
 
 
     //FIREBASE

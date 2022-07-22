@@ -12,7 +12,7 @@
         android:layout_height="428dp"
         android:layout_below="@id/WelcomeText"
         android:layout_centerInParent="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/vie_bg">
 
         <TextView
@@ -132,9 +132,10 @@
 
     <ImageView
         android:id="@+id/FSMAP"
-        android:layout_width="320dp"
-        android:layout_height="157dp"
+        android:layout_width="316dp"
+        android:layout_height="212dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="-21dp"
         android:background="@null"
         android:foreground="@drawable/finallogo" />
@@ -148,7 +149,7 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/questrialregular"
         android:text="Welcome to FS Map!"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textSize="30dp" />
 
     <TextView
@@ -157,10 +158,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/constrainLayout"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:textColor="@color/gray"
         android:textSize="20dp" />
 
 

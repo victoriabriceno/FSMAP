@@ -1,10 +1,12 @@
 package com.example.logintesting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editEmail, editPassword,confirmEmail , confirmPassword, editUser;
     private ProgressBar progressBar;
     private Button registerBack;
+    ImageView registerBackButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         registerUser = (TextView) findViewById(R.id.RegisterUser);
         registerUser.setOnClickListener(this);
 
+        registerBackButton = findViewById(R.id.backBTN);
+        registerBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterUser.this,MainActivity.class));
+            }
+        });
         editEmail = (EditText) findViewById(R.id.registerEmailAddress);
          editPassword = (EditText)  findViewById(R.id.registerPassword);
         confirmEmail = (EditText) findViewById(R.id.ConfirmEmailAddress) ;

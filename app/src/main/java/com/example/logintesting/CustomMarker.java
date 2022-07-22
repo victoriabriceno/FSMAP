@@ -1,7 +1,10 @@
 package com.example.logintesting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +38,7 @@ public class CustomMarker extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     CustomMarkersList customMarkersList ;
     List<String> markerList;
+    ImageView markerCUstomMarkers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,14 @@ public class CustomMarker extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        markerCUstomMarkers = findViewById(R.id.backBTN);
+        markerCUstomMarkers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomMarker.this,Settings.class));
             }
         });
 

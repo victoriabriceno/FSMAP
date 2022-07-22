@@ -28,7 +28,7 @@
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.082" />
@@ -40,7 +40,7 @@
         android:background="@drawable/pencilgrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintHorizontal_bias="0.668"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.225" />
@@ -57,10 +57,10 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633" />
+        app:layout_constraintVertical_bias="0.54" />
 
     <Button
         android:id="@+id/Savebtn"
@@ -74,29 +74,28 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintHorizontal_bias="0.877"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633" />
+        app:layout_constraintVertical_bias="0.54" />
 
     <EditText
         android:id="@+id/UserChange"
-        android:layout_width="390dp"
-        android:layout_height="55dp"
+        android:layout_width="371dp"
+        android:layout_height="53dp"
         android:background="@null"
-        android:foreground="@drawable/custom_input"
         android:drawableLeft="@drawable/usericon"
         android:drawablePadding="10dp"
         android:ems="10"
+        android:foreground="@drawable/custom_input"
         android:hint="Change user name"
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
+        app:layout_constraintVertical_bias="0.297" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -106,10 +105,10 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintVertical_bias="0.374" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="410dp"
@@ -117,19 +116,19 @@
         android:background="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UserChange"
-        app:layout_constraintVertical_bias="0.126">
+        app:layout_constraintVertical_bias="0.109">
 
         <TextView
             android:id="@+id/EmailEditprofile"
             android:layout_width="266dp"
             android:layout_height="37dp"
-            android:text="email"
-            android:textSize="18dp"
-            android:textColor="@color/dark_gray"
             android:fontFamily="@font/questrialregular"
+            android:text="email"
+            android:textColor="@color/dark_gray"
+            android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.111"
@@ -150,6 +149,6 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.757" />
+        app:layout_constraintVertical_bias="0.707" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

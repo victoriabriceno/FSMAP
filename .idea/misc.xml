@@ -21,23 +21,23 @@
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/drawable/location_marker_favoritedesign.xml" value="0.1" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/drawable/vie_bg.xml" value="0.2425" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_forgot_password.xml" value="0.21754385964912282" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_forgot_password.xml" value="0.33" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_fsmap_about.xml" value="0.2578125" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_main.xml" value="0.2578125" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_maps.xml" value="0.25" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_maps.xml" value="0.33" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw320dp/activity_register_user.xml" value="0.2578125" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_custommarkers.xml" value="0.33" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_edit_profile.xml" value="0.33" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_favorites.xml" value="0.25972222222222224" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_forgot_password.xml" value="0.271875" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_fsmap_about.xml" value="0.193359375" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_main.xml" value="0.5" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_maps.xml" value="0.25" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_edit_profile.xml" value="0.5" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_favorites.xml" value="0.33" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_forgot_password.xml" value="0.5" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_fsmap_about.xml" value="0.33" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_maps.xml" value="0.5" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_register_user.xml" value="0.33" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout-sw720dp/activity_themes.xml" value="0.271875" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_custommarkers.xml" value="0.21666666666666667" />
-        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_custommarkers.xml" value="0.33" />
+        <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_edit_profile.xml" value="0.33" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_favorites.xml" value="0.2578125" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_forgot_password.xml" value="0.34739583333333335" />
         <entry key="..\:/Users/ruben/OneDrive/Documents/GitHub/FSMAP/app/src/main/res/layout/activity_fsmap_about.xml" value="1.0903083700440528" />
@@ -63,12 +63,10 @@
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_map.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_maps.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/victo/AndroidStudioProjects/LoginTesting/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout-sw320dp/activity_maps.xml" value="0.29393115942028986" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_fsmap_about.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_settings.xml" value="0.38697916666666665" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/row_custommarker.xml" value="0.29393115942028986" />
       </map>
     </option>
   </component>

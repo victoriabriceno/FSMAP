@@ -13,10 +13,10 @@
         android:background="@drawable/back"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.21" />
+        app:layout_constraintVertical_bias="0.578" />
 
     <TextView
         android:id="@+id/textView"
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.601" />
+        app:layout_constraintVertical_bias="0.762" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

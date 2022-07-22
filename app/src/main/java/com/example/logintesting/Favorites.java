@@ -5,7 +5,10 @@ package com.example.logintesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +40,7 @@ public class Favorites extends AppCompatActivity {
  FirebaseAuth firebaseAuth;
     UserFavoriteList userFavoriteList ;
     List<String>markerList;
+    ImageView backFavorites;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,13 @@ public class Favorites extends AppCompatActivity {
 
        list = new ArrayList<UserFavoriteList>();
 
+       backFavorites = findViewById(R.id.backBTN);
+       backFavorites.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               startActivity(new Intent(Favorites.this,Settings.class));
+           }
+       });
 
        adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
         recyclerView.setAdapter(adapterUserFavoriteList);

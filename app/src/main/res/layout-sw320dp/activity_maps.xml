@@ -152,10 +152,11 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMaps"
-        android:layout_width="83dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="-4dp"
+        android:layout_width="75dp"
+        android:layout_height="74dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="2dp"
         android:layout_toLeftOf="@id/search_bar"
         android:background="@drawable/userprofilefinalexpanded" />
 

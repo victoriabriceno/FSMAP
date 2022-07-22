@@ -7,21 +7,22 @@
     tools:context=".Favorites">
  <ImageView
      android:id="@+id/backBTN"
-     android:layout_width="30dp"
-     android:layout_height="29dp"
+     android:layout_width="40dp"
+     android:layout_height="40dp"
      android:layout_marginHorizontal="10dp"
      android:layout_marginTop="25dp"
      android:background="@drawable/back" />
+
  <TextView
      android:id="@+id/favoriteMarkerLabel"
      android:layout_width="765dp"
      android:layout_height="80dp"
-     android:gravity="center"
      android:fontFamily="@font/amaticscbold"
+     android:gravity="center"
      android:padding="5dp"
      android:text="Favorite List"
      android:textAlignment="center"
-     android:textColor="@color/black"
+     android:textColor="@color/gray"
      android:textSize="50dp"
      android:textStyle="bold" />
 
@@ -30,6 +31,7 @@
      android:layout_width="match_parent"
      android:layout_height="1531dp"
      android:layout_below="@id/favoriteMarkerLabel"
+     android:layout_marginTop="63dp"
      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintTop_toTopOf="parent"

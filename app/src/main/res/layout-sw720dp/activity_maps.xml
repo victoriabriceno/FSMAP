@@ -145,10 +145,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMaps"
-        android:layout_width="139dp"
-        android:layout_height="133dp"
-        android:layout_marginRight="-6dp"
-        android:background="@drawable/userprofilefinalexpanded" />
+        android:layout_width="115dp"
+        android:layout_height="107dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/userprofilefinalexpanded" />
 
     <ImageView
         android:id="@+id/gps"
@@ -190,9 +192,10 @@
         android:layout_width="790dp"
         android:layout_height="77dp"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/userMaps"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="27dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/userMaps"
         android:background="@drawable/white_boarder"
         android:elevation="15dp">
 
@@ -219,6 +222,7 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:textColor="@color/black"
+            android:textColorHint="@color/gray"
             android:textSize="15sp"
             android:translationZ="90dp" />
     </RelativeLayout>

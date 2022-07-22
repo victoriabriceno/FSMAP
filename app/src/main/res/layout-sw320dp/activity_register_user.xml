@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,8 +12,12 @@
         android:layout_height="430dp"
         android:layout_below="@id/FSMAP2"
         android:layout_centerInParent="true"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/vie_bg">
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/vie_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.684">
 
         <TextView
             android:id="@+id/SIGNUPText"
@@ -125,19 +129,26 @@
 
 
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/backBTN"
         android:layout_width="30dp"
         android:layout_height="29dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/back" />
+        android:background="@drawable/back"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="24dp" />
+
     <ImageView
         android:id="@+id/FSMAP2"
         android:layout_width="265dp"
         android:layout_height="176dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="600dp"
         android:background="@null"
-        android:foreground="@drawable/finallogo" />
+        android:foreground="@drawable/finallogo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/RegisterText"
@@ -145,23 +156,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/FSMAP2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="572dp"
         android:fontFamily="@font/questrialregular"
         android:text="Join our team!"
-        android:textColor="@color/black"
-        android:textSize="25dp" />
+        android:textColor="@color/gray"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/constrainLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="76dp"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textSize="15dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/constrainLayout"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

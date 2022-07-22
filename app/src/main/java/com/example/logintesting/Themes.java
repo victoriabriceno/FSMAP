@@ -3,9 +3,11 @@ package com.example.logintesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +32,14 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         //Setting up buttons
         ImageButton LightMode;
         ImageButton DarkMode;
+        ImageView backThemes;
+        backThemes = findViewById(R.id.backBTN);
+        backThemes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Themes.this,Settings.class));
+            }
+        });
 
         LightMode = findViewById(R.id.LightModeButton);
         LightMode.setOnClickListener(this);
