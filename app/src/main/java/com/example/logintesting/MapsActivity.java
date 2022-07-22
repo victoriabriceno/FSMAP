@@ -1405,9 +1405,7 @@ GoogleMap.OnMapClickListener {
             {
                 if(!m3.getTitle().equals(marker2.getTitle()))
                 {
-                    if(mMap.getCameraPosition().zoom>18) {
-                        m3.setVisible(false);
-                    }
+                    m3.setVisible(false);
                 }
             }
             for(Marker m3C: createdMarkers)
