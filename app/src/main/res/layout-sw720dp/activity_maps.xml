@@ -35,7 +35,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/questrialregular"
-            android:text="Room Number"
+            android:text="Potato Holder"
             android:textSize="15dp"
             android:textStyle="bold"
             map:layout_constraintBottom_toBottomOf="parent"
@@ -164,9 +164,9 @@
         android:id="@+id/userMaps"
         android:layout_width="156dp"
         android:layout_height="115dp"
-        android:layout_marginRight="-9dp"
+        android:layout_marginRight="-6dp"
         android:layout_toLeftOf="@id/search_bar"
-        android:background="@drawable/userprofilefinal" />
+        android:background="@drawable/userprofilefinalexpanded" />
 
     <ImageView
         android:id="@+id/gps"

@@ -12,15 +12,15 @@
         android:layout_height="430dp"
         android:layout_below="@id/FSMAP2"
         android:layout_centerInParent="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/vie_bg">
 
         <TextView
             android:id="@+id/SIGNUPText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/amaticscbold"
             android:text="Create an account"
             android:textColor="@color/black"
@@ -106,8 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/registerPassword"
@@ -126,22 +125,27 @@
 
 
     </RelativeLayout>
-
+    <ImageView
+        android:id="@+id/backBTN"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/back" />
     <ImageView
         android:id="@+id/FSMAP2"
-        android:layout_width="243dp"
-        android:layout_height="179dp"
-        android:foreground="@drawable/finallogo"
+        android:layout_width="265dp"
+        android:layout_height="176dp"
+        android:layout_centerHorizontal="true"
         android:background="@null"
-        android:layout_centerHorizontal="true"/>
+        android:foreground="@drawable/finallogo" />
 
     <TextView
         android:id="@+id/RegisterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/FSMAP2"
-        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/questrialregular"
         android:text="Join our team!"
         android:textColor="@color/black"

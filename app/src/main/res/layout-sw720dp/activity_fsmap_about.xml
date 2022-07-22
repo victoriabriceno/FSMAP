@@ -5,21 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FSMapAbout">
+    <ImageView
+        android:id="@+id/backBTN"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:background="@drawable/back"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="716dp"
-        android:layout_height="650dp"
+        android:layout_width="731dp"
+        android:layout_height="1302dp"
+        android:fontFamily="@font/questrialregular"
         android:gravity="left"
         android:text="@string/AboutText"
         android:textSize="50sp"
-        android:fontFamily="@font/questrialregular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.438"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.379" />
+        app:layout_constraintVertical_bias="0.659" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

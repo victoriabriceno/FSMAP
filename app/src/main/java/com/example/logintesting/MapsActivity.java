@@ -152,7 +152,7 @@ GoogleMap.OnMapClickListener {
     boolean wasRemoveHit = false;
     private boolean FollowUser= false;
     boolean wasMarkerClicked = false;
-
+    String SquidCheck = "SquidWard Community College";
     //Variables from profile Picture
 
     FirebaseAuth fAuth;
@@ -750,10 +750,16 @@ GoogleMap.OnMapClickListener {
         WaterZones.add(waterZone);
         MarkersList.add(waterZone);
 
+        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("SquidWard Community College");
+        Marker SquidCC = mMap.addMarker(SCC);
+        MarkersList.add(SquidCC);
+
 
         for (Marker marker1: MarkersList)
         {
-            marker1.setVisible(false);
+            if(!marker1.getTitle().equals(SquidCheck)) {
+                marker1.setVisible(false);
+            }
         }
         //Set the bounds for overlay
         LatLngBounds buildLibrary = new LatLngBounds(
@@ -780,6 +786,11 @@ GoogleMap.OnMapClickListener {
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 140, 200, false);
 
+        //Markers for SquidWard
+        BitmapDrawable bitmapdrawSCC=(BitmapDrawable)getResources().getDrawable(R.drawable.squidward_community_college);
+        Bitmap bSCC=bitmapdrawSCC.getBitmap();
+        Bitmap smallMarkerSCC = Bitmap.createScaledBitmap(bSCC, 340, 400, false);
+
         //Markers for Bathrooms
         BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.bathroom_marker_expanded);
         Bitmap b2=bitmapdraw2.getBitmap();
@@ -795,6 +806,7 @@ GoogleMap.OnMapClickListener {
         Bitmap b4=bitmapdraw4.getBitmap();
         Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 140, 200, false);
 
+        SquidCC.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarkerSCC));
         //Set Markers image for classrooms
         for (Marker ClassRoom: ClassRoomMarkers)
         {
@@ -831,13 +843,12 @@ GoogleMap.OnMapClickListener {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                if(marker2 != null) {
+                if (marker2 != null) {
                     if (markers.getTitle().equals(marker2.getTitle())) {
                         markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                }
-                else{
-                    markers.setVisible(mMap.getCameraPosition().zoom>18);
+                } else {
+                    markers.setVisible(mMap.getCameraPosition().zoom > 18);
                 }
             }
         });
@@ -876,7 +887,7 @@ GoogleMap.OnMapClickListener {
                     boolean isIt = markers.isVisible();
                 }
                 else{
-                    markers.setVisible(mMap.getCameraPosition().zoom>18);
+                    checkIfMarkerNeedVisible();
                 }
             }
         });
@@ -1201,9 +1212,11 @@ GoogleMap.OnMapClickListener {
                 break;
             case R.id.ZoomIn:
                 mMap.moveCamera(CameraUpdateFactory.zoomIn());
+                checkIfMarkerNeedVisible();
                 break;
             case R.id.ZoomOut:
                 mMap.moveCamera(CameraUpdateFactory.zoomOut());
+                checkIfMarkerNeedVisible();
                 break;
         }
     }
@@ -1368,6 +1381,21 @@ GoogleMap.OnMapClickListener {
         return false;
     }
 
+    public void checkIfMarkerNeedVisible()
+    {
+        if(mMap.getCameraPosition().zoom >18) {
+            for (Marker m : MarkersList) {
+                m.setVisible(true);
+            }
+        }
+        else
+        {
+            for (Marker m2 : MarkersList) {
+                m2.setVisible(false);
+            }
+        }
+    }
+
     //Handles what happens when user clicks on the map (not the same as drag)
     @Override
     public void onMapClick(LatLng point){
@@ -1398,10 +1426,7 @@ GoogleMap.OnMapClickListener {
             saveSpotLayout.setVisibility(View.GONE);
         }
         //Make all markers visible
-        for (Marker m : MarkersList)
-        {
-            m.setVisible(true);
-        }
+        checkIfMarkerNeedVisible();
     }
 
     public void RemoveAllLines()
