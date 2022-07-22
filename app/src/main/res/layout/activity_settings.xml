@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,158 +7,123 @@
     tools:context=".Settings">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/constrainLayout"
-        android:layout_height="365dp"
-        android:layout_width="311dp"
-        android:background="@drawable/vie_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".78"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568">
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606">
-
+        android:layout_width="368dp"
+        android:layout_height="486dp"
+        android:layout_below="@id/userSettings"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/vie_bg">
 
         <TextView
             android:id="@+id/LoginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/amaticscbold"
+            android:gravity="center"
             android:text="Settings"
             android:textColor="@color/black"
             android:textSize="45dp"
-            android:textStyle="normal"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/FavoritesButton"
-            android:layout_width="259dp"
-            android:layout_height="39dp"
+            android:layout_width="303dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/LoginText"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="Favorites"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.511"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.214" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/CustomMarkersButton"
-            android:layout_width="259dp"
-            android:layout_height="39dp"
+            android:layout_width="303dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/FavoritesButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="CustomMarkers"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.374" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/ThemesButton"
-            android:layout_width="259dp"
-            android:layout_height="39dp"
+            android:layout_width="303dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/CustomMarkersButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="Themes"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.533"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.54" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/AboutButton"
-            android:layout_width="259dp"
-            android:layout_height="39dp"
+            android:layout_width="303dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/ThemesButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="About"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.511"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.702" />
-
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/LogoutButton"
-            android:layout_width="259dp"
-            android:layout_height="39dp"
+            android:layout_width="303dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/AboutButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="Logout"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.538"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.858" />
+            android:textSize="15dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/userNamesettings"
         android:layout_width="284dp"
         android:layout_height="41dp"
+        android:layout_below="@id/userSettings"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/questrialregular"
+        android:gravity="center"
         android:text="User"
+        android:textColor="@color/gray"
         android:textAlignment="center"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.242" />
+        android:textSize="25dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userSettings"
-        android:layout_width="146dp"
-        android:layout_height="109dp"
-        android:src="@drawable/user2"
-        app:civ_border_color="@color/light_gray"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
+        android:layout_width="328dp"
+        android:layout_height="164dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/userprofilefinalexpanded" />
 
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="308dp"
         android:layout_height="54dp"
+        android:layout_below="@id/constrainLayout"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/questrialregular"
-        android:text="Made by SwiftKings"
-        android:textAlignment="center"
         android:gravity="center"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
+        android:text="Made by SwiftKings"
+        android:textColor="@color/gray"
+        android:textSize="25dp" />
 
     <ImageView
         android:id="@+id/backBTN"
@@ -167,9 +132,9 @@
         android:background="@drawable/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/constrainLayout"
-        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051" />
+        app:layout_constraintVertical_bias="0.038" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

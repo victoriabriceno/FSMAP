@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Settings">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/constrainLayout"
         android:layout_width="468dp"
         android:layout_height="486dp"
         android:background="@drawable/vie_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".78"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45">
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true">
 
         <TextView
             android:id="@+id/LoginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
             android:fontFamily="@font/amaticscbold"
             android:text="Settings"
             android:textColor="@color/black"
             android:textSize="45dp"
-            android:textStyle="normal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/FavoritesButton"
@@ -41,25 +36,21 @@
             android:fontFamily="@font/questrialregular"
             android:text="Favorites"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.244" />
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/LoginText"
+            android:layout_centerInParent="true"/>
 
         <Button
             android:id="@+id/CustomMarkersButton"
             android:layout_width="403dp"
             android:layout_height="59dp"
+            android:layout_below="@id/FavoritesButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="CustomMarkers"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.413" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/ThemesButton"
@@ -69,12 +60,9 @@
             android:fontFamily="@font/questrialregular"
             android:text="Themes"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.58" />
+            android:layout_below="@id/CustomMarkersButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/AboutButton"
@@ -84,12 +72,9 @@
             android:fontFamily="@font/questrialregular"
             android:text="About"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            android:layout_below="@id/ThemesButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/LogoutButton"
@@ -99,57 +84,45 @@
             android:fontFamily="@font/questrialregular"
             android:text="Logout"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.507"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.93" />
+            android:layout_below="@id/AboutButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/userNamesettings"
         android:layout_width="284dp"
         android:layout_height="41dp"
+        android:layout_above="@id/constrainLayout"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/questrialregular"
+        android:gravity="center"
         android:text="User"
         android:textAlignment="center"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.242" />
+        android:textColor="@color/gray"
+        android:textSize="25dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userSettings"
-        android:layout_width="146dp"
-        android:layout_height="109dp"
-        android:src="@drawable/user2"
-        app:civ_border_color="@color/light_gray"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
+        android:layout_width="371dp"
+        android:layout_height="291dp"
+        android:layout_above="@id/userNamesettings"
+        android:layout_marginBottom="64dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/userprofilefinalexpanded" />
 
     <TextView
         android:id="@+id/Decoration"
         android:layout_width="308dp"
         android:layout_height="54dp"
+        android:layout_below="@id/constrainLayout"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/questrialregular"
+        android:gravity="center"
+        android:textColor="@color/gray"
         android:text="Made by SwiftKings"
-        android:textAlignment="center"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.698" />
+        android:textSize="25dp" />
 
     <ImageView
         android:id="@+id/backBTN"
@@ -162,5 +135,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.038" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
 

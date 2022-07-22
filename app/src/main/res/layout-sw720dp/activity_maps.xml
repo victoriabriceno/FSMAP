@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         tools:layout_editor_absoluteX="-5dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/slideup"
         android:layout_width="match_parent"
         android:layout_height="175dp"
@@ -51,16 +51,10 @@
             android:layout_width="48dp"
             android:layout_height="45dp"
             android:layout_above="@id/navgo"
-            android:layout_alignParentRight="true"
-            android:layout_marginHorizontal="45dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="10dp"
-            android:foreground="@drawable/starfull"
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintHorizontal_bias="0.334"
-            map:layout_constraintStart_toStartOf="parent"
-            map:layout_constraintTop_toTopOf="parent"
-            map:layout_constraintVertical_bias="0.607" />
+            android:layout_toRightOf="@id/Destination"
+            android:foreground="@drawable/starfull" />
 
         <AutoCompleteTextView
             android:id="@+id/From"
@@ -83,34 +77,26 @@
 
         <ImageButton
             android:id="@+id/btnAddFavorites"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
             android:layout_above="@id/navgo"
-            android:layout_alignParentRight="true"
-            android:layout_marginHorizontal="45dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="10dp"
+            android:layout_toRightOf="@id/Destination"
             android:foreground="@drawable/star"
-            android:visibility="gone"
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintHorizontal_bias="0.844"
-            map:layout_constraintStart_toStartOf="parent"
-            map:layout_constraintTop_toTopOf="parent"
-            map:layout_constraintVertical_bias="0.338" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/navgo"
             android:layout_width="66dp"
             android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_toRightOf="@id/From"
             android:background="@drawable/custom_imput2"
             android:fontFamily="@font/questrialregular"
-            android:text="GO"
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintHorizontal_bias="0.43"
-            map:layout_constraintStart_toStartOf="parent"
-            map:layout_constraintTop_toTopOf="parent"
-            map:layout_constraintVertical_bias="0.606" />
+            android:text="GO" />
 
         <AutoCompleteTextView
             android:id="@+id/Destination"
@@ -128,7 +114,7 @@
             map:layout_constraintTop_toTopOf="parent"
             map:layout_constraintVertical_bias="0.88" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/NavDone"
@@ -151,46 +137,36 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_above="@+id/slideup"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="0dp"
+        android:layout_marginVertical="5dp"
         android:background="@drawable/custom_input"
         android:backgroundTint="@color/orange"
         android:gravity="center"
         android:paddingLeft="10dp"
         android:text="Save Spot"
-        android:visibility="visible"
-        map:layout_constraintBottom_toTopOf="@+id/slideup"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.049"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="0.981" />
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/RemoveSpot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="135dp"
+        android:layout_height="48dp"
         android:layout_alignWithParentIfMissing="true"
         android:layout_above="@+id/slideup"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="0dp"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/custom_input"
         android:backgroundTint="@color/orange"
+        android:gravity="center"
+        android:paddingLeft="10dp"
         android:text="Remove Spot"
-        android:visibility="gone"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent" />
+        android:visibility="gone"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMaps"
-        android:layout_width="98dp"
-        android:layout_height="101dp"
-        android:layout_alignLeft="@id/search_bar"
-        android:background="@drawable/user2"
-        map:layout_constraintBottom_toTopOf="@+id/SaveSpot"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.018"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="0.024" />
+        android:layout_width="156dp"
+        android:layout_height="115dp"
+        android:layout_marginRight="-9dp"
+        android:layout_toLeftOf="@id/search_bar"
+        android:background="@drawable/userprofilefinal" />
 
     <ImageView
         android:id="@+id/gps"
@@ -210,21 +186,15 @@
 
     <ImageView
         android:id="@+id/ZoomIn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="45dp"
         android:layout_above="@+id/ZoomOut"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="5dp"
         android:layout_marginVertical="10dp"
-        android:background="@drawable/plus"
-        android:paddingRight="10dp"
-        map:layout_constraintBottom_toTopOf="@+id/slideup"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.969"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="0.893" />
+        android:background="@drawable/zoom_in_transparent_expanded"
+        android:paddingRight="10dp" />
 
     <ImageView
         android:id="@+id/ZoomOut"
@@ -234,27 +204,18 @@
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="5dp"
-        android:background="@drawable/minus"
-        android:paddingLeft="10dp"
-        map:layout_constraintBottom_toTopOf="@+id/slideup"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.975"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="0.934" />
+        android:background="@drawable/zoom_out_transparent_extended"
+        android:paddingLeft="10dp"/>
 
     <RelativeLayout
         android:id="@+id/search_bar"
         android:layout_width="812dp"
-        android:layout_height="79dp"
+        android:layout_height="77dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_alignParentRight="true"
         android:background="@drawable/white_boarder"
-        android:elevation="15dp"
-        map:layout_constraintBottom_toTopOf="@+id/slideup"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.851"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="@+id/map"
-        map:layout_constraintVertical_bias="0.03">
+        android:elevation="15dp">
 
         <ImageView
             android:id="@+id/ic_magnify"
@@ -270,7 +231,9 @@
             android:id="@+id/input_Search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="-4dp"
             android:layout_toRightOf="@id/ic_magnify"
             android:background="@null"
             android:hint="Enter a classroom"
@@ -280,4 +243,62 @@
             android:textSize="15sp"
             android:translationZ="90dp" />
     </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/vie_bg"
+        android:visibility="gone"
+        android:id="@+id/saveSpotLayout">
+
+        <EditText
+            android:id="@+id/MarkerName"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/custom_input"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:hint="Type In Marker Name"
+            android:textColorHint="@color/black"
+            android:gravity="center"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/SaveSpotTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:text="Save Spot"
+            android:fontFamily="@font/amaticscbold"
+            android:textColor="@color/black"
+            android:textSize="45dp"
+            android:textStyle="normal"/>
+
+        <Button
+            android:id="@+id/OkMarkerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginVertical="18dp"
+            android:textColor="@color/light_gray"
+            android:backgroundTint="@color/orange"
+            android:background="@drawable/custom_input"
+            android:text="Set" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/NavLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/NavDone"
+        android:layout_alignParentRight="true"
+        android:layout_marginHorizontal="5dp"
+        android:backgroundTint="@color/orange"
+        android:background="@drawable/custom_input"
+        android:text="Nav Lock" />
+</RelativeLayout>

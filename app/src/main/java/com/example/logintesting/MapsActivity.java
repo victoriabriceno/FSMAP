@@ -141,7 +141,7 @@ GoogleMap.OnMapClickListener {
     RelativeLayout slideupview;
 
     boolean DarkorLight;
-    ConstraintLayout saveSpotLayout;
+    RelativeLayout saveSpotLayout;
     //Favorites
     ImageButton bntFavoritesRemove;
     ImageButton btnFavoritesAdd;
