@@ -779,9 +779,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //create map overlap
         GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
                 .positionFromBounds(buildLibrary)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
-                .anchor(0.43f,0.45f);
-
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3e_library_orange))
+                .anchor(0.43f,0.46f)
+                .bearing(-2);
         GroundOverlayOptions build3aOverlay =  new GroundOverlayOptions()
                 .positionFromBounds(build3A)
                 .image(build3aF1BitMap)
