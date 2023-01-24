@@ -22,6 +22,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -30,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -49,11 +51,13 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.logintesting.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.Dot;
@@ -71,6 +75,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -100,7 +105,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 //Main Maps Screen
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
-GoogleMap.OnMapClickListener {
+GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     //Global Variables used throughout the program,
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
@@ -108,7 +113,6 @@ GoogleMap.OnMapClickListener {
     private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Set;
-    private Button SavePoint;
     private Button RemovePoint;
     private ImageView ZoomIn;
     private ImageView ZoomOut;
@@ -139,7 +143,7 @@ GoogleMap.OnMapClickListener {
     boolean slideup;
 
     RelativeLayout slideupview;
-
+   ArrayList<String> nameslist = new ArrayList<String>() {};
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
     //Favorites
@@ -153,8 +157,9 @@ GoogleMap.OnMapClickListener {
     private boolean FollowUser= false;
     boolean wasMarkerClicked = false;
     String SquidCheck = "SquidWard Community College";
+    LatLng LongClickPoint;
     //Variables from profile Picture
-
+    Snackbar snack;
     FirebaseAuth fAuth;
     StorageReference storageReference;
 
@@ -325,6 +330,7 @@ GoogleMap.OnMapClickListener {
             Toast.makeText(getApplicationContext(), "No Results Found", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void LoadMarkers()
     {
         createdMarkers = new ArrayList<>();
@@ -715,22 +721,22 @@ GoogleMap.OnMapClickListener {
         customPolyLines.add(outsideToWaterZone);
         LinesTitles.add("outsideToWater Zone (112)");
         //add Marker
-        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593989,-81.304514)).title("Meeting 119");
+        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593974,-81.304508)).title("Meeting 119");
         Marker room119 = mMap.addMarker(Meeting119);
         ClassRoomMarkers.add(room119);
         MarkersList.add(room119);
 
-        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593959,-81.304514)).title("Meeting 118");
+        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593945,-81.304514)).title("Meeting 118");
         Marker room118 = mMap.addMarker(Meeting118);
         ClassRoomMarkers.add(room118);
         MarkersList.add(room118);
 
-        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593929,-81.304514)).title("Meeting 117");
+        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593919,-81.304514)).title("Meeting 117");
         Marker room117 = mMap.addMarker(meeting117);
         ClassRoomMarkers.add(room117);
         MarkersList.add(room117);
 
-        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593898,-81.304514)).title("Meeting 116");
+        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593890,-81.304514)).title("Meeting 116");
         Marker room116 = mMap.addMarker(Meeting116);
         ClassRoomMarkers.add(room116);
         MarkersList.add(room116);
@@ -740,7 +746,7 @@ GoogleMap.OnMapClickListener {
         ClassRoomMarkers.add(room115);
         MarkersList.add(room115);
 
-        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593838,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
         BathroomMarkers.add(boysBathroom113);
         MarkersList.add(boysBathroom113);
@@ -750,7 +756,7 @@ GoogleMap.OnMapClickListener {
         WaterZones.add(waterZone);
         MarkersList.add(waterZone);
 
-        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("SquidWard Community College");
+        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("Squidward Community College");
         Marker SquidCC = mMap.addMarker(SCC);
         MarkersList.add(SquidCC);
 
@@ -761,30 +767,44 @@ GoogleMap.OnMapClickListener {
                 marker1.setVisible(false);
             }
         }
+        BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
+
         //Set the bounds for overlay
         LatLngBounds buildLibrary = new LatLngBounds(
                 new LatLng(28.59379993356988, -81.30450729197996),
                 new LatLng(28.594005193975605, -81.30415971195876));
-
+        LatLngBounds build3A =  new LatLngBounds(
+                new LatLng(28.595392200538452, -81.30425629914613),
+                new LatLng(28.59565596435769, -81.30393979848783));
         //create map overlap
         GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
+                .positionFromBounds(buildLibrary)
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
-                .anchor(0.43f,0.45f)
-                .position(new LatLng(28.593907678091824, -81.3043584293843),39.6f,27.8f);
+                .anchor(0.43f,0.45f);
 
+        GroundOverlayOptions build3aOverlay =  new GroundOverlayOptions()
+                .positionFromBounds(build3A)
+                .image(build3aF1BitMap)
+                .anchor(1.2f,-0.60f)
+                .bearing(-2);
         //add groundOverlay and create reference.
         GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
-
+        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
+        build3aF1.setDimensions(34,30);
+        buildLibraryOverlayed.setDimensions(37,28);
         //make it so overlay doesnt appear originally
         buildLibraryOverlayed.setVisible(false);
-
+        build3aF1.setVisible(false);
+        buildLibraryOverlayed.setClickable(true);
+        build3aF1.setClickable(true);
         //add the overlay to overlay array.
         groundOverlays.add(buildLibraryOverlayed);
+        groundOverlays.add(build3aF1);
 
         //Markers for classrooms
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.classroom_marker_expand);
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
         Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 140, 200, false);
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
 
         //Markers for SquidWard
         BitmapDrawable bitmapdrawSCC=(BitmapDrawable)getResources().getDrawable(R.drawable.squidward_community_college);
@@ -792,14 +812,14 @@ GoogleMap.OnMapClickListener {
         Bitmap smallMarkerSCC = Bitmap.createScaledBitmap(bSCC, 340, 400, false);
 
         //Markers for Bathrooms
-        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.bathroom_marker_expanded);
+        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.pixil_frame_0);
         Bitmap b2=bitmapdraw2.getBitmap();
-        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 140, 200, false);
+        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
 
         //Markers for WaterZones
-        BitmapDrawable bitmapdraw3=(BitmapDrawable)getResources().getDrawable(R.drawable.water_station_marker_expanded);
+        BitmapDrawable bitmapdraw3=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing__1_);
         Bitmap b3=bitmapdraw3.getBitmap();
-        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 140, 200, false);
+        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
 
         //Markers for AdminRooms (Unused as of now)
         BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.admin_rooms_marker_expanded);
@@ -896,10 +916,6 @@ GoogleMap.OnMapClickListener {
         slideupview.setVisibility(View.GONE);
         slideup = false;
 
-        //Save Spot button
-        SavePoint = findViewById(R.id.SaveSpot);
-        SavePoint.setOnClickListener(this);
-
         //Set Button for save spot
         Set = findViewById(R.id.OkMarkerTitle);
         Set.setOnClickListener(this);
@@ -917,12 +933,12 @@ GoogleMap.OnMapClickListener {
         NavDone.setOnClickListener(this);
 
         //zoom in
-        ZoomIn = findViewById(R.id.ZoomIn);
-        ZoomIn.setOnClickListener(this);
+//        ZoomIn = findViewById(R.id.ZoomIn);
+//        ZoomIn.setOnClickListener(this);
 
         //zoom out
-        ZoomOut = findViewById(R.id.ZoomOut);
-        ZoomOut.setOnClickListener(this);
+//        ZoomOut = findViewById(R.id.ZoomOut);
+//        ZoomOut.setOnClickListener(this);
         //SearchBar
         Search = findViewById(R.id.input_Search);
 
@@ -933,9 +949,10 @@ GoogleMap.OnMapClickListener {
         mMap.setOnMarkerClickListener(this);
         //Map click function
         mMap.setOnMapClickListener(this);
+        //Map Long Click function
+        mMap.setOnMapLongClickListener(this);
         //prepares searchbar
         SearchReady();
-
         //Getting Darkmode option from database
         DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/DarkMode/");
         mdatabase.addValueEventListener(new ValueEventListener() {
@@ -1029,7 +1046,8 @@ GoogleMap.OnMapClickListener {
     }
     }
 
-    public boolean isItInMyFavorites(Marker marker){
+    public boolean isItInMyFavorites(Marker marker)
+    {
         for (int i = 0; i < favoritedMarkers.size(); i++) {
             if(favoritedMarkers.get(i).getTitle().equals(marker.getTitle()))
             {
@@ -1050,15 +1068,18 @@ GoogleMap.OnMapClickListener {
                 if(!FollowUser)
                 {
                     FollowUser = true;
-                    Toast.makeText(MapsActivity.this,"Nav Lock ON",Toast.LENGTH_SHORT).show();
+                    Snackbar snack = Snackbar.make(findViewById(R.id.map), "NavLoc ON", Snackbar.LENGTH_SHORT);
+                    snack.show();
                 }
                 else
                 {
                     FollowUser = false;
-                    Toast.makeText(MapsActivity.this,"Nav Lock OFF",Toast.LENGTH_SHORT).show();
+                    Snackbar snack = Snackbar.make(findViewById(R.id.map), "NavLoc OFF", Snackbar.LENGTH_SHORT);
+                    snack.show();
                 }
                 break;
             case R.id.navgo:
+                getDirectionPoly(marker2);
                 //Setting curlocation and final destination to text boxes
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
@@ -1096,7 +1117,8 @@ GoogleMap.OnMapClickListener {
                         }
                     }
                     if (!wasFound) {
-                        Toast.makeText(getApplicationContext(), "Invalid route", Toast.LENGTH_SHORT).show();
+                        snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
+                        snack.show();
                         break;
                     }
                 }
@@ -1118,6 +1140,7 @@ GoogleMap.OnMapClickListener {
                 //Remove all lines
                 RemoveAllLines();
                 checkIfMarkerNeedVisible();
+                onMapClick(new LatLng(28.595085, -81.308305));
                 markersClicked.remove(0);
                 //Brings Searchbar back (again, may be depricated)
                 Search.setVisibility(View.VISIBLE);
@@ -1127,13 +1150,10 @@ GoogleMap.OnMapClickListener {
             case R.id.btnRemoveFavorites:
                 Favorites.removeFromFavorite(MapsActivity.this, marker2);
                 favoritedMarkers.remove(marker2);
+                snack = Snackbar.make(findViewById(R.id.map), "Removed From Favorites", Snackbar.LENGTH_SHORT);
+                snack.show();
                 bntFavoritesRemove.setVisibility(View.GONE);
                 btnFavoritesAdd.setVisibility(View.VISIBLE);
-                break;
-            case R.id.SaveSpot:
-                getDeviceLocation();
-                wasRemoveHit =false;
-                saveSpotLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.RemoveSpot:
                 wasRemoveHit = true;
@@ -1143,7 +1163,10 @@ GoogleMap.OnMapClickListener {
                     if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
                     {
                         createdMarkers.get(i).remove();
+                        createdMarkers.get(i).setVisible(false);
                         createdMarkers.remove(i);
+                        createdMarker.remove();
+                        createdMarker = null;
                     }
                 }
                 for (int i = 0; i < favoritedMarkers.size(); i++) {
@@ -1153,13 +1176,13 @@ GoogleMap.OnMapClickListener {
                         favoritedMarkers.remove(i);
                     }
                 }
-                slideupview.setVisibility(View.GONE);
                 RemoveAllLines();
                 RemovePoint.setVisibility(View.GONE);
-                SavePoint.setVisibility(View.VISIBLE);
+                slideupview.setVisibility(View.GONE);
                 break;
             case R.id.OkMarkerTitle:
                 getDeviceLocation();
+
                 boolean wasItCreatedAlready = false;
                 boolean nameExistAlready = false;
                 TextView markerName = findViewById(R.id.MarkerName);
@@ -1169,7 +1192,6 @@ GoogleMap.OnMapClickListener {
                 {
                     for (Marker marker1: createdMarkers)
                     {
-                        String createdNamecheck = marker1.getTitle();
                         if(marker1.getTitle().equals(name))
                         {
                             wasItCreatedAlready = true;
@@ -1186,17 +1208,19 @@ GoogleMap.OnMapClickListener {
                 Marker newMarker = null;
                 if(wasItCreatedAlready || nameExistAlready)
                 {
-                    Toast.makeText(getApplicationContext(), "Marker Already Exists", Toast.LENGTH_SHORT).show();
+                    snack = Snackbar.make(findViewById(R.id.map), "Marker Already Exists", Snackbar.LENGTH_SHORT);
+                    snack.show();
                     saveSpotLayout.setVisibility(View.GONE);
                 }
                 else {
                     if(!wasRemoveHit) {
                         if(!name.isEmpty()) {
-                            newMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(Latitude,Longitued)).title(name));
+                            newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
                             newMarker.showInfoWindow();
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(LongClickPoint));
                         }
                         else{
-                            newMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(Latitude,Longitued)).title(name));
+                            newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
                             newMarker.showInfoWindow();
                         }
                     }
@@ -1208,6 +1232,8 @@ GoogleMap.OnMapClickListener {
                 break;
             case R.id.btnAddFavorites:
                 Favorites.addToFavorite(MapsActivity.this,marker2);
+                snack = Snackbar.make(findViewById(R.id.map), "Added To Favorites", Snackbar.LENGTH_SHORT);
+                snack.show();
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
                 btnFavoritesAdd.setVisibility(View.GONE);
                 break;
@@ -1236,13 +1262,18 @@ GoogleMap.OnMapClickListener {
             }else{
                 ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
             }
-        }else{
-            ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        }else {
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
-
     }
+
+    @Override
+    public void onMapLongClick(LatLng point) {
+        wasRemoveHit = false;
+        saveSpotLayout.setVisibility(View.VISIBLE);
+        LongClickPoint = point;
+    }
+
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -1250,6 +1281,10 @@ GoogleMap.OnMapClickListener {
         getDeviceLocation();
         if(!wasRemoveHit){
             wasRemoveHit = true;
+        }
+        else
+        {
+            marker.remove();
         }
         if(isItInMyFavorites(marker))
         {
@@ -1267,14 +1302,12 @@ GoogleMap.OnMapClickListener {
         //check for marker in original Marker list
         if(CheckMarkerType(marker))
         {
-            SavePoint.setVisibility(View.GONE);
             RemovePoint.setVisibility(View.VISIBLE);
             createdMarker = marker;
         }
         else
         {
             RemovePoint.setVisibility(View.GONE);
-            SavePoint.setVisibility(View.GONE);
         }
         //Change camera, zoom if needed
         if (mMap.getCameraPosition().zoom < 18) {
@@ -1285,8 +1318,6 @@ GoogleMap.OnMapClickListener {
         //Keep track of how many times a marker is clicked
         if (clickCount == 0) {
             clickCount++;
-            //draw line to marker
-            getDirectionPoly(marker);
             //add marker to markersClicked
             markersClicked.add(marker);
         }
@@ -1296,12 +1327,12 @@ GoogleMap.OnMapClickListener {
                 clickCount++;
                 RemoveAllLines();
                 markersClicked.add(marker);
-                getDirectionPoly(marker);
             }
             //triggers if user clicks on same marker twice
             else {
                 if (clickCount != 1) {
-                    Toast.makeText(getApplicationContext(), "Clicked On the Same Marker", Toast.LENGTH_SHORT).show();
+                    snack = Snackbar.make(findViewById(R.id.map), "Clicked On The Same Marker", Snackbar.LENGTH_SHORT);
+                    snack.show();
                 }
             }
         }
@@ -1309,7 +1340,6 @@ GoogleMap.OnMapClickListener {
         {
             RemoveAllLines();
             markersClicked.add(marker);
-            getDirectionPoly(marker);
         }
         //Remove marker from markers clicked when more than 1 marker has been clicked
         if (markersClicked.size() > 1) {
@@ -1368,7 +1398,6 @@ GoogleMap.OnMapClickListener {
             To.setText(marker.getTitle());
             To.setFocusable(false);
             To.setBackgroundColor(Color.TRANSPARENT);
-
         }
         //hide markers after one is clicked
         for (Marker m : MarkersList)
@@ -1437,11 +1466,6 @@ GoogleMap.OnMapClickListener {
         if(RemovePoint.getVisibility() == View.VISIBLE)
         {
             RemovePoint.setVisibility(View.GONE);
-            SavePoint.setVisibility(View.VISIBLE);
-        }
-        if(SavePoint.getVisibility() == View.GONE)
-        {
-            SavePoint.setVisibility(View.VISIBLE);
         }
         if(saveSpotLayout.getVisibility() == View.VISIBLE)
         {
@@ -1632,13 +1656,16 @@ GoogleMap.OnMapClickListener {
                 }
                 polylineOptions.geodesic(true);
             }
-            if(polylineOptions!= null){
-                if(!CheckMarkerType(marker)) {
+            if(polylineOptions!= null)
+            {
+                if(!CheckMarkerType(marker))
+                {
                     List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
                     polylineOptions.add(outToInPoly.get(0));
                 }
                 String outToPolys = "outsideTo" + marker.getTitle();
-                for (int i = 0; i < LinesTitles.size() ; i++) {
+                for (int i = 0; i < LinesTitles.size() ; i++)
+                {
                     if(LinesTitles.get(i).equals(outToPolys))
                     {
                         linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
@@ -1646,9 +1673,11 @@ GoogleMap.OnMapClickListener {
                 }
                 linesShowing.add(mMap.addPolyline(polylineOptions));
             }else
-                Toast.makeText(getApplicationContext(),"Direction Not Found",Toast.LENGTH_SHORT).show();
+            {
+                snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
+                snack.show();
+            }
         }
     }
-
 }
 
