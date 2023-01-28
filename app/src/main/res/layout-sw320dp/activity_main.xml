@@ -135,7 +135,7 @@
         android:layout_width="259.79dp"
         android:layout_height="166.08"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="50.11"
         android:layout_marginBottom="-21dp"
         android:background="@null"
         android:foreground="@drawable/finallogo" />
