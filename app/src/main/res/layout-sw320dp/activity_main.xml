@@ -132,8 +132,8 @@
 
     <ImageView
         android:id="@+id/FSMAP"
-        android:layout_width="316dp"
-        android:layout_height="212dp"
+        android:layout_width="259.79dp"
+        android:layout_height="166.08"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="-21dp"
