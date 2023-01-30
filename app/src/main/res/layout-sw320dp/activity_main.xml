@@ -127,15 +127,27 @@
 
             />
 
+        <ImageButton
+            android:id="@+id/google_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/google_logo"
+            android:layout_below="@id/RegisterBTN"
+            android:layout_alignParentRight="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"
+            />
+
 
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/FSMAP"
         android:layout_width="259.79dp"
-        android:layout_height="166.08"
+        android:layout_height="166.08dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50.11"
+        android:layout_marginTop="50.11dp"
         android:layout_marginBottom="-21dp"
         android:background="@null"
         android:foreground="@drawable/finallogo" />

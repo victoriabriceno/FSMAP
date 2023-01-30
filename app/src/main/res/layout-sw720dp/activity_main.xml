@@ -119,6 +119,18 @@
             android:textColor="@color/white"
             android:textSize="15dp" />
 
+        <ImageButton
+            android:id="@+id/google_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/google_logo"
+            android:layout_below="@id/RegisterBTN"
+            android:layout_alignParentRight="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"
+            />
+
         <ProgressBar
             android:id="@+id/ProgressBar"
             style="?android:attr/progressBarStyleLarge"

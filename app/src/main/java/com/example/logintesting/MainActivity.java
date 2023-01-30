@@ -1,6 +1,9 @@
 package com.example.logintesting;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +12,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,24 +20,41 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register, forgetPassword;
     private EditText editTextEmail, editTextPassword;
     private Button login;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     //Save email and password
@@ -104,9 +125,104 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        // Google
+
+        //google
+        ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail().build();
+        gsc = GoogleSignIn.getClient(this,gso);
+
+        GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if(gAccount != null){
+            finish();
+            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+            startActivity(intent);
+        }
+
+//        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//            @Override
+//            public void onActivityResult(ActivityResult result) {
+//                if(result.getResultCode() == Activity.RESULT_OK){
+//                    Intent data = result.getData();
+//                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//                    try{
+//                        task.getResult(ApiException.class);
+//                        finish();
+//                        Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+//                        startActivity(intent);
+//                    }catch (ApiException e){
+//
+//                        Toast.makeText(MainActivity.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                }
+//            }
+//        });
+
+
+
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = gsc.getSignInIntent();
+               startActivityForResult(signInIntent,1234);
+            }
+        });
+
 
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1234){
+
+                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                 try {
+                     GoogleSignInAccount account = task.getResult(ApiException.class);
+                     AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),
+                             null);
+                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                         @Override
+                         public void onComplete(@NonNull Task<AuthResult> task) {
+
+                             if(task.isSuccessful()){
+                                 Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                                 startActivity(intent);
+                             }else{
+                                 Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                             }
+
+
+                         }
+                     });
+
+
+                 }catch (ApiException e){
+                     e.printStackTrace();
+                 }
+        }
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!= null){
+            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+            startActivity(intent);
+        }
+    }
+
     //Creates a save instance of the previous ui
     //Runs right before everything is destroyed
     @Override
@@ -246,5 +362,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
+
+
 
 }

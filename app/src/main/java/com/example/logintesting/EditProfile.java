@@ -16,6 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +46,9 @@ FirebaseAuth fAuth;
 FirebaseUser firebaseAuth;
 ImageView pencilProfilechange , backEditPROFILE;
 EditText changeUser;
-DatabaseReference databaseReference;
+
+// Google
+    DatabaseReference databaseReference;
     String fullName;
     String useriD;
     TextView emailProfile;
@@ -68,7 +74,7 @@ DatabaseReference databaseReference;
         });
 
 
-    //FIREBASE
+        //FIREBASE
         firebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
         useriD = firebaseAuth.getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -131,8 +137,12 @@ DatabaseReference databaseReference;
 
                 User userProfile = snapshot.getValue(User.class);
 
+
                 if(userProfile != null){
                     String email = userProfile.email;
+
+                    // Google variable
+
 
                     emailProfile.setText(email);
 
