@@ -47,11 +47,14 @@ FirebaseUser firebaseAuth;
 ImageView pencilProfilechange , backEditPROFILE;
 EditText changeUser;
 
-// Google
+GoogleSignInOptions gso;
+GoogleSignInClient gsc;
+
     DatabaseReference databaseReference;
     String fullName;
     String useriD;
-    TextView emailProfile;
+    TextView emailProfile,getEmailProfile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ EditText changeUser;
         pencilProfilechange = findViewById(R.id.pencil_change_profile);
         changeUser = findViewById(R.id.UserChange);
         emailProfile = findViewById(R.id.EmailEditprofile);
+
         backEditPROFILE =findViewById(R.id.backBTN);
         backEditPROFILE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,12 +128,19 @@ EditText changeUser;
             }
         });
 
+
+
         //SHOWING USER DATA
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail().build();
+        gsc = GoogleSignIn.getClient(this,gso);
+        GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
       Intent data = getIntent();
        fullName = data.getStringExtra("fullName");
 
       changeUser.setText(fullName);
-
 
         databaseReference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -137,19 +148,19 @@ EditText changeUser;
 
                 User userProfile = snapshot.getValue(User.class);
 
-
                 if(userProfile != null){
                     String email = userProfile.email;
-
-                    // Google variable
 
 
                     emailProfile.setText(email);
 
-
-
+//                }else if(gAccount!=null){
+//
+//                    String emailGoogle = gAccount.getEmail();
+//
+//                    getEmailProfile.setText(emailGoogle);
+//
                 }
-
             }
 
             @Override

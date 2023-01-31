@@ -40,8 +40,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
 
 TextView userNameSettings;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
-    FirebaseAuth fAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +117,6 @@ TextView userNameSettings;
 
                     userNameSettings.setText(userName);
 
-
                 }
 
             }
@@ -127,7 +128,10 @@ TextView userNameSettings;
             }
         });
 
-
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail().build();
+        gsc = GoogleSignIn.getClient(this,gso);
 
 
     }
@@ -150,9 +154,8 @@ TextView userNameSettings;
                 break;
             case R.id.LogoutButton:
                 //Logs user out and returns to login
-                //FirebaseAuth.getInstance().signOut();
-
-                fAuth.signOut();
+                gsc.signOut();
+                FirebaseAuth.getInstance().signOut();
                // Returns to specified Screen
                 Intent i = new Intent(Settings.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

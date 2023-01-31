@@ -126,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         // Google
-
-        //google
         ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
@@ -142,28 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-//        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//            @Override
-//            public void onActivityResult(ActivityResult result) {
-//                if(result.getResultCode() == Activity.RESULT_OK){
-//                    Intent data = result.getData();
-//                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//                    try{
-//                        task.getResult(ApiException.class);
-//                        finish();
-//                        Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-//                        startActivity(intent);
-//                    }catch (ApiException e){
-//
-//                        Toast.makeText(MainActivity.this,"Something went wrong",Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }
-//            }
-//        });
-
-
-
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,8 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
