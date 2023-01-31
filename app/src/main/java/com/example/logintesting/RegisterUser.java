@@ -136,7 +136,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                         public void onComplete(@NonNull Task<Void> task) {
 
                                             if(task.isSuccessful()){
-                                                //Toast.makeText(RegisterUser.this,"User has been registered successfully!",Toast.LENGTH_LONG).show();
                                                 FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                                                 user.sendEmailVerification();
                                                 Toast.makeText(RegisterUser.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
