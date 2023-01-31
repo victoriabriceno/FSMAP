@@ -1,13 +1,6 @@
 package com.example.logintesting;
 //Woohoo, imports
 
-import androidx.annotation.NonNull;
-import androidx.annotation.PluralsRes;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.loader.content.Loader;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,12 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -30,20 +20,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
-import android.widget.LinearLayout;
-import android.widget.ListPopupWindow;
 import android.widget.RelativeLayout;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -51,10 +35,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.logintesting.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -162,8 +144,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     Snackbar snack;
     FirebaseAuth fAuth;
     StorageReference storageReference;
-
-
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +151,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -213,7 +194,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Picasso.get().load(uri).into(userIconMaps);
             }
         });
-
 
     }
 
@@ -446,6 +426,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
         //set zoom
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
+        moveCamera(mMap.getCameraPosition().target,16f);
         //Location tracking
         if (mLocationPermissionsGranted){
             getDeviceLocation();
@@ -1007,6 +988,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 lines1.color(Color.parseColor("#FFA500"));
             }
         }
+
     }
 
     public void navloc()

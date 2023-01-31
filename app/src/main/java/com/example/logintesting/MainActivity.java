@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextEmail = (EditText) findViewById(R.id.EmailAddress);
         editTextPassword=(EditText) findViewById(R.id.Password);
 
-        progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         mAuth = FirebaseAuth.getInstance();
 
         //Internet connection check
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String checkBox = preferences.getString("remember","");
             if (!firstload){
                 if (checkBox.equals("true")){
-                    Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                    Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
                     startActivity(intent);
 
                 }else if (checkBox.equals("false")){
@@ -221,26 +220,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                     if (user.isEmailVerified()){
-                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                        startActivity(new Intent(MainActivity.this, LoadingScreenActivity.class));
 
 
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
                     }
-                    progressBar.setVisibility(View.GONE);
 
 
                 }else{
                     Toast.makeText(MainActivity.this, "Failed to login check your email and password!", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
                 }
 
             }

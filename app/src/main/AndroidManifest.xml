@@ -9,12 +9,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +20,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginTesting"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".LoadingScreenActivity"
+            android:exported="false"
+            android:label="@string/title_activity_loading_screen"
+            android:theme="@style/Theme.LoginTesting.NoActionBar" />
         <activity
             android:name=".EditProfile"
             android:exported="false" />
@@ -34,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".CustomMarker"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".FSMapAbout"
             android:exported="false" />
