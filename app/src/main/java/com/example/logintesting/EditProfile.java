@@ -148,18 +148,18 @@ GoogleSignInClient gsc;
 
                 User userProfile = snapshot.getValue(User.class);
 
-                if(userProfile != null){
+                if(userProfile != null || gAccount!= null){
                     String email = userProfile.email;
+
 
 
                     emailProfile.setText(email);
 
-//                }else if(gAccount!=null){
-//
-//                    String emailGoogle = gAccount.getEmail();
-//
-//                    getEmailProfile.setText(emailGoogle);
-//
+
+                    String emailGoogle = gAccount.getEmail();
+
+                    emailProfile.setText(emailGoogle);
+
                 }
             }
 

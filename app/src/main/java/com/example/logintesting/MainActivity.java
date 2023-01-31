@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
 
                 }else if (checkBox.equals("false")){
-                    Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
                 }
                 firstload = true;
             }
