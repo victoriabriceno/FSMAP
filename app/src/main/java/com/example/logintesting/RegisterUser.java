@@ -139,7 +139,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                                                 user.sendEmailVerification();
                                                 Toast.makeText(RegisterUser.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
-                                                finish();
+                                                startActivity(new Intent(RegisterUser.this, MainActivity.class));
                                             }else{
                                                 Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
                                             }
