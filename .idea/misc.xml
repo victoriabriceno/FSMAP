@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/School/Final Project/FSMAP/app/src/main/res/layout-sw720dp/activity_edit_profile.xml" value="0.275" />
+        <entry key="..\:/School/Final Project/FSMAP/app/src/main/res/layout/activity_edit_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.136" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
         <entry key="..\:/School/Midterm Project/Github/FSMAPGit/app/src/main/res/drawable-v24/white_boarder.xml" value="0.136" />
@@ -67,8 +69,6 @@
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_maps.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/LoginTesting - Copy/app/src/main/res/layout/activity_settings.xml" value="0.38697916666666665" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/app/src/main/res/layout-sw320dp/activity_main.xml" value="0.20527859237536658" />
-        <entry key="..\:/Users/victo/OneDrive/Desktop/FSMAP/app/src/main/res/layout-sw720dp/activity_main.xml" value="0.25956284153005466" />
       </map>
     </option>
   </component>

@@ -39,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfile extends AppCompatActivity  {
 
 CircleImageView profileImage;
-Button saveProfile, closeProfile;
+Button saveProfile, closeProfile, delete;
 Uri imageUri, imageUriSave;
 StorageReference storageReference;
 FirebaseAuth fAuth;
@@ -68,6 +68,7 @@ GoogleSignInClient gsc;
         pencilProfilechange = findViewById(R.id.pencil_change_profile);
         changeUser = findViewById(R.id.UserChange);
         emailProfile = findViewById(R.id.EmailEditprofile);
+        delete = findViewById(R.id.delete);
 
         backEditPROFILE =findViewById(R.id.backBTN);
         backEditPROFILE.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +95,7 @@ GoogleSignInClient gsc;
 
 
 
-        //CODE FRO CLOSE THE EDIT PROFILE CLASS
+        //CODE FOR CLOSE THE EDIT PROFILE CLASS
         closeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,13 +123,26 @@ GoogleSignInClient gsc;
         pencilProfilechange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Open the gallary
+                //Open the gallery
                 Intent OpenGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(OpenGalleryIntent,1000);
             }
         });
 
+        //Delete Account
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                //Popup
+
+                user.delete();
+                Toast.makeText(EditProfile.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(EditProfile.this,MainActivity.class));
+
+            }
+        });
 
         //SHOWING USER DATA
 
