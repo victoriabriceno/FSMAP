@@ -2,6 +2,7 @@ package com.example.logintesting;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -134,12 +135,24 @@ GoogleSignInClient gsc;
             @Override
             public void onClick(View view) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //Signing Out
+                gsc.signOut();
+                FirebaseAuth.getInstance().signOut();
 
                 //Popup
 
                 user.delete();
                 Toast.makeText(EditProfile.this, "Account Deleted", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditProfile.this,MainActivity.class));
+                //Send back to loging
+                Intent i = new Intent(EditProfile.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+                SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+                finish();
 
             }
         });
