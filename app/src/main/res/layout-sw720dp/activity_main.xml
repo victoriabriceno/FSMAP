@@ -121,15 +121,41 @@
 
         <ImageButton
             android:id="@+id/google_login"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/google_logo"
             android:layout_below="@id/RegisterBTN"
+            android:layout_alignStart="@+id/RegisterBTN"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="20dp"
-            />
+            android:layout_marginStart="-49dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="104dp"
+            app:srcCompat="@drawable/google_logo" />
+
+<!--        <com.facebook.login.widget.LoginButton-->
+<!--            android:id="@+id/facebook_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignEnd="@+id/LoginBTN"-->
+<!--            android:layout_alignBottom="@+id/LoginBTN"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_marginEnd="-18dp"-->
+<!--            android:layout_marginBottom="-52dp"-->
+<!--             />-->
+
+        <ImageButton
+            android:id="@+id/facebook_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/LoginBTN"
+            android:layout_alignBottom="@+id/LoginBTN"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="-18dp"
+            android:layout_marginBottom="-52dp"
+            app:srcCompat="@drawable/facebook" />
+
 
         <ProgressBar
             android:id="@+id/ProgressBar"
