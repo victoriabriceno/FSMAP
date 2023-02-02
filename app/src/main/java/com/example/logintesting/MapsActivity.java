@@ -144,8 +144,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     Snackbar snack;
     FirebaseAuth fAuth;
     StorageReference storageReference;
-
-
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +151,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -195,7 +194,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Picasso.get().load(uri).into(userIconMaps);
             }
         });
-
 
     }
 
@@ -428,6 +426,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
         //set zoom
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
+        moveCamera(mMap.getCameraPosition().target,16f);
         //Location tracking
         if (mLocationPermissionsGranted){
             getDeviceLocation();
@@ -989,6 +988,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 lines1.color(Color.parseColor("#FFA500"));
             }
         }
+
     }
 
     public void navloc()
