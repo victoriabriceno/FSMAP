@@ -1279,6 +1279,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     public boolean onMarkerClick(Marker marker) {
         //get location for drawing line between user and marker
         getDeviceLocation();
+
         if(!wasRemoveHit){
             wasRemoveHit = true;
         }

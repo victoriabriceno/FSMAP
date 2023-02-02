@@ -137,7 +137,8 @@ GoogleSignInClient gsc;
                 .requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
-      Intent data = getIntent();
+
+        Intent data = getIntent();
        fullName = data.getStringExtra("fullName");
 
       changeUser.setText(fullName);
@@ -148,7 +149,7 @@ GoogleSignInClient gsc;
 
                 User userProfile = snapshot.getValue(User.class);
 
-                if(userProfile != null || gAccount!= null){
+                if(userProfile != null && gAccount!= null){
                     String email = userProfile.email;
 
 

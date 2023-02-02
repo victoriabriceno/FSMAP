@@ -23,6 +23,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     Context context;
     ArrayList<UserFavoriteList> listFavorite;
     MapsActivity mapsActivity;
+    Favorites favorites;
 
 
     //Constructor
@@ -61,8 +62,8 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
                     }
                 }
                 if (null != click){
-                    mapsActivity.onMarkerClick(click);
 
+                        mapsActivity.onMarkerClick(click);
 
                 }
                 else{
