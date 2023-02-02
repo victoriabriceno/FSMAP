@@ -39,17 +39,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfile extends AppCompatActivity  {
 
-CircleImageView profileImage;
-Button saveProfile, closeProfile, delete;
-Uri imageUri, imageUriSave;
-StorageReference storageReference;
-FirebaseAuth fAuth;
-FirebaseUser firebaseAuth;
-ImageView pencilProfilechange , backEditPROFILE;
-EditText changeUser;
+    CircleImageView profileImage;
+    Button saveProfile, closeProfile, delete;
+    Uri imageUri, imageUriSave;
+    StorageReference storageReference;
+    FirebaseAuth fAuth;
+    FirebaseUser firebaseAuth;
+    ImageView pencilProfilechange , backEditPROFILE;
+    EditText changeUser;
 
-GoogleSignInOptions gso;
-GoogleSignInClient gsc;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     DatabaseReference databaseReference;
     String fullName;
@@ -100,25 +100,25 @@ GoogleSignInClient gsc;
         closeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(EditProfile.this,Settings.class));
+                startActivity(new Intent(EditProfile.this,Settings.class));
             }
         });
 
         //CODE FOR SAVE THE IMAGE WHEN THE USER CLICKS SAVE
-     saveProfile.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
+        saveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-             if (isNameChanged() && isImageChanged()){
-                 Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
-             }else if (isNameChanged() || isImageChanged()){
-                 //UploadImageToFirebase(imageUriSave);
-                 Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
-             }
+                if (isNameChanged() && isImageChanged()){
+                    Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
+                }else if (isNameChanged() || isImageChanged()){
+                    //UploadImageToFirebase(imageUriSave);
+                    Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
+                }
 
-            // UploadImageToFirebase(imageUriSave);
-         }
-     });
+                // UploadImageToFirebase(imageUriSave);
+            }
+        });
 
         //CODE FOR CHANGE THE PICTURE
         pencilProfilechange.setOnClickListener(new View.OnClickListener() {
@@ -147,12 +147,11 @@ GoogleSignInClient gsc;
                 Intent i = new Intent(EditProfile.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
                 SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("remember","false");
                 editor.apply();
-                finish();
+                startActivity(i);
 
             }
         });
@@ -164,10 +163,10 @@ GoogleSignInClient gsc;
                 .requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
-      Intent data = getIntent();
-       fullName = data.getStringExtra("fullName");
+        Intent data = getIntent();
+        fullName = data.getStringExtra("fullName");
 
-      changeUser.setText(fullName);
+        changeUser.setText(fullName);
 
         databaseReference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -223,15 +222,15 @@ GoogleSignInClient gsc;
 
     private boolean isNameChanged() {
 
-         if (!fullName.equals(changeUser.getText().toString())){
+        if (!fullName.equals(changeUser.getText().toString())){
             // Toast.makeText(this, "User name changed", Toast.LENGTH_SHORT).show();
-             databaseReference.child(fAuth.getUid()).child("fullName").setValue(changeUser.getText().toString());
-             fullName = changeUser.getText().toString();
-             return true;
-         }else{
+            databaseReference.child(fAuth.getUid()).child("fullName").setValue(changeUser.getText().toString());
+            fullName = changeUser.getText().toString();
+            return true;
+        }else{
             // Toast.makeText(this, "User name not updated", Toast.LENGTH_SHORT).show();
-             return false;
-         }
+            return false;
+        }
     }
 
 
@@ -243,7 +242,7 @@ GoogleSignInClient gsc;
         fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-               // Toast.makeText(EditProfile.this, "Image uploaded", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(EditProfile.this, "Image uploaded", Toast.LENGTH_SHORT).show();
 
                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -266,10 +265,10 @@ GoogleSignInClient gsc;
         if (requestCode == 1000){
             if (resultCode == Activity.RESULT_OK){
                 imageUri = data.getData();
-               profileImage.setImageURI(imageUri); //you has this comment before
+                profileImage.setImageURI(imageUri); //you has this comment before
             }
         }
 
-       imageUriSave = imageUri;
+        imageUriSave = imageUri;
     }
 }

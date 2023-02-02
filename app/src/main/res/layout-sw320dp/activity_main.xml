@@ -139,14 +139,17 @@
             android:layout_marginRight="20dp"
             />
 
-        <com.facebook.login.widget.LoginButton
+        <ImageButton
             android:id="@+id/facebook_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/LoginBTN"
             android:layout_alignBottom="@+id/LoginBTN"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="-38dp" />
+            android:layout_marginEnd="-18dp"
+            android:layout_marginBottom="-52dp"
+            app:srcCompat="@drawable/facebook" />
 
 
     </RelativeLayout>
@@ -187,10 +190,3 @@
 
 
 </RelativeLayout>
-
-
-
-
-
-
-

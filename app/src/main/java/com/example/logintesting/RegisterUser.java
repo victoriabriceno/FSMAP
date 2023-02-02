@@ -1,6 +1,7 @@
 package com.example.logintesting;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -47,7 +48,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             }
         });
         editEmail = (EditText) findViewById(R.id.registerEmailAddress);
-         editPassword = (EditText)  findViewById(R.id.registerPassword);
+        editPassword = (EditText)  findViewById(R.id.registerPassword);
         confirmEmail = (EditText) findViewById(R.id.ConfirmEmailAddress) ;
         confirmPassword = (EditText) findViewById(R.id.ConfirmPassword);
         editUser  =(EditText) findViewById(R.id.Username) ;
@@ -58,11 +59,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-             switch(view.getId()){
-                 case R.id.RegisterUser:
-                     registerUser();
-                     break;
-             }
+        switch(view.getId()){
+            case R.id.RegisterUser:
+                registerUser();
+                break;
+        }
     }
 
     private void registerUser() {
@@ -130,7 +131,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()){
                             User user = new User(confirmE,userName);
                             FirebaseDatabase.getInstance().getReference("Users")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -138,8 +139,16 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                             if(task.isSuccessful()){
                                                 FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                                                 user.sendEmailVerification();
+                                                FirebaseAuth.getInstance().signOut();
                                                 Toast.makeText(RegisterUser.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(RegisterUser.this, MainActivity.class));
+                                                Intent i = new Intent(RegisterUser.this, MainActivity.class);
+                                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = preferences.edit();
+                                                editor.putString("remember","false");
+                                                editor.apply();
+                                                startActivity(i);
                                             }else{
                                                 Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
                                             }
