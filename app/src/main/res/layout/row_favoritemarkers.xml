@@ -13,6 +13,20 @@
         android:layout_width="412dp"
         android:layout_height="58dp">
 
+<!--        <ImageButton-->
+<!--            android:id="@+id/trashFavorites"-->
+<!--            android:layout_width="69dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="289dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_toEndOf="@+id/marker"-->
+<!--            android:background="@drawable/location_marker_favoritedesign">-->
+<!--            android:maxLines="1"-->
+<!--            android:text="Title"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:textSize="15dp" />-->
+
+
         <RelativeLayout
             android:id="@+id/marker"
             android:layout_width="51dp"
@@ -34,6 +48,7 @@
             android:text="Title"
             android:textColor="@color/gray"
             android:textSize="15dp" />
+
 
 
     </RelativeLayout>
