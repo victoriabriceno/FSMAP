@@ -2,7 +2,6 @@ package com.example.logintesting;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -40,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfile extends AppCompatActivity  {
 
 CircleImageView profileImage;
-Button saveProfile, closeProfile, delete;
+Button saveProfile, closeProfile;
 Uri imageUri, imageUriSave;
 StorageReference storageReference;
 FirebaseAuth fAuth;
@@ -69,7 +68,6 @@ GoogleSignInClient gsc;
         pencilProfilechange = findViewById(R.id.pencil_change_profile);
         changeUser = findViewById(R.id.UserChange);
         emailProfile = findViewById(R.id.EmailEditprofile);
-        delete = findViewById(R.id.delete);
 
         backEditPROFILE =findViewById(R.id.backBTN);
         backEditPROFILE.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +94,7 @@ GoogleSignInClient gsc;
 
 
 
-        //CODE FOR CLOSE THE EDIT PROFILE CLASS
+        //CODE FRO CLOSE THE EDIT PROFILE CLASS
         closeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,38 +122,13 @@ GoogleSignInClient gsc;
         pencilProfilechange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Open the gallery
+                //Open the gallary
                 Intent OpenGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(OpenGalleryIntent,1000);
             }
         });
 
-        //Delete Account
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                //Signing Out
-                gsc.signOut();
-                FirebaseAuth.getInstance().signOut();
 
-                //Popup
-
-                user.delete();
-                Toast.makeText(EditProfile.this, "Account Deleted", Toast.LENGTH_SHORT).show();
-                //Send back to loging
-                Intent i = new Intent(EditProfile.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
-                SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember","false");
-                editor.apply();
-                finish();
-
-            }
-        });
 
         //SHOWING USER DATA
 
