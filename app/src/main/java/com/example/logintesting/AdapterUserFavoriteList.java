@@ -52,23 +52,11 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
             @Override
             public void onClick(View v) {
 
-                String markerTitle = holder.TitleOfTheMarker.getText().toString();
-                Marker click = null;
+               String markerTitle = holder.TitleOfTheMarker.getText().toString();
 
-                for (Marker m: mapsActivity.MarkersList){
-                    if (markerTitle.equals(m.getTitle())){
-                        click = m;
-                        break;
-                    }
-                }
-                if (null != click){
-
-                        mapsActivity.onMarkerClick(click);
-
-                }
-                else{
-                   // EVERYTHING IS FUCKED
-                }
+               Intent intent = new Intent(context, MapsActivity.class);
+               intent.putExtra("marker_ToMap",markerTitle);
+               context.startActivity(intent);
 
             }
         });

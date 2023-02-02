@@ -90,9 +90,6 @@ public class Favorites extends AppCompatActivity {
 
 
 
-
-
-
     }
 
     public static void addToFavorite(Context context,Marker marker){

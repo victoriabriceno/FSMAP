@@ -162,7 +162,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     Snackbar snack;
     FirebaseAuth fAuth;
     StorageReference storageReference;
-
+    String markerTitle2;
+    boolean isNOTfUCKED = false;
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -197,6 +198,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+
+
         if(createdMarkers== null) {
             LoadMarkers();
         }
@@ -213,6 +216,22 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Picasso.get().load(uri).into(userIconMaps);
             }
         });
+
+
+        // FAVORITES
+        if(savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                //Extra bundle is null
+                isNOTfUCKED = false;
+            } else {
+                markerTitle2 = extras.getString("marker_ToMap");
+
+                isNOTfUCKED = true;
+
+            }
+
+        }
 
 
     }
@@ -1007,6 +1026,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 lines1.color(Color.parseColor("#FFA500"));
             }
         }
+
+        if(isNOTfUCKED){
+            onMarkerClick(FindTheMarker(markerTitle2));
+        }
+
     }
 
     public void navloc()
@@ -1289,11 +1313,13 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         }
         if(isItInMyFavorites(marker))
         {
+
             btnFavoritesAdd.setVisibility(View.GONE);
             bntFavoritesRemove.setVisibility(View.VISIBLE);
         }
         else
         {
+
             bntFavoritesRemove.setVisibility(View.GONE);
             btnFavoritesAdd.setVisibility(View.VISIBLE);
         }
