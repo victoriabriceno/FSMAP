@@ -41,6 +41,8 @@ public class Favorites extends AppCompatActivity {
     UserFavoriteList userFavoriteList ;
     List<String>markerList;
     ImageView backFavorites;
+    MapsActivity mapsActivity;
+
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class Favorites extends AppCompatActivity {
            }
        });
 
-       adapterUserFavoriteList = new AdapterUserFavoriteList(this,list);
+       adapterUserFavoriteList = new AdapterUserFavoriteList(this,list,mapsActivity);
         recyclerView.setAdapter(adapterUserFavoriteList);
 
        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/");
@@ -85,6 +87,9 @@ public class Favorites extends AppCompatActivity {
 
             }
         });
+
+
+
 
 
 
