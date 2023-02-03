@@ -18,9 +18,7 @@ public class UserFavoriteList {
         return markerTitle;
     }
 
-    public void setMarkerTitle(String markerTitle) {
-        this.markerTitle = markerTitle;
-    }
+    public void setMarkerTitle(String markerTitle) { this.markerTitle = markerTitle; }
 
 
 

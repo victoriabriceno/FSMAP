@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.model.Marker;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFavoriteList.FavoriteViewHolder> {
@@ -24,6 +25,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     ArrayList<UserFavoriteList> listFavorite;
     MapsActivity mapsActivity;
     Favorites favorites;
+    AdapterUserFavoriteList adapterUserFavoriteList;
 
 
     //Constructor
@@ -61,6 +63,22 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
             }
         });
 
+        holder.trash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String markerTitle = holder.TitleOfTheMarker.getText().toString();
+
+                Favorites.removeFromFavorite(context,markerTitle);
+                int size = listFavorite.size();
+                listFavorite.clear();
+                notifyItemRangeRemoved(0,size);
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -71,14 +89,16 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
 
         TextView TitleOfTheMarker;
-        ImageButton removeStar;
+        ImageButton trash;
         RelativeLayout markerClick;
+        ImageButton editFavorites;
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
 
             TitleOfTheMarker = itemView.findViewById(R.id.TitleMarker);
             markerClick = itemView.findViewById(R.id.marker);
-            //removeStar = itemView.findViewById(R.id.removeFromFavorites);
+            trash = itemView.findViewById(R.id.trashFavorites);
+            editFavorites = itemView.findViewById(R.id.editFavorites);
         }
     }
 
