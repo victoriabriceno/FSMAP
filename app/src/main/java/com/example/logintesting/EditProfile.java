@@ -163,8 +163,10 @@ public class EditProfile extends AppCompatActivity  {
                 .requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
+
         Intent data = getIntent();
         fullName = data.getStringExtra("fullName");
+
 
         changeUser.setText(fullName);
 

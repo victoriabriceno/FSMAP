@@ -1,11 +1,14 @@
 package com.example.logintesting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +22,15 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
     Context context;
     ArrayList<UserFavoriteList> listFavorite;
+    MapsActivity mapsActivity;
+    Favorites favorites;
 
 
     //Constructor
-    public AdapterUserFavoriteList(Context context,ArrayList<UserFavoriteList> listFavorite) {
+    public AdapterUserFavoriteList(Context context,ArrayList<UserFavoriteList> listFavorite, MapsActivity mapsActivity) {
         this.context = context;
         this.listFavorite = listFavorite;
+        this.mapsActivity = mapsActivity;
     }
 
     @NonNull
@@ -40,13 +46,20 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
         UserFavoriteList userFavoriteList = listFavorite.get(position);
         holder.TitleOfTheMarker.setText(userFavoriteList.getMarkerTitle());
 
-  /*      holder.removeStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
+        // Marker TO TAKE YOU TO MAP
+        holder.markerClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               String markerTitle = holder.TitleOfTheMarker.getText().toString();
+
+               Intent intent = new Intent(context, MapsActivity.class);
+               intent.putExtra("marker_ToMap",markerTitle);
+               context.startActivity(intent);
 
             }
-        });*/
+        });
 
     }
 
@@ -59,10 +72,12 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
         TextView TitleOfTheMarker;
         ImageButton removeStar;
+        RelativeLayout markerClick;
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
 
             TitleOfTheMarker = itemView.findViewById(R.id.TitleMarker);
+            markerClick = itemView.findViewById(R.id.marker);
             //removeStar = itemView.findViewById(R.id.removeFromFavorites);
         }
     }

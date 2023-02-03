@@ -77,6 +77,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -162,7 +163,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     Snackbar snack;
     FirebaseAuth fAuth;
     StorageReference storageReference;
-
+    String markerTitle2;
+    boolean isNOTfUCKED = false;
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -197,6 +199,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+
+
         if(createdMarkers== null) {
             LoadMarkers();
         }
@@ -213,6 +217,22 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Picasso.get().load(uri).into(userIconMaps);
             }
         });
+
+
+        // FAVORITES
+        if(savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                //Extra bundle is null
+                isNOTfUCKED = false;
+            } else {
+                markerTitle2 = extras.getString("marker_ToMap");
+
+                isNOTfUCKED = true;
+
+            }
+
+        }
 
 
     }
@@ -1007,7 +1027,17 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 lines1.color(Color.parseColor("#FFA500"));
             }
         }
+
+        if(isNOTfUCKED){
+
+            onMarkerClick(FindTheMarker(markerTitle2));
+            btnFavoritesAdd.setVisibility(View.GONE);
+            bntFavoritesRemove.setVisibility(View.VISIBLE);
+        }
+
     }
+
+
 
     public void navloc()
     {
@@ -1279,6 +1309,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     public boolean onMarkerClick(Marker marker) {
         //get location for drawing line between user and marker
         getDeviceLocation();
+
         if(!wasRemoveHit){
             wasRemoveHit = true;
         }
@@ -1288,11 +1319,13 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         }
         if(isItInMyFavorites(marker))
         {
+
             btnFavoritesAdd.setVisibility(View.GONE);
             bntFavoritesRemove.setVisibility(View.VISIBLE);
         }
         else
         {
+
             bntFavoritesRemove.setVisibility(View.GONE);
             btnFavoritesAdd.setVisibility(View.VISIBLE);
         }
