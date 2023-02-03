@@ -70,9 +70,14 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
                 String markerTitle = holder.TitleOfTheMarker.getText().toString();
 
                 Favorites.removeFromFavorite(context,markerTitle);
-                favorites.onDatachange();
+                int size = listFavorite.size();
+                listFavorite.clear();
+                notifyItemRangeRemoved(0,size);
+
             }
         });
+
+
 
     }
 
@@ -86,12 +91,14 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
         TextView TitleOfTheMarker;
         ImageButton trash;
         RelativeLayout markerClick;
+        ImageButton editFavorites;
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
 
             TitleOfTheMarker = itemView.findViewById(R.id.TitleMarker);
             markerClick = itemView.findViewById(R.id.marker);
             trash = itemView.findViewById(R.id.trashFavorites);
+            editFavorites = itemView.findViewById(R.id.editFavorites);
         }
     }
 

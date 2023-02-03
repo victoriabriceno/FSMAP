@@ -55,7 +55,6 @@ public class Favorites extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
        list = new ArrayList<UserFavoriteList>();
-
        backFavorites = findViewById(R.id.backBTN);
        backFavorites.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -87,6 +86,8 @@ public class Favorites extends AppCompatActivity {
 
             }
         });
+
+
 
 
 
@@ -144,11 +145,11 @@ public class Favorites extends AppCompatActivity {
         }
     }
 
-    public static void removeFromFavorite(Context context, String title){
+    public static void removeFromFavorite(Context context, String title) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser()==null){
+        if (firebaseAuth.getCurrentUser() == null) {
             Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(firebaseAuth.getUid()).child("Favorites").child(title)
@@ -167,24 +168,8 @@ public class Favorites extends AppCompatActivity {
         }
 
 
-
     }
 
-    public void onDatachange(){
-        finish();
-        startActivity(getIntent());
-    }}
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
