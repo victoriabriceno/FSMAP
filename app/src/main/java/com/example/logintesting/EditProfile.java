@@ -177,16 +177,16 @@ public class EditProfile extends AppCompatActivity  {
                 User userProfile = snapshot.getValue(User.class);
 
                 if(userProfile != null && gAccount!= null){
-                    String email = userProfile.email;
-
-
-
-                    emailProfile.setText(email);
 
 
                     String emailGoogle = gAccount.getEmail();
 
                     emailProfile.setText(emailGoogle);
+
+                }
+                else if(userProfile != null){
+                    String email = userProfile.email;
+                    emailProfile.setText(email);
 
                 }
             }
