@@ -22,5 +22,9 @@
     <string name="fb_login_protocol_scheme">fb1245373456395769</string>
     <string name="facebook_client_token">2e2a90c24e9e971a3d808d2b4f4f58b9</string>
 
+    <string name="title_activity_loading_screen">LoadingScreenActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
 </resources>

@@ -3,7 +3,6 @@ package com.example.logintesting;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,15 +20,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,10 +32,9 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -55,8 +48,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 import java.util.Arrays;
 
@@ -102,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextEmail = (EditText) findViewById(R.id.EmailAddress);
         editTextPassword=(EditText) findViewById(R.id.Password);
 
-        progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         mAuth = FirebaseAuth.getInstance();
 
         //Internet connection check
@@ -232,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
         if (users != null) {
             // User is signed in
-            Intent i = new Intent(MainActivity.this, MapsActivity.class);
+            Intent i = new Intent(MainActivity.this, LoadingScreenActivity.class);
             startActivity(i);
             finish();
 
@@ -258,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          public void onComplete(@NonNull Task<AuthResult> task) {
 
                              if(task.isSuccessful()){
-                                 Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                                 Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
                                  startActivity(intent);
                              }else{
                                  Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -285,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         if(user!= null){
-            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+            Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
             startActivity(intent);
         }
     }
@@ -317,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String checkBox = preferences.getString("remember","");
             if (!firstload){
                 if (checkBox.equals("true")){
-                    Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                    Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
                     startActivity(intent);
 
                 }else if (checkBox.equals("false")){
@@ -404,26 +394,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                     if (user.isEmailVerified()){
-                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                        startActivity(new Intent(MainActivity.this, LoadingScreenActivity.class));
 
 
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
                     }
-                    progressBar.setVisibility(View.GONE);
 
 
                 }else{
                     Toast.makeText(MainActivity.this, "Failed to login check your email and password!", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
                 }
 
             }
