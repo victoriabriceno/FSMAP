@@ -778,6 +778,18 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]),Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
             Marker mark = mMap.addMarker(roommarker);
             MarkersList.add(mark);
+            switch (room[3])
+            {
+                case ("CR"):
+                    ClassRoomMarkers.add(mark);
+                    break;
+                case ("BR"):
+                    BathroomMarkers.add(mark);
+                    break;
+                case ("WZ"):
+                    WaterZones.add(mark);
+                    break;
+            }
         }
         
 //        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("Squidward Community College");
