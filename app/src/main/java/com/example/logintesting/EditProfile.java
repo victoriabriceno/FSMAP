@@ -53,6 +53,7 @@ public class EditProfile extends AppCompatActivity  {
 
     DatabaseReference databaseReference;
     String fullName;
+    String markerEdit;
     String useriD;
     TextView emailProfile,getEmailProfile;
 
@@ -167,6 +168,7 @@ public class EditProfile extends AppCompatActivity  {
         Intent data = getIntent();
         fullName = data.getStringExtra("fullName");
 
+        markerEdit = data.getStringExtra("Favorites");
 
         changeUser.setText(fullName);
 
@@ -211,17 +213,6 @@ public class EditProfile extends AppCompatActivity  {
     }
 
 
-  /*  private void UpdateUser(){
-
-        if (isNameChanged()){
-
-            Toast.makeText(this, "Profile has been updated", Toast.LENGTH_SHORT).show();
-
-        }else{
-            Toast.makeText(this, "Data is the same and there are not changes", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
     private boolean isNameChanged() {
 
         if (!fullName.equals(changeUser.getText().toString())){
@@ -234,6 +225,7 @@ public class EditProfile extends AppCompatActivity  {
             return false;
         }
     }
+
 
 
     private void UploadImageToFirebase(Uri uri) {
