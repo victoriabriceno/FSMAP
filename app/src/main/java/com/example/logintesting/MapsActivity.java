@@ -748,12 +748,12 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         ClassRoomMarkers.add(room115);
         MarkersList.add(room115);
 
-        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)");
         Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
         BathroomMarkers.add(boysBathroom113);
         MarkersList.add(boysBathroom113);
 
-        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)");
         Marker waterZone = mMap.addMarker(WaterZone);
         WaterZones.add(waterZone);
         MarkersList.add(waterZone);
@@ -1064,6 +1064,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //SearchBar
         Search = findViewById(R.id.input_Search);
 
+        
         //Nav Lock Button
         NacLock = findViewById(R.id.NavLock);
         NacLock.setOnClickListener(this);
