@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Visible password
     boolean passwordVisible;
     boolean firstload = false;
+    boolean connected;
     ConnectivityManager cm;
     NetworkInfo ni;
 
@@ -77,9 +78,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Internet Check
+
+
 
         register = (TextView) findViewById(R.id.RegisterBTN);
         register.setOnClickListener(this);
@@ -98,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Internet connection check
         cm = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         ni = cm.getActiveNetworkInfo();
+
+        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected= false;
 
         //PASSWORD VISIBLE
 
@@ -272,12 +282,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
-        if(user!= null){
-            Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
-            startActivity(intent);
-        }
     }
 
     //Creates a save instance of the previous ui
@@ -296,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPostCreate(Bundle savedInstanceState){
         super.onPostCreate(savedInstanceState);
-        if (ni == null){
+        if (!connected){
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -343,10 +347,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
-        if (ni == null){
+        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected= false;
+        if (!connected){
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+
         }
         else{
             switch(view.getId()){
