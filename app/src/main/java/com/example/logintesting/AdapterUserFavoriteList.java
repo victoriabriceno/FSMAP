@@ -8,14 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.maps.model.Marker;
-
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFavoriteList.FavoriteViewHolder> {
@@ -26,7 +22,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     MapsActivity mapsActivity;
     Favorites favorites;
     AdapterUserFavoriteList adapterUserFavoriteList;
-
+    CustomMarkerAdapter customMarkerAdapter;
 
     //Constructor
     public AdapterUserFavoriteList(Context context,ArrayList<UserFavoriteList> listFavorite, MapsActivity mapsActivity) {
