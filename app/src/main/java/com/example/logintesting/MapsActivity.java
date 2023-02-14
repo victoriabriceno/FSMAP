@@ -152,6 +152,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     String markerTitle2;
     boolean isNOTfUCKED = false;
 
+    ArrayList<String[]> roomlist;
+
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +189,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd.setOnClickListener(this);
 
 
+        CSVReader creader = new CSVReader();
+        InputStream inputStream = getResources().openRawResource(R.raw.rooms);
+        creader.SetFile(inputStream);
+        creader.CreateRoomList();
+        roomlist = creader.GetRoomList();
 
         if(createdMarkers== null) {
             LoadMarkers();
@@ -765,11 +772,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        MarkersList.add(waterZone);
 //
 
-        CSVReader creader = new CSVReader();
-        InputStream inputStream = getResources().openRawResource(R.raw.rooms);
-        creader.SetFile(inputStream);
-        creader.CreateRoomList();
-        ArrayList<String[]> roomlist = creader.GetRoomList();
+
         for (String[] room : roomlist)
         {
             MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]),Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
