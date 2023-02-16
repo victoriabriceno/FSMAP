@@ -135,13 +135,15 @@ public class EditProfile extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                user.delete();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                ref.child(firebaseAuth.getUid()).removeValue();
                 //Signing Out
                 gsc.signOut();
                 FirebaseAuth.getInstance().signOut();
 
                 //Popup
 
-                user.delete();
                 Toast.makeText(EditProfile.this, "Account Deleted", Toast.LENGTH_SHORT).show();
                 //Send back to loging
                 Intent i = new Intent(EditProfile.this, MainActivity.class);

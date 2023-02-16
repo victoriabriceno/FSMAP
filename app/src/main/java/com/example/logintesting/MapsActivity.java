@@ -56,8 +56,10 @@ import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +69,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -74,6 +77,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -84,6 +88,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -153,6 +158,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     boolean isNOTfUCKED = false;
 
     ArrayList<String[]> roomlist;
+    InputStream inputStream;
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -188,9 +194,25 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+        //Loading markers from CSV
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference sr = storage.getReference();
+        StorageReference csvref = sr.child("Classrooms/rooms.csv");
+        Task<byte[]> csvinf = csvref.getBytes(1024^2).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                int e = ((StorageException) exception).getErrorCode();
+                // Handle any errors
+            }
+        });
+
+        inputStream = new ByteArrayInputStream(csvinf.getResult());
 
         CSVReader creader = new CSVReader();
-        InputStream inputStream = getResources().openRawResource(R.raw.rooms);
         creader.SetFile(inputStream);
         creader.CreateRoomList();
         roomlist = creader.GetRoomList();

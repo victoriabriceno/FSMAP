@@ -22,29 +22,19 @@ public class CSVReader {
         return roomlist;
     }
 
-    public void CreateRoomList(){
+    public void CreateRoomList() {
+        if (csv == null)
+            return;;
         String line = "";
         String splitBy = ",";
-        try
-        {
+        try {
             BufferedReader br = new BufferedReader(new InputStreamReader(csv));
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
                 String[] roominfo = line.split(splitBy);
                 roomlist.add(roominfo);
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                csv.close();
-            }
-            catch (IOException e) {
-                throw new RuntimeException("Error while closing rooms.csv: "+e);
-            }
         }
     }
 }
