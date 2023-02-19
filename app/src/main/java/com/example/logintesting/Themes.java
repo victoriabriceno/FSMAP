@@ -2,12 +2,17 @@ package com.example.logintesting;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,8 +27,6 @@ import java.util.Map;
 public class Themes extends AppCompatActivity implements View.OnClickListener {
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +36,12 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         ImageButton LightMode;
         ImageButton DarkMode;
         ImageView backThemes;
+
         backThemes = findViewById(R.id.backBTN);
         backThemes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Themes.this,Settings.class));
+                startActivity(new Intent(Themes.this, Settings.class));
             }
         });
 
@@ -56,7 +60,7 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         DatabaseReference tdatabase;
         String userID;
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        tdatabase = FirebaseDatabase.getInstance().getReference("/Users/"+userID);
+        tdatabase = FirebaseDatabase.getInstance().getReference("/Users/" + userID);
 
         if (view.getId() == R.id.LightModeButton) {
             //Need to find alternative to below
@@ -66,8 +70,7 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
             //Add data to firebase
             DarkMode.put("DarkMode", Boolean.FALSE);
             tdatabase.updateChildren(DarkMode);
-        }
-        else if (view.getId() == R.id.DarkModeButton) {
+        } else if (view.getId() == R.id.DarkModeButton) {
             //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             setTheme((AppCompatDelegate.MODE_NIGHT_YES));
             //Add data to firebase
@@ -75,4 +78,6 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
             tdatabase.updateChildren(DarkMode);
         }
     }
+
+
 }
