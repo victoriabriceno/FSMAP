@@ -204,6 +204,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         // FAVORITES
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
+
             if (extras == null) {
                 //Extra bundle is null
                 isNOTfUCKED = false;
@@ -372,7 +373,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Marker found = FindTheMarker(dataSnapshot.getValue().toString());
+                    Marker found = FindTheMarker(dataSnapshot.getKey());
                     if(found != null)
                     {
                         if(CheckMarkerType(found))

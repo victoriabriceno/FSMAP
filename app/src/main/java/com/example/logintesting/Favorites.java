@@ -32,16 +32,16 @@ import java.util.List;
 
 public class Favorites extends AppCompatActivity {
 
-
  RecyclerView recyclerView;
  FirebaseDatabase databaseReference ;
- AdapterUserFavoriteList adapterUserFavoriteList;
- ArrayList<UserFavoriteList> list ;
+ public static AdapterUserFavoriteList adapterUserFavoriteList;
+ public static ArrayList<UserFavoriteList> list ;
  FirebaseAuth firebaseAuth;
     UserFavoriteList userFavoriteList ;
     List<String>markerList;
     ImageView backFavorites;
     MapsActivity mapsActivity;
+    public static HashMap<String,Object> markerEditHash = new HashMap<>();
 
 
      @Override
@@ -71,12 +71,16 @@ public class Favorites extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+
+                list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
 
                     String marker = dataSnapshot.getValue().toString();
-                    userFavoriteList = new UserFavoriteList(marker);
+                    String originalName = dataSnapshot.getKey().toString();
+                    userFavoriteList = new UserFavoriteList(marker,originalName);
                     list.add(userFavoriteList);
                 }
+
                 adapterUserFavoriteList.notifyDataSetChanged();
 
             }
@@ -107,6 +111,7 @@ public class Favorites extends AppCompatActivity {
 
              //Save to db
              DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+
              ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.updateChildren(hashMap)./*.
                      setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
                          @Override
@@ -156,17 +161,53 @@ public class Favorites extends AppCompatActivity {
                     .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(context, "Removed from Favorites.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "Removed from Favorites.", Toast.LENGTH_SHORT).show();
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "Failed to remove from your favorite list due to " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "Failed to remove from your favorite list due to " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
+
+
         }
 
+
+
+    }
+
+    public static void renameMarker(Context context,String title,String originalTitle){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser()==null){
+            Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
+        }else{
+            //Set up the data to add in firebase of current user for favorite
+            HashMap<String,Object> hashMap = new HashMap<>();
+            hashMap.put(originalTitle, "" +title);
+
+            //Save to db
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.child(originalTitle).setValue(title)./*.
+                     setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(context, "Marker rename", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, "Marker not rename", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+
+        }
 
     }
 
