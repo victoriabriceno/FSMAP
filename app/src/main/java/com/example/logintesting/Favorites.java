@@ -71,6 +71,8 @@ public class Favorites extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+
+                list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
 
                     String marker = dataSnapshot.getValue().toString();
@@ -78,6 +80,7 @@ public class Favorites extends AppCompatActivity {
                     userFavoriteList = new UserFavoriteList(marker,originalName);
                     list.add(userFavoriteList);
                 }
+
                 adapterUserFavoriteList.notifyDataSetChanged();
 
             }
@@ -103,12 +106,13 @@ public class Favorites extends AppCompatActivity {
          }else{
              //Set up the data to add in firebase of current user for favorite book
              HashMap<String,Object> hashMap = new HashMap<>();
-             markerEditHash.put(marker.getTitle(), "" +marker.getTitle());
+             hashMap.put(marker.getTitle(), "" +marker.getTitle());
 
 
              //Save to db
              DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-             ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.updateChildren(markerEditHash)./*.
+
+             ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.updateChildren(hashMap)./*.
                      setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
                          @Override
                          public void onSuccess(Void unused) {
@@ -186,7 +190,7 @@ public class Favorites extends AppCompatActivity {
 
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.updateChildren(hashMap)./*.
+            ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.child(originalTitle).setValue(title)./*.
                      setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {

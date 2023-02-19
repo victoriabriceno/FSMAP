@@ -87,6 +87,8 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
                 listFavorite.clear();
                 notifyItemRangeRemoved(0,size);
 
+
+
             }
         });
 
@@ -103,9 +105,10 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
 
                     Favorites.renameMarker(context,holder.TitleOfTheMarker.getText().toString(),holder.orginalName.getText().toString());
-                    int size = listFavorite.size();
-                    listFavorite.clear();
-                    notifyItemRangeChanged(0,size);
+//                    int size = listFavorite.size();
+//                    listFavorite.clear();
+//                    notifyItemRangeInserted(0,size);
+
 
 
                 }
