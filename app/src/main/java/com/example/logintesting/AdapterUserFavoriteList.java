@@ -43,14 +43,14 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
         UserFavoriteList userFavoriteList = listFavorite.get(position);
         holder.TitleOfTheMarker.setText(userFavoriteList.getMarkerTitle());
-
+        holder.OriginalMarker.setText(userFavoriteList.getOriginalTitle());
 
         // Marker TO TAKE YOU TO MAP
         holder.markerClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-               String markerTitle = holder.TitleOfTheMarker.getText().toString();
+               String markerTitle = holder.OriginalMarker.getText().toString();
 
                Intent intent = new Intent(context, MapsActivity.class);
                intent.putExtra("marker_ToMap",markerTitle);
@@ -85,12 +85,13 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
 
         TextView TitleOfTheMarker;
+        TextView OriginalMarker;
         ImageButton trash;
         RelativeLayout markerClick;
         ImageButton editFavorites;
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            OriginalMarker = itemView.findViewById(R.id.OriginalTitle);
             TitleOfTheMarker = itemView.findViewById(R.id.TitleMarker);
             markerClick = itemView.findViewById(R.id.marker);
             trash = itemView.findViewById(R.id.trashFavorites);

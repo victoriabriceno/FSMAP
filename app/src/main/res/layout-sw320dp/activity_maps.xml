@@ -258,4 +258,21 @@
         android:backgroundTint="@color/orange"
         android:background="@drawable/custom_input"
         android:text="Nav Lock" />
+
+    <Button
+        android:id="@+id/FloorUp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/userMaps"
+        android:text="U"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/FloorDown"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/userMaps"
+        android:text="D"
+        android:visibility="gone"
+        android:layout_marginLeft="20dp"/>
 </RelativeLayout>

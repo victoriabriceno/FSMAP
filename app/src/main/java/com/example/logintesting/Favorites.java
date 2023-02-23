@@ -2,11 +2,11 @@ package com.example.logintesting;
 
 
 //Favorites Screen
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,6 +49,15 @@ public class Favorites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
+         if(savedInstanceState == null) {
+             Bundle extras = getIntent().getExtras();
+             if (extras == null) {} else {
+                 ArrayList<Parcelable> parcelables = extras.getParcelableArrayList("ListOfCustom");
+                 parcelables.get(0);
+             }
+         }
+
+
         recyclerView = findViewById(R.id.markersRV);
        // DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorites");
         recyclerView.setHasFixedSize(true);
@@ -73,8 +82,9 @@ public class Favorites extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
 
-                    String marker = dataSnapshot.getValue().toString();
-                    userFavoriteList = new UserFavoriteList(marker);
+                    String nameTitle = dataSnapshot.getValue().toString();
+                    String originalTitle = dataSnapshot.getKey();
+                    userFavoriteList = new UserFavoriteList(nameTitle,originalTitle);
                     list.add(userFavoriteList);
                 }
                 adapterUserFavoriteList.notifyDataSetChanged();

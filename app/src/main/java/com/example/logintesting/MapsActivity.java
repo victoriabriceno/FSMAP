@@ -5,13 +5,19 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.OnNmeaMessageListener;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -26,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -38,9 +46,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.Dot;
 import com.google.android.gms.maps.model.Gap;
@@ -66,6 +76,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.maps.android.PolyUtil;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -88,10 +99,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener, GoogleMap.OnMarkerClickListener,
 GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
+    private static final long GPS_UPDATE_TIME = 10;
     //Global Variables used throughout the program,
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
-    private ActivityMapsBinding binding;
+    protected ActivityMapsBinding binding;
     private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Set;
@@ -106,12 +118,14 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE= 1234;
-    ArrayList<GroundOverlay> groundOverlays = new ArrayList<GroundOverlay>();
+    ArrayList<GroundOverlay> groundOverlaysf1 = new ArrayList<GroundOverlay>();
+    ArrayList<GroundOverlay> groundOverlaysf2 = new ArrayList<GroundOverlay>();
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
     ArrayList<PolylineOptions> customPolyLines = new ArrayList<>();
     ArrayList<Marker> markersClicked = new ArrayList<>();
-    ArrayList<Marker> createdMarkers;
+    ArrayList<Marker> createdMarkers = new ArrayList<>();
+    ArrayList<Marker> secondFloorMarkersList = new ArrayList<Marker>();
     ArrayList<Marker> favoritedMarkers;
     ArrayList<Marker> BathroomMarkers = new ArrayList<>();
     ArrayList<Marker> ClassRoomMarkers = new ArrayList<>();
@@ -122,15 +136,18 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     List<PatternItem> pattern = Arrays.asList(
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
+    float zoom;
     boolean slideup;
-
+    double mLastAltitude;
     RelativeLayout slideupview;
-   ArrayList<String> nameslist = new ArrayList<String>() {};
+    ArrayList<String> nameslist = new ArrayList<String>() {};
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
     //Favorites
     ImageButton bntFavoritesRemove;
     ImageButton btnFavoritesAdd;
+    Button upFloor;
+    Button downFloor;
     Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
@@ -140,22 +157,89 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     boolean wasMarkerClicked = false;
     String SquidCheck = "SquidWard Community College";
     LatLng LongClickPoint;
+    LatLng checkDistPoint;
     //Variables from profile Picture
     Snackbar snack;
     FirebaseAuth fAuth;
     StorageReference storageReference;
-
+    LocationManager mLocationManager;
     String markerTitle2;
     boolean isNOTfUCKED = false;
+    int floorPicked = 1;
+    CameraPosition cameraLoad;
+    int altitudesCollectedNumber;
+
+
+    LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            ComparePoints(location);
+
+        }
+    };
+
+    OnNmeaMessageListener onNmeaMessageListener = (nmea, timestamp) -> {
+        if (nmea.startsWith("$")) {
+            String[] Tokens = nmea.split(",");
+            String token = Tokens[0];
+            if (token.endsWith("GGA")) {
+                if (Tokens.length > 10) {
+                    if (Tokens[9].length() > 0) {
+                        try {
+                            mLastAltitude = Float.parseFloat(Tokens[9]);
+                        } catch (NumberFormatException ex) {
+                            mLastAltitude = 0;
+                        }
+                    } else {
+                        mLastAltitude = 0.0f;
+                    }
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CameraPosition mMyCam = mMap.getCameraPosition();
+        double longitude = mMyCam.target.longitude;
+        double latitude = mMyCam.target.latitude;
+
+        SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat("longitude",(float) longitude);
+        editor.putFloat("latitude",(float) latitude);
+        editor.putInt("floorPicked",floorPicked);
+        editor.putFloat("zoom",mMyCam.zoom);
+        editor.commit();
+
+
+    }
 
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                //Extra bundle is null
+                isNOTfUCKED = false;
+            } else {
+                markerTitle2 = extras.getString("marker_ToMap");
+                isNOTfUCKED = true;
+            }
+        }
+
+
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -183,13 +267,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd.setOnClickListener(this);
 
 
-
-        if(createdMarkers== null|| createdMarkers.isEmpty()) {
-            LoadMarkers();
-        }
-        if(favoritedMarkers == null||favoritedMarkers.isEmpty()){
-            LoadFavoriteMarkers();
-        }
         //PROFILE PICTURE
         fAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -200,24 +277,35 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Picasso.get().load(uri).into(userIconMaps);
             }
         });
-
-        // FAVORITES
-        if(savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                //Extra bundle is null
-                isNOTfUCKED = false;
-            } else {
-                markerTitle2 = extras.getString("marker");
-                isNOTfUCKED = true;
-
-            }
-
-        }
-
+        ActivityResultLauncher<String[]> locationPermissionRequest =
+                registerForActivityResult(new ActivityResultContracts
+                        .RequestMultiplePermissions(), result -> {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                        Boolean fineLocationGranted = result.getOrDefault(
+                                Manifest.permission.ACCESS_FINE_LOCATION, false);
+                    }
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                        Boolean coarseLocationGranted = result.getOrDefault(
+                                Manifest.permission.ACCESS_COARSE_LOCATION, false);
+                    }
+                });
 
     }
+    @SuppressLint("MissingPermission")
+    public void registerLocationManager() {
+        mLocationManager = (LocationManager) MapsActivity.this.getSystemService(LOCATION_SERVICE);
+        if (mLocationPermissionsGranted) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
 
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mLocationManager.addNmeaListener(onNmeaMessageListener);
+            }
+        }
+    }
     //Function to obtain device location and store in Latitude and Longitued
     private void getDeviceLocation(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -239,12 +327,77 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     }
                 });
             }
-
         }catch(SecurityException e){
 
         }
 
     }
+    public void ComparePoints(Location location)
+    {
+        Polyline line;
+        int ixLastPoint = 0;
+        List<LatLng> points;
+
+       if(linesShowing.size() >0) {
+               line = linesShowing.get(0);
+                points = line.getPoints();
+            for (int i = 0; i < points.size()-1; i++) {
+                LatLng point1 = points.get(i);
+                LatLng point2 = points.get(i+1);
+                List<LatLng> currentSegment = new ArrayList<>();
+                currentSegment.add(point1);
+                currentSegment.add(point2);
+                if(PolyUtil.isLocationOnPath(new LatLng(location.getLatitude(),location.getLongitude()), currentSegment,true,30))
+                {
+                  LatLng snappedtOSegment = getMarkerProjectionOnSegment(new LatLng(location.getLatitude(),location.getLongitude()),currentSegment,mMap.getProjection());
+                  break;
+                }
+            }
+             List<LatLng> pathPoints = points;
+            for (int i = 0; i < ixLastPoint; i++) {
+                pathPoints.remove(0);
+            }
+//            line.setPoints(pathPoints);
+//            double earthRadius = 3958.75;
+//            double dLat = Math.toRadians(checkDistPoint.latitude-location.getLatitude());
+//            double dLng = Math.toRadians(checkDistPoint.longitude-location.getLongitude());
+//            double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+//                    Math.cos(Math.toRadians(Latitude)) * Math.cos(Math.toRadians(checkDistPoint.latitude)) *
+//                            Math.sin(dLng/2) * Math.sin(dLng/2);
+//            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//            double dist = earthRadius * c;
+//            if(dist>0.001)
+//            {
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Latitude,Longitued)));
+//                checkDistPoint = new LatLng(Latitude,Longitued);
+//            }
+
+        }
+
+
+    }
+    private LatLng getMarkerProjectionOnSegment(LatLng carPos, List<LatLng> segment, Projection projection) {
+        LatLng markerProjection = null;
+
+        Point carPosOnScreen = projection.toScreenLocation(carPos);
+        Point p1 = projection.toScreenLocation(segment.get(0));
+        Point p2 = projection.toScreenLocation(segment.get(1));
+        Point carPosOnSegment = new Point();
+
+        float denominator = (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
+        // p1 and p2 are the same
+        if (Math.abs(denominator) <= 1E-10) {
+            markerProjection = segment.get(0);
+        } else {
+            float t = (carPosOnScreen.x * (p2.x - p1.x) - (p2.x - p1.x) * p1.x
+                    + carPosOnScreen.y * (p2.y - p1.y) - (p2.y - p1.y) * p1.y) / denominator;
+            carPosOnSegment.x = (int) (p1.x + (p2.x - p1.x) * t);
+            carPosOnSegment.y = (int) (p1.y + (p2.y - p1.y) * t);
+            markerProjection = projection.fromScreenLocation(carPosOnSegment);
+        }
+        return markerProjection;
+    }
+
     private void getDeviceLocationCameraMove(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         try {
@@ -332,37 +485,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         }
     }
 
-    private void LoadMarkers()
-    {
-        createdMarkers = new ArrayList<>();
-        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomMarkers/");
-        databaseReference1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-
-                    String markerTitle = dataSnapshot.getKey().toString();
-                    double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
-                    double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
-                    LatLng newLatLng = new LatLng(latitude1,longitude1);
-                    MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
-                    if(!wasRemoveHit) {
-                        Marker newMarker = mMap.addMarker(newMarkerOption);
-                        newMarker.showInfoWindow();
-                        if(FindTheMarker(markerTitle) == null) {
-                            createdMarkers.add(newMarker);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
     private void LoadFavoriteMarkers()
     {
         favoritedMarkers= new ArrayList<>();
@@ -372,7 +495,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Marker found = FindTheMarker(dataSnapshot.getValue().toString());
+                    Marker found = FindTheMarker(dataSnapshot.getKey());
                     if(found != null)
                     {
                         if(CheckMarkerType(found))
@@ -405,6 +528,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             }
         });
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -419,8 +543,27 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     //There are comments inside the function
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
 
+        SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
+        float longitude = settings.getFloat("longitude",(float) Longitued);
+        float latitude = settings.getFloat("latitude",(float)Latitude);
+        float zoomload = settings.getFloat("zoom", zoom);
+        floorPicked = settings.getInt("floorPicked",floorPicked);
+
+
+        LatLng startPosition = new LatLng(latitude,longitude);
+        cameraLoad = new CameraPosition.Builder()
+                .target(startPosition)
+                .zoom(zoomload)
+                .build();
+        registerLocationManager();
+
+        if(mLocationPermissionsGranted) {
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    GPS_UPDATE_TIME, 1, locationListener);
+        }
         //get latlong for corners for specified place
         LatLng one = new LatLng( 28.5899089565466,-81.30689695755838);
         LatLng two = new LatLng(28.597315583066404,-81.29914504373565);
@@ -762,12 +905,20 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         Marker SquidCC = mMap.addMarker(SCC);
         MarkersList.add(SquidCC);
 
+        MarkerOptions secondFloorTestMarker =  new MarkerOptions().position(new LatLng(28.59557353825031, -81.30422210103595)).title("Second");
+        Marker secondFloorTestMarkerMarker = mMap.addMarker(secondFloorTestMarker);
+        secondFloorMarkersList.add(secondFloorTestMarkerMarker);
+
 
         for (Marker marker1: MarkersList)
         {
             if(!marker1.getTitle().equals(SquidCheck)) {
                 marker1.setVisible(false);
             }
+        }
+        for(Marker marker:secondFloorMarkersList)
+        {
+            marker.setVisible(false);
         }
         BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
 
@@ -778,43 +929,47 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         LatLngBounds build3A =  new LatLngBounds(
                 new LatLng(28.595392200538452, -81.30425629914613),
                 new LatLng(28.59565596435769, -81.30393979848783));
-        LatLngBounds build3B =  new LatLngBounds(
-                new LatLng(28.59489939800887, -81.30421001414925),
-                new LatLng(28.595410442208898, -81.30359042388629));
-        LatLngBounds build3BConnect = new LatLngBounds(
-                new LatLng(28.594658645277548, -81.30423153222328),
-                new LatLng(28.594876487499718, -81.30377019229515));
-        LatLngBounds build3C = new LatLngBounds(
-                new LatLng(28.594253533934957, -81.3042093605151),
-                new LatLng(28.59463740843301, -81.30378020710396));
-        LatLngBounds build3CMP = new LatLngBounds(
-                new LatLng(28.59401920494417, -81.30419863168258),
-                new LatLng(28.59422291811299, -81.30397734945726));
-        LatLngBounds build3F = new LatLngBounds(
-                new LatLng(28.593322903500177, -81.30542386327811),
-                new LatLng(28.59398467985881, -81.30454409878536));
-        LatLngBounds build4C = new LatLngBounds(
-                new LatLng(28.591369859267225, -81.3042459017761),
-                new LatLng(28.591409896421553, -81.30413526066346));
-        LatLngBounds build4B = new LatLngBounds(
-                new LatLng(28.591588937000083, -81.30422856031794),
-                new LatLng(28.592005130777046, -81.30363824532108));
-        LatLngBounds build4A = new LatLngBounds(
-                new LatLng(28.5926339005131, -81.30546789052039),
-                new LatLng(28.592869410133137, -81.30476246959658));
-        LatLngBounds build4AWD2 = new LatLngBounds(
-                new LatLng(28.592030993472754, -81.30421731065695),
-                new LatLng(28.592066320152245, -81.30417908918166));
-        LatLngBounds build4AFC =  new LatLngBounds(
-                new LatLng(28.59226717692391, -81.30473598372107),
-                new LatLng(28.592838288837115, -81.30406274931435));
-        LatLngBounds build4D =  new LatLngBounds(
-                new LatLng(28.59059641684985, -81.30456270361756),
-                new LatLng(28.590932024410755, -81.30418853548505));
-        LatLngBounds build4E = new LatLngBounds(
-                new LatLng(28.590101835337443, -81.30483226561324),
-                new LatLng(28.59086254784375, -81.30463378216082));
+        LatLngBounds build3AF2 =  new LatLngBounds(
+                new LatLng(28.595392200538452, -81.30425629914613),
+                new LatLng(28.59565596435769, -81.30393979848783));
+//        LatLngBounds build3B =  new LatLngBounds(
+//                new LatLng(28.59489939800887, -81.30421001414925),
+//                new LatLng(28.595410442208898, -81.30359042388629));
+//        LatLngBounds build3BConnect = new LatLngBounds(
+//                new LatLng(28.594658645277548, -81.30423153222328),
+//                new LatLng(28.594876487499718, -81.30377019229515));
+//        LatLngBounds build3C = new LatLngBounds(
+//                new LatLng(28.594253533934957, -81.3042093605151),
+//                new LatLng(28.59463740843301, -81.30378020710396));
+//        LatLngBounds build3CMP = new LatLngBounds(
+//                new LatLng(28.59401920494417, -81.30419863168258),
+//                new LatLng(28.59422291811299, -81.30397734945726));
+//        LatLngBounds build3F = new LatLngBounds(
+//                new LatLng(28.593322903500177, -81.30542386327811),
+//                new LatLng(28.59398467985881, -81.30454409878536));
+//        LatLngBounds build4C = new LatLngBounds(
+//                new LatLng(28.591369859267225, -81.3042459017761),
+//                new LatLng(28.591409896421553, -81.30413526066346));
+//        LatLngBounds build4B = new LatLngBounds(
+//                new LatLng(28.591588937000083, -81.30422856031794),
+//                new LatLng(28.592005130777046, -81.30363824532108));
+//        LatLngBounds build4A = new LatLngBounds(
+//                new LatLng(28.5926339005131, -81.30546789052039),
+//                new LatLng(28.592869410133137, -81.30476246959658));
+//        LatLngBounds build4AWD2 = new LatLngBounds(
+//                new LatLng(28.592030993472754, -81.30421731065695),
+//                new LatLng(28.592066320152245, -81.30417908918166));
+//        LatLngBounds build4AFC =  new LatLngBounds(
+//                new LatLng(28.59226717692391, -81.30473598372107),
+//                new LatLng(28.592838288837115, -81.30406274931435));
+//        LatLngBounds build4D =  new LatLngBounds(
+//                new LatLng(28.59059641684985, -81.30456270361756),
+//                new LatLng(28.590932024410755, -81.30418853548505));
+//        LatLngBounds build4E = new LatLngBounds(
+//                new LatLng(28.590101835337443, -81.30483226561324),
+//                new LatLng(28.59086254784375, -81.30463378216082));
         //create map overlap
+
         GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
                 .positionFromBounds(buildLibrary)
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
@@ -824,105 +979,114 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 .image(build3aF1BitMap)
                 .anchor(1.0f,-0.1f)
                 .bearing(-2);
-        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3B)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
-                .anchor(0.45f,0.45f);
-        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
-                .positionFromBounds(build3BConnect)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
-        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3C)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
-        GroundOverlayOptions build3CMPOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3CMP)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp));
-        GroundOverlayOptions build3FOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3F)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3f_1f));
-        GroundOverlayOptions build4COverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4C)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4c))
-                .bearing(140);
-        GroundOverlayOptions build4BOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4B)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4b_1f));
-        GroundOverlayOptions build4AOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4A)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd1));
-        GroundOverlayOptions build4AWD2Overlay = new GroundOverlayOptions()
-                .positionFromBounds(build4AWD2)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd2))
-                .bearing(42);
-        GroundOverlayOptions build4AFCOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4AFC)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_fc))
-                .bearing(-46);
-        GroundOverlayOptions build4DOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4D)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4d_1f))
-                .bearing(45);
-        GroundOverlayOptions build4EOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4E)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
-                .bearing(45);
+        GroundOverlayOptions build3aF2Overlay =  new GroundOverlayOptions()
+                .positionFromBounds(build3A)
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_2f))
+                .anchor(1.0f,-0.1f)
+                .bearing(-2);
+//        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3B)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
+//                .anchor(0.45f,0.45f);
+//        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
+//                .positionFromBounds(build3BConnect)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
+//        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3C)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
+//        GroundOverlayOptions build3CMPOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3CMP)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp));
+//        GroundOverlayOptions build3FOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3F)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3f_1f));
+//        GroundOverlayOptions build4COverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4C)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4c))
+//                .bearing(140);
+//        GroundOverlayOptions build4BOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4B)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4b_1f));
+//        GroundOverlayOptions build4AOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4A)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd1));
+//        GroundOverlayOptions build4AWD2Overlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4AWD2)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd2))
+//                .bearing(42);
+//        GroundOverlayOptions build4AFCOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4AFC)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_fc))
+//                .bearing(-46);
+//        GroundOverlayOptions build4DOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4D)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4d_1f))
+//                .bearing(45);
+//        GroundOverlayOptions build4EOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4E)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
+//                .bearing(45);
         //add groundOverlay and create reference.
         GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
         GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
-        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
-        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
-        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
-        GroundOverlay build3CMPOverlayOption =  mMap.addGroundOverlay(build3CMPOverlay);
-        GroundOverlay build3FOverlayOption = mMap.addGroundOverlay(build3FOverlay);
-        GroundOverlay build4COverlayOption = mMap.addGroundOverlay(build4COverlay);
-        GroundOverlay build4BOverlayOption = mMap.addGroundOverlay(build4BOverlay);
-        GroundOverlay build4AOverlayOption = mMap.addGroundOverlay(build4AOverlay);
-        GroundOverlay build4AWD2OverlayOption = mMap.addGroundOverlay(build4AWD2Overlay);
-        GroundOverlay build4AFCOverlayOption = mMap.addGroundOverlay(build4AFCOverlay);
-        GroundOverlay build4DOverlayOption = mMap.addGroundOverlay(build4DOverlay);
-        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
+        GroundOverlay build3aF2 = mMap.addGroundOverlay(build3aF2Overlay);
+//        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
+//        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
+//        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
+//        GroundOverlay build3CMPOverlayOption =  mMap.addGroundOverlay(build3CMPOverlay);
+//        GroundOverlay build3FOverlayOption = mMap.addGroundOverlay(build3FOverlay);
+//        GroundOverlay build4COverlayOption = mMap.addGroundOverlay(build4COverlay);
+//        GroundOverlay build4BOverlayOption = mMap.addGroundOverlay(build4BOverlay);
+//        GroundOverlay build4AOverlayOption = mMap.addGroundOverlay(build4AOverlay);
+//        GroundOverlay build4AWD2OverlayOption = mMap.addGroundOverlay(build4AWD2Overlay);
+//        GroundOverlay build4AFCOverlayOption = mMap.addGroundOverlay(build4AFCOverlay);
+//        GroundOverlay build4DOverlayOption = mMap.addGroundOverlay(build4DOverlay);
+//        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
         build3aF1.setDimensions(34,28);
+        build3aF2.setDimensions(34,28);
         buildLibraryOverlayed.setDimensions(37,28);
-        build3bF1.setDimensions(84,62);
-        build3bConnect.setDimensions(64,30);
-        build3COverlayOption.setDimensions(40,42);
-        build3CMPOverlayOption.setDimensions(20,25);
-        build3FOverlayOption.setDimensions(100,80);
-        build4COverlayOption.setDimensions(14,10);
+//        build3bF1.setDimensions(84,62);
+//        build3bConnect.setDimensions(64,30);
+//        build3COverlayOption.setDimensions(40,42);
+//        build3CMPOverlayOption.setDimensions(20,25);
+//        build3FOverlayOption.setDimensions(100,80);
+/*        build4COverlayOption.setDimensions(14,10);
         build4BOverlayOption.setDimensions(68,48);
         build4AOverlayOption.setDimensions(90,50);
         build4AWD2OverlayOption.setDimensions(14,10);
         build4AFCOverlayOption.setDimensions(70,50);
         build4DOverlayOption.setDimensions(100,60);
-        build4EOverlayOption.setDimensions(100,60);
+        build4EOverlayOption.setDimensions(100,60);*/
         //make it so overlay doesnt appear originally
-        build3bConnect.setVisible(false);
-        build3bF1.setVisible(false);
+//        build3bConnect.setVisible(false);
+//        build3bF1.setVisible(false);
         buildLibraryOverlayed.setVisible(false);
         build3aF1.setVisible(false);
-        build3COverlayOption.setVisible(false);
-        build3CMPOverlayOption.setVisible(false);
-        build3FOverlayOption.setVisible(false);
-        build4COverlayOption.setVisible(false);
-        build4BOverlayOption.setVisible(false);
-        build4AOverlayOption.setVisible(false);
-        build4DOverlayOption.setVisible(true);
-        build4EOverlayOption.setVisible(true);
+//        build3COverlayOption.setVisible(false);
+//        build3CMPOverlayOption.setVisible(false);
+//        build3FOverlayOption.setVisible(false);
+//        build4COverlayOption.setVisible(false);
+//        build4BOverlayOption.setVisible(false);
+//        build4AOverlayOption.setVisible(false);
+//        build4DOverlayOption.setVisible(true);
+//        build4EOverlayOption.setVisible(true);
+        build3aF2.setVisible(false);
         //add the overlay to overlay array.
-        groundOverlays.add(build3bConnect);
-        groundOverlays.add(buildLibraryOverlayed);
-        groundOverlays.add(build3aF1);
-        groundOverlays.add(build3bF1);
-        groundOverlays.add(build3COverlayOption);
-        groundOverlays.add(build3CMPOverlayOption);
-        groundOverlays.add(build3FOverlayOption);
-        groundOverlays.add(build4COverlayOption);
-        groundOverlays.add(build4BOverlayOption);
-        groundOverlays.add(build4AOverlayOption);
-        groundOverlays.add(build4AWD2OverlayOption);
-        groundOverlays.add(build4AFCOverlayOption);
-        groundOverlays.add(build4DOverlayOption);
-        groundOverlays.add(build4EOverlayOption);
+//        groundOverlaysf1.add(build3bConnect);
+        groundOverlaysf1.add(buildLibraryOverlayed);
+        groundOverlaysf1.add(build3aF1);
+//        groundOverlaysf1.add(build3bF1);
+//        groundOverlaysf1.add(build3COverlayOption);
+//        groundOverlaysf1.add(build3CMPOverlayOption);
+//        groundOverlaysf1.add(build3FOverlayOption);
+//        groundOverlaysf1.add(build4COverlayOption);
+//        groundOverlaysf1.add(build4BOverlayOption);
+//        groundOverlaysf1.add(build4AOverlayOption);
+//        groundOverlaysf1.add(build4AWD2OverlayOption);
+//        groundOverlaysf1.add(build4AFCOverlayOption);
+//        groundOverlaysf1.add(build4DOverlayOption);
+//        groundOverlaysf1.add(build4EOverlayOption);
+        groundOverlaysf2.add(build3aF2);
         //Markers for classrooms
         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
         Bitmap b=bitmapdraw.getBitmap();
@@ -981,16 +1145,40 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     }
                 }
             }
-            for (GroundOverlay Overlay : groundOverlays) {
-                Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
+            for (GroundOverlay Overlay : groundOverlaysf1) {
+                Overlay.setVisible(mMap.getCameraPosition().zoom > 18 && floorPicked == 1);
             }
-            for (Marker markers : MarkersList) {
-                if (marker2 != null) {
-                    if (markers.getTitle().equals(marker2.getTitle())) {
+            for(GroundOverlay Overlay: groundOverlaysf2){
+                Overlay.setVisible(mMap.getCameraPosition().zoom >18 && floorPicked == 2);
+            }
+            if(floorPicked == 1) {
+                for (Marker markers : MarkersList) {
+                    if (marker2 != null) {
+                        if (markers.getTitle().equals(marker2.getTitle())) {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
+                    } else {
                         markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                } else {
-                    markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                }
+                for(Marker marker: secondFloorMarkersList)
+                {
+                    marker.setVisible(false);
+                }
+            }
+            else
+            {
+                for (Marker markers : secondFloorMarkersList) {
+                    if (marker2 != null) {
+                        if (markers.getTitle().equals(marker2.getTitle())) {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
+                    } else {
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
+                }
+                for (Marker marker : MarkersList){
+                    marker.setVisible(false);
                 }
             }
         });
@@ -1018,18 +1206,40 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     }
                 }
             }
-            for (GroundOverlay Overlay : groundOverlays) {
-                Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
+            for (GroundOverlay Overlay : groundOverlaysf1) {
+                Overlay.setVisible(mMap.getCameraPosition().zoom > 18 && floorPicked == 1);
             }
-            for (Marker markers : MarkersList) {
-                if(marker2 != null) {
-                    if (markers.getTitle().equals(marker2.getTitle())) {
+            for(GroundOverlay Overlay: groundOverlaysf2){
+                Overlay.setVisible(mMap.getCameraPosition().zoom >18 && floorPicked == 2);
+            }
+            if(floorPicked == 1) {
+                for (Marker markers : MarkersList) {
+                    if (marker2 != null) {
+                        if (markers.getTitle().equals(marker2.getTitle())) {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
+                    } else {
                         markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                    boolean isIt = markers.isVisible();
                 }
-                else{
-                    checkIfMarkerNeedVisible();
+                for(Marker marker: secondFloorMarkersList)
+                {
+                    marker.setVisible(false);
+                }
+            }
+            else
+            {
+                for (Marker markers : secondFloorMarkersList) {
+                    if (marker2 != null) {
+                        if (markers.getTitle().equals(marker2.getTitle())) {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
+                    } else {
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
+                }
+                for (Marker marker : MarkersList){
+                    marker.setVisible(false);
                 }
             }
         });
@@ -1064,7 +1274,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //SearchBar
         Search = findViewById(R.id.input_Search);
 
-        
+        //upFloor
+        upFloor = findViewById(R.id.FloorUp);
+        //downFloor
+        downFloor = findViewById(R.id.FloorDown);
+
         //Nav Lock Button
         NacLock = findViewById(R.id.NavLock);
         NacLock.setOnClickListener(this);
@@ -1074,6 +1288,19 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         mMap.setOnMapClickListener(this);
         //Map Long Click function
         mMap.setOnMapLongClickListener(this);
+        //upFloor Click Listener
+        upFloor.setOnClickListener(this);
+        //downFloor Click Listener
+        downFloor.setOnClickListener(this);
+        if(floorPicked == 1)
+        {
+            downFloor.setVisibility(View.GONE);
+        }
+        else
+        {
+            upFloor.setVisibility(View.GONE);
+            downFloor.setVisibility(View.VISIBLE);
+        }
         //prepares searchbar
         SearchReady();
         //Getting Darkmode option from database
@@ -1131,16 +1358,89 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             }
         }
 
-        if(isNOTfUCKED){
+        if(favoritedMarkers == null||favoritedMarkers.isEmpty()){
+            LoadFavoriteMarkers();
+        }
+        if(!favoritedMarkers.isEmpty())
+        {
+            for (int i = 0; i < favoritedMarkers.size(); i++) {
+                if(favoritedMarkers.get(i).getTitle().equals(markerTitle2))
+                {
+                    onMarkerClick(favoritedMarkers.get(i));
+                    break;
+                }
+            }
+        }
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraLoad));
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomMarkers/");
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+
+                    String markerTitle = dataSnapshot.getKey().toString();
+                    double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
+                    double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
+                    LatLng newLatLng = new LatLng(latitude1,longitude1);
+                    MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
+                    if(!wasRemoveHit) {
+                        Marker newMarker = mMap.addMarker(newMarkerOption);
+                        newMarker.showInfoWindow();
+                        createdMarkers.add(newMarker);
+                    }
+                }
+                doTheClick(createdMarkers);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void doTheClick(ArrayList<Marker> ListToClick)
+    {
+        Marker marker = ListToClick.get(0);
+        if(isNOTfUCKED){
             onMarkerClick(FindTheMarker(markerTitle2));
             btnFavoritesAdd.setVisibility(View.GONE);
             bntFavoritesRemove.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraLoad));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("floorPicked", floorPicked);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle inState){
+        super.onRestoreInstanceState(inState);
+        floorPicked = inState.getInt("floorPicked");
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CameraPosition mMyCam = mMap.getCameraPosition();
+        double longitude = mMyCam.target.longitude;
+        double latitude = mMyCam.target.latitude;
 
+        SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat("longitude",(float) longitude);
+        editor.putFloat("latitude",(float) latitude);
+        editor.putInt("floorPicked",floorPicked);
+        editor.commit();
+    }
 
     public void navloc()
     {
@@ -1195,7 +1495,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //Switch based on what button was clicked
         switch(view.getId()){
             case R.id.userMaps:
-                startActivity(new Intent(this,Settings.class));
+                Intent intent =  new Intent(this,Settings.class);
+                startActivity(intent);
                 break;
             case R.id.NavLock:
                 if(!FollowUser)
@@ -1213,6 +1514,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 break;
             case R.id.navgo:
                 getDirectionPoly(marker2);
+                checkDistPoint = new LatLng(Latitude,Longitued);
                 //Setting curlocation and final destination to text boxes
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
@@ -1302,7 +1604,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                         createdMarker = null;
                     }
                 }
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
+                for (int i = 0; i < favoritedMarkers.size(); i++)
+                {
                     if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
                     {
                         Favorites.removeFromFavorite(MapsActivity.this,createdMarker);
@@ -1345,14 +1648,18 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     snack.show();
                     saveSpotLayout.setVisibility(View.GONE);
                 }
-                else {
-                    if(!wasRemoveHit) {
-                        if(!name.isEmpty()) {
+                else
+                {
+                    if(!wasRemoveHit)
+                    {
+                        if(!name.isEmpty())
+                        {
                             newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
                             newMarker.showInfoWindow();
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(LongClickPoint));
                         }
-                        else{
+                        else
+                        {
                             newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
                             newMarker.showInfoWindow();
                         }
@@ -1378,6 +1685,72 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 mMap.moveCamera(CameraUpdateFactory.zoomOut());
                 checkIfMarkerNeedVisible();
                 break;
+            case R.id.FloorUp:
+                floorPicked = 2;
+                showMapsFloor(floorPicked);
+                upFloor.setVisibility(View.GONE);
+                downFloor.setVisibility(View.VISIBLE);
+                for (Marker markers : secondFloorMarkersList) {
+                    if (marker2 != null) {
+                        if (markers.getTitle().equals(marker2.getTitle())) {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
+                    } else {
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
+                }
+                for (Marker marker : MarkersList){
+                    marker.setVisible(false);
+                }
+                break;
+            case R.id.FloorDown:
+                floorPicked = 1;
+                showMapsFloor(floorPicked);
+                downFloor.setVisibility(View.GONE);
+                upFloor.setVisibility(View.VISIBLE);
+                for (Marker markers : MarkersList) {
+                    if (marker2 != null) {
+                        if (markers.getTitle().equals(marker2.getTitle())) {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
+                    } else {
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
+                }
+                for(Marker marker: secondFloorMarkersList)
+                {
+                    marker.setVisible(false);
+                }
+                break;
+        }
+    }
+    //Chooses which Maps needs to be shown
+    protected void showMapsFloor(int Floor) {
+        if(Floor == 2)
+        {
+            for (GroundOverlay Overlay : groundOverlaysf1)
+            {
+                Overlay.setVisible(false);
+            }
+            for(GroundOverlay Overlay : groundOverlaysf2)
+            {
+                if(mMap.getCameraPosition().zoom >18) {
+                    Overlay.setVisible(true);
+                }
+            }
+        }
+        else
+        {
+            for (GroundOverlay Overlay : groundOverlaysf2)
+            {
+                Overlay.setVisible(false);
+            }
+            for(GroundOverlay Overlay : groundOverlaysf1)
+            {
+                if(mMap.getCameraPosition().zoom>18) {
+                    Overlay.setVisible(true);
+                }
+            }
         }
     }
 
@@ -1643,6 +2016,13 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 foundMarker = m2;
             }
         }
+        for(Marker m3: secondFloorMarkersList)
+        {
+            if(m3.getTitle().equals(title))
+            {
+                foundMarker = m3;
+            }
+        }
         return foundMarker;
     }
     public boolean CheckMarkerType(Marker marker)
@@ -1823,4 +2203,3 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         }
     }
 }
-
