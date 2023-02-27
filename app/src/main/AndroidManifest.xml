@@ -26,7 +26,7 @@
             android:name="com.example.FSMap.LoadingScreenActivity"
             android:exported="false"
             android:label="@string/title_activity_loading_screen"
-            android:theme="@style/Theme.FSMap.NoActionBar" />
+            android:theme="@style/Theme.LoginTesting.NoActionBar" />
         <activity
             android:name="com.example.FSMap.EditProfile"
             android:exported="false" />

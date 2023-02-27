@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.TutorialsAndroid:GButton:v1.0.19@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/403851354efcf79d8619e53838c501fe/transformed/GButton-v1.0.19/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/403851354efcf79d8619e53838c501fe/transformed/GButton-v1.0.19/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/403851354efcf79d8619e53838c501fe/transformed/GButton-v1.0.19/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.TutorialsAndroid/GButton/v1.0.19/5ab303588ec3a43e7c2a572dbf7adf6d7a56c4ff/GButton-v1.0.19-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
