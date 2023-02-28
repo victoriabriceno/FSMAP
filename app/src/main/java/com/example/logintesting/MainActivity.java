@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cm = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         ni = cm.getActiveNetworkInfo();
 
-//        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-//                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-//            connected = true;
-//        else
-//            connected= false;
+        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected= false;
 
         //PASSWORD VISIBLE
 
