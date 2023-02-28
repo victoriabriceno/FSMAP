@@ -1,4 +1,4 @@
-package com.example.logintesting;
+package com.example.FSMap;
 
 //BY SEBASTIAN JAZMIN
 import androidx.appcompat.app.AppCompatActivity;

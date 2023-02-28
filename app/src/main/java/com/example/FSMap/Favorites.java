@@ -1,4 +1,4 @@
-package com.example.logintesting;
+package com.example.FSMap;
 
 
 //Favorites Screen
@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LoginTesting</string>
+    <string name="app_name">FS Map</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="AboutText">App created by Swift Kings:\n
         Victoria Briceño\n

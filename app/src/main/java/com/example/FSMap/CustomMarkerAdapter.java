@@ -1,4 +1,4 @@
-package com.example.logintesting;
+package com.example.FSMap;
 
 import android.content.Context;
 import android.content.Intent;

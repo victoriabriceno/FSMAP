@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.logintesting"
+        applicationId "com.example.FSMap"
         minSdk 21
         targetSdk 32
         versionCode 1

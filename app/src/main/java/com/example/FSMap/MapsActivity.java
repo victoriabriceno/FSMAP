@@ -1,4 +1,4 @@
-package com.example.logintesting;
+package com.example.FSMap;
 //Woohoo, imports
 
 import android.Manifest;
@@ -32,7 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.logintesting.databinding.ActivityMapsBinding;
+import com.example.FSMap.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

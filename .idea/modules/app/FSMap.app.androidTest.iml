@@ -32,7 +32,7 @@
     <content url="file://$MODULE_DIR$/../../../app/src/androidTestDebug" />
     <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="LoginTesting.app.main" scope="TEST" />
+    <orderEntry type="module" module-name="FSMap.app.main" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.13.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.annotation:annotation:1.5.0" level="project" />
@@ -177,5 +177,5 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.android:facebook-messenger:16.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.android:facebook-gamingservices:16.0.0@aar" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="LoginTesting.app.main" />
+  <component name="TestModuleProperties" production-module="FSMap.app.main" />
 </module>

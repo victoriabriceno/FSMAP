@@ -1,9 +1,4 @@
-package com.example.logintesting;
-
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-
-import com.google.android.gms.maps.model.Marker;
+package com.example.FSMap;
 
 public class UserFavoriteList {
 

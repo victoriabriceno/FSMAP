@@ -1,4 +1,4 @@
-package com.example.logintesting;
+package com.example.FSMap;
 
 public class CustomMarkersList {
     String markerTitle;

@@ -1,4 +1,4 @@
-package com.example.logintesting;
+package com.example.FSMap;
 
 import com.google.android.gms.maps.model.LatLng;
 
