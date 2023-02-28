@@ -175,6 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Marker usermarker;
     Circle userLocationAccuracyCircle;
+    Location currentLocation;
 
     LocationListener locationListener = new LocationListener() {
         @Override
@@ -487,7 +488,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            Location currentLocation = (Location) task.getResult();
+                            currentLocation = (Location) task.getResult();
                             Latitude = currentLocation.getLatitude();
                             Longitued = currentLocation.getLongitude();
                             setUserLocationMarker(currentLocation);
@@ -506,42 +507,72 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void ComparePoints(Location location) {
-        int ixLastPoint = 0;
-        List<LatLng> points;
-        if (linesShowing.size() > 0) {
+//        int ixLastPoint = 0;
+//        List<LatLng> points;
+//        if (linesShowing.size() > 0) {
+//
+//            points = linesShowing.get(0).getPoints();
+//            List<LatLng> pathPoints = points;
+//            for (int i = 0; i < points.size(); i++) {
+//                LatLng point1 = points.get(i);
+//                LatLng point2 = points.get(i);
+//                List<LatLng> currentSegment = new ArrayList<>();
+//                currentSegment.add(point1);
+//                currentSegment.add(point2);
+//                if (PolyUtil.isLocationOnPath(new LatLng(location.getLatitude(), location.getLongitude()), currentSegment, true, 50)) {
+//
+//                    ixLastPoint = i;
+//                    // LatLng snappedtOSegment = getMarkerProjectionOnSegment(new LatLng(location.getLatitude(), location.getLongitude()), currentSegment, mMap.getProjection());
+//                    break;
+//                }
+//            }
+//            pathPoints = points;
+//            for (int i = 0; i < ixLastPoint; i++) {
+//                pathPoints.remove(0);
+//            }
+//            linesShowing.get(0).setVisible(true);
+//            linesShowing.get(0).setPoints(pathPoints);
+//            for (int i = 0; i < linesShowing.size(); i++) {
+//                linesShowing.get(0).setVisible(true);
+//            }
+//
+//        }
 
-            points = linesShowing.get(0).getPoints();
-            List<LatLng> pathPoints = points;
-            for (int i = 0; i < points.size(); i++) {
-                LatLng point1 = points.get(i);
-                LatLng point2 = points.get(i);
-                List<LatLng> currentSegment = new ArrayList<>();
-                currentSegment.add(point1);
-                currentSegment.add(point2);
-                if (PolyUtil.isLocationOnPath(new LatLng(location.getLatitude(), location.getLongitude()), currentSegment, true, 50)) {
+        List<LatLng> sourcePoints = new ArrayList<>();
+        sourcePoints = linesShowing.get(0).getPoints();
+        PolylineOptions polyLineOptions;
+        LatLng carPos;
 
-                    ixLastPoint = i;
-                    // LatLng snappedtOSegment = getMarkerProjectionOnSegment(new LatLng(location.getLatitude(), location.getLongitude()), currentSegment, mMap.getProjection());
-                    break;
-                }
-            }
-            pathPoints = points;
-            for (int i = 0; i < ixLastPoint; i++) {
-                pathPoints.remove(0);
-            }
-            linesShowing.get(0).setVisible(true);
-            linesShowing.get(0).setPoints(pathPoints);
-            for (int i = 0; i < linesShowing.size(); i++) {
-                linesShowing.get(0).setVisible(true);
-            }
+        carPos = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sourcePoints.get(0), 15));
 
+
+
+        for (int i = 0; i < sourcePoints.size() - 1; i++) {
+            LatLng segmentP1 = sourcePoints.get(i);
+            LatLng segmentP2 = sourcePoints.get(i+1);
+            List<LatLng> segment = new ArrayList<>(2);
+            segment.add(segmentP1);
+            segment.add(segmentP2);
+
+            if (PolyUtil.isLocationOnPath(carPos, segment, true, 30)) {
+                polyLineOptions = new PolylineOptions();
+                polyLineOptions.addAll(segment);
+                polyLineOptions.width(10);
+                polyLineOptions.color(Color.RED);
+                mMap.addPolyline(polyLineOptions);
+                Location snappedToSegment = getMarkerProjectionOnSegment(carPos, segment, mMap.getProjection());
+                setUserLocationMarker(snappedToSegment);
+                break;
+            }
         }
 
+        
 
     }
 
 
-    private LatLng getMarkerProjectionOnSegment(LatLng userPos, List<LatLng> segment, Projection projection) {
+    private Location getMarkerProjectionOnSegment(LatLng userPos, List<LatLng> segment, Projection projection) {
 
         LatLng markerProjection = null;
 
@@ -561,7 +592,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             carPosOnSegment.y = (int) (p1.y + (p2.y - p1.y) * t);
             markerProjection = projection.fromScreenLocation(carPosOnSegment);
         }
-        return markerProjection;
+        Location marker = new Location("source");
+        marker.setLatitude(markerProjection.latitude);
+        marker.setLongitude(markerProjection.longitude);
+        return marker;
     }
 
     private void getDeviceLocationCameraMove() {
@@ -573,7 +607,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            Location currentLocation = (Location) task.getResult();
+                            currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
                             Latitude = currentLocation.getLatitude();
                             Longitued = currentLocation.getLongitude();
