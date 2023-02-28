@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -54,9 +55,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -65,6 +69,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -72,6 +77,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -81,6 +87,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.io.File;
+import java.util.concurrent.ExecutionException;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -148,6 +157,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     String markerTitle2;
     boolean isNOTfUCKED = false;
 
+
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +192,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+        //Loading markers from CSV
 
 
         if(createdMarkers== null|| createdMarkers.isEmpty()) {
@@ -724,52 +735,144 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         customPolyLines.add(outsideToWaterZone);
         LinesTitles.add("outsideToWater Zone (112)");
         //add Marker
-        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593974,-81.304508)).title("Meeting 119");
-        Marker room119 = mMap.addMarker(Meeting119);
-        ClassRoomMarkers.add(room119);
-        MarkersList.add(room119);
 
-        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593945,-81.304514)).title("Meeting 118");
-        Marker room118 = mMap.addMarker(Meeting118);
-        ClassRoomMarkers.add(room118);
-        MarkersList.add(room118);
+//        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593974,-81.304508)).title("Meeting 119");
+//        Marker room119 = mMap.addMarker(Meeting119);
+//        ClassRoomMarkers.add(room119);
+//        MarkersList.add(room119);
+//
+//        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593945,-81.304514)).title("Meeting 118");
+//        Marker room118 = mMap.addMarker(Meeting118);
+//        ClassRoomMarkers.add(room118);
+//        MarkersList.add(room118);
+//
+//        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593919,-81.304514)).title("Meeting 117");
+//        Marker room117 = mMap.addMarker(meeting117);
+//        ClassRoomMarkers.add(room117);
+//        MarkersList.add(room117);
+//
+//        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593890,-81.304514)).title("Meeting 116");
+//        Marker room116 = mMap.addMarker(Meeting116);
+//        ClassRoomMarkers.add(room116);
+//        MarkersList.add(room116);
+//
+//        MarkerOptions Meeting115 = new MarkerOptions().position(new LatLng(28.593858, -81.304514)).title("Meeting 115");
+//        Marker room115 = mMap.addMarker(Meeting115);
+//        ClassRoomMarkers.add(room115);
+//        MarkersList.add(room115);
+//
+//        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
+//        BathroomMarkers.add(boysBathroom113);
+//        MarkersList.add(boysBathroom113);
+//
+//        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+//        Marker waterZone = mMap.addMarker(WaterZone);
+//        WaterZones.add(waterZone);
+//        MarkersList.add(waterZone);
+//
 
-        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593919,-81.304514)).title("Meeting 117");
-        Marker room117 = mMap.addMarker(meeting117);
-        ClassRoomMarkers.add(room117);
-        MarkersList.add(room117);
+        //Marker stuffs
+        //Markers for classrooms
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
 
-        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593890,-81.304514)).title("Meeting 116");
-        Marker room116 = mMap.addMarker(Meeting116);
-        ClassRoomMarkers.add(room116);
-        MarkersList.add(room116);
+        //Markers for SquidWard
+        BitmapDrawable bitmapdrawSCC=(BitmapDrawable)getResources().getDrawable(R.drawable.squidward_community_college);
+        Bitmap bSCC=bitmapdrawSCC.getBitmap();
+        Bitmap smallMarkerSCC = Bitmap.createScaledBitmap(bSCC, 340, 400, false);
 
-        MarkerOptions Meeting115 = new MarkerOptions().position(new LatLng(28.593858, -81.304514)).title("Meeting 115");
-        Marker room115 = mMap.addMarker(Meeting115);
-        ClassRoomMarkers.add(room115);
-        MarkersList.add(room115);
+        //Markers for Bathrooms
+        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.pixil_frame_0);
+        Bitmap b2=bitmapdraw2.getBitmap();
+        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
 
-        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
-        BathroomMarkers.add(boysBathroom113);
-        MarkersList.add(boysBathroom113);
+        //Markers for WaterZones
+        BitmapDrawable bitmapdraw3=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing__1_);
+        Bitmap b3=bitmapdraw3.getBitmap();
+        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
 
-        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-        Marker waterZone = mMap.addMarker(WaterZone);
-        WaterZones.add(waterZone);
-        MarkersList.add(waterZone);
+        //Markers for AdminRooms (Unused as of now)
+        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.admin_rooms_marker_expanded);
+        Bitmap b4=bitmapdraw4.getBitmap();
+        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 140, 200, false);
 
-        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("Squidward Community College");
-        Marker SquidCC = mMap.addMarker(SCC);
-        MarkersList.add(SquidCC);
+        //SquidCC.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarkerSCC));
+        CSVReader creader = new CSVReader();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference sr = storage.getReference();
+        StorageReference csvref = sr.child("Classrooms/rooms.csv");
+        csvref.getBytes(2048*2048).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                creader.CreateRoomList(bytes);
+                ArrayList<String[]> roomlist = creader.GetRoomList();
 
+                for (String[] room : roomlist)
+                {
+                    MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]),Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    Marker mark = mMap.addMarker(roommarker);
+                    MarkersList.add(mark);
+                    switch (room[3])
+                    {
+                        case ("CR"):
+                            ClassRoomMarkers.add(mark);
+                            break;
+                        case ("BR"):
+                            BathroomMarkers.add(mark);
+                            break;
+                        case ("WZ"):
+                            WaterZones.add(mark);
+                            break;
+                        case ("ETC"):
+                            break;
+                    }
+                    //Set Markers image for classrooms
+                    for (Marker ClassRoom: ClassRoomMarkers)
+                    {
+                        ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                    }
 
+                    //Set Markers image for bathrooms
+                    for(Marker Bathrooms: BathroomMarkers)
+                    {
+                        Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+                    }
+
+                    //Set Markers image for Waterzones
+                    for(Marker WaterStation: WaterZones)
+                    {
+                        WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MapsActivity.this, "CSV Failure", Toast.LENGTH_LONG);
+            }
+        }).addOnCanceledListener(new OnCanceledListener() {
+            @Override
+            public void onCanceled() {
+                Toast.makeText(MapsActivity.this, "CSV Cancelled", Toast.LENGTH_LONG);
+
+            }
+        });
+
+        
+//        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("Squidward Community College");
+//        Marker SquidCC = mMap.addMarker(SCC);
+//        MarkersList.add(SquidCC);
+//
         for (Marker marker1: MarkersList)
         {
             if(!marker1.getTitle().equals(SquidCheck)) {
                 marker1.setVisible(false);
             }
         }
+
+
         BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
 
         //Set the bounds for overlay
@@ -929,44 +1032,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
 
-        //Markers for SquidWard
-        BitmapDrawable bitmapdrawSCC=(BitmapDrawable)getResources().getDrawable(R.drawable.squidward_community_college);
-        Bitmap bSCC=bitmapdrawSCC.getBitmap();
-        Bitmap smallMarkerSCC = Bitmap.createScaledBitmap(bSCC, 340, 400, false);
 
-        //Markers for Bathrooms
-        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.pixil_frame_0);
-        Bitmap b2=bitmapdraw2.getBitmap();
-        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
-
-        //Markers for WaterZones
-        BitmapDrawable bitmapdraw3=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing__1_);
-        Bitmap b3=bitmapdraw3.getBitmap();
-        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
-
-        //Markers for AdminRooms (Unused as of now)
-        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.admin_rooms_marker_expanded);
-        Bitmap b4=bitmapdraw4.getBitmap();
-        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 140, 200, false);
-
-        SquidCC.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarkerSCC));
-        //Set Markers image for classrooms
-        for (Marker ClassRoom: ClassRoomMarkers)
-        {
-            ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-        }
-
-        //Set Markers image for bathrooms
-        for(Marker Bathrooms: BathroomMarkers)
-        {
-            Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
-        }
-
-        //Set Markers image for Waterzones
-        for(Marker WaterStation: WaterZones)
-        {
-            WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
-        }
         //set overlays and markers visibile after certain zoom level is reached.
         //For camera moving
         mMap.setOnCameraMoveListener(()->

@@ -44,7 +44,15 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         registerBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterUser.this,MainActivity.class));
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(RegisterUser.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+                startActivity(i);
             }
         });
         editEmail = (EditText) findViewById(R.id.registerEmailAddress);
