@@ -179,6 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(@NonNull Location location) {
+            setUserLocationMarker(location);
             ComparePoints(location);
         }
     };
@@ -450,7 +451,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Create a new marker
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarker));
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.locationmarkersmol_orange));
             markerOptions.rotation(location.getBearing());
             markerOptions.anchor((float) 0.5, (float) 0.5);
             usermarker = mMap.addMarker(markerOptions);
@@ -465,8 +466,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             CircleOptions circleOptions = new CircleOptions();
             circleOptions.center(latLng);
             circleOptions.strokeWidth(4);
-            circleOptions.strokeColor(Color.rgb(255, 181, 81));
-            circleOptions.fillColor(Color.rgb(255, 181, 81));
+            circleOptions.strokeColor(Color.parseColor("#22ffb551"));
+            circleOptions.fillColor(Color.parseColor("#22ffb551"));
             circleOptions.radius(location.getAccuracy());
             userLocationAccuracyCircle = mMap.addCircle(circleOptions);
         } else {
@@ -760,7 +761,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return;
 
             }
-            // mMap.setMyLocationEnabled(true);
+//            mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             Init();
         }
@@ -1325,8 +1326,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //For camera moving
         mMap.setOnCameraMoveListener(() ->
         {
-
-
             String result = DoTheChecks();
             CheckResults(result);
             if (wasRemoveHit) {
@@ -1419,34 +1418,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         //Slide up code setup
-        slideupview =
-
-                findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.slideup);
         slideupview.setVisibility(View.GONE);
         slideup = false;
 
         //Set Button for save spot
-        Set =
-
-                findViewById(R.id.OkMarkerTitle);
+        Set = findViewById(R.id.OkMarkerTitle);
         Set.setOnClickListener(this);
 
         //Remove Spot button
-        RemovePoint =
-
-                findViewById(R.id.RemoveSpot);
+        RemovePoint = findViewById(R.id.RemoveSpot);
         RemovePoint.setOnClickListener(this);
 
         //Navigation button Setup
-        NavGo =
-
-                findViewById(R.id.navgo);
+        NavGo = findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
 
         //Button for when Done is pressed while in nav mode
-        NavDone =
-
-                findViewById(R.id.NavDone);
+        NavDone = findViewById(R.id.NavDone);
         NavDone.setOnClickListener(this);
 
         //zoom in
@@ -1457,23 +1446,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        ZoomOut = findViewById(R.id.ZoomOut);
 //        ZoomOut.setOnClickListener(this);
         //SearchBar
-        Search =
-
-                findViewById(R.id.input_Search);
+        Search = findViewById(R.id.input_Search);
 
         //upFloor
-        upFloor =
-
-                findViewById(R.id.FloorUp);
+        upFloor = findViewById(R.id.FloorUp);
         //downFloor
-        downFloor =
-
-                findViewById(R.id.FloorDown);
+        downFloor = findViewById(R.id.FloorDown);
 
         //Nav Lock Button
-        NacLock =
-
-                findViewById(R.id.NavLock);
+        NacLock = findViewById(R.id.NavLock);
         NacLock.setOnClickListener(this);
         //Marker click function
         mMap.setOnMarkerClickListener(this);
@@ -1497,40 +1478,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Getting Darkmode option from database
         DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/DarkMode/");
-        mdatabase.addValueEventListener(new
-
-                                                ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                        if (snapshot.exists()) {
-                                                            Boolean DarkMode = (boolean) snapshot.getValue();
-                                                            if (DarkMode) {
-                                                                DarkorLight = true;
-                                                                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.style_json));
-                                                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                                                                for (PolylineOptions lines1 : customPolyLines) {
-                                                                    lines1.pattern(pattern);
-                                                                    lines1.width(15);
-                                                                    lines1.color(Color.BLUE);
-                                                                }
-                                                            } else {
-                                                                DarkorLight = false;
-                                                                mMap.setMapStyle(null);
-                                                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                                                                for (PolylineOptions lines1 : customPolyLines) {
-                                                                    lines1.pattern(pattern);
-                                                                    lines1.width(15);
-                                                                    lines1.color(Color.parseColor("#FFA500"));
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                                    }
-                                                });
+        mdatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Boolean DarkMode = (boolean) snapshot.getValue();
+                    if (DarkMode) {
+                        DarkorLight = true;
+                        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.style_json));
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        for (PolylineOptions lines1 : customPolyLines) {
+                            lines1.pattern(pattern);
+                            lines1.width(15);
+                            lines1.color(Color.BLUE);
+                        }
+                    } else {
+                        DarkorLight = false;
+                        mMap.setMapStyle(null);
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        for (PolylineOptions lines1 : customPolyLines) {
+                            lines1.pattern(pattern);
+                            lines1.width(15);
+                            lines1.color(Color.parseColor("#FFA500"));
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         if (DarkorLight) {
             for (PolylineOptions lines1 : customPolyLines) {
                 lines1.pattern(pattern);
@@ -1559,32 +1536,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraLoad));
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/CustomMarkers/");
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                      @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
+            @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                                                          for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                                                                              String markerTitle = dataSnapshot.getKey().toString();
-                                                                              double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
-                                                                              double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
-                                                                              LatLng newLatLng = new LatLng(latitude1, longitude1);
-                                                                              MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
-                                                                              if (!wasRemoveHit) {
-                                                                                  Marker newMarker = mMap.addMarker(newMarkerOption);
-                                                                                  newMarker.showInfoWindow();
-                                                                                  createdMarkers.add(newMarker);
-                                                                              }
-                                                                          }
-                                                                          if (createdMarkers.size() > 0) {
-                                                                              doTheClick(createdMarkers);
-                                                                          }
-                                                                      }
-
-                                                                      @Override
-                                                                      public void onCancelled(@NonNull DatabaseError error) {
-
-                                                                      }
-                                                                  });
-
+                    String markerTitle = dataSnapshot.getKey().toString();
+                    double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
+                    double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
+                    LatLng newLatLng = new LatLng(latitude1, longitude1);
+                    MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
+                    if (!wasRemoveHit) {
+                        Marker newMarker = mMap.addMarker(newMarkerOption);newMarker.showInfoWindow()
+                        ;createdMarkers.add(newMarker);
+                    }
+                }
+                if (createdMarkers.size() > 0) {
+                    doTheClick(createdMarkers);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
         public void doTheClick (ArrayList < Marker > ListToClick) {
             if (isNOTfUCKED) {
