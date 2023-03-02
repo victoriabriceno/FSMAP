@@ -52,7 +52,7 @@ public class MarkerTouch extends FrameLayout {
     private static final int ClickRadius = 70;
 
     private GoogleMap mGoogleMap;
-    private List<Marker> mMarkers, Favs, CM;
+    private List<Marker> mMarkers, Favs, CM, AM;
     ArrayList<Marker> markersClicked = new ArrayList<>();
     private Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
@@ -75,12 +75,17 @@ public class MarkerTouch extends FrameLayout {
     public void setGoogleMapAndMarkers(GoogleMap googleMap, List<Marker> markers, List<Marker> favorite, List<Marker> created, List<Polyline> lines, Context context, Activity activity) {
         mGoogleMap = googleMap;
         mMarkers = markers;
+        CM = created;
         C = context;
         A = activity;
         Favs = favorite;
-        CM = created;
         linesShowing = lines;
+        AM = mMarkers;
+        AM.addAll(CM);
+
     }
+
+
 
 
     //Marker Click
@@ -97,7 +102,7 @@ public class MarkerTouch extends FrameLayout {
 
             Marker marker = null;
             int minDistanceInPixels = Integer.MAX_VALUE;
-            for (Marker markers : mMarkers) {
+            for (Marker markers : AM) {
                 Point markerScreen = projection.toScreenLocation(markers.getPosition());
                 int distanceToMarker = (int) Math.sqrt((screenX - markerScreen.x) * (screenX - markerScreen.x)
                         + (screenY - markerScreen.y) * (screenY - markerScreen.y));
@@ -115,7 +120,9 @@ public class MarkerTouch extends FrameLayout {
                 getLocationPermission();
                 //If you have location, get device location
                 if (mLocationPermissionsGranted)
+                {
                     getDeviceLocation();
+                }
 
                 if(!wasRemoveHit){
                     wasRemoveHit = true;
@@ -199,10 +206,10 @@ public class MarkerTouch extends FrameLayout {
                 TextView text = slideupview.findViewById(R.id.roomnumber);
                 text.setText(marker.getTitle());
                 slideupview.setVisibility(View.VISIBLE);
-                
+
                 //Creates list of all marker titles
                 ArrayList<String> listfornav = new ArrayList<String>();
-                for (Marker m : mMarkers){
+                for (Marker m : AM){
                     if (m.getTitle() != null){
                         listfornav.add(m.getTitle());
                     }
@@ -238,7 +245,7 @@ public class MarkerTouch extends FrameLayout {
                     To.setBackgroundColor(Color.TRANSPARENT);
                 }
                 //hide markers after one is clicked
-                for (Marker m : mMarkers)
+                for (Marker m : AM)
                 {
                     if(!m.getTitle().equals(marker.getTitle())) {
                         m.setVisible(false);

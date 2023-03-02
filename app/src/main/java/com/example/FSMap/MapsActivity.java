@@ -3,6 +3,7 @@ package com.example.FSMap;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -154,7 +155,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     String markerTitle2;
     boolean isNOTfUCKED = false;
+
     private MarkerFragment markerFragment;
+    boolean csvmarkerready, cmmarkerready = false;
 
 
     //onCreate gets rebuilt each time the map is created
@@ -345,6 +348,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     private void LoadMarkers()
     {
+        Activity act = this;
+        Context con = this;
         createdMarkers = new ArrayList<>();
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomMarkers/");
         databaseReference1.addValueEventListener(new ValueEventListener() {
@@ -366,6 +371,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                         }
                     }
                 }
+                cmmarkerready = true;
+                if (csvmarkerready){
+                    markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, con, act);
+                }
+
             }
 
             @Override
@@ -766,6 +776,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sr = storage.getReference();
         StorageReference csvref = sr.child("Classrooms/rooms.csv");
+        Context con = this;
+        Activity act = this;
         csvref.getBytes(2048*2048).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -808,6 +820,10 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     {
                         WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
                     }
+                }
+                csvmarkerready = true;
+                if (cmmarkerready){
+                    markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, con, act);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -1023,7 +1039,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         });
 
         //On Marker Click Override
-        markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, this.getApplicationContext(), this);
+        if (cmmarkerready && csvmarkerready)
+            markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, this.getApplicationContext(), this);
 
         // disable marker click processing
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
