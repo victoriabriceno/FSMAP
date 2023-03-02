@@ -49,7 +49,7 @@ public class MarkerTouch extends FrameLayout {
 
 
     //Change this to change clickable radius in pixels
-    private static final int ClickRadius = 70;
+    private static final int ClickRadius = 50;
 
     private GoogleMap mGoogleMap;
     private List<Marker> mMarkers, Favs, CM, AM;
