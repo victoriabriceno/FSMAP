@@ -928,105 +928,105 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 .image(build3aF1BitMap)
                 .anchor(1.0f,-0.1f)
                 .bearing(-2);
-        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3B)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
-                .anchor(0.45f,0.45f);
-        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
-                .positionFromBounds(build3BConnect)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
-        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3C)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
-        GroundOverlayOptions build3CMPOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3CMP)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp));
-        GroundOverlayOptions build3FOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3F)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3f_1f));
-        GroundOverlayOptions build4COverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4C)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4c))
-                .bearing(140);
-        GroundOverlayOptions build4BOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4B)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4b_1f));
-        GroundOverlayOptions build4AOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4A)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd1));
-        GroundOverlayOptions build4AWD2Overlay = new GroundOverlayOptions()
-                .positionFromBounds(build4AWD2)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd2))
-                .bearing(42);
-        GroundOverlayOptions build4AFCOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4AFC)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_fc))
-                .bearing(-46);
-        GroundOverlayOptions build4DOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4D)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4d_1f))
-                .bearing(45);
-        GroundOverlayOptions build4EOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build4E)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
-                .bearing(45);
+//        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3B)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
+//                .anchor(0.45f,0.45f);
+//        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
+//                .positionFromBounds(build3BConnect)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
+//        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3C)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
+//        GroundOverlayOptions build3CMPOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3CMP)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp));
+//        GroundOverlayOptions build3FOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3F)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3f_1f));
+//        GroundOverlayOptions build4COverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4C)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4c))
+//                .bearing(140);
+//        GroundOverlayOptions build4BOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4B)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4b_1f));
+//        GroundOverlayOptions build4AOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4A)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd1));
+//        GroundOverlayOptions build4AWD2Overlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4AWD2)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd2))
+//                .bearing(42);
+//        GroundOverlayOptions build4AFCOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4AFC)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_fc))
+//                .bearing(-46);
+//        GroundOverlayOptions build4DOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4D)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4d_1f))
+//                .bearing(45);
+//        GroundOverlayOptions build4EOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build4E)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
+//                .bearing(45);
         //add groundOverlay and create reference.
         GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
         GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
-        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
-        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
-        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
-        GroundOverlay build3CMPOverlayOption =  mMap.addGroundOverlay(build3CMPOverlay);
-        GroundOverlay build3FOverlayOption = mMap.addGroundOverlay(build3FOverlay);
-        GroundOverlay build4COverlayOption = mMap.addGroundOverlay(build4COverlay);
-        GroundOverlay build4BOverlayOption = mMap.addGroundOverlay(build4BOverlay);
-        GroundOverlay build4AOverlayOption = mMap.addGroundOverlay(build4AOverlay);
-        GroundOverlay build4AWD2OverlayOption = mMap.addGroundOverlay(build4AWD2Overlay);
-        GroundOverlay build4AFCOverlayOption = mMap.addGroundOverlay(build4AFCOverlay);
-        GroundOverlay build4DOverlayOption = mMap.addGroundOverlay(build4DOverlay);
-        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
+//        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
+//        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
+//        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
+//        GroundOverlay build3CMPOverlayOption =  mMap.addGroundOverlay(build3CMPOverlay);
+//        GroundOverlay build3FOverlayOption = mMap.addGroundOverlay(build3FOverlay);
+//        GroundOverlay build4COverlayOption = mMap.addGroundOverlay(build4COverlay);
+//        GroundOverlay build4BOverlayOption = mMap.addGroundOverlay(build4BOverlay);
+//        GroundOverlay build4AOverlayOption = mMap.addGroundOverlay(build4AOverlay);
+//        GroundOverlay build4AWD2OverlayOption = mMap.addGroundOverlay(build4AWD2Overlay);
+//        GroundOverlay build4AFCOverlayOption = mMap.addGroundOverlay(build4AFCOverlay);
+//        GroundOverlay build4DOverlayOption = mMap.addGroundOverlay(build4DOverlay);
+//        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
         build3aF1.setDimensions(34,28);
         buildLibraryOverlayed.setDimensions(37,28);
-        build3bF1.setDimensions(84,62);
-        build3bConnect.setDimensions(64,30);
-        build3COverlayOption.setDimensions(40,42);
-        build3CMPOverlayOption.setDimensions(20,25);
-        build3FOverlayOption.setDimensions(100,80);
-        build4COverlayOption.setDimensions(14,10);
-        build4BOverlayOption.setDimensions(68,48);
-        build4AOverlayOption.setDimensions(90,50);
-        build4AWD2OverlayOption.setDimensions(14,10);
-        build4AFCOverlayOption.setDimensions(70,50);
-        build4DOverlayOption.setDimensions(100,60);
-        build4EOverlayOption.setDimensions(100,60);
+//        build3bF1.setDimensions(84,62);
+//        build3bConnect.setDimensions(64,30);
+//        build3COverlayOption.setDimensions(40,42);
+//        build3CMPOverlayOption.setDimensions(20,25);
+//        build3FOverlayOption.setDimensions(100,80);
+//        build4COverlayOption.setDimensions(14,10);
+//        build4BOverlayOption.setDimensions(68,48);
+//        build4AOverlayOption.setDimensions(90,50);
+//        build4AWD2OverlayOption.setDimensions(14,10);
+//        build4AFCOverlayOption.setDimensions(70,50);
+//        build4DOverlayOption.setDimensions(100,60);
+//        build4EOverlayOption.setDimensions(100,60);
         //make it so overlay doesnt appear originally
-        build3bConnect.setVisible(false);
-        build3bF1.setVisible(false);
+//        build3bConnect.setVisible(false);
+//        build3bF1.setVisible(false);
         buildLibraryOverlayed.setVisible(false);
         build3aF1.setVisible(false);
-        build3COverlayOption.setVisible(false);
-        build3CMPOverlayOption.setVisible(false);
-        build3FOverlayOption.setVisible(false);
-        build4COverlayOption.setVisible(false);
-        build4BOverlayOption.setVisible(false);
-        build4AOverlayOption.setVisible(false);
-        build4DOverlayOption.setVisible(true);
-        build4EOverlayOption.setVisible(true);
+//        build3COverlayOption.setVisible(false);
+//        build3CMPOverlayOption.setVisible(false);
+//        build3FOverlayOption.setVisible(false);
+//        build4COverlayOption.setVisible(false);
+//        build4BOverlayOption.setVisible(false);
+//        build4AOverlayOption.setVisible(false);
+//        build4DOverlayOption.setVisible(true);
+//        build4EOverlayOption.setVisible(true);
         //add the overlay to overlay array.
-        groundOverlays.add(build3bConnect);
+//        groundOverlays.add(build3bConnect);
         groundOverlays.add(buildLibraryOverlayed);
         groundOverlays.add(build3aF1);
-        groundOverlays.add(build3bF1);
-        groundOverlays.add(build3COverlayOption);
-        groundOverlays.add(build3CMPOverlayOption);
-        groundOverlays.add(build3FOverlayOption);
-        groundOverlays.add(build4COverlayOption);
-        groundOverlays.add(build4BOverlayOption);
-        groundOverlays.add(build4AOverlayOption);
-        groundOverlays.add(build4AWD2OverlayOption);
-        groundOverlays.add(build4AFCOverlayOption);
-        groundOverlays.add(build4DOverlayOption);
-        groundOverlays.add(build4EOverlayOption);
+//        groundOverlays.add(build3bF1);
+//        groundOverlays.add(build3COverlayOption);
+//        groundOverlays.add(build3CMPOverlayOption);
+//        groundOverlays.add(build3FOverlayOption);
+//        groundOverlays.add(build4COverlayOption);
+//        groundOverlays.add(build4BOverlayOption);
+//        groundOverlays.add(build4AOverlayOption);
+//        groundOverlays.add(build4AWD2OverlayOption);
+//        groundOverlays.add(build4AFCOverlayOption);
+//        groundOverlays.add(build4DOverlayOption);
+//        groundOverlays.add(build4EOverlayOption);
         //Markers for classrooms
         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
         Bitmap b=bitmapdraw.getBitmap();
@@ -1061,6 +1061,18 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 }
             }
         });
+
+        //On Marker Click Override
+        mMapFragment.touchView.setGoogleMapAndMarkers(mMap, MarkersList, this.getApplicationContext());
+
+        // disable marker click processing
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return true;
+            }
+        });
+
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(()->
         {
