@@ -117,6 +117,7 @@ public class MarkerTouch extends FrameLayout {
 
             if (marker != null) {
                 //Do marker stuff here
+                //vvvvvvvvvvvvvvvvvvv
                 getLocationPermission();
                 //If you have location, get device location
                 if (mLocationPermissionsGranted)
