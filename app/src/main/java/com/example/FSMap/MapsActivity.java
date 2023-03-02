@@ -119,7 +119,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     ArrayList<Marker> MarkersList =  new ArrayList<Marker>();
     ArrayList<Polyline> linesShowing =  new ArrayList<Polyline>();
     ArrayList<PolylineOptions> customPolyLines = new ArrayList<>();
-    ArrayList<Marker> markersClicked = new ArrayList<>();
     ArrayList<Marker> createdMarkers;
     ArrayList<Marker> favoritedMarkers;
     ArrayList<Marker> BathroomMarkers = new ArrayList<>();
@@ -131,7 +130,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     List<PatternItem> pattern = Arrays.asList(
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
-    boolean slideup;
 
     RelativeLayout slideupview;
    ArrayList<String> nameslist = new ArrayList<String>() {};
@@ -156,6 +154,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     String markerTitle2;
     boolean isNOTfUCKED = false;
+    private MarkerFragment markerFragment;
 
 
     //onCreate gets rebuilt each time the map is created
@@ -170,7 +169,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        markerFragment = (MarkerFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        markerFragment.getMapAsync(this);
 
         userIconMaps = findViewById(R.id.userMaps);
         userIconMaps.setOnClickListener(this);
@@ -180,8 +181,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         getLocationPermission();
         //Slide up code
         slideupview = findViewById(R.id.slideup);
-        slideupview.setVisibility(View.INVISIBLE);
-        slideup = false;
+        slideupview.setVisibility(View.GONE);
 
         //save spot code
         saveSpotLayout = findViewById(R.id.saveSpotLayout);
@@ -255,7 +255,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         }catch(SecurityException e){
 
         }
-
     }
     private void getDeviceLocationCameraMove(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -734,49 +733,13 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         LinesTitles.add("Meeting 119Water Zone (112)");
         customPolyLines.add(outsideToWaterZone);
         LinesTitles.add("outsideToWater Zone (112)");
-        //add Marker
 
-//        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593974,-81.304508)).title("Meeting 119");
-//        Marker room119 = mMap.addMarker(Meeting119);
-//        ClassRoomMarkers.add(room119);
-//        MarkersList.add(room119);
-//
-//        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593945,-81.304514)).title("Meeting 118");
-//        Marker room118 = mMap.addMarker(Meeting118);
-//        ClassRoomMarkers.add(room118);
-//        MarkersList.add(room118);
-//
-//        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593919,-81.304514)).title("Meeting 117");
-//        Marker room117 = mMap.addMarker(meeting117);
-//        ClassRoomMarkers.add(room117);
-//        MarkersList.add(room117);
-//
-//        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593890,-81.304514)).title("Meeting 116");
-//        Marker room116 = mMap.addMarker(Meeting116);
-//        ClassRoomMarkers.add(room116);
-//        MarkersList.add(room116);
-//
-//        MarkerOptions Meeting115 = new MarkerOptions().position(new LatLng(28.593858, -81.304514)).title("Meeting 115");
-//        Marker room115 = mMap.addMarker(Meeting115);
-//        ClassRoomMarkers.add(room115);
-//        MarkersList.add(room115);
-//
-//        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-//        Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
-//        BathroomMarkers.add(boysBathroom113);
-//        MarkersList.add(boysBathroom113);
-//
-//        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-//        Marker waterZone = mMap.addMarker(WaterZone);
-//        WaterZones.add(waterZone);
-//        MarkersList.add(waterZone);
-//
 
         //Marker stuffs
         //Markers for classrooms
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
-        Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+        BitmapDrawable bitmapdraw1=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
+        Bitmap b1=bitmapdraw1.getBitmap();
+        Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
 
         //Markers for SquidWard
         BitmapDrawable bitmapdrawSCC=(BitmapDrawable)getResources().getDrawable(R.drawable.squidward_community_college);
@@ -831,7 +794,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     //Set Markers image for classrooms
                     for (Marker ClassRoom: ClassRoomMarkers)
                     {
-                        ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                        ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
                     }
 
                     //Set Markers image for bathrooms
@@ -861,10 +824,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         });
 
         
-//        MarkerOptions SCC = new MarkerOptions().position(new LatLng(28.595085, -81.308305)).title("Squidward Community College");
-//        Marker SquidCC = mMap.addMarker(SCC);
-//        MarkersList.add(SquidCC);
-//
+
         for (Marker marker1: MarkersList)
         {
             if(!marker1.getTitle().equals(SquidCheck)) {
@@ -882,42 +842,42 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         LatLngBounds build3A =  new LatLngBounds(
                 new LatLng(28.595392200538452, -81.30425629914613),
                 new LatLng(28.59565596435769, -81.30393979848783));
-        LatLngBounds build3B =  new LatLngBounds(
-                new LatLng(28.59489939800887, -81.30421001414925),
-                new LatLng(28.595410442208898, -81.30359042388629));
-        LatLngBounds build3BConnect = new LatLngBounds(
-                new LatLng(28.594658645277548, -81.30423153222328),
-                new LatLng(28.594876487499718, -81.30377019229515));
-        LatLngBounds build3C = new LatLngBounds(
-                new LatLng(28.594253533934957, -81.3042093605151),
-                new LatLng(28.59463740843301, -81.30378020710396));
-        LatLngBounds build3CMP = new LatLngBounds(
-                new LatLng(28.59401920494417, -81.30419863168258),
-                new LatLng(28.59422291811299, -81.30397734945726));
-        LatLngBounds build3F = new LatLngBounds(
-                new LatLng(28.593322903500177, -81.30542386327811),
-                new LatLng(28.59398467985881, -81.30454409878536));
-        LatLngBounds build4C = new LatLngBounds(
-                new LatLng(28.591369859267225, -81.3042459017761),
-                new LatLng(28.591409896421553, -81.30413526066346));
-        LatLngBounds build4B = new LatLngBounds(
-                new LatLng(28.591588937000083, -81.30422856031794),
-                new LatLng(28.592005130777046, -81.30363824532108));
-        LatLngBounds build4A = new LatLngBounds(
-                new LatLng(28.5926339005131, -81.30546789052039),
-                new LatLng(28.592869410133137, -81.30476246959658));
-        LatLngBounds build4AWD2 = new LatLngBounds(
-                new LatLng(28.592030993472754, -81.30421731065695),
-                new LatLng(28.592066320152245, -81.30417908918166));
-        LatLngBounds build4AFC =  new LatLngBounds(
-                new LatLng(28.59226717692391, -81.30473598372107),
-                new LatLng(28.592838288837115, -81.30406274931435));
-        LatLngBounds build4D =  new LatLngBounds(
-                new LatLng(28.59059641684985, -81.30456270361756),
-                new LatLng(28.590932024410755, -81.30418853548505));
-        LatLngBounds build4E = new LatLngBounds(
-                new LatLng(28.590101835337443, -81.30483226561324),
-                new LatLng(28.59086254784375, -81.30463378216082));
+//        LatLngBounds build3B =  new LatLngBounds(
+//                new LatLng(28.59489939800887, -81.30421001414925),
+//                new LatLng(28.595410442208898, -81.30359042388629));
+//        LatLngBounds build3BConnect = new LatLngBounds(
+//                new LatLng(28.594658645277548, -81.30423153222328),
+//                new LatLng(28.594876487499718, -81.30377019229515));
+//        LatLngBounds build3C = new LatLngBounds(
+//                new LatLng(28.594253533934957, -81.3042093605151),
+//                new LatLng(28.59463740843301, -81.30378020710396));
+//        LatLngBounds build3CMP = new LatLngBounds(
+//                new LatLng(28.59401920494417, -81.30419863168258),
+//                new LatLng(28.59422291811299, -81.30397734945726));
+//        LatLngBounds build3F = new LatLngBounds(
+//                new LatLng(28.593322903500177, -81.30542386327811),
+//                new LatLng(28.59398467985881, -81.30454409878536));
+//        LatLngBounds build4C = new LatLngBounds(
+//                new LatLng(28.591369859267225, -81.3042459017761),
+//                new LatLng(28.591409896421553, -81.30413526066346));
+//        LatLngBounds build4B = new LatLngBounds(
+//                new LatLng(28.591588937000083, -81.30422856031794),
+//                new LatLng(28.592005130777046, -81.30363824532108));
+//        LatLngBounds build4A = new LatLngBounds(
+//                new LatLng(28.5926339005131, -81.30546789052039),
+//                new LatLng(28.592869410133137, -81.30476246959658));
+//        LatLngBounds build4AWD2 = new LatLngBounds(
+//                new LatLng(28.592030993472754, -81.30421731065695),
+//                new LatLng(28.592066320152245, -81.30417908918166));
+//        LatLngBounds build4AFC =  new LatLngBounds(
+//                new LatLng(28.59226717692391, -81.30473598372107),
+//                new LatLng(28.592838288837115, -81.30406274931435));
+//        LatLngBounds build4D =  new LatLngBounds(
+//                new LatLng(28.59059641684985, -81.30456270361756),
+//                new LatLng(28.590932024410755, -81.30418853548505));
+//        LatLngBounds build4E = new LatLngBounds(
+//                new LatLng(28.590101835337443, -81.30483226561324),
+//                new LatLng(28.59086254784375, -81.30463378216082));
         //create map overlap
         GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
                 .positionFromBounds(buildLibrary)
@@ -1063,7 +1023,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         });
 
         //On Marker Click Override
-        mMapFragment.touchView.setGoogleMapAndMarkers(mMap, MarkersList, this.getApplicationContext());
+        markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, this.getApplicationContext(), this);
 
         // disable marker click processing
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -1115,7 +1075,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //Slide up code setup
         slideupview = findViewById(R.id.slideup);
         slideupview.setVisibility(View.GONE);
-        slideup = false;
 
         //Set Button for save spot
         Set = findViewById(R.id.OkMarkerTitle);
@@ -1257,16 +1216,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     }
     }
 
-    public boolean isItInMyFavorites(Marker marker)
-    {
-        for (int i = 0; i < favoritedMarkers.size(); i++) {
-            if(favoritedMarkers.get(i).getTitle().equals(marker.getTitle()))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     public void onClick(View view) {
@@ -1336,7 +1285,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 //"Select" markers to be used if needed
                 //Removes slideup
                 slideupview.setVisibility(View.GONE);
-                slideup = false;
                 //Allows NavDone button to appear
                 NavDone.setVisibility(View.VISIBLE);
                 //Brings back searchbar (may be depricated, will have to test)
@@ -1352,8 +1300,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 RemoveAllLines();
                 checkIfMarkerNeedVisible();
                 onMapClick(new LatLng(28.595085, -81.308305));
-                markersClicked.remove(0);
-                //Brings Searchbar back (again, may be depricated)
+                //Brings Searchbar back
                 Search.setVisibility(View.VISIBLE);
                 //Removes navdone button
                 NavDone.setVisibility(View.GONE);
@@ -1488,141 +1435,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        //get location for drawing line between user and marker
-        getDeviceLocation();
 
-        if(!wasRemoveHit){
-            wasRemoveHit = true;
-        }
-        else
-        {
-            marker.remove();
-        }
-        if(isItInMyFavorites(marker))
-        {
-
-            btnFavoritesAdd.setVisibility(View.GONE);
-            bntFavoritesRemove.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-
-            bntFavoritesRemove.setVisibility(View.GONE);
-            btnFavoritesAdd.setVisibility(View.VISIBLE);
-        }
-        wasRemoveHit = false;
-        wasMarkerClicked = true;
-        NavDone.setVisibility(View.VISIBLE);
-        //check for marker in original Marker list
-        if(CheckMarkerType(marker))
-        {
-            RemovePoint.setVisibility(View.VISIBLE);
-            createdMarker = marker;
-        }
-        else
-        {
-            RemovePoint.setVisibility(View.GONE);
-        }
-        //Change camera, zoom if needed
-        if (mMap.getCameraPosition().zoom < 18) {
-                moveCamera(marker.getPosition(), 20f);
-        } else {
-                moveCamera(marker.getPosition());
-        }
-        //Keep track of how many times a marker is clicked
-        if (clickCount == 0) {
-            clickCount++;
-            //add marker to markersClicked
-            markersClicked.add(marker);
-        }
-        //If clicking another marker, switch marker and line
-        if(markersClicked.size()!= 0) {
-            if (!markersClicked.get(0).equals(marker)) {
-                clickCount++;
-                RemoveAllLines();
-                markersClicked.add(marker);
-            }
-            //triggers if user clicks on same marker twice
-            else {
-                if (clickCount != 1) {
-                    snack = Snackbar.make(findViewById(R.id.map), "Clicked On The Same Marker", Snackbar.LENGTH_SHORT);
-                    snack.show();
-                }
-            }
-        }
-        else
-        {
-            RemoveAllLines();
-            markersClicked.add(marker);
-        }
-        //Remove marker from markers clicked when more than 1 marker has been clicked
-        if (markersClicked.size() > 1) {
-            markersClicked.remove(0);
-        }
-        /*marker.showInfoWindow();*/
-
-        //Slide up code
-        TextView text = slideupview.findViewById(R.id.roomnumber);
-        text.setText(marker.getTitle());
-        if (!slideup){
-            //Makes slideup visible
-            slideupview.setVisibility(View.VISIBLE);
-          //Animation (Does not function properly, cant remove slideup afterwards)
-            /*  TranslateAnimation animate = new TranslateAnimation(0, 0, slideupview.getHeight(), 0);
-            animate.setDuration(375);
-            animate.setFillAfter(true);
-            slideupview.startAnimation(animate);*/
-            slideup = true;
-        }
-
-        //Creates list of all marker titles
-        ArrayList<String> listfornav = new ArrayList<String>();
-        for (Marker m : MarkersList){
-            if (m.getTitle() != null){
-                listfornav.add(m.getTitle());
-            }
-        }
-        AutoCompleteTextView from = findViewById(R.id.From);
-        AutoCompleteTextView To = findViewById(R.id.Destination);
-        if(!CheckMarkerType(marker)) {
-            from.setEnabled(true);
-            from.setFocusableInTouchMode(true);
-            from.setBackgroundColor(Color.GRAY);
-            To.setBackgroundColor(Color.GRAY);
-            To.setEnabled(true);
-            To.setFocusableInTouchMode(true);
-            //Creating Suggestions for text boxes in nav
-            ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_dropdown_item_1line, listfornav);
-            from = findViewById(R.id.From);
-            from.setText("");//Blank "from"
-            from.setAdapter(adapterlist);//set dropdown
-            AutoCompleteTextView destination = findViewById(R.id.Destination);
-            destination.setAdapter(adapterlist);//set dropdown
-            //Autofill Destination
-            destination.setText(markersClicked.get(0).getTitle());
-        }
-        else
-        {
-            from.setEnabled(false);
-            from.setText("Current Location");
-            from.setFocusable(false);
-            from.setBackgroundColor(Color.TRANSPARENT);
-            To.setEnabled(false);
-            To.setText(marker.getTitle());
-            To.setFocusable(false);
-            To.setBackgroundColor(Color.TRANSPARENT);
-        }
-        //hide markers after one is clicked
-        for (Marker m : MarkersList)
-        {
-            if(!m.getTitle().equals(marker.getTitle())) {
-                m.setVisible(false);
-            }
-        }
-        marker2 = marker;
-        //No clue why google decided marker click HAS to return a boolean, so here ya go google
-        return false;
+        return true;
     }
 
     public void checkIfMarkerNeedVisible()
@@ -1667,16 +1481,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //Hide Keyboard when map is clicked
         InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-        //slide down slideup when map is clicked
-        if (slideup){
-            slideupview.setVisibility(View.GONE);
-            //Animation stuff that bugs out
-            /*TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
-            animate.setDuration(375);
-            animate.setFillAfter(true);
-            slideupview.startAnimation(animate);*/
-            slideup = false;
-        }
+        slideupview.setVisibility(View.GONE);
         if(RemovePoint.getVisibility() == View.VISIBLE)
         {
             RemovePoint.setVisibility(View.GONE);
