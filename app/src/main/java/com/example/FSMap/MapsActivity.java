@@ -871,15 +871,15 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        LatLngBounds buildLibrary = new LatLngBounds(
 //                new LatLng(28.59379993356988, -81.30450729197996),
 //                new LatLng(28.594005193975605, -81.30415971195876));
-        LatLngBounds build3A =  new LatLngBounds(
-                new LatLng(28.595392200538452, -81.30425629914613),
-                new LatLng(28.59565596435769, -81.30393979848783));
-//        LatLngBounds build3B =  new LatLngBounds(
-//                new LatLng(28.59489939800887, -81.30421001414925),
-//                new LatLng(28.595410442208898, -81.30359042388629));
-//        LatLngBounds build3BConnect = new LatLngBounds(
-//                new LatLng(28.594658645277548, -81.30423153222328),
-//                new LatLng(28.594876487499718, -81.30377019229515));
+//        LatLngBounds build3A =  new LatLngBounds(
+//                new LatLng(28.595392200538452, -81.30425629914613),
+//                new LatLng(28.59565596435769, -81.30393979848783));
+        LatLngBounds build3B =  new LatLngBounds(
+                new LatLng(28.59489939800887, -81.30421001414925),
+                new LatLng(28.595410442208898, -81.30359042388629));
+        LatLngBounds build3BConnect = new LatLngBounds(
+                new LatLng(28.594658645277548, -81.30423153222328),
+                new LatLng(28.594876487499718, -81.30377019229515));
 //        LatLngBounds build3C = new LatLngBounds(
 //                new LatLng(28.594253533934957, -81.3042093605151),
 //                new LatLng(28.59463740843301, -81.30378020710396));
@@ -915,18 +915,18 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                .positionFromBounds(buildLibrary)
 //                .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
 //                .anchor(0.43f,0.45f);
-        GroundOverlayOptions build3aOverlay =  new GroundOverlayOptions()
-                .positionFromBounds(build3A)
-                .image(build3aF1BitMap)
-                .anchor(1.0f,-0.1f)
-                .bearing(-2);
-//        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
-//                .positionFromBounds(build3B)
-//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
-//                .anchor(0.45f,0.45f);
-//        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
-//                .positionFromBounds(build3BConnect)
-//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
+//        GroundOverlayOptions build3aOverlay =  new GroundOverlayOptions()
+//                .positionFromBounds(build3A)
+//                .image(build3aF1BitMap)
+//                .anchor(1.0f,-0.1f)
+//                .bearing(-2);
+        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
+                .positionFromBounds(build3B)
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
+                .anchor(0.45f,0.45f);
+        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
+                .positionFromBounds(build3BConnect)
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
 //        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
 //                .positionFromBounds(build3C)
 //                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
@@ -964,9 +964,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                .bearing(45);
         //add groundOverlay and create reference.
 //        GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
-        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
-//        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
-//        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
+//        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
+        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
+        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
 //        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
 //        GroundOverlay build3CMPOverlayOption =  mMap.addGroundOverlay(build3CMPOverlay);
 //        GroundOverlay build3FOverlayOption = mMap.addGroundOverlay(build3FOverlay);
@@ -979,8 +979,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
 //        build3aF1.setDimensions(34,28);
 //        buildLibraryOverlayed.setDimensions(37,28);
-//        build3bF1.setDimensions(84,62);
-//        build3bConnect.setDimensions(64,30);
+        build3bF1.setDimensions(84,62);
+        build3bConnect.setDimensions(64,30);
 //        build3COverlayOption.setDimensions(40,42);
 //        build3CMPOverlayOption.setDimensions(20,25);
 //        build3FOverlayOption.setDimensions(100,80);
@@ -992,10 +992,10 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        build4DOverlayOption.setDimensions(100,60);
 //        build4EOverlayOption.setDimensions(100,60);
         //make it so overlay doesnt appear originally
-//        build3bConnect.setVisible(false);
-//        build3bF1.setVisible(false);
+        build3bConnect.setVisible(false);
+        build3bF1.setVisible(false);
 //        buildLibraryOverlayed.setVisible(false);
-        build3aF1.setVisible(false);
+//        build3aF1.setVisible(false);
 //        build3COverlayOption.setVisible(false);
 //        build3CMPOverlayOption.setVisible(false);
 //        build3FOverlayOption.setVisible(false);
@@ -1005,10 +1005,10 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        build4DOverlayOption.setVisible(true);
 //        build4EOverlayOption.setVisible(true);
         //add the overlay to overlay array.
-//        groundOverlays.add(build3bConnect);
+        groundOverlays.add(build3bConnect);
 //        groundOverlays.add(buildLibraryOverlayed);
 //        groundOverlays.add(build3aF1);
-//        groundOverlays.add(build3bF1);
+        groundOverlays.add(build3bF1);
 //        groundOverlays.add(build3COverlayOption);
 //        groundOverlays.add(build3CMPOverlayOption);
 //        groundOverlays.add(build3FOverlayOption);
