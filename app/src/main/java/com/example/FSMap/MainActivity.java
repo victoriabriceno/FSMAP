@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -49,6 +50,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.net.NetworkInterface;
 import java.util.Arrays;
 
 
@@ -69,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean firstload = false;
     boolean connected;
     ConnectivityManager cm;
-    NetworkInfo ni;
 
     // Facebook
     CallbackManager mCallbackManager;
@@ -101,14 +102,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Internet connection check
         cm = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        ni = cm.getActiveNetworkInfo();
 
-        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected= false;
+        if (cm != null)
+        {
+            NetworkInfo nim = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo niw = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if ((nim != null && nim.isConnectedOrConnecting()) || (niw != null && niw.isConnectedOrConnecting())) {
+                connected = true;
+            }
+            else {
+                connected = false;
+            }
 
+        }
+        else {
+            connected = false;
+        }
         //PASSWORD VISIBLE
 
         editTextPassword.setOnTouchListener(new View.OnTouchListener() {
