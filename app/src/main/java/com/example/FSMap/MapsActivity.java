@@ -125,6 +125,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     ArrayList<Marker> BathroomMarkers = new ArrayList<>();
     ArrayList<Marker> ClassRoomMarkers = new ArrayList<>();
     ArrayList<Marker> ETCRooms = new ArrayList<>();
+    ArrayList<Marker> OFRooms = new ArrayList<>();
     ArrayList<Marker> WaterZones = new ArrayList<>();
     int clickCount = 0;
     ArrayList<String> LinesTitles = new ArrayList<String>();
@@ -734,43 +735,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         LinesTitles.add("Meeting 119Water Zone (112)");
         customPolyLines.add(outsideToWaterZone);
         LinesTitles.add("outsideToWater Zone (112)");
-        //add Marker
 
-//        MarkerOptions Meeting119 =  new MarkerOptions().position(new LatLng(28.593974,-81.304508)).title("Meeting 119");
-//        Marker room119 = mMap.addMarker(Meeting119);
-//        ClassRoomMarkers.add(room119);
-//        MarkersList.add(room119);
-//
-//        MarkerOptions Meeting118 = new MarkerOptions().position(new LatLng(28.593945,-81.304514)).title("Meeting 118");
-//        Marker room118 = mMap.addMarker(Meeting118);
-//        ClassRoomMarkers.add(room118);
-//        MarkersList.add(room118);
-//
-//        MarkerOptions meeting117 =  new MarkerOptions().position(new LatLng(28.593919,-81.304514)).title("Meeting 117");
-//        Marker room117 = mMap.addMarker(meeting117);
-//        ClassRoomMarkers.add(room117);
-//        MarkersList.add(room117);
-//
-//        MarkerOptions Meeting116 = new MarkerOptions().position(new LatLng(28.593890,-81.304514)).title("Meeting 116");
-//        Marker room116 = mMap.addMarker(Meeting116);
-//        ClassRoomMarkers.add(room116);
-//        MarkersList.add(room116);
-//
-//        MarkerOptions Meeting115 = new MarkerOptions().position(new LatLng(28.593858, -81.304514)).title("Meeting 115");
-//        Marker room115 = mMap.addMarker(Meeting115);
-//        ClassRoomMarkers.add(room115);
-//        MarkersList.add(room115);
-//
-//        MarkerOptions BoysBathroom113 = new MarkerOptions().position(new LatLng(28.593818,-81.304444)).title("Boys Bathroom (113)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-//        Marker boysBathroom113 = mMap.addMarker(BoysBathroom113);
-//        BathroomMarkers.add(boysBathroom113);
-//        MarkersList.add(boysBathroom113);
-//
-//        MarkerOptions WaterZone = new MarkerOptions().position(new LatLng(28.593818,-81.304400)).title("Water Zone (112)").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-//        Marker waterZone = mMap.addMarker(WaterZone);
-//        WaterZones.add(waterZone);
-//        MarkersList.add(waterZone);
-//
 
         //Marker stuffs
         //Markers for classrooms
@@ -794,7 +759,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         Bitmap b4=bitmapdraw4.getBitmap();
         Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
 
-        //SquidCC.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarkerSCC));
+        //Markers for OFRooms
+        BitmapDrawable bitmapdraw5=(BitmapDrawable)getResources().getDrawable(R.drawable.office_marker);
+        Bitmap b5=bitmapdraw5.getBitmap();
+        Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
+
         CSVReader creader = new CSVReader();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sr = storage.getReference();
@@ -824,6 +793,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                         case ("ETC"):
                             ETCRooms.add(mark);
                             break;
+                        case ("OF"):
+                            OFRooms.add(mark);
+
                     }
                     //Set Markers image for classrooms
                     for (Marker ClassRoom: ClassRoomMarkers)
@@ -846,6 +818,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     for (Marker etc: ETCRooms)
                     {
                         etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
+                    }
+                    //Set Marker image for OF rooms
+                    for (Marker etc: OFRooms)
+                    {
+                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
                     }
                 }
             }
@@ -874,12 +851,12 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        LatLngBounds build3A =  new LatLngBounds(
 //                new LatLng(28.595392200538452, -81.30425629914613),
 //                new LatLng(28.59565596435769, -81.30393979848783));
-        LatLngBounds build3B =  new LatLngBounds(
-                new LatLng(28.59489939800887, -81.30421001414925),
-                new LatLng(28.595410442208898, -81.30359042388629));
-        LatLngBounds build3BConnect = new LatLngBounds(
-                new LatLng(28.594658645277548, -81.30423153222328),
-                new LatLng(28.594876487499718, -81.30377019229515));
+//        LatLngBounds build3B =  new LatLngBounds(
+//                new LatLng(28.59489939800887, -81.30421001414925),
+//                new LatLng(28.595410442208898, -81.30359042388629));
+//        LatLngBounds build3BConnect = new LatLngBounds(
+//                new LatLng(28.594658645277548, -81.30423153222328),
+//                new LatLng(28.594876487499718, -81.30377019229515));
 //        LatLngBounds build3C = new LatLngBounds(
 //                new LatLng(28.594253533934957, -81.3042093605151),
 //                new LatLng(28.59463740843301, -81.30378020710396));
@@ -920,16 +897,16 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                .image(build3aF1BitMap)
 //                .anchor(1.0f,-0.1f)
 //                .bearing(-2);
-        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
-                .positionFromBounds(build3B)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
-                .anchor(0.45f,0.45f);
-        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
-                .positionFromBounds(build3BConnect)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
-//        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
-//                .positionFromBounds(build3C)
-//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
+//        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
+//                .positionFromBounds(build3B)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
+//                .anchor(0.45f,0.45f);
+//        GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
+//                .positionFromBounds(build3BConnect)
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
+        GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
+                .positionFromBounds(build3C)
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
 //        GroundOverlayOptions build3CMPOverlay = new GroundOverlayOptions()
 //                .positionFromBounds(build3CMP)
 //                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp));
@@ -965,9 +942,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //add groundOverlay and create reference.
 //        GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
 //        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
-        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
-        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
-//        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
+//        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
+//        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
+        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
 //        GroundOverlay build3CMPOverlayOption =  mMap.addGroundOverlay(build3CMPOverlay);
 //        GroundOverlay build3FOverlayOption = mMap.addGroundOverlay(build3FOverlay);
 //        GroundOverlay build4COverlayOption = mMap.addGroundOverlay(build4COverlay);
@@ -979,9 +956,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
 //        build3aF1.setDimensions(34,28);
 //        buildLibraryOverlayed.setDimensions(37,28);
-        build3bF1.setDimensions(84,62);
-        build3bConnect.setDimensions(64,30);
-//        build3COverlayOption.setDimensions(40,42);
+//        build3bF1.setDimensions(84,62);
+//        build3bConnect.setDimensions(64,30);
+        build3COverlayOption.setDimensions(40,42);
 //        build3CMPOverlayOption.setDimensions(20,25);
 //        build3FOverlayOption.setDimensions(100,80);
 //        build4COverlayOption.setDimensions(14,10);
@@ -992,11 +969,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        build4DOverlayOption.setDimensions(100,60);
 //        build4EOverlayOption.setDimensions(100,60);
         //make it so overlay doesnt appear originally
-        build3bConnect.setVisible(false);
-        build3bF1.setVisible(false);
+//        build3bConnect.setVisible(false);
+//        build3bF1.setVisible(false);
 //        buildLibraryOverlayed.setVisible(false);
 //        build3aF1.setVisible(false);
-//        build3COverlayOption.setVisible(false);
+        build3COverlayOption.setVisible(false);
 //        build3CMPOverlayOption.setVisible(false);
 //        build3FOverlayOption.setVisible(false);
 //        build4COverlayOption.setVisible(false);
@@ -1005,11 +982,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        build4DOverlayOption.setVisible(true);
 //        build4EOverlayOption.setVisible(true);
         //add the overlay to overlay array.
-        groundOverlays.add(build3bConnect);
+//        groundOverlays.add(build3bConnect);
 //        groundOverlays.add(buildLibraryOverlayed);
 //        groundOverlays.add(build3aF1);
-        groundOverlays.add(build3bF1);
-//        groundOverlays.add(build3COverlayOption);
+//        groundOverlays.add(build3bF1);
+        groundOverlays.add(build3COverlayOption);
 //        groundOverlays.add(build3CMPOverlayOption);
 //        groundOverlays.add(build3FOverlayOption);
 //        groundOverlays.add(build4COverlayOption);
