@@ -139,7 +139,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     //Favorites
     ImageButton bntFavoritesRemove;
     ImageButton btnFavoritesAdd;
-    Marker marker2;
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
     Marker createdMarker;
@@ -371,10 +370,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                         }
                     }
                 }
-                cmmarkerready = true;
-                if (csvmarkerready){
-                    markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, con, act);
-                }
+                markerFragment.MTouch.CustomMarkers(createdMarkers);
 
             }
 
@@ -418,6 +414,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                         }
                     }
                 }
+                markerFragment.MTouch.FavoriteMarkers(favoritedMarkers);
             }
 
             @Override
@@ -821,10 +818,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                         WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
                     }
                 }
-                csvmarkerready = true;
-                if (cmmarkerready){
-                    markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, con, act);
-                }
+                markerFragment.MTouch.CSVMarkers(MarkersList);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -1028,8 +1023,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                if (marker2 != null) {
-                    if (markers.getTitle().equals(marker2.getTitle())) {
+                if (markerFragment.MTouch.marker2 != null) {
+                    if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                         markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
                 } else {
@@ -1039,8 +1034,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         });
 
         //On Marker Click Override
-        if (cmmarkerready && csvmarkerready)
-            markerFragment.MTouch.setGoogleMapAndMarkers(mMap, MarkersList, favoritedMarkers, createdMarkers, linesShowing, this.getApplicationContext(), this);
+        markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
 
         // disable marker click processing
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -1078,8 +1072,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 Overlay.setVisible(mMap.getCameraPosition().zoom > 18);
             }
             for (Marker markers : MarkersList) {
-                if(marker2 != null) {
-                    if (markers.getTitle().equals(marker2.getTitle())) {
+                if(markerFragment.MTouch.marker2 != null) {
+                    if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                         markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
                     boolean isIt = markers.isVisible();
@@ -1215,7 +1209,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                             if (location.getLatitude() != Latitude || location.getLongitude() != Longitued) {
                                 if(wasMarkerClicked) {
                                     RemoveAllLines();
-                                    getDirectionPoly(marker2);
+                                    getDirectionPoly(markerFragment.MTouch.marker2);
                                 }
                                 if(FollowUser) {
                                     Latitude = location.getLatitude();
@@ -1256,7 +1250,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 }
                 break;
             case R.id.navgo:
-                getDirectionPoly(marker2);
+                getDirectionPoly(markerFragment.MTouch.marker2);
                 //Setting curlocation and final destination to text boxes
                 AutoCompleteTextView curlocation = findViewById(R.id.From);
                 AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
@@ -1323,8 +1317,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 NavDone.setVisibility(View.GONE);
                 break;
             case R.id.btnRemoveFavorites:
-                Favorites.removeFromFavorite(MapsActivity.this, marker2);
-                favoritedMarkers.remove(marker2);
+                Favorites.removeFromFavorite(MapsActivity.this, markerFragment.MTouch.marker2);
+                favoritedMarkers.remove(markerFragment.MTouch.marker2);
                 snack = Snackbar.make(findViewById(R.id.map), "Removed From Favorites", Snackbar.LENGTH_SHORT);
                 snack.show();
                 bntFavoritesRemove.setVisibility(View.GONE);
@@ -1406,7 +1400,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 manager1.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
                 break;
             case R.id.btnAddFavorites:
-                Favorites.addToFavorite(MapsActivity.this,marker2);
+                Favorites.addToFavorite(MapsActivity.this,markerFragment.MTouch.marker2);
                 snack = Snackbar.make(findViewById(R.id.map), "Added To Favorites", Snackbar.LENGTH_SHORT);
                 snack.show();
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
@@ -1477,14 +1471,14 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         {
             for(Marker m3: MarkersList)
             {
-                if(!m3.getTitle().equals(marker2.getTitle()))
+                if(!m3.getTitle().equals(markerFragment.MTouch.marker2.getTitle()))
                 {
                     m3.setVisible(false);
                 }
             }
             for(Marker m3C: createdMarkers)
             {
-                if(!m3C.getTitle().equals(marker2.getTitle()))
+                if(!m3C.getTitle().equals(markerFragment.MTouch.marker2.getTitle()))
                 {
                     m3C.setVisible(false);
                 }

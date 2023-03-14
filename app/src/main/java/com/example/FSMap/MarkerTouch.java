@@ -54,9 +54,9 @@ public class MarkerTouch extends FrameLayout {
     private GoogleMap mGoogleMap;
     private List<Marker> mMarkers, Favs, CM, AM;
     ArrayList<Marker> markersClicked = new ArrayList<>();
-    private Marker createdMarker, marker2;
+    public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
-    private boolean mLocationPermissionsGranted, wasRemoveHit, wasMarkerClicked = false;
+    private boolean mLocationPermissionsGranted, wasRemoveHit, wasMarkerClicked, csvReady, cReady, fReady = false;
     private Context C;
     private Activity A;
     private double Latitude, Longitude;
@@ -72,17 +72,48 @@ public class MarkerTouch extends FrameLayout {
         super(context);
     }
 
-    public void setGoogleMapAndMarkers(GoogleMap googleMap, List<Marker> markers, List<Marker> favorite, List<Marker> created, List<Polyline> lines, Context context, Activity activity) {
+    public void setGoogleMap(GoogleMap googleMap, List<Polyline> lines, Context context, Activity activity) {
         mGoogleMap = googleMap;
-        mMarkers = markers;
-        CM = created;
         C = context;
         A = activity;
-        Favs = favorite;
         linesShowing = lines;
+
+    }
+
+    public void MakeList()
+    {
         AM = mMarkers;
         AM.addAll(CM);
+    }
 
+    public void CSVMarkers(List <Marker> markers)
+    {
+        mMarkers = markers;
+        csvReady = true;
+        if (cReady && fReady)
+        {
+            MakeList();
+        }
+    }
+
+    public void CustomMarkers (List <Marker> custom)
+    {
+        CM = custom;
+        cReady = true;
+        if (csvReady && fReady)
+        {
+            MakeList();
+        }
+    }
+
+    public void FavoriteMarkers (List <Marker> fav)
+    {
+        Favs = fav;
+        fReady = true;
+        if (csvReady && cReady)
+        {
+            MakeList();
+        }
     }
 
 
