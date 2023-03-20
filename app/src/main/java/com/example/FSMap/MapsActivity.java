@@ -112,6 +112,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private Button NavDone;
     private Button NacLock;
     private AutoCompleteTextView Search;
+    private Button Filter, CRFilter, OFFilter, BRFilter, WZFilter, ETCFilter;
+    private boolean FilterShow, CRShow, OFShow, BRShow, WZShow, ETCShow = false;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
@@ -195,6 +197,27 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+        //Filters
+        Filter = findViewById(R.id.FilterButton);
+        CRFilter = findViewById(R.id.CRFilterButton);
+        OFFilter = findViewById(R.id.OFFilterButton);
+        BRFilter = findViewById(R.id.BRFilterButton);
+        WZFilter = findViewById(R.id.WZFilterButton);
+        ETCFilter = findViewById(R.id.ETCFilterButton);
+
+        Filter.setOnClickListener(this);
+        CRFilter.setOnClickListener(this);
+        OFFilter.setOnClickListener(this);
+        BRFilter.setOnClickListener(this);
+        WZFilter.setOnClickListener(this);
+        ETCFilter.setOnClickListener(this);
+
+
+        CRFilter.setVisibility(View.GONE);
+        OFFilter.setVisibility(View.GONE);
+        BRFilter.setVisibility(View.GONE);
+        WZFilter.setVisibility(View.GONE);
+        ETCFilter.setVisibility(View.GONE);
         //Loading markers from CSV
 
 
@@ -1439,7 +1462,116 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 mMap.moveCamera(CameraUpdateFactory.zoomOut());
                 checkIfMarkerNeedVisible();
                 break;
+            case R.id.FilterButton:
+                FilterShow = !FilterShow;
+                if (FilterShow){
+                    CRFilter.setVisibility(View.VISIBLE);
+                    OFFilter.setVisibility(View.VISIBLE);
+                    BRFilter.setVisibility(View.VISIBLE);
+                    WZFilter.setVisibility(View.VISIBLE);
+                    ETCFilter.setVisibility(View.VISIBLE);
+                }
+                else{
+                    CRFilter.setVisibility(View.GONE);
+                    OFFilter.setVisibility(View.GONE);
+                    BRFilter.setVisibility(View.GONE);
+                    WZFilter.setVisibility(View.GONE);
+                    ETCFilter.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.CRFilterButton:
+                FilteredMarkers("CR");
+                break;
+
+            case R.id.OFFilterButton:
+                FilteredMarkers("OF");
+                break;
+
+            case R.id.BRFilterButton:
+                FilteredMarkers("BR");
+                break;
+
+            case R.id.WZFilterButton:
+                FilteredMarkers("WZ");
+                break;
+
+            case R.id.ETCFilterButton:
+                FilteredMarkers("ETC");
+                break;
         }
+    }
+
+    //Filter Function
+    private void FilteredMarkers(String type){
+        switch (type){
+            case "CR":
+                CRShow = !CRShow;
+                break;
+            case "OF":
+                OFShow = !OFShow;
+                break;
+            case "BR":
+                BRShow = !BRShow;
+                break;
+            case "WZ":
+                WZShow = !WZShow;
+                break;
+            case "ETC":
+                ETCShow = !ETCShow;
+                break;
+        }
+
+        if (CRShow){
+            for (Marker m: ClassRoomMarkers) {
+                m.setVisible(true);
+            }
+        }
+        else{
+            for (Marker m: ClassRoomMarkers) {
+                m.setVisible(false);
+            }
+        }
+        if (OFShow){
+            for (Marker m: OFRooms) {
+                m.setVisible(true);
+            }
+        }
+        else{
+            for (Marker m: OFRooms) {
+                m.setVisible(false);
+            }
+        }
+        if (BRShow){
+            for (Marker m: BathroomMarkers) {
+                m.setVisible(true);
+            }
+        }
+        else {
+            for (Marker m: BathroomMarkers) {
+                m.setVisible(false);
+            }
+        }
+        if (WZShow){
+            for (Marker m: WaterZones) {
+                m.setVisible(true);
+            }
+        }
+        else{
+            for (Marker m: WaterZones) {
+                m.setVisible(false);
+            }
+        }
+        if (ETCShow){
+            for (Marker m: ETCRooms) {
+                m.setVisible(true);
+            }
+        }
+        else {
+            for (Marker m: ETCRooms) {
+                m.setVisible(false);
+            }
+        }
+
     }
 
     //Getting permission from user for location
