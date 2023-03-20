@@ -124,7 +124,8 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     ArrayList<Marker> favoritedMarkers;
     ArrayList<Marker> BathroomMarkers = new ArrayList<>();
     ArrayList<Marker> ClassRoomMarkers = new ArrayList<>();
-    ArrayList<Marker> AdminMarkers = new ArrayList<>();
+    ArrayList<Marker> ETCRooms = new ArrayList<>();
+    ArrayList<Marker> OFRooms = new ArrayList<>();
     ArrayList<Marker> WaterZones = new ArrayList<>();
     int clickCount = 0;
     ArrayList<String> LinesTitles = new ArrayList<String>();
@@ -748,10 +749,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         Bitmap b1=bitmapdraw1.getBitmap();
         Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
 
-        //Markers for SquidWard
-        BitmapDrawable bitmapdrawSCC=(BitmapDrawable)getResources().getDrawable(R.drawable.squidward_community_college);
-        Bitmap bSCC=bitmapdrawSCC.getBitmap();
-        Bitmap smallMarkerSCC = Bitmap.createScaledBitmap(bSCC, 340, 400, false);
 
         //Markers for Bathrooms
         BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.pixil_frame_0);
@@ -763,12 +760,16 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         Bitmap b3=bitmapdraw3.getBitmap();
         Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
 
-        //Markers for AdminRooms (Unused as of now)
-        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.admin_rooms_marker_expanded);
+        //Markers for ETCRooms
+        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.etc_marker);
         Bitmap b4=bitmapdraw4.getBitmap();
-        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 140, 200, false);
+        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
 
-        //SquidCC.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarkerSCC));
+        //Markers for OFRooms
+        BitmapDrawable bitmapdraw5=(BitmapDrawable)getResources().getDrawable(R.drawable.office_marker);
+        Bitmap b5=bitmapdraw5.getBitmap();
+        Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
+
         CSVReader creader = new CSVReader();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sr = storage.getReference();
@@ -798,7 +799,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                             WaterZones.add(mark);
                             break;
                         case ("ETC"):
+                            ETCRooms.add(mark);
                             break;
+                        case ("OF"):
+                            OFRooms.add(mark);
+
                     }
                     //Set Markers image for classrooms
                     for (Marker ClassRoom: ClassRoomMarkers)
@@ -817,6 +822,16 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     {
                         WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
                     }
+                    //Set Markers image for ETC rooms
+                    for (Marker etc: ETCRooms)
+                    {
+                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
+                    }
+                    //Set Marker image for OF rooms
+                    for (Marker etc: OFRooms)
+                    {
+                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
+                    }
                 }
                 markerFragment.MTouch.CSVMarkers(MarkersList);
 
@@ -834,25 +849,23 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             }
         });
 
-        
 
-        for (Marker marker1: MarkersList)
-        {
-            if(!marker1.getTitle().equals(SquidCheck)) {
-                marker1.setVisible(false);
-            }
-        }
 
 
         BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
 
         //Set the bounds for overlay
-        LatLngBounds buildLibrary = new LatLngBounds(
+        LatLngBounds build1_1f = new LatLngBounds(
+                new LatLng(28.59600450841536, -81.3020220190869),
+                new LatLng(28.596635652774378, -81.30086330482766)
+        );
+        LatLngBounds build3E = new LatLngBounds(
                 new LatLng(28.59379993356988, -81.30450729197996),
                 new LatLng(28.594005193975605, -81.30415971195876));
-        LatLngBounds build3A =  new LatLngBounds(
-                new LatLng(28.595392200538452, -81.30425629914613),
-                new LatLng(28.59565596435769, -81.30393979848783));
+
+//        LatLngBounds build3A =  new LatLngBounds(
+//                new LatLng(28.595392200538452, -81.30425629914613),
+//                new LatLng(28.59565596435769, -81.30393979848783));
 //        LatLngBounds build3B =  new LatLngBounds(
 //                new LatLng(28.59489939800887, -81.30421001414925),
 //                new LatLng(28.595410442208898, -81.30359042388629));
@@ -890,15 +903,21 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                new LatLng(28.590101835337443, -81.30483226561324),
 //                new LatLng(28.59086254784375, -81.30463378216082));
         //create map overlap
-        GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
-                .positionFromBounds(buildLibrary)
+        GroundOverlayOptions build1f1Overlay = new GroundOverlayOptions()
+                .positionFromBounds(build1_1f)
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_1f))
+                .bearing(180)
+                .anchor(0.56f, 0.50f);
+        GroundOverlayOptions build3EOverlay = new GroundOverlayOptions()
+                .positionFromBounds(build3E)
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
                 .anchor(0.43f,0.45f);
-        GroundOverlayOptions build3aOverlay =  new GroundOverlayOptions()
-                .positionFromBounds(build3A)
-                .image(build3aF1BitMap)
-                .anchor(1.0f,-0.1f)
-                .bearing(-2);
+
+//        GroundOverlayOptions build3aOverlay =  new GroundOverlayOptions()
+//                .positionFromBounds(build3A)
+//                .image(build3aF1BitMap)
+//                .anchor(1.0f,-0.1f)
+//                .bearing(-2);
 //        GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
 //                .positionFromBounds(build3B)
 //                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
@@ -942,8 +961,10 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
 //                .bearing(45);
         //add groundOverlay and create reference.
-        GroundOverlay buildLibraryOverlayed = mMap.addGroundOverlay(buildLibraryOverlay);
-        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
+//        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
+        GroundOverlay build1F1 = mMap.addGroundOverlay(build1f1Overlay);
+        GroundOverlay build3EOverlayed = mMap.addGroundOverlay(build3EOverlay);
+//        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
 //        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
 //        GroundOverlay build3bConnect = mMap.addGroundOverlay(build3BConnected);
 //        GroundOverlay build3COverlayOption = mMap.addGroundOverlay(build3COverlay);
@@ -956,8 +977,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        GroundOverlay build4AFCOverlayOption = mMap.addGroundOverlay(build4AFCOverlay);
 //        GroundOverlay build4DOverlayOption = mMap.addGroundOverlay(build4DOverlay);
 //        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
-        build3aF1.setDimensions(34,28);
-        buildLibraryOverlayed.setDimensions(37,28);
+        build1F1.setDimensions(140, 90);
+//        build3aF1.setDimensions(34,28);
+//        build3EOverlayed.setDimensions(37,28);
 //        build3bF1.setDimensions(84,62);
 //        build3bConnect.setDimensions(64,30);
 //        build3COverlayOption.setDimensions(40,42);
@@ -973,8 +995,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //make it so overlay doesnt appear originally
 //        build3bConnect.setVisible(false);
 //        build3bF1.setVisible(false);
-        buildLibraryOverlayed.setVisible(false);
-        build3aF1.setVisible(false);
+
+        build3EOverlayed.setVisible(false);
+//        build3aF1.setVisible(false);
 //        build3COverlayOption.setVisible(false);
 //        build3CMPOverlayOption.setVisible(false);
 //        build3FOverlayOption.setVisible(false);
@@ -985,8 +1008,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        build4EOverlayOption.setVisible(true);
         //add the overlay to overlay array.
 //        groundOverlays.add(build3bConnect);
-        groundOverlays.add(buildLibraryOverlayed);
-        groundOverlays.add(build3aF1);
+
+//        groundOverlays.add(build3EOverlayed);
+//        groundOverlays.add(build3aF1);
 //        groundOverlays.add(build3bF1);
 //        groundOverlays.add(build3COverlayOption);
 //        groundOverlays.add(build3CMPOverlayOption);
@@ -1326,25 +1350,26 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 break;
             case R.id.RemoveSpot:
                 wasRemoveHit = true;
-                CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
+                for (int i = 0; i < favoritedMarkers.size(); i++) {
+                    if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
+                    {
+                        favoritedMarkers.remove(i);
+                        Favorites.removeFromFavorite(MapsActivity.this,createdMarker);
+                    }
+                }
                 for (int i = 0; i <createdMarkers.size() ; i++)
                 {
                     if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
                     {
                         createdMarkers.get(i).remove();
                         createdMarkers.get(i).setVisible(false);
+                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
                         createdMarkers.remove(i);
                         createdMarker.remove();
                         createdMarker = null;
                     }
                 }
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
-                    if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
-                    {
-                        Favorites.removeFromFavorite(MapsActivity.this,createdMarker);
-                        favoritedMarkers.remove(i);
-                    }
-                }
+
                 RemoveAllLines();
                 RemovePoint.setVisibility(View.GONE);
                 slideupview.setVisibility(View.GONE);
