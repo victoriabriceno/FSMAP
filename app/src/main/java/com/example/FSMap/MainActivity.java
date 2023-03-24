@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Google
         ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-                requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail().build();
-        gsc = GoogleSignIn.getClient(this,gso);
+//        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+//                requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail().build();
+//        gsc = GoogleSignIn.getClient(this,gso);
 
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(gAccount != null){

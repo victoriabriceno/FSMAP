@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.facebook.android:facebook-bolts:16.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/39c9c8b5d897ebd9ebbc303c39b8d48b/transformed/facebook-bolts-16.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/39c9c8b5d897ebd9ebbc303c39b8d48b/transformed/facebook-bolts-16.0.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-bolts/16.0.0/1c4d163b7fea93c57553c3f68d0defa7bcd6456f/facebook-bolts-16.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-bolts/16.0.0/24ef54f98ec639698c905f4ad0230f3405db4f84/facebook-bolts-16.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
