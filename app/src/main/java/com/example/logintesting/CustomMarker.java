@@ -12,9 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -87,7 +85,7 @@ public class CustomMarker extends AppCompatActivity {
 
     }
 
-    public static void addToCustomMarkers(Context context, Marker marker){
+    public static void addToCustomMarkers(Context context, Marker marker,int floor){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser()==null){
             Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
@@ -95,11 +93,24 @@ public class CustomMarker extends AppCompatActivity {
             //Set up the data to add in firebase of current user for marker book
             HashMap<String,Object> hashMap = new HashMap<>();
             hashMap.put(marker.getTitle(), marker.getPosition());
+            HashMap<String,Object> hashMap1 = new HashMap<>();
+            hashMap1.put("Floor",floor);
 
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid()).child("CustomMarkers")/*child(marker.getTitle())*/.updateChildren(hashMap)./*.
-                     setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
+            ref.child(firebaseAuth.getUid()).child("CustomMarkers").updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, "Failed to add to you Marker list due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(marker.getTitle()).updateChildren(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
