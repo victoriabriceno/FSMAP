@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Internet Check
 
 
-
         register = (TextView) findViewById(R.id.RegisterBTN);
         register.setOnClickListener(this);
 
@@ -108,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            connected = true;
 //        else
 //            connected= false;
-
         //PASSWORD VISIBLE
 
         editTextPassword.setOnTouchListener(new View.OnTouchListener() {
@@ -231,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
         if (users != null) {
             // User is signed in
-            Intent i = new Intent(MainActivity.this, LoadingScreenActivity.class);
+            Intent i = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(i);
             finish();
 
@@ -257,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          public void onComplete(@NonNull Task<AuthResult> task) {
 
                              if(task.isSuccessful()){
-                                 Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
+                                 Intent intent = new Intent(MainActivity.this,MapsActivity.class);
                                  startActivity(intent);
                              }else{
                                  Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -310,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String checkBox = preferences.getString("remember","");
             if (!firstload){
                 if (checkBox.equals("true")){
-                    Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
+                    Intent intent = new Intent(MainActivity.this,MapsActivity.class);
                     startActivity(intent);
 
                 }else if (checkBox.equals("false")){
@@ -410,7 +408,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()){
                     FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                     if (user.isEmailVerified()){
-                        startActivity(new Intent(MainActivity.this, LoadingScreenActivity.class));
+                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
 
 
                     }else{

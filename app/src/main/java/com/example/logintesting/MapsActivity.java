@@ -19,8 +19,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -38,6 +40,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.logintesting.databinding.ActivityMapsBinding;
@@ -201,7 +204,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String prevResult = "";
     String firstLoadResult = "";
     ArrayList<String> resultsList = new ArrayList<>();
-
+    View importPanel;
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(@NonNull Location location) {
@@ -351,7 +354,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     B4U.get(B4U.size() - 1).setDimensions(90, 50);
                 } else if (firstLoadResults.equals("4AWD2")) {
                     B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(8)));
-                    B4U.get(B4U.size() - 1).setDimensions(84, 40);
+                    B4U.get(B4U.size() - 1).setDimensions(58, 32);
                 } else if (firstLoadResults.equals("4AFC")) {
                     B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(9)));
                     B4U.get(B4U.size() - 1).setDimensions(70, 50);
@@ -388,7 +391,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 B1.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 2)));
                 B1.get(B1.size() - 1).setDimensions(140, 90);
                 B1.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 2)));
-                B1.get(B1.size() - 1).setDimensions(140, 90);
+                B1.get(B1.size() - 1).setDimensions(136, 94);
                 if (floorPicked == 1) {
                     B1.get(1).setVisible(false);
                 } else {
@@ -540,12 +543,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-
+    boolean isAndroidReady = false;
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        SplashScreen screen = SplashScreen.installSplashScreen(this);
+        isAndroidReady = false;
 
+        View content = findViewById(android.R.id.content);
+        content.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if(isAndroidReady)
+                {
+                    content.getViewTreeObserver().removeOnPreDrawListener(this);
+                }
+                dismissSplashScreen();
+                return false;
+            }
+        });
+
+        super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -610,6 +628,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
+    }
+
+    private void dismissSplashScreen() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //change the boolean
+                isAndroidReady =true;
+            }
+        },5000);
     }
 
     @SuppressLint("MissingPermission")
@@ -1056,7 +1084,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 GroundOverlayOptions build1f2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build1_2f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_2f))
-                        .bearing(180);
+                        .bearing(180)
+                        .anchor(0.558f, 0.485f);;
                 GroundOverlayOptions build2f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
@@ -1090,6 +1119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 FirstLoad(result, secondResult);
 //                CheckResults(result);
                 prevResult = result;
+
             }
         });
         SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
@@ -1727,13 +1757,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                int floor =1;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker newMarker = null;
                     String markerTitle = dataSnapshot.getKey().toString();
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
                     double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
-                    int floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
+//                    int floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
                     LatLng newLatLng = new LatLng(latitude1, longitude1);
                     MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
                     if (!wasRemoveHit) {
@@ -2123,6 +2153,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 for (Marker marker : secondFloorMarkersList) {
                     marker.setVisible(false);
+                }
+                if(B3U2 != null) {
+                    B3U2.setVisible(false);
                 }
                 removeAllOverlays();
                 String results = DoTheChecks();

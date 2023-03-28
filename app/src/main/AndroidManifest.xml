@@ -23,11 +23,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".LoadingScreenActivity"
-            android:exported="false"
-            android:label="@string/title_activity_loading_screen"
-            android:theme="@style/Theme.LoginTesting.NoActionBar" />
-        <activity
             android:name=".EditProfile"
             android:exported="false" />
         <activity
@@ -64,7 +59,8 @@
             android:name=".MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.SplashTheme"/>
         <activity
             android:name=".ForgotPassword"
             android:exported="false" />
