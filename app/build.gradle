@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.FSMap"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -30,6 +30,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.FSMap'
 }
 
 dependencies {
@@ -64,4 +65,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-drive:17.0.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+
+    // FOR THE ANIMATION BAR
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 }

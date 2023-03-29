@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Google
         ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
 
-//        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-//                requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail().build();
-//        gsc = GoogleSignIn.getClient(this,gso);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail().build();
+        gsc = GoogleSignIn.getClient(this,gso);
 
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(gAccount != null){
@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this,MapsActivity.class);
             startActivity(intent);
         }
-
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
         if (users != null) {
             // User is signed in
-            Intent i = new Intent(MainActivity.this, LoadingScreenActivity.class);
+            Intent i = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(i);
             finish();
 
@@ -267,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                          public void onComplete(@NonNull Task<AuthResult> task) {
 
                              if(task.isSuccessful()){
-                                 Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
+                                 Intent intent = new Intent(MainActivity.this,MapsActivity.class);
                                  startActivity(intent);
                              }else{
                                  Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -320,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String checkBox = preferences.getString("remember","");
             if (!firstload){
                 if (checkBox.equals("true")){
-                    Intent intent = new Intent(MainActivity.this,LoadingScreenActivity.class);
+                    Intent intent = new Intent(MainActivity.this,MapsActivity.class);
                     startActivity(intent);
 
                 }else if (checkBox.equals("false")){
@@ -359,11 +358,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
-        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected= false;
+//        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+//                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+//            connected = true;
+//        else
+//            connected= false;
         if (!connected){
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
@@ -420,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()){
                     FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
                     if (user.isEmailVerified()){
-                        startActivity(new Intent(MainActivity.this, LoadingScreenActivity.class));
+                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
 
 
                     }else{

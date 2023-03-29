@@ -60,7 +60,7 @@
             android:singleLine = "true"
             android:maxLines="1"
             android:text="Title"
-            android:textColor="@color/gray"
+            android:textColor="@color/FS_gray"
             android:textSize="15dp" />
 
         <EditText
@@ -76,7 +76,7 @@
             android:singleLine="true"
             android:maxLines="1"
             android:text="Title"
-            android:textColor="@color/gray"
+            android:textColor="@color/FS_gray"
             android:textSize="15dp"
             android:visibility="invisible" />
 

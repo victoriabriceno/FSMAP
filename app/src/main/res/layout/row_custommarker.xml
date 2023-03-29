@@ -32,7 +32,7 @@
             android:fontFamily="@font/questrialregular"
             android:maxLines="1"
             android:text="Title"
-            android:textColor="@color/gray"
+            android:textColor="@color/FS_gray"
             android:textSize="15dp" />
 
     </RelativeLayout>

@@ -173,7 +173,7 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/questrialregular"
         android:text="Welcome to FS Map!"
-        android:textColor="@color/gray"
+        android:textColor="@color/FS_gray"
         android:textSize="30dp" />
 
     <TextView
@@ -185,7 +185,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
-        android:textColor="@color/gray"
+        android:textColor="@color/FS_gray"
         android:textSize="20dp" />
 
 

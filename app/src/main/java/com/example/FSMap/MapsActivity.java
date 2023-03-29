@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -23,9 +24,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.SplashScreen;
 
 
 import androidx.annotation.NonNull;
@@ -159,14 +162,19 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private MarkerFragment markerFragment;
     boolean csvmarkerready, cmmarkerready = false;
 
+ ;
+
 
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+
+
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -176,8 +184,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 .findFragmentById(R.id.map);
         markerFragment.getMapAsync(this);
 
+
         userIconMaps = findViewById(R.id.userMaps);
         userIconMaps.setOnClickListener(this);
+
+
 
         mGps = (ImageView) findViewById(R.id.gps);
 
@@ -232,6 +243,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
 
     }
+
 
     //Function to obtain device location and store in Latitude and Longitued
     private void getDeviceLocation(){
@@ -438,8 +450,14 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     //There are comments inside the function
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
+        mMap = googleMap;
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                //setTheme(R.style.Theme_LoginTesting);
+            }
+        });
         //get latlong for corners for specified place
         LatLng one = new LatLng( 28.5899089565466,-81.30689695755838);
         LatLng two = new LatLng(28.597315583066404,-81.29914504373565);
