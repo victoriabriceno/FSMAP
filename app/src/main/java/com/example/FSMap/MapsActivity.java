@@ -24,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -136,7 +138,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
     double Latitude,Longitued;
 
-    RelativeLayout slideupview;
+    LinearLayout slideupview;
+    boolean slidepup;
+    BottomSheetBehavior bottomSheetBehavior;
    ArrayList<String> nameslist = new ArrayList<String>() {};
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
@@ -194,8 +198,10 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
         getLocationPermission();
         //Slide up code
-        slideupview = findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.design_bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         slideupview.setVisibility(View.GONE);
+        slidepup= false;
 
         //save spot code
         saveSpotLayout = findViewById(R.id.saveSpotLayout);
@@ -1126,8 +1132,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             }
         });
         //Slide up code setup
-        slideupview = findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.design_bottom_sheet);
         slideupview.setVisibility(View.GONE);
+        slidepup = false;
 
         //Set Button for save spot
         Set = findViewById(R.id.OkMarkerTitle);
@@ -1338,6 +1345,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 //"Select" markers to be used if needed
                 //Removes slideup
                 slideupview.setVisibility(View.GONE);
+                slidepup = false;
                 //Allows NavDone button to appear
                 NavDone.setVisibility(View.VISIBLE);
                 //Brings back searchbar (may be depricated, will have to test)
@@ -1449,14 +1457,14 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
                 btnFavoritesAdd.setVisibility(View.GONE);
                 break;
-            case R.id.ZoomIn:
-                mMap.moveCamera(CameraUpdateFactory.zoomIn());
-                checkIfMarkerNeedVisible();
-                break;
-            case R.id.ZoomOut:
-                mMap.moveCamera(CameraUpdateFactory.zoomOut());
-                checkIfMarkerNeedVisible();
-                break;
+//            case R.id.ZoomIn:
+//                mMap.moveCamera(CameraUpdateFactory.zoomIn());
+//                checkIfMarkerNeedVisible();
+//                break;
+//            case R.id.ZoomOut:
+//                mMap.moveCamera(CameraUpdateFactory.zoomOut());
+//                checkIfMarkerNeedVisible();
+//                break;
         }
     }
 
@@ -1535,7 +1543,12 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         //Hide Keyboard when map is clicked
         InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-        slideupview.setVisibility(View.GONE);
+        if(slidepup){
+            slideupview.setVisibility(View.GONE);
+            slidepup = false;
+        }
+
+
         if(RemovePoint.getVisibility() == View.VISIBLE)
         {
             RemovePoint.setVisibility(View.GONE);
