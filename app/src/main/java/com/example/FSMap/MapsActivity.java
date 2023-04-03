@@ -113,7 +113,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private Button NacLock;
     private AutoCompleteTextView Search;
     private Button Filter, CRFilter, OFFilter, BRFilter, WZFilter, ETCFilter;
-    private boolean FilterShow, CRShow, OFShow, BRShow, WZShow, ETCShow = false;
+    private boolean FilterShow, CRShow, OFShow, BRShow, WZShow, ETCShow, Filtering = false;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
@@ -212,6 +212,12 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         WZFilter.setOnClickListener(this);
         ETCFilter.setOnClickListener(this);
 
+        Filter.setBackgroundColor(Color.parseColor("#73777B"));
+        CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        OFFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
 
         CRFilter.setVisibility(View.GONE);
         OFFilter.setVisibility(View.GONE);
@@ -1072,10 +1078,15 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             for (Marker markers : MarkersList) {
                 if (markerFragment.MTouch.marker2 != null) {
                     if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        if (!Filtering)
+                        {
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
                     }
                 } else {
-                    markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    if (!Filtering){
+                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }
                 }
             }
         });
@@ -1121,7 +1132,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             for (Marker markers : MarkersList) {
                 if(markerFragment.MTouch.marker2 != null) {
                     if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        if (!Filtering){
+                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                        }
                     }
                     boolean isIt = markers.isVisible();
                 }
@@ -1465,6 +1478,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             case R.id.FilterButton:
                 FilterShow = !FilterShow;
                 if (FilterShow){
+                    Filter.setBackgroundColor(Color.parseColor("#F55E25"));
                     CRFilter.setVisibility(View.VISIBLE);
                     OFFilter.setVisibility(View.VISIBLE);
                     BRFilter.setVisibility(View.VISIBLE);
@@ -1472,6 +1486,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                     ETCFilter.setVisibility(View.VISIBLE);
                 }
                 else{
+                    Filter.setBackgroundColor(Color.parseColor("#73777B"));
                     CRFilter.setVisibility(View.GONE);
                     OFFilter.setVisibility(View.GONE);
                     BRFilter.setVisibility(View.GONE);
@@ -1481,22 +1496,27 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
                 break;
             case R.id.CRFilterButton:
                 FilteredMarkers("CR");
+                Filtering = true;
                 break;
 
             case R.id.OFFilterButton:
                 FilteredMarkers("OF");
+                Filtering = true;
                 break;
 
             case R.id.BRFilterButton:
                 FilteredMarkers("BR");
+                Filtering = true;
                 break;
 
             case R.id.WZFilterButton:
                 FilteredMarkers("WZ");
+                Filtering = true;
                 break;
 
             case R.id.ETCFilterButton:
                 FilteredMarkers("ETC");
+                Filtering = true;
                 break;
         }
     }
@@ -1525,51 +1545,78 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
             for (Marker m: ClassRoomMarkers) {
                 m.setVisible(true);
             }
+            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
         }
         else{
             for (Marker m: ClassRoomMarkers) {
                 m.setVisible(false);
             }
+            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
         }
         if (OFShow){
             for (Marker m: OFRooms) {
                 m.setVisible(true);
             }
+            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
         }
         else{
             for (Marker m: OFRooms) {
                 m.setVisible(false);
             }
+            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
         }
         if (BRShow){
             for (Marker m: BathroomMarkers) {
                 m.setVisible(true);
             }
+            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
         }
         else {
             for (Marker m: BathroomMarkers) {
                 m.setVisible(false);
             }
+            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
         }
         if (WZShow){
             for (Marker m: WaterZones) {
                 m.setVisible(true);
             }
+            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
         }
         else{
             for (Marker m: WaterZones) {
                 m.setVisible(false);
             }
+            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
         }
+
         if (ETCShow){
             for (Marker m: ETCRooms) {
                 m.setVisible(true);
             }
+            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
         }
         else {
             for (Marker m: ETCRooms) {
                 m.setVisible(false);
             }
+            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow)
+        {
+            Filtering = false;
+            for (Marker m:MarkersList){
+                m.setVisible(true);
+            }
+
         }
 
     }
@@ -1612,7 +1659,9 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         if(!wasMarkerClicked) {
             if (mMap.getCameraPosition().zoom > 18) {
                 for (Marker m : MarkersList) {
-                    m.setVisible(true);
+                    if (!Filtering){
+                        m.setVisible(true);
+                    }
                 }
             } else {
                 for (Marker m2 : MarkersList) {
