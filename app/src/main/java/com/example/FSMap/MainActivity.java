@@ -120,37 +120,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //PASSWORD VISIBLE
 
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int Right =2;
-                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
-                    if (motionEvent.getRawX()>= editTextPassword.getRight()-
-                            editTextPassword.getCompoundDrawables()[Right].getBounds().width()){
-                        int selection = editTextPassword.getSelectionEnd();
-                        if (passwordVisible){
-                            //set drawable image here
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                    0,0,R.drawable.visible,0);
-
-                            //for hide password
-                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible = false;
-                        }else{
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                    0,0,R.drawable.eye1,0);
-
-                            //for show password
-                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible = true;
-                        }
-                        editTextPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+//        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                final int Right =2;
+//                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+//                    if (motionEvent.getRawX()>= editTextPassword.getRight()-
+//                            editTextPassword.getCompoundDrawables()[Right].getBounds().width()){
+//                        int selection = editTextPassword.getSelectionEnd();
+//                        if (passwordVisible){
+//                            //set drawable image here
+//                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+//                                    0,0,R.drawable.visible,0);
+//
+//                            //for hide password
+//                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                            passwordVisible = false;
+//                        }else{
+//                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+//                                    0,0,R.drawable.eye1,0);
+//
+//                            //for show password
+//                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                            passwordVisible = true;
+//                        }
+//                        editTextPassword.setSelection(selection);
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         // Google
         ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
