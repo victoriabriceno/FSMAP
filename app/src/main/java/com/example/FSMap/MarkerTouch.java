@@ -1,8 +1,6 @@
 package com.example.FSMap;
 
 
-
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -36,7 +33,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,13 +129,15 @@ public class MarkerTouch extends FrameLayout {
 
             Marker marker = null;
             int minDistanceInPixels = Integer.MAX_VALUE;
-            for (Marker markers : AM) {
-                Point markerScreen = projection.toScreenLocation(markers.getPosition());
-                int distanceToMarker = (int) Math.sqrt((screenX - markerScreen.x) * (screenX - markerScreen.x)
-                        + (screenY - markerScreen.y) * (screenY - markerScreen.y));
-                if (distanceToMarker < minDistanceInPixels) {
-                    minDistanceInPixels = distanceToMarker;
-                    marker = markers;
+            if(AM != null) {
+                for (Marker markers : AM) {
+                    Point markerScreen = projection.toScreenLocation(markers.getPosition());
+                    int distanceToMarker = (int) Math.sqrt((screenX - markerScreen.x) * (screenX - markerScreen.x)
+                            + (screenY - markerScreen.y) * (screenY - markerScreen.y));
+                    if (distanceToMarker < minDistanceInPixels) {
+                        minDistanceInPixels = distanceToMarker;
+                        marker = markers;
+                    }
                 }
             }
             if (minDistanceInPixels > ClickRadius) {

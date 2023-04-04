@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -211,6 +212,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String firstLoadResult = "";
     ArrayList<String> resultsList = new ArrayList<>();
     private MarkerFragment markerFragment;
+    boolean isAndroidReady = false;
     boolean csvmarkerready, cmmarkerready = false;
     View importPanel;
     LocationListener locationListener = new LocationListener() {
@@ -550,7 +552,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-    boolean isAndroidReady = false;
+
+    private void dismissSplashScreen() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //change the boolean
+                isAndroidReady =true;
+            }
+        },5000);
+    }
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -564,8 +575,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (isAndroidReady) {
                     content.getViewTreeObserver().removeOnPreDrawListener(this);
                 }
+                dismissSplashScreen();
                 return false;
             }
+
         });
 
         super.onCreate(savedInstanceState);
