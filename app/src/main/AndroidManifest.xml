@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.logintesting">
+    package="com.example.FSMap">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -23,27 +23,27 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".LoadingScreenActivity"
+            android:name="com.example.FSMap.LoadingScreenActivity"
             android:exported="false"
             android:label="@string/title_activity_loading_screen"
             android:theme="@style/Theme.LoginTesting.NoActionBar" />
         <activity
-            android:name=".EditProfile"
+            android:name="com.example.FSMap.EditProfile"
             android:exported="false" />
         <activity
-            android:name=".Themes"
+            android:name="com.example.FSMap.Themes"
             android:exported="false" />
         <activity
-            android:name=".Favorites"
+            android:name="com.example.FSMap.Favorites"
             android:exported="false" />
         <activity
-            android:name=".CustomMarker"
+            android:name="com.example.FSMap.CustomMarker"
             android:exported="false" />
         <activity
-            android:name=".FSMapAbout"
+            android:name="com.example.FSMap.FSMapAbout"
             android:exported="false" />
         <activity
-            android:name=".Settings"
+            android:name="com.example.FSMap.Settings"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -61,18 +61,18 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.example.FSMap.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ForgotPassword"
+            android:name="com.example.FSMap.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".RegisterUser"
+            android:name="com.example.FSMap.RegisterUser"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.FSMap.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

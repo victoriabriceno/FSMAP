@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LoginTesting.iml" filepath="$PROJECT_DIR$/.idea/modules/LoginTesting.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LoginTesting.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FSMap.iml" filepath="$PROJECT_DIR$/.idea/modules/FSMap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FSMap.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FSMap.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FSMap.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FSMap.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FSMap.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FSMap.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FSMap.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FSMap.app.unitTest.iml" />
     </modules>
   </component>
 </project>

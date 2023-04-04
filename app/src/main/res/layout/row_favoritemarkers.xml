@@ -18,7 +18,7 @@
             android:id="@+id/trashFavorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="296dp"
+            android:layout_marginStart="320dp"
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/marker"
             android:background="@drawable/bin"
@@ -30,12 +30,14 @@
             android:id="@+id/editFavorites"
             android:layout_width="35dp"
             android:layout_height="34dp"
-            android:layout_marginStart="257dp"
+            android:layout_marginStart="270dp"
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/marker"
             android:background="@drawable/edit"
             android:fontFamily="@font/questrialregular"
+            android:onClick="store_input"
             android:textSize="15dp" />
+
         <RelativeLayout
             android:id="@+id/marker"
             android:layout_width="51dp"
@@ -45,18 +47,38 @@
 
         </RelativeLayout>
 
-        <TextView
+        <EditText
             android:id="@+id/TitleMarker"
-            android:layout_width="match_parent"
+            android:layout_width="226dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/marker"
+            android:background="@null"
             android:fontFamily="@font/questrialregular"
+            android:imeOptions="actionDone"
+            android:singleLine = "true"
             android:maxLines="1"
             android:text="Title"
             android:textColor="@color/gray"
             android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/orginalName"
+            android:layout_width="229dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/marker"
+            android:background="@null"
+            android:fontFamily="@font/questrialregular"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:text="Title"
+            android:textColor="@color/gray"
+            android:textSize="15dp"
+            android:visibility="invisible" />
 
 
     </RelativeLayout>

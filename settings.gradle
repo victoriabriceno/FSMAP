@@ -16,5 +16,5 @@ dependencyResolutionManagement {
              }
     }
 }
-rootProject.name = "LoginTesting"
+rootProject.name = "FSMap"
 include ':app'
