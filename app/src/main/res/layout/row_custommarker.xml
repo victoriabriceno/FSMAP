@@ -10,9 +10,9 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
-        android:layout_width="358dp"
+        android:layout_width="435dp"
         android:layout_height="54dp"
-        android:background="@drawable/round_lineralayout">
+       >
 
         <RelativeLayout
             android:id="@+id/marker"
@@ -20,7 +20,7 @@
             android:layout_height="39dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="307dp"
+            android:layout_marginEnd="386dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/location_pin">
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="151dp"
+            android:layout_marginEnd="222dp"
             android:layout_marginBottom="23dp"
             android:fontFamily="@font/questrialregular"
             android:maxLines="1"
@@ -46,7 +46,7 @@
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="46dp"
+            android:layout_marginEnd="137dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/trash"
             android:fontFamily="@font/questrialregular"
@@ -59,8 +59,8 @@
             android:layout_height="29dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="93dp"
-            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="172dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/pencil"
             android:fontFamily="@font/questrialregular"
             android:onClick="store_input"

@@ -156,7 +156,6 @@
             android:layout_width="621dp"
             android:layout_height="277dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/white"
             android:layout_marginRight="10dp"
             android:orientation="horizontal"
             android:padding="10dp"
