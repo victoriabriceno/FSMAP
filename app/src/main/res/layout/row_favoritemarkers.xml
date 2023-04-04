@@ -50,9 +50,9 @@
         <EditText
             android:id="@+id/TitleMarker"
             android:layout_width="226dp"
+
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/marker"
             android:background="@null"
             android:fontFamily="@font/questrialregular"
@@ -63,17 +63,14 @@
             android:textColor="@color/gray"
             android:textSize="15dp" />
 
-        <EditText
-            android:id="@+id/orginalName"
-            android:layout_width="229dp"
+        <TextView
+            android:id="@+id/OriginalTitle"
+            android:layout_width="244dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="6dp"
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/marker"
-            android:background="@null"
             android:fontFamily="@font/questrialregular"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
             android:maxLines="1"
             android:text="Title"
             android:textColor="@color/gray"

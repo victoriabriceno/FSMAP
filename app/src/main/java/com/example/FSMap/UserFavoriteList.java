@@ -1,3 +1,4 @@
+
 package com.example.FSMap;
 
 public class UserFavoriteList {
@@ -5,15 +6,18 @@ public class UserFavoriteList {
     String markerTitle;
     String OriginalTitle;
 
-    public UserFavoriteList(String markerTitle,String originalName) {
+
+    public UserFavoriteList(String markerTitle,String OriginalTitle) {
         this.markerTitle = markerTitle;
-        this.OriginalTitle = originalName;
+        this.OriginalTitle = OriginalTitle;
     }
 
     public String getMarkerTitle() {
         return markerTitle;
     }
-    public String getOriginalTitle(){return  OriginalTitle;}
+
+    public String getOriginalTitle(){return OriginalTitle;}
+
     public void setMarkerTitle(String markerTitle) { this.markerTitle = markerTitle; }
 
 
