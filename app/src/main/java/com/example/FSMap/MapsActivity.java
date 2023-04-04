@@ -884,7 +884,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
 
         //Set the bounds for overlay
-        LatLngBounds build1_1f = new LatLngBounds(
+        LatLngBounds build1_2f = new LatLngBounds(
                 new LatLng(28.59600450841536, -81.3020220190869),
                 new LatLng(28.596635652774378, -81.30086330482766)
         );
@@ -932,11 +932,11 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                new LatLng(28.590101835337443, -81.30483226561324),
 //                new LatLng(28.59086254784375, -81.30463378216082));
         //create map overlap
-        GroundOverlayOptions build1f1Overlay = new GroundOverlayOptions()
-                .positionFromBounds(build1_1f)
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_1f))
+        GroundOverlayOptions build1f2Overlay = new GroundOverlayOptions()
+                .positionFromBounds(build1_2f)
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_2f))
                 .bearing(180)
-                .anchor(0.56f, 0.50f);
+                .anchor(0.558f, 0.485f);
         GroundOverlayOptions build3EOverlay = new GroundOverlayOptions()
                 .positionFromBounds(build3E)
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
@@ -991,7 +991,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //                .bearing(45);
         //add groundOverlay and create reference.
 //        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
-        GroundOverlay build1F1 = mMap.addGroundOverlay(build1f1Overlay);
+        GroundOverlay build1F2 = mMap.addGroundOverlay(build1f1Overlay);
         GroundOverlay build3EOverlayed = mMap.addGroundOverlay(build3EOverlay);
 //        GroundOverlay build3aF1 = mMap.addGroundOverlay(build3aOverlay);
 //        GroundOverlay  build3bF1 = mMap.addGroundOverlay(building3BOverlay);
@@ -1006,7 +1006,7 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 //        GroundOverlay build4AFCOverlayOption = mMap.addGroundOverlay(build4AFCOverlay);
 //        GroundOverlay build4DOverlayOption = mMap.addGroundOverlay(build4DOverlay);
 //        GroundOverlay build4EOverlayOption = mMap.addGroundOverlay(build4EOverlay);
-        build1F1.setDimensions(140, 90);
+        build1F2.setDimensions(126, 94);
 //        build3aF1.setDimensions(34,28);
 //        build3EOverlayed.setDimensions(37,28);
 //        build3bF1.setDimensions(84,62);
