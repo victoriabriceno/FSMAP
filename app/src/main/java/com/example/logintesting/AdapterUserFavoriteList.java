@@ -12,6 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.FSMap.CustomMarkerAdapter;
+import com.example.FSMap.Favorites;
+import com.example.FSMap.MapsActivity;
+import com.example.FSMap.R;
+import com.example.FSMap.UserFavoriteList;
+
 import java.util.ArrayList;
 
 public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFavoriteList.FavoriteViewHolder> {

@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -34,7 +33,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -76,7 +74,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -85,7 +82,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.maps.android.PolyUtil;
 import com.squareup.picasso.Picasso;
@@ -94,7 +90,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -104,9 +99,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.io.File;
-import java.util.concurrent.ExecutionException;
-
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -569,11 +561,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         content.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                if(isAndroidReady)
-                {
+                if (isAndroidReady) {
                     content.getViewTreeObserver().removeOnPreDrawListener(this);
                 }
-                dismissSplashScreen();
                 return false;
             }
         });
@@ -646,7 +636,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
 
         // FAVORITES
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
 
             if (extras == null) {
@@ -655,6 +645,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             } else {
                 markerTitle2 = extras.getString("marker");
                 isNOTfUCKED = true;
+            }
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1645,8 +1637,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             } else {
                 for (Marker markers : secondFloorMarkersList) {
-                    if (marker2 != null) {
-                        if (markers.getTitle().equals(marker2.getTitle())) {
+                    if (markerFragment.MTouch.marker2 != null) {
+                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
                     } else {
@@ -1716,8 +1708,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             } else {
                 for (Marker markers : secondFloorMarkersList) {
-                    if (marker2 != null) {
-                        if (markers.getTitle().equals(marker2.getTitle())) {
+                    if (markerFragment.MTouch.marker2 != null) {
+                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
                     } else {
@@ -1861,9 +1853,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
                     if (!wasRemoveHit) {
                         newMarker = mMap.addMarker(newMarkerOption);
-                        newMarker.showInfoWindow()
-                        ;
-                        createdMarkers.add(newMarker);
+                        newMarker.showInfoWindow();
+                        if(createdMarkers != null) {
+                            createdMarkers.add(newMarker);
+                        }
                     }
                     if (floor == 1 && newMarker != null) {
                         MarkersList.add(newMarker);
@@ -1871,8 +1864,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         secondFloorMarkersList.add(newMarker);
                     }
                 }
-                if (createdMarkers.size() > 0) {
-                    doTheClick(createdMarkers);
+                if(createdMarkers !=  null) {
+                    if (createdMarkers.size() > 0) {
+                        doTheClick(createdMarkers);
+                    }
                 }
             }
 
@@ -2036,7 +2031,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             case R.id.navgo:
 
-                getDirectionPoly(marker2);
+                getDirectionPoly(markerFragment.MTouch.marker2);
                 isTraveling = true;
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
                 // checkDistPoint = new LatLng(Latitude, Longitued);
@@ -2212,8 +2207,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 upFloor.setVisibility(View.GONE);
                 downFloor.setVisibility(View.VISIBLE);
                 for (Marker markers : secondFloorMarkersList) {
-                    if (marker2 != null) {
-                        if (markers.getTitle().equals(marker2.getTitle())) {
+                    if (markerFragment.MTouch.marker2!= null) {
+                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
                     } else {
@@ -2232,8 +2227,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 downFloor.setVisibility(View.GONE);
                 upFloor.setVisibility(View.VISIBLE);
                 for (Marker markers : MarkersList) {
-                    if (marker2 != null) {
-                        if (markers.getTitle().equals(marker2.getTitle())) {
+                    if (markerFragment.MTouch.marker2 != null) {
+                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
                     } else {
@@ -2364,24 +2359,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public Marker FindTheMarker(String title) {
         Marker foundMarker = null;
-        for (Marker m : createdMarkers) {
-            if (m.getTitle().equals(title)) {
-                foundMarker = m;
+        if (createdMarkers != null) {
+            for (Marker m : createdMarkers) {
+                if (m.getTitle().equals(title)) {
+                    foundMarker = m;
+                }
             }
         }
-        for (Marker m1 : MarkersList) {
-            if (m1.getTitle().equals(title)) {
-                foundMarker = m1;
+        if(MarkersList != null) {
+            for (Marker m1 : MarkersList) {
+                if (m1.getTitle().equals(title)) {
+                    foundMarker = m1;
+                }
             }
         }
-        for (Marker m2 : favoritedMarkers) {
-            if (m2.getTitle().equals(title)) {
-                foundMarker = m2;
+        if(favoritedMarkers != null) {
+            for (Marker m2 : favoritedMarkers) {
+                if (m2.getTitle().equals(title)) {
+                    foundMarker = m2;
+                }
             }
         }
-        for (Marker m3 : secondFloorMarkersList) {
-            if (m3.getTitle().equals(title)) {
-                foundMarker = m3;
+        if(secondFloorMarkersList != null) {
+            for (Marker m3 : secondFloorMarkersList) {
+                if (m3.getTitle().equals(title)) {
+                    foundMarker = m3;
+                }
             }
         }
         return foundMarker;

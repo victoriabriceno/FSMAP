@@ -2,7 +2,6 @@ package com.example.FSMap;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.InputType;
 import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,17 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.google.android.gms.maps.model.Marker;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.lang.reflect.Constructor;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFavoriteList.FavoriteViewHolder> {
 
@@ -173,7 +162,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
             markerClick = itemView.findViewById(R.id.marker);
             trash = itemView.findViewById(R.id.trashFavorites);
             editFavorites = itemView.findViewById(R.id.editFavorites);
-            orginalName = itemView.findViewById(R.id.orginalName);
+            orginalName = itemView.findViewById(R.id.OriginalTitle);
             originalKeyListener = TitleOfTheMarker.getKeyListener();
             TitleOfTheMarker.setKeyListener(null);
         }
