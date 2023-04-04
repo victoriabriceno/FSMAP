@@ -35,6 +35,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfile extends AppCompatActivity  {
@@ -210,8 +212,17 @@ public class EditProfile extends AppCompatActivity  {
 
     private boolean isImageChanged() {
 
-        UploadImageToFirebase(imageUri);
-        return  true;
+        File pfp = new File(imageUri.getPath());
+        long size = pfp.length();
+        if (size > 10500000)
+        {
+            Toast.makeText(this, "File too large, upload image under 10 MB", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else{
+            UploadImageToFirebase(imageUri);
+            return  true;
+        }
     }
 
 
