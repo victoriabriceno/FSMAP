@@ -8,12 +8,13 @@
 
     <fragment
         android:id="@+id/map"
-        android:name="com.example.FSMap.MarkerFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivity"
         tools:layout_editor_absoluteX="-5dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="0dp"
+        />
 
     <RelativeLayout
         android:id="@+id/slideup"

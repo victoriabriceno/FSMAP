@@ -83,12 +83,12 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="12dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_lineralayout">
 
                     <TextView
                         android:id="@+id/favoritesName"
@@ -108,7 +108,7 @@
                         android:layout_height="90dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="70dp"
-                        android:src="@drawable/lace" />
+                        android:src="@drawable/favorite_logo" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -119,12 +119,12 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="12dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_lineralayout">
 
                     <TextView
                         android:id="@+id/CustomMarkersName"
@@ -144,7 +144,7 @@
                         android:layout_height="90dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="70dp"
-                        android:src="@drawable/map" />
+                        android:src="@drawable/location_marker" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -156,11 +156,11 @@
             android:layout_width="621dp"
             android:layout_height="277dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="16dp"
-
+            android:background="@color/white"
             android:layout_marginRight="10dp"
             android:orientation="horizontal"
             android:padding="10dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
@@ -172,12 +172,13 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="12dp"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_lineralayout">
 
                     <TextView
                         android:id="@+id/AboutName"
@@ -208,12 +209,13 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="12dp"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_lineralayout">
 
                     <TextView
                         android:id="@+id/LogoutName"

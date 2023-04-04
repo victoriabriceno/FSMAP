@@ -177,10 +177,6 @@ GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
         setContentView(binding.getRoot());
 
 
-
-
-
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
