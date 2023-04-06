@@ -119,37 +119,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //PASSWORD VISIBLE
 
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int Right =2;
-                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
-                    if (motionEvent.getRawX()>= editTextPassword.getRight()-
-                            editTextPassword.getCompoundDrawables()[Right].getBounds().width()){
-                        int selection = editTextPassword.getSelectionEnd();
-                        if (passwordVisible){
-                            //set drawable image here
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                    0,0,R.drawable.visible,0);
-
-                            //for hide password
-                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible = false;
-                        }else{
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                    0,0,R.drawable.eye1,0);
-
-                            //for show password
-                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible = true;
-                        }
-                        editTextPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+//        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                final int Right =2;
+//                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+//                    if (motionEvent.getRawX()>= editTextPassword.getRight()-
+//                            editTextPassword.getCompoundDrawables()[Right].getBounds().width()){
+//                        int selection = editTextPassword.getSelectionEnd();
+//                        if (passwordVisible){
+//                            //set drawable image here
+//                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+//                                    0,0,R.drawable.visible,0);
+//
+//                            //for hide password
+//                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                            passwordVisible = false;
+//                        }else{
+//                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
+//                                    0,0,R.drawable.eye1,0);
+//
+//                            //for show password
+//                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                            passwordVisible = true;
+//                        }
+//                        editTextPassword.setSelection(selection);
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         // Google
         ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this,MapsActivity.class);
             startActivity(intent);
         }
-
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -357,11 +356,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
-        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected= false;
+//        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+//                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+//            connected = true;
+//        else
+//            connected= false;
         if (!connected){
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
