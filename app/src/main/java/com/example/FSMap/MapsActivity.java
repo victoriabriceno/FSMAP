@@ -122,6 +122,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button NavDone;
     private Button NacLock;
     private AutoCompleteTextView Search;
+    private Button Filter, CRFilter, OFFilter, BRFilter, WZFilter, ETCFilter;
+    private boolean FilterShow, CRShow, OFShow, BRShow, WZShow, ETCShow, Filtering = false;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private Boolean mLocationPermissionsGranted = false;
@@ -277,17 +279,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             case "b3d"://check if result was building 3 bottom half
             {
-                if(checklong < -81.30451440811157 ) {
+                if (checklong < -81.30451440811157) {
                     return "3F";
-                }
-                else
-                {
+                } else {
                     if (checklat < 28.593998352683425) {
                         return "3E";
-                    }else if (checklat < 28.594210014236552) {
+                    } else if (checklat < 28.594210014236552) {
                         return "3D";
-                    }
-                    else{
+                    } else {
                         return "3C";
                     }
                 }
@@ -558,10 +557,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void run() {
                 //change the boolean
-                isAndroidReady =true;
+                isAndroidReady = true;
             }
-        },5000);
+        }, 5000);
     }
+
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -623,6 +623,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnFavoritesAdd = (ImageButton) findViewById(R.id.btnAddFavorites);
         btnFavoritesAdd.setOnClickListener(this);
 
+        //Filters
+        Filter = findViewById(R.id.FilterButton);
+        CRFilter = findViewById(R.id.CRFilterButton);
+        OFFilter = findViewById(R.id.OFFilterButton);
+        BRFilter = findViewById(R.id.BRFilterButton);
+        WZFilter = findViewById(R.id.WZFilterButton);
+        ETCFilter = findViewById(R.id.ETCFilterButton);
+
+        Filter.setOnClickListener(this);
+        CRFilter.setOnClickListener(this);
+        OFFilter.setOnClickListener(this);
+        BRFilter.setOnClickListener(this);
+        WZFilter.setOnClickListener(this);
+        ETCFilter.setOnClickListener(this);
+
+        Filter.setBackgroundColor(Color.parseColor("#73777B"));
+        CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        OFFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        CRFilter.setVisibility(View.GONE);
+        OFFilter.setVisibility(View.GONE);
+        BRFilter.setVisibility(View.GONE);
+        WZFilter.setVisibility(View.GONE);
+        ETCFilter.setVisibility(View.GONE);
         //Loading markers from CSV
 
         //PROFILE PICTURE
@@ -920,27 +947,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void LoadMarkers()
-    {
+    private void LoadMarkers() {
         Activity act = this;
         Context con = this;
         createdMarkers = new ArrayList<>();
-        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomMarkers/");
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/CustomMarkers/");
         databaseReference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     String markerTitle = dataSnapshot.getKey().toString();
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
                     double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
-                    LatLng newLatLng = new LatLng(latitude1,longitude1);
+                    LatLng newLatLng = new LatLng(latitude1, longitude1);
                     MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
-                    if(!wasRemoveHit) {
+                    if (!wasRemoveHit) {
                         Marker newMarker = mMap.addMarker(newMarkerOption);
                         newMarker.showInfoWindow();
-                        if(FindTheMarker(markerTitle) == null) {
+                        if (FindTheMarker(markerTitle) == null) {
                             createdMarkers.add(newMarker);
                         }
                     }
@@ -955,24 +981,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-    private void LoadFavoriteMarkers()
-    {
-        favoritedMarkers= new ArrayList<>();
-        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Favorites/");
+
+    private void LoadFavoriteMarkers() {
+        favoritedMarkers = new ArrayList<>();
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/Favorites/");
         databaseReference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker found = FindTheMarker(dataSnapshot.getKey());
-                    if(found != null)
-                    {
-                        if(CheckMarkerType(found))
-                        {
-                            for (Marker m: createdMarkers)
-                            {
-                                if(m.getTitle().equals(found.getTitle()))
-                                {
+                    if (found != null) {
+                        if (CheckMarkerType(found)) {
+                            for (Marker m : createdMarkers) {
+                                if (m.getTitle().equals(found.getTitle())) {
                                     favoritedMarkers.add(found);
                                 }
                             }
@@ -1114,7 +1136,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .positionFromBounds(build4C)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4c))
                         .bearing(135)
-                        .anchor(0.48f,0.62f);
+                        .anchor(0.48f, 0.62f);
                 GroundOverlayOptions build4BOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4B)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4b_1f));
@@ -1146,7 +1168,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .positionFromBounds(build1_2f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_2f))
                         .bearing(180)
-                        .anchor(0.558f, 0.485f);;
+                        .anchor(0.558f, 0.485f);
+                ;
                 GroundOverlayOptions build2f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
@@ -1506,8 +1529,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Marker stuffs
         //Markers for classrooms
-        BitmapDrawable bitmapdraw1=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
-        Bitmap b1=bitmapdraw1.getBitmap();
+        BitmapDrawable bitmapdraw1 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing);
+        Bitmap b1 = bitmapdraw1.getBitmap();
         Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
 
         //Markers for Bathrooms
@@ -1521,13 +1544,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
 
         //Markers for ETCRooms
-        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.etc_marker);
-        Bitmap b4=bitmapdraw4.getBitmap();
+        BitmapDrawable bitmapdraw4 = (BitmapDrawable) getResources().getDrawable(R.drawable.etc_marker);
+        Bitmap b4 = bitmapdraw4.getBitmap();
         Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
 
         //Markers for OFRooms
-        BitmapDrawable bitmapdraw5=(BitmapDrawable)getResources().getDrawable(R.drawable.office_marker);
-        Bitmap b5=bitmapdraw5.getBitmap();
+        BitmapDrawable bitmapdraw5 = (BitmapDrawable) getResources().getDrawable(R.drawable.office_marker);
+        Bitmap b5 = bitmapdraw5.getBitmap();
         Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
 
         CSVReader creader = new CSVReader();
@@ -1536,19 +1559,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         StorageReference csvref = sr.child("Classrooms/rooms.csv");
         Context con = this;
         Activity act = this;
-        csvref.getBytes(2048*2048).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        csvref.getBytes(2048 * 2048).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 creader.CreateRoomList(bytes);
                 ArrayList<String[]> roomlist = creader.GetRoomList();
 
-                for (String[] room : roomlist)
-                {
-                    MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]),Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                for (String[] room : roomlist) {
+                    MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]), Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                     Marker mark = mMap.addMarker(roommarker);
                     MarkersList.add(mark);
-                    switch (room[3])
-                    {
+                    switch (room[3]) {
                         case ("CR"):
                             ClassRoomMarkers.add(mark);
                             break;
@@ -1566,30 +1587,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     }
                     //Set Markers image for classrooms
-                    for (Marker ClassRoom: ClassRoomMarkers)
-                    {
+                    for (Marker ClassRoom : ClassRoomMarkers) {
                         ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
                     }
 
                     //Set Markers image for bathrooms
-                    for(Marker Bathrooms: BathroomMarkers)
-                    {
+                    for (Marker Bathrooms : BathroomMarkers) {
                         Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
                     }
 
                     //Set Markers image for Waterzones
-                    for(Marker WaterStation: WaterZones)
-                    {
+                    for (Marker WaterStation : WaterZones) {
                         WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
                     }
                     //Set Markers image for ETC rooms
-                    for (Marker etc: ETCRooms)
-                    {
+                    for (Marker etc : ETCRooms) {
                         etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
                     }
                     //Set Marker image for OF rooms
-                    for (Marker etc: OFRooms)
-                    {
+                    for (Marker etc : OFRooms) {
                         etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
                     }
                 }
@@ -1609,6 +1625,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+
         //set overlays and markers visibile after certain zoom level is reached.
         //For camera moving
         mMap.setOnCameraMoveListener(() ->
@@ -1624,7 +1642,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         FirstLoad(result, secondResult);
                     }
                 }
-
             }
             if (wasRemoveHit) {
                 for (int i = 0; i < createdMarkers.size(); i++) {
@@ -1635,31 +1652,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
 
-            if (floorPicked == 1) {
-                for (Marker markers : MarkersList) {
-                    if (markerFragment.MTouch.marker2 != null) {
-                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+            if(!Filtering)
+            {
+                if (floorPicked == 1) {
+                    for (Marker markers : MarkersList) {
+                        if (markerFragment.MTouch.marker2 != null) {
+                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                            }
+                        } else {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
-                    } else {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                }
-                for (Marker marker : secondFloorMarkersList) {
-                    marker.setVisible(false);
-                }
-            } else {
-                for (Marker markers : secondFloorMarkersList) {
-                    if (markerFragment.MTouch.marker2 != null) {
-                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                    for (Marker marker : secondFloorMarkersList) {
+                        marker.setVisible(false);
+                    }
+                } else {
+                    for (Marker markers : secondFloorMarkersList) {
+                        if (markerFragment.MTouch.marker2 != null) {
+                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                            }
+                        } else {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
-                    } else {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                }
-                for (Marker marker : MarkersList) {
-                    marker.setVisible(false);
+                    for (Marker marker : MarkersList) {
+                        marker.setVisible(false);
+                    }
                 }
             }
         });
@@ -1705,32 +1725,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
             }
-
-            if (floorPicked == 1) {
-                for (Marker markers : MarkersList) {
-                    if (markerFragment.MTouch.marker2 != null) {
-                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+            if (!Filtering){
+                if (floorPicked == 1) {
+                    for (Marker markers : MarkersList) {
+                        if (markerFragment.MTouch.marker2 != null) {
+                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                            }
+                        } else {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
-                    } else {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                }
-                for (Marker marker : secondFloorMarkersList) {
-                    marker.setVisible(false);
-                }
-            } else {
-                for (Marker markers : secondFloorMarkersList) {
-                    if (markerFragment.MTouch.marker2 != null) {
-                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                    for (Marker marker : secondFloorMarkersList) {
+                        marker.setVisible(false);
+                    }
+                } else {
+                    for (Marker markers : secondFloorMarkersList) {
+                        if (markerFragment.MTouch.marker2 != null) {
+                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                            }
+                        } else {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
-                    } else {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
-                }
-                for (Marker marker : MarkersList) {
-                    marker.setVisible(false);
+                    for (Marker marker : MarkersList) {
+                        marker.setVisible(false);
+                    }
                 }
             }
         });
@@ -1855,7 +1876,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int floor =1;
+                int floor = 1;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker newMarker = null;
                     String markerTitle = dataSnapshot.getKey().toString();
@@ -1867,7 +1888,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if (!wasRemoveHit) {
                         newMarker = mMap.addMarker(newMarkerOption);
                         newMarker.showInfoWindow();
-                        if(createdMarkers != null) {
+                        if (createdMarkers != null) {
                             createdMarkers.add(newMarker);
                         }
                     }
@@ -1877,7 +1898,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         secondFloorMarkersList.add(newMarker);
                     }
                 }
-                if(createdMarkers !=  null) {
+                if (createdMarkers != null) {
                     if (createdMarkers.size() > 0) {
                         doTheClick(createdMarkers);
                     }
@@ -2125,10 +2146,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.RemoveSpot:
                 wasRemoveHit = true;
 
-                for (int i = 0; i <createdMarkers.size() ; i++)
-                {
-                    if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle()))
-                    {
+                for (int i = 0; i < createdMarkers.size(); i++) {
+                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
                         createdMarkers.get(i).remove();
                         CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
                         createdMarkers.get(i).setVisible(false);
@@ -2200,7 +2219,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 manager1.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
                 break;
             case R.id.btnAddFavorites:
-                Favorites.addToFavorite(MapsActivity.this,markerFragment.MTouch.marker2);
+                Favorites.addToFavorite(MapsActivity.this, markerFragment.MTouch.marker2);
 
                 snack = Snackbar.make(findViewById(R.id.map), "Added To Favorites", Snackbar.LENGTH_SHORT);
                 snack.show();
@@ -2220,7 +2239,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 upFloor.setVisibility(View.GONE);
                 downFloor.setVisibility(View.VISIBLE);
                 for (Marker markers : secondFloorMarkersList) {
-                    if (markerFragment.MTouch.marker2!= null) {
+                    if (markerFragment.MTouch.marker2 != null) {
                         if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
                             markers.setVisible(mMap.getCameraPosition().zoom > 18);
                         }
@@ -2251,353 +2270,481 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (Marker marker : secondFloorMarkersList) {
                     marker.setVisible(false);
                 }
-                if(B3U2 != null) {
+                if (B3U2 != null) {
                     B3U2.setVisible(false);
                 }
                 removeAllOverlays();
                 String results = DoTheChecks();
                 CheckResults(results);
+            case R.id.FilterButton:
+                FilterShow = !FilterShow;
+                if (FilterShow) {
+                    Filter.setBackgroundColor(Color.parseColor("#F55E25"));
+                    CRFilter.setVisibility(View.VISIBLE);
+                    OFFilter.setVisibility(View.VISIBLE);
+                    BRFilter.setVisibility(View.VISIBLE);
+                    WZFilter.setVisibility(View.VISIBLE);
+                    ETCFilter.setVisibility(View.VISIBLE);
+                } else {
+                    Filter.setBackgroundColor(Color.parseColor("#73777B"));
+                    CRFilter.setVisibility(View.GONE);
+                    OFFilter.setVisibility(View.GONE);
+                    BRFilter.setVisibility(View.GONE);
+                    WZFilter.setVisibility(View.GONE);
+                    ETCFilter.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.CRFilterButton:
+                FilteredMarkers("CR");
+                Filtering = true;
+                break;
+
+            case R.id.OFFilterButton:
+                FilteredMarkers("OF");
+                Filtering = true;
+                break;
+
+            case R.id.BRFilterButton:
+                FilteredMarkers("BR");
+                Filtering = true;
+                break;
+
+            case R.id.WZFilterButton:
+                FilteredMarkers("WZ");
+                Filtering = true;
+                break;
+
+            case R.id.ETCFilterButton:
+                FilteredMarkers("ETC");
+                Filtering = true;
                 break;
         }
     }
 
-    protected void removeAllOverlays() {
+    private void FilteredMarkers (String type) {
+        switch (type) {
+            case "CR":
+                CRShow = !CRShow;
+                break;
+            case "OF":
+                OFShow = !OFShow;
+                break;
+            case "BR":
+                BRShow = !BRShow;
+                break;
+            case "WZ":
+                WZShow = !WZShow;
+                break;
+            case "ETC":
+                ETCShow = !ETCShow;
+                break;
+        }
+
+        if (CRShow) {
+            for (Marker m : ClassRoomMarkers) {
+                m.setVisible(true);
+            }
+            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+        } else {
+            for (Marker m : ClassRoomMarkers) {
+                m.setVisible(false);
+            }
+            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        }
+        if (OFShow) {
+            for (Marker m : OFRooms) {
+                m.setVisible(true);
+            }
+            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : OFRooms) {
+                m.setVisible(false);
+            }
+            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (BRShow) {
+            for (Marker m : BathroomMarkers) {
+                m.setVisible(true);
+            }
+            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : BathroomMarkers) {
+                m.setVisible(false);
+            }
+            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (WZShow) {
+            for (Marker m : WaterZones) {
+                m.setVisible(true);
+            }
+            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : WaterZones) {
+                m.setVisible(false);
+            }
+            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+
+        if (ETCShow) {
+            for (Marker m : ETCRooms) {
+                m.setVisible(true);
+            }
+            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : ETCRooms) {
+                m.setVisible(false);
+            }
+            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
+            Filtering = false;
+            for (Marker m : MarkersList) {
+                m.setVisible(true);
+            }
+
+        }
+    }
+        protected void removeAllOverlays() {
 
     }
 
 
     protected void showMapsFloor(int floorPicked) {
 
-    }
+        }
 
-    //Getting permission from user for location
-    private void getLocationPermission() {
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION};
+        //Getting permission from user for location
+        private void getLocationPermission () {
+            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_lOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_lOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                //SET A BOOLEAN
-                mLocationPermissionsGranted = true;
+                if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    //SET A BOOLEAN
+                    mLocationPermissionsGranted = true;
 
+                } else {
+                    ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+                }
             } else {
                 ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
         }
-    }
 
-    @Override
-    public void onMapLongClick(LatLng point) {
-        wasRemoveHit = false;
-        saveSpotLayout.setVisibility(View.VISIBLE);
-        LongClickPoint = point;
-    }
+        @Override
+        public void onMapLongClick (LatLng point){
+            wasRemoveHit = false;
+            saveSpotLayout.setVisibility(View.VISIBLE);
+            LongClickPoint = point;
+        }
 
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return true;
-    }
+        @Override
+        public boolean onMarkerClick (Marker marker){
+            return true;
+        }
 
-    public void checkIfMarkerNeedVisible() {
-        if (!wasMarkerClicked) {
-            if (mMap.getCameraPosition().zoom > 18) {
-                for (Marker m : MarkersList) {
-                    m.setVisible(true);
+        public void checkIfMarkerNeedVisible () {
+            if (!wasMarkerClicked) {
+                if (mMap.getCameraPosition().zoom > 18) {
+                    for (Marker m : MarkersList) {
+                        if (!Filtering) {
+                            m.setVisible(true);
+                        }
+                    }
+                } else {
+                    for (Marker m2 : MarkersList) {
+                        m2.setVisible(false);
+                    }
+                }
+                for (Marker mC : createdMarkers) {
+                    mC.setVisible(true);
                 }
             } else {
-                for (Marker m2 : MarkersList) {
-                    m2.setVisible(false);
+                for (Marker m3 : MarkersList) {
+                    if (!m3.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                        m3.setVisible(false);
+                    }
                 }
-            }
-            for (Marker mC : createdMarkers) {
-                mC.setVisible(true);
-            }
-        }
-        else
-        {
-            for(Marker m3: MarkersList)
-            {
-                if(!m3.getTitle().equals(markerFragment.MTouch.marker2.getTitle()))
-                {
-                    m3.setVisible(false);
-                }
-            }
-            for(Marker m3C: createdMarkers)
-            {
-                if(!m3C.getTitle().equals(markerFragment.MTouch.marker2.getTitle()))
-                {
-                    m3C.setVisible(false);
+                for (Marker m3C : createdMarkers) {
+                    if (!m3C.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                        m3C.setVisible(false);
+                    }
                 }
             }
         }
-    }
 
-    //Handles what happens when user clicks on the map (not the same as drag)
-    @Override
-    public void onMapClick(LatLng point) {
-        //Hide Keyboard when map is clicked
-        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+        //Handles what happens when user clicks on the map (not the same as drag)
+        @Override
+        public void onMapClick (LatLng point){
+            //Hide Keyboard when map is clicked
+            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
 
-        //slide down slideup when map is clicked
-        if (slideup) {
-            slideupview.setVisibility(View.GONE);
-            //Animation stuff that bugs out
+            //slide down slideup when map is clicked
+            if (slideup) {
+                slideupview.setVisibility(View.GONE);
+                //Animation stuff that bugs out
             /*TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
             animate.setDuration(375);
             animate.setFillAfter(true);
             slideupview.startAnimation(animate);*/
-            slideup = false;
-        }
-        if (RemovePoint.getVisibility() == View.VISIBLE) {
-            RemovePoint.setVisibility(View.GONE);
-        }
-        if (saveSpotLayout.getVisibility() == View.VISIBLE) {
-            saveSpotLayout.setVisibility(View.GONE);
-        }
-        //Make all markers visible
+                slideup = false;
+            }
+            if (RemovePoint.getVisibility() == View.VISIBLE) {
+                RemovePoint.setVisibility(View.GONE);
+            }
+            if (saveSpotLayout.getVisibility() == View.VISIBLE) {
+                saveSpotLayout.setVisibility(View.GONE);
+            }
+            //Make all markers visible
 //        checkIfMarkerNeedVisible();
-    }
-
-    public void RemoveAllLines() {
-        while (linesShowing.size() > 0) {
-            linesShowing.get(0).remove();
-            linesShowing.remove(0);
         }
-    }
 
-    public Marker FindTheMarker(String title) {
-        Marker foundMarker = null;
-        if (createdMarkers != null) {
+        public void RemoveAllLines () {
+            while (linesShowing.size() > 0) {
+                linesShowing.get(0).remove();
+                linesShowing.remove(0);
+            }
+        }
+
+        public Marker FindTheMarker (String title){
+            Marker foundMarker = null;
+            if (createdMarkers != null) {
+                for (Marker m : createdMarkers) {
+                    if (m.getTitle().equals(title)) {
+                        foundMarker = m;
+                    }
+                }
+            }
+            if (MarkersList != null) {
+                for (Marker m1 : MarkersList) {
+                    if (m1.getTitle().equals(title)) {
+                        foundMarker = m1;
+                    }
+                }
+            }
+            if (favoritedMarkers != null) {
+                for (Marker m2 : favoritedMarkers) {
+                    if (m2.getTitle().equals(title)) {
+                        foundMarker = m2;
+                    }
+                }
+            }
+            if (secondFloorMarkersList != null) {
+                for (Marker m3 : secondFloorMarkersList) {
+                    if (m3.getTitle().equals(title)) {
+                        foundMarker = m3;
+                    }
+                }
+            }
+            return foundMarker;
+        }
+
+        public boolean CheckMarkerType (Marker marker){
+            boolean isItCreatedMarker = false;
             for (Marker m : createdMarkers) {
-                if (m.getTitle().equals(title)) {
-                    foundMarker = m;
+                if (m.getTitle().equals(marker.getTitle())) {
+                    isItCreatedMarker = true;
                 }
             }
+            return isItCreatedMarker;
         }
-        if(MarkersList != null) {
-            for (Marker m1 : MarkersList) {
-                if (m1.getTitle().equals(title)) {
-                    foundMarker = m1;
-                }
+
+        //Credit to Ruben for solving everything below here
+        //get directions to marker
+        public void getDirectionPoly (Marker marker){
+            getDeviceLocation();
+            String url1 = "";
+            if (!CheckMarkerType(marker)) {
+                url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
+            } else {
+                url1 = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
             }
-        }
-        if(favoritedMarkers != null) {
-            for (Marker m2 : favoritedMarkers) {
-                if (m2.getTitle().equals(title)) {
-                    foundMarker = m2;
-                }
-            }
-        }
-        if(secondFloorMarkersList != null) {
-            for (Marker m3 : secondFloorMarkersList) {
-                if (m3.getTitle().equals(title)) {
-                    foundMarker = m3;
-                }
-            }
-        }
-        return foundMarker;
-    }
+            String url = url1;
 
-    public boolean CheckMarkerType(Marker marker) {
-        boolean isItCreatedMarker = false;
-        for (Marker m : createdMarkers) {
-            if (m.getTitle().equals(marker.getTitle())) {
-                isItCreatedMarker = true;
-            }
-        }
-        return isItCreatedMarker;
-    }
-
-    //Credit to Ruben for solving everything below here
-    //get directions to marker
-    public void getDirectionPoly(Marker marker) {
-        getDeviceLocation();
-        String url1 = "";
-        if (!CheckMarkerType(marker)) {
-            url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
-        } else {
-            url1 = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
-        }
-        String url = url1;
-
-        TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
-        taskRequestDirections.execute(url);
-    }
-
-    //Get URL for Getting Direction
-    private String getUrl(LatLng origin, LatLng dest) {
-        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
-
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-        String sensor = "sensor=false";
-
-        String mode = "mode=walking";
-
-        String param = str_dest + "&" + mode + "&" + str_org + "&" + sensor;
-
-        String output = "json";
-
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=AIzaSyBXJ-PMOg2kDp8jXih-3ME_52znZc6A2ds ";
-
-        return url;
-    }
-
-    private String getDirectionsUrl(String reqUrl) throws IOException {
-        String responseString = "";
-        InputStream inputStream = null;
-        HttpURLConnection httpURLConnection = null;
-        try {
-            URL url = new URL(reqUrl);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.connect();
-
-            inputStream = httpURLConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            StringBuffer stringBuffer = new StringBuffer();
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-            responseString = stringBuffer.toString();
-            bufferedReader.close();
-            inputStreamReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            httpURLConnection.disconnect();
-        }
-        return responseString;
-    }
-
-    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
-        Marker marker;
-
-        public TaskRequestDirections() {
+            TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
+            taskRequestDirections.execute(url);
         }
 
-        public TaskRequestDirections(Marker _marker) {
-            marker = _marker;
+        //Get URL for Getting Direction
+        private String getUrl (LatLng origin, LatLng dest){
+            String str_org = "origin=" + origin.latitude + "," + origin.longitude;
+
+            String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+            String sensor = "sensor=false";
+
+            String mode = "mode=walking";
+
+            String param = str_dest + "&" + mode + "&" + str_org + "&" + sensor;
+
+            String output = "json";
+
+            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=AIzaSyBXJ-PMOg2kDp8jXih-3ME_52znZc6A2ds ";
+
+            return url;
         }
 
-        @Override
-        protected String doInBackground(String... strings) {
+        private String getDirectionsUrl (String reqUrl) throws IOException {
             String responseString = "";
+            InputStream inputStream = null;
+            HttpURLConnection httpURLConnection = null;
             try {
-                responseString = getDirectionsUrl(strings[0]);
-            } catch (IOException e) {
+                URL url = new URL(reqUrl);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.connect();
+
+                inputStream = httpURLConnection.getInputStream();
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuffer stringBuffer = new StringBuffer();
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(line);
+                }
+                responseString = stringBuffer.toString();
+                bufferedReader.close();
+                inputStreamReader.close();
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                httpURLConnection.disconnect();
             }
             return responseString;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            //parse json here
-            TaskParser taskParser = new TaskParser(marker);
-            taskParser.execute(s);
-        }
-    }
+        public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+            Marker marker;
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
-        Marker marker;
-
-        public TaskParser() {
-        }
-
-        public TaskParser(Marker _marker) {
-            marker = _marker;
-        }
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
-            JSONObject jsonObject = null;
-            List<List<HashMap<String, String>>> routes = null;
-            try {
-                jsonObject = new JSONObject(strings[0]);
-                DataParser dataParser = new DataParser();
-                routes = dataParser.parse(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            public TaskRequestDirections() {
             }
-            return routes;
+
+            public TaskRequestDirections(Marker _marker) {
+                marker = _marker;
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String responseString = "";
+                try {
+                    responseString = getDirectionsUrl(strings[0]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return responseString;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //parse json here
+                TaskParser taskParser = new TaskParser(marker);
+                taskParser.execute(s);
+            }
         }
 
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
-            ArrayList points = null;
-            PolylineOptions polylineOptions = null;
+        public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
+            Marker marker;
 
-            for (List<HashMap<String, String>> path : lists) {
-                points = new ArrayList();
-                polylineOptions = new PolylineOptions();
-
-                for (HashMap<String, String> point : path) {
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lon = Double.parseDouble(point.get("lon"));
-
-                    points.add(new LatLng(lat, lon));
-                }
-
-                polylineOptions.addAll(points);
-                polylineOptions.width(15);
-                if (DarkorLight) {
-                    polylineOptions.color(Color.BLUE);
-                } else {
-                    polylineOptions.color(Color.parseColor("#FFA500"));
-                }
-                polylineOptions.geodesic(true);
+            public TaskParser() {
             }
-            Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#22808080")).width(15));
-            linesShowing.add(poly);
-            if (polylineOptions != null) {
-                if (!CheckMarkerType(marker)) {
-                    List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
-                    polylineOptions.add(outToInPoly.get(0));
+
+            public TaskParser(Marker _marker) {
+                marker = _marker;
+            }
+
+            @Override
+            protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+                JSONObject jsonObject = null;
+                List<List<HashMap<String, String>>> routes = null;
+                try {
+                    jsonObject = new JSONObject(strings[0]);
+                    DataParser dataParser = new DataParser();
+                    routes = dataParser.parse(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                String outToPolys = "outsideTo" + marker.getTitle();
-                for (int i = 0; i < LinesTitles.size(); i++) {
-                    if (LinesTitles.get(i).equals(outToPolys)) {
-                        linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                return routes;
+            }
+
+            @Override
+            protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
+                ArrayList points = null;
+                PolylineOptions polylineOptions = null;
+
+                for (List<HashMap<String, String>> path : lists) {
+                    points = new ArrayList();
+                    polylineOptions = new PolylineOptions();
+
+                    for (HashMap<String, String> point : path) {
+                        double lat = Double.parseDouble(point.get("lat"));
+                        double lon = Double.parseDouble(point.get("lon"));
+
+                        points.add(new LatLng(lat, lon));
                     }
+
+                    polylineOptions.addAll(points);
+                    polylineOptions.width(15);
+                    if (DarkorLight) {
+                        polylineOptions.color(Color.BLUE);
+                    } else {
+                        polylineOptions.color(Color.parseColor("#FFA500"));
+                    }
+                    polylineOptions.geodesic(true);
                 }
-                linesShowing.add(mMap.addPolyline(polylineOptions));
-            } else {
-                snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
-                snack.show();
+                Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#22808080")).width(15));
+                linesShowing.add(poly);
+                if (polylineOptions != null) {
+                    if (!CheckMarkerType(marker)) {
+                        List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
+                        polylineOptions.add(outToInPoly.get(0));
+                    }
+                    String outToPolys = "outsideTo" + marker.getTitle();
+                    for (int i = 0; i < LinesTitles.size(); i++) {
+                        if (LinesTitles.get(i).equals(outToPolys)) {
+                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                        }
+                    }
+                    linesShowing.add(mMap.addPolyline(polylineOptions));
+                } else {
+                    snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
+                    snack.show();
+                }
             }
         }
+
+        private class Overlays extends AsyncTask<Void, Void, String> {
+            GoogleMap maps;
+
+            public void sendMap(GoogleMap _maps) {
+                maps = _maps;
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+
+                return "succ";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+            }
+        }
+
     }
-
-    private class Overlays extends AsyncTask<Void, Void, String> {
-        GoogleMap maps;
-
-        public void sendMap(GoogleMap _maps) {
-            maps = _maps;
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            return "succ";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-        }
-    }
-
-}
