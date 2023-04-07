@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.FSMap"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -30,6 +30,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.FSMap'
 }
 
 dependencies {
@@ -52,7 +53,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     implementation 'com.google.firebase:firebase-database:20.1.0'
-    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.firebase:firebase-auth:21.2.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -65,6 +66,12 @@ dependencies {
 
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
+
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+
+
+    // For the slideup widnow
+    implementation 'com.google.android.material:material:1.8.0'
+
 }

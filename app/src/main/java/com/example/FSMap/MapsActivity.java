@@ -5,13 +5,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -31,17 +28,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.SplashScreen;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.FSMap.databinding.ActivityMapsBinding;
@@ -64,17 +60,15 @@ import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -170,13 +164,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     List<PatternItem> pattern = Arrays.asList(
             new Dash(30), new Gap(20), new Dot(), new Gap(20));
 
+
     double Latitude, Longitued;
     float zoom;
     boolean slideup;
     double mLastAltitude;
-    RelativeLayout slideupview;
     ArrayList<String> nameslist = new ArrayList<String>() {
     };
+
+    LinearLayout slideupview;
+    boolean slidepup;
+    BottomSheetBehavior bottomSheetBehavior;
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
     //Favorites
@@ -222,6 +220,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public void onLocationChanged(@NonNull Location location) {
             setUserLocationMarker(location);
             ComparePoints(location);
+
 
         }
     };
@@ -562,8 +561,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }, 5000);
     }
 
+    ;
+
     //onCreate gets rebuilt each time the map is created
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen screen = SplashScreen.installSplashScreen(this);
         isAndroidReady = false;
@@ -582,6 +584,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         super.onCreate(savedInstanceState);
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -604,15 +607,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         markerFragment.getMapAsync(this);
 
+
         userIconMaps = findViewById(R.id.userMaps);
         userIconMaps.setOnClickListener(this);
+
 
         mGps = (ImageView) findViewById(R.id.gps);
 
         getLocationPermission();
         //Slide up code
-        slideupview = findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.design_bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         slideupview.setVisibility(View.GONE);
+        slidepup = false;
 
         //save spot code
         saveSpotLayout = findViewById(R.id.saveSpotLayout);
@@ -735,6 +742,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             userLocationAccuracyCircle.setRadius(location.getAccuracy());
         }
     }
+
 
     //Function to obtain device location and store in Latitude and Longitued
     private void getDeviceLocation() {
@@ -1037,6 +1045,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
+
                 BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
 
                 //Set the bounds for overlays
@@ -1224,249 +1233,254 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     GPS_UPDATE_TIME, 1, locationListener);
         }
+
+        //setTheme(R.style.Theme_LoginTesting);
+    }
+});
+
         //get latlong for corners for specified place
-        LatLng one = new LatLng(28.5899089565466, -81.30689695755838);
-        LatLng two = new LatLng(28.597315583066404, -81.29914504373565);
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        LatLng one=new LatLng(28.5899089565466,-81.30689695755838);
+        LatLng two=new LatLng(28.597315583066404,-81.29914504373565);
+        LatLngBounds.Builder builder=new LatLngBounds.Builder();
 
         //add them to builder
         builder.include(one);
         builder.include(two);
 
-        LatLngBounds bounds = builder.build();
+        LatLngBounds bounds=builder.build();
 
         //get width and height to current display screen
-        int width = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels;
+        int width=getResources().getDisplayMetrics().widthPixels;
+        int height=getResources().getDisplayMetrics().heightPixels;
 
         //20% Padding
-        int padding = (int) (width * 0.18);
+        int padding=(int)(width*0.18);
 
         //set latlong bounds
         mMap.setLatLngBoundsForCameraTarget(bounds);
 
         //move camera to fill the bound to screen
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,width,height,padding));
 
         //set zoom
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
-        moveCamera(mMap.getCameraPosition().target, 16f);
+        moveCamera(mMap.getCameraPosition().target,16f);
         //Location tracking
-        if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+        if(mLocationPermissionsGranted){
+        getDeviceLocation();
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+        !=PackageManager.PERMISSION_GRANTED&&ActivityCompat.checkSelfPermission(
+        this,Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+        return;
 
-            }
+        }
 //            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-            Init();
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        Init();
         }
         //Creating polylines
-        PolylineOptions outSideTo119 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593989, -81.304514));
-        PolylineOptions room119to118 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593959, -81.304514));
-        PolylineOptions outSideTo118 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593959, -81.304514));
-        PolylineOptions room118to117 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304514));
-        PolylineOptions room118to116 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room118to115 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room118to113 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room118toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room119to117 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304514));
-        PolylineOptions outSideTo117 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304514));
-        PolylineOptions room117To116 = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room117to115 = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room117to113 = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room117toWater = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room119to116 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room116to115 = new PolylineOptions()
-                .add(new LatLng(28.593898, -81.304514))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room116to113 = new PolylineOptions()
-                .add(new LatLng(28.593898, -81.304514))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room116toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593898, -81.304514))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions outsideTo116 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room119to115 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room115to113 = new PolylineOptions()
-                .add(new LatLng(28.593858, -81.304514))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room115toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593858, -81.304514))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions outsideTo115 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room119to113 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions outsideTo113 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room119toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room113ToWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593838, -81.304444))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions outsideToWaterZone = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
+        PolylineOptions outSideTo119=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593989,-81.304514));
+        PolylineOptions room119to118=new PolylineOptions()
+        .add(new LatLng(28.593989,-81.304514))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593959,-81.304514));
+        PolylineOptions outSideTo118=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593959,-81.304514));
+        PolylineOptions room118to117=new PolylineOptions()
+        .add(new LatLng(28.593959,-81.304514))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304514));
+        PolylineOptions room118to116=new PolylineOptions()
+        .add(new LatLng(28.593959,-81.304514))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593898,-81.304514));
+        PolylineOptions room118to115=new PolylineOptions()
+        .add(new LatLng(28.593959,-81.304514))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304514));
+        PolylineOptions room118to113=new PolylineOptions()
+        .add(new LatLng(28.593959,-81.304514))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions room118toWaterZone=new PolylineOptions()
+        .add(new LatLng(28.593959,-81.304514))
+        .add(new LatLng(28.593959,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions room119to117=new PolylineOptions()
+        .add(new LatLng(28.593989,-81.304514))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304514));
+        PolylineOptions outSideTo117=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304514));
+        PolylineOptions room117To116=new PolylineOptions()
+        .add(new LatLng(28.593929,-81.304514))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593898,-81.304514));
+        PolylineOptions room117to115=new PolylineOptions()
+        .add(new LatLng(28.593929,-81.304514))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304514));
+        PolylineOptions room117to113=new PolylineOptions()
+        .add(new LatLng(28.593929,-81.304514))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593838,-81.304400))
+        .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room117toWater=new PolylineOptions()
+        .add(new LatLng(28.593929,-81.304514))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions room119to116=new PolylineOptions()
+        .add(new LatLng(28.593989,-81.304514))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593898,-81.304514));
+        PolylineOptions room116to115=new PolylineOptions()
+        .add(new LatLng(28.593898,-81.304514))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304514));
+        PolylineOptions room116to113=new PolylineOptions()
+        .add(new LatLng(28.593898,-81.304514))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593838,-81.304400))
+        .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room116toWaterZone=new PolylineOptions()
+        .add(new LatLng(28.593898,-81.304514))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions outsideTo116=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593898,-81.304514));
+        PolylineOptions room119to115=new PolylineOptions()
+        .add(new LatLng(28.593989,-81.304514))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304514));
+        PolylineOptions room115to113=new PolylineOptions()
+        .add(new LatLng(28.593858,-81.304514))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593838,-81.304400))
+        .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room115toWaterZone=new PolylineOptions()
+        .add(new LatLng(28.593858,-81.304514))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions outsideTo115=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304514));
+        PolylineOptions room119to113=new PolylineOptions()
+        .add(new LatLng(28.593989,-81.304514))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593838,-81.304400))
+        .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions outsideTo113=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593838,-81.304400))
+        .add(new LatLng(28.593838,-81.304444));
+        PolylineOptions room119toWaterZone=new PolylineOptions()
+        .add(new LatLng(28.593989,-81.304514))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions room113ToWaterZone=new PolylineOptions()
+        .add(new LatLng(28.593838,-81.304444))
+        .add(new LatLng(28.593838,-81.304400))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
+        PolylineOptions outsideToWaterZone=new PolylineOptions()
+        .add(new LatLng(28.594075,-81.304381))
+        .add(new LatLng(28.593989,-81.304386))
+        .add(new LatLng(28.593989,-81.304484))
+        .add(new LatLng(28.593929,-81.304484))
+        .add(new LatLng(28.593929,-81.304464))
+        .add(new LatLng(28.593898,-81.304464))
+        .add(new LatLng(28.593858,-81.304464))
+        .add(new LatLng(28.593858,-81.304400))
+        .add(new LatLng(28.593818,-81.304400));
         //Adding polylines to list for lines and string list for searching
         customPolyLines.add(outSideTo119);
         LinesTitles.add("outsideToMeeting 119");
@@ -1529,250 +1543,250 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Marker stuffs
         //Markers for classrooms
-        BitmapDrawable bitmapdraw1 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing);
-        Bitmap b1 = bitmapdraw1.getBitmap();
-        Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
+        BitmapDrawable bitmapdraw1=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing);
+        Bitmap b1=bitmapdraw1.getBitmap();
+        Bitmap smallMarker1=Bitmap.createScaledBitmap(b1,100,100,false);
 
         //Markers for Bathrooms
-        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixil_frame_0);
-        Bitmap b2 = bitmapdraw2.getBitmap();
-        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
+        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.pixil_frame_0);
+        Bitmap b2=bitmapdraw2.getBitmap();
+        Bitmap smallMarker2=Bitmap.createScaledBitmap(b2,100,100,false);
 
         //Markers for WaterZones
-        BitmapDrawable bitmapdraw3 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing__1_);
-        Bitmap b3 = bitmapdraw3.getBitmap();
-        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
+        BitmapDrawable bitmapdraw3=(BitmapDrawable)getResources().getDrawable(R.drawable.pixilart_drawing__1_);
+        Bitmap b3=bitmapdraw3.getBitmap();
+        Bitmap smallMarker3=Bitmap.createScaledBitmap(b3,100,100,false);
 
         //Markers for ETCRooms
-        BitmapDrawable bitmapdraw4 = (BitmapDrawable) getResources().getDrawable(R.drawable.etc_marker);
-        Bitmap b4 = bitmapdraw4.getBitmap();
-        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
+        BitmapDrawable bitmapdraw4=(BitmapDrawable)getResources().getDrawable(R.drawable.etc_marker);
+        Bitmap b4=bitmapdraw4.getBitmap();
+        Bitmap smallMarker4=Bitmap.createScaledBitmap(b4,100,100,false);
 
         //Markers for OFRooms
-        BitmapDrawable bitmapdraw5 = (BitmapDrawable) getResources().getDrawable(R.drawable.office_marker);
-        Bitmap b5 = bitmapdraw5.getBitmap();
-        Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
+        BitmapDrawable bitmapdraw5=(BitmapDrawable)getResources().getDrawable(R.drawable.office_marker);
+        Bitmap b5=bitmapdraw5.getBitmap();
+        Bitmap smallMarker5=Bitmap.createScaledBitmap(b5,100,100,false);
 
-        CSVReader creader = new CSVReader();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference sr = storage.getReference();
-        StorageReference csvref = sr.child("Classrooms/rooms.csv");
-        Context con = this;
-        Activity act = this;
-        csvref.getBytes(2048 * 2048).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                creader.CreateRoomList(bytes);
-                ArrayList<String[]> roomlist = creader.GetRoomList();
+        CSVReader creader=new CSVReader();
+        FirebaseStorage storage=FirebaseStorage.getInstance();
+        StorageReference sr=storage.getReference();
+        StorageReference csvref=sr.child("Classrooms/rooms.csv");
+        Context con=this;
+        Activity act=this;
+        csvref.getBytes(2048*2048).addOnSuccessListener(new OnSuccessListener<byte[]>(){
+@Override
+public void onSuccess(byte[]bytes){
+        creader.CreateRoomList(bytes);
+        ArrayList<String[]>roomlist=creader.GetRoomList();
 
-                for (String[] room : roomlist) {
-                    MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]), Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-                    Marker mark = mMap.addMarker(roommarker);
-                    MarkersList.add(mark);
-                    switch (room[3]) {
-                        case ("CR"):
-                            ClassRoomMarkers.add(mark);
-                            break;
-                        case ("BR"):
-                            BathroomMarkers.add(mark);
-                            break;
-                        case ("WZ"):
-                            WaterZones.add(mark);
-                            break;
-                        case ("ETC"):
-                            ETCRooms.add(mark);
-                            break;
-                        case ("OF"):
-                            OFRooms.add(mark);
+        for(String[]room:roomlist){
+        MarkerOptions roommarker=new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]),Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        Marker mark=mMap.addMarker(roommarker);
+        MarkersList.add(mark);
+        switch(room[3]){
+        case("CR"):
+        ClassRoomMarkers.add(mark);
+        break;
+        case("BR"):
+        BathroomMarkers.add(mark);
+        break;
+        case("WZ"):
+        WaterZones.add(mark);
+        break;
+        case("ETC"):
+        ETCRooms.add(mark);
+        break;
+        case("OF"):
+        OFRooms.add(mark);
 
-                    }
-                    //Set Markers image for classrooms
-                    for (Marker ClassRoom : ClassRoomMarkers) {
-                        ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
-                    }
+        }
+        //Set Markers image for classrooms
+        for(Marker ClassRoom:ClassRoomMarkers){
+        ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
+        }
 
-                    //Set Markers image for bathrooms
-                    for (Marker Bathrooms : BathroomMarkers) {
-                        Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
-                    }
+        //Set Markers image for bathrooms
+        for(Marker Bathrooms:BathroomMarkers){
+        Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+        }
 
-                    //Set Markers image for Waterzones
-                    for (Marker WaterStation : WaterZones) {
-                        WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
-                    }
-                    //Set Markers image for ETC rooms
-                    for (Marker etc : ETCRooms) {
-                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
-                    }
-                    //Set Marker image for OF rooms
-                    for (Marker etc : OFRooms) {
-                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
-                    }
-                }
-                markerFragment.MTouch.CSVMarkers(MarkersList);
+        //Set Markers image for Waterzones
+        for(Marker WaterStation:WaterZones){
+        WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+        }
+        //Set Markers image for ETC rooms
+        for(Marker etc:ETCRooms){
+        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
+        }
+        //Set Marker image for OF rooms
+        for(Marker etc:OFRooms){
+        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
+        }
+        }
+        markerFragment.MTouch.CSVMarkers(MarkersList);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MapsActivity.this, "CSV Failure", Toast.LENGTH_LONG);
-            }
-        }).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                Toast.makeText(MapsActivity.this, "CSV Cancelled", Toast.LENGTH_LONG);
+        }
+        }).addOnFailureListener(new OnFailureListener(){
+@Override
+public void onFailure(@NonNull Exception e){
+        Toast.makeText(MapsActivity.this,"CSV Failure",Toast.LENGTH_LONG);
+        }
+        }).addOnCanceledListener(new OnCanceledListener(){
+@Override
+public void onCanceled(){
+        Toast.makeText(MapsActivity.this,"CSV Cancelled",Toast.LENGTH_LONG);
 
-            }
+        }
         });
-
 
 
         //set overlays and markers visibile after certain zoom level is reached.
         //For camera moving
-        mMap.setOnCameraMoveListener(() ->
+        mMap.setOnCameraMoveListener(()->
         {
-            if (groundOverlaysf1.size() > 0) {
-                String result = DoTheChecks();
+        if(groundOverlaysf1.size()>0){
+        String result=DoTheChecks();
 
-                if (CheckResultLoadType(result)) {
-                    CheckResults(result);
-                } else {
-                    String secondResult = secondCheckForFirstLoad(result);
-                    if (!CheckResultLoadType(secondResult)) {
-                        FirstLoad(result, secondResult);
-                    }
-                }
-            }
-            if (wasRemoveHit) {
-                for (int i = 0; i < createdMarkers.size(); i++) {
-                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        createdMarkers.get(i).remove();
-                        createdMarkers.remove(i);
-                    }
-                }
-            }
+        if(CheckResultLoadType(result)){
+        CheckResults(result);
+        }else{
+        String secondResult=secondCheckForFirstLoad(result);
+        if(!CheckResultLoadType(secondResult)){
+        FirstLoad(result,secondResult);
+        }
+        }
+        }
+        if(wasRemoveHit){
+        for(int i=0;i<createdMarkers.size();i++){
+        if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())){
+        createdMarkers.get(i).remove();
+        createdMarkers.remove(i);
+        }
+        }
+        }
 
-            if(!Filtering)
-            {
-                if (floorPicked == 1) {
-                    for (Marker markers : MarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : secondFloorMarkersList) {
-                        marker.setVisible(false);
-                    }
-                } else {
-                    for (Marker markers : secondFloorMarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : MarkersList) {
-                        marker.setVisible(false);
-                    }
-                }
-            }
+        if(!Filtering)
+        {
+        if(floorPicked==1){
+        for(Marker markers:MarkersList){
+        if(markerFragment.MTouch.marker2!=null){
+        if(markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())){
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }else{
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }
+        for(Marker marker:secondFloorMarkersList){
+        marker.setVisible(false);
+        }
+        }else{
+        for(Marker markers:secondFloorMarkersList){
+        if(markerFragment.MTouch.marker2!=null){
+        if(markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())){
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }else{
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }
+        for(Marker marker:MarkersList){
+        marker.setVisible(false);
+        }
+        }
+        }
         });
 
         //On Marker Click Override
-        markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
+        markerFragment.MTouch.setGoogleMap(mMap,linesShowing,this.getApplicationContext(),this);
 
         // disable marker click processing
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                return true;
-            }
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+@Override
+public boolean onMarkerClick(Marker marker){
+        return true;
+        }
         });
 
         //when camera is still (used for searchbar since it doesn't count as camera moving)
-        mMap.setOnCameraIdleListener(() -> {
-            if (groundOverlaysf1.size() > 0) {
-                String result = DoTheChecks();
-                if (CheckResultLoadType(result)) {
-                    CheckResults(result);
-                } else {
-                    String secondResult = secondCheckForFirstLoad(result);
-                    if (!CheckResultLoadType(secondResult)) {
-                        FirstLoad(result, secondResult);
-                    }
-                }
+        mMap.setOnCameraIdleListener(()->{
+        if(groundOverlaysf1.size()>0){
+        String result=DoTheChecks();
+        if(CheckResultLoadType(result)){
+        CheckResults(result);
+        }else{
+        String secondResult=secondCheckForFirstLoad(result);
+        if(!CheckResultLoadType(secondResult)){
+        FirstLoad(result,secondResult);
+        }
+        }
 
-            }
-            if (FollowUser || wasMarkerClicked) {
-                navloc();
-            }
-            if (wasRemoveHit) {
-                for (int i = 0; i < createdMarkers.size(); i++) {
-                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        createdMarkers.get(i).remove();
-                        createdMarkers.remove(i);
-                    }
-                }
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
-                    if (favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        favoritedMarkers.remove(i);
-                    }
-                }
-            }
-            if (!Filtering){
-                if (floorPicked == 1) {
-                    for (Marker markers : MarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : secondFloorMarkersList) {
-                        marker.setVisible(false);
-                    }
-                } else {
-                    for (Marker markers : secondFloorMarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : MarkersList) {
-                        marker.setVisible(false);
-                    }
-                }
-            }
+        }
+        if(FollowUser||wasMarkerClicked){
+        navloc();
+        }
+        if(wasRemoveHit){
+        for(int i=0;i<createdMarkers.size();i++){
+        if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())){
+        createdMarkers.get(i).remove();
+        createdMarkers.remove(i);
+        }
+        }
+        for(int i=0;i<favoritedMarkers.size();i++){
+        if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle())){
+        favoritedMarkers.remove(i);
+        }
+        }
+        }
+        if(!Filtering){
+        if(floorPicked==1){
+        for(Marker markers:MarkersList){
+        if(markerFragment.MTouch.marker2!=null){
+        if(markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())){
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }else{
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }
+        for(Marker marker:secondFloorMarkersList){
+        marker.setVisible(false);
+        }
+        }else{
+        for(Marker markers:secondFloorMarkersList){
+        if(markerFragment.MTouch.marker2!=null){
+        if(markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())){
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }else{
+        markers.setVisible(mMap.getCameraPosition().zoom>18);
+        }
+        }
+        for(Marker marker:MarkersList){
+        marker.setVisible(false);
+        }
+        }
+        }
         });
         //Slide up code setup
-        slideupview = findViewById(R.id.slideup);
+        slideupview=findViewById(R.id.design_bottom_sheet);
         slideupview.setVisibility(View.GONE);
+        slidepup=false;
 
         //Set Button for save spot
-        Set = findViewById(R.id.OkMarkerTitle);
+        Set=findViewById(R.id.OkMarkerTitle);
         Set.setOnClickListener(this);
 
         //Remove Spot button
-        RemovePoint = findViewById(R.id.RemoveSpot);
+        RemovePoint=findViewById(R.id.RemoveSpot);
         RemovePoint.setOnClickListener(this);
 
         //Navigation button Setup
-        NavGo = findViewById(R.id.navgo);
+        NavGo=findViewById(R.id.navgo);
         NavGo.setOnClickListener(this);
 
         //Button for when Done is pressed while in nav mode
-        NavDone = findViewById(R.id.NavDone);
+        NavDone=findViewById(R.id.NavDone);
         NavDone.setOnClickListener(this);
 
         //zoom in
@@ -1783,15 +1797,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        ZoomOut = findViewById(R.id.ZoomOut);
 //        ZoomOut.setOnClickListener(this);
         //SearchBar
-        Search = findViewById(R.id.input_Search);
+        Search=findViewById(R.id.input_Search);
 
         //upFloor
-        upFloor = findViewById(R.id.FloorUp);
+        upFloor=findViewById(R.id.FloorUp);
         //downFloor
-        downFloor = findViewById(R.id.FloorDown);
+        downFloor=findViewById(R.id.FloorDown);
 
         //Nav Lock Button
-        NacLock = findViewById(R.id.NavLock);
+        NacLock=findViewById(R.id.NavLock);
         NacLock.setOnClickListener(this);
         //Marker click function
         mMap.setOnMarkerClickListener(this);
@@ -1803,948 +1817,1114 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         upFloor.setOnClickListener(this);
         //downFloor Click Listener
         downFloor.setOnClickListener(this);
-        if (floorPicked == 1) {
-            downFloor.setVisibility(View.GONE);
-        } else {
-            upFloor.setVisibility(View.GONE);
-            downFloor.setVisibility(View.VISIBLE);
+        if(floorPicked==1){
+        downFloor.setVisibility(View.GONE);
+        }else{
+        upFloor.setVisibility(View.GONE);
+        downFloor.setVisibility(View.VISIBLE);
         }
 
         //prepares searchbar
         SearchReady();
 
         //Getting Darkmode option from database
-        DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/DarkMode/");
-        mdatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Boolean DarkMode = (boolean) snapshot.getValue();
-                    if (DarkMode) {
-                        DarkorLight = true;
-                        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.style_json));
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        for (PolylineOptions lines1 : customPolyLines) {
-                            lines1.pattern(pattern);
-                            lines1.width(15);
-                            lines1.color(Color.BLUE);
-                        }
-                    } else {
-                        DarkorLight = false;
-                        mMap.setMapStyle(null);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        for (PolylineOptions lines1 : customPolyLines) {
-                            lines1.pattern(pattern);
-                            lines1.width(15);
-                            lines1.color(Color.parseColor("#FFA500"));
-                        }
-                    }
-                }
-            }
+        DatabaseReference mdatabase=FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/DarkMode/");
+        mdatabase.addValueEventListener(new ValueEventListener(){
+@Override
+public void onDataChange(@NonNull DataSnapshot snapshot){
+        if(snapshot.exists()){
+        Boolean DarkMode=(boolean)snapshot.getValue();
+        if(DarkMode){
+        DarkorLight=true;
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(),R.raw.style_json));
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        for(PolylineOptions lines1:customPolyLines){
+        lines1.pattern(pattern);
+        lines1.width(15);
+        lines1.color(Color.BLUE);
+        }
+        }else{
+        DarkorLight=false;
+        mMap.setMapStyle(null);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        for(PolylineOptions lines1:customPolyLines){
+        lines1.pattern(pattern);
+        lines1.width(15);
+        lines1.color(Color.parseColor("#FFA500"));
+        }
+        }
+        }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+@Override
+public void onCancelled(@NonNull DatabaseError error){
+        }
         });
-        if (DarkorLight) {
-            for (PolylineOptions lines1 : customPolyLines) {
-                lines1.pattern(pattern);
-                lines1.width(15);
-                lines1.color(Color.BLUE);
-            }
-        } else {
-            for (PolylineOptions lines1 : customPolyLines) {
-                lines1.pattern(pattern);
-                lines1.width(15);
-                lines1.color(Color.parseColor("#FFA500"));
-            }
+        if(DarkorLight){
+        for(PolylineOptions lines1:customPolyLines){
+        lines1.pattern(pattern);
+        lines1.width(15);
+        lines1.color(Color.BLUE);
+        }
+        }else{
+        for(PolylineOptions lines1:customPolyLines){
+        lines1.pattern(pattern);
+        lines1.width(15);
+        lines1.color(Color.parseColor("#FFA500"));
+        }
         }
 
-        if (favoritedMarkers == null || favoritedMarkers.isEmpty()) {
-            LoadFavoriteMarkers();
+        if(favoritedMarkers==null||favoritedMarkers.isEmpty()){
+        LoadFavoriteMarkers();
         }
-        if (!favoritedMarkers.isEmpty()) {
-            for (int i = 0; i < favoritedMarkers.size(); i++) {
-                if (favoritedMarkers.get(i).getTitle().equals(markerTitle2)) {
-                    onMarkerClick(favoritedMarkers.get(i));
-                    break;
-                }
-            }
+        if(!favoritedMarkers.isEmpty()){
+        for(int i=0;i<favoritedMarkers.size();i++){
+        if(favoritedMarkers.get(i).getTitle().equals(markerTitle2)){
+        onMarkerClick(favoritedMarkers.get(i));
+        break;
+        }
+        }
         }
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraLoad));
-        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/CustomMarkers/");
-        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int floor = 1;
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Marker newMarker = null;
-                    String markerTitle = dataSnapshot.getKey().toString();
-                    double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
-                    double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
+        DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference("/Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomMarkers/");
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener(){
+@Override
+public void onDataChange(@NonNull DataSnapshot snapshot){
+        int floor=1;
+        for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+        Marker newMarker=null;
+        String markerTitle=dataSnapshot.getKey().toString();
+        double latitude1=Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
+        double longitude1=Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
 //                    int floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
-                    LatLng newLatLng = new LatLng(latitude1, longitude1);
-                    MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
-                    if (!wasRemoveHit) {
-                        newMarker = mMap.addMarker(newMarkerOption);
-                        newMarker.showInfoWindow();
-                        if (createdMarkers != null) {
-                            createdMarkers.add(newMarker);
-                        }
-                    }
-                    if (floor == 1 && newMarker != null) {
-                        MarkersList.add(newMarker);
-                    } else if (newMarker != null) {
-                        secondFloorMarkersList.add(newMarker);
-                    }
-                }
-                if (createdMarkers != null) {
-                    if (createdMarkers.size() > 0) {
-                        doTheClick(createdMarkers);
-                    }
-                }
-            }
+        LatLng newLatLng=new LatLng(latitude1,longitude1);
+        MarkerOptions newMarkerOption=new MarkerOptions().position(newLatLng).title(markerTitle);
+        if(!wasRemoveHit){
+        newMarker=mMap.addMarker(newMarkerOption);
+        newMarker.showInfoWindow();
+        if(createdMarkers!=null){
+        createdMarkers.add(newMarker);
+        }
+        }
+        if(floor==1&&newMarker!=null){
+        MarkersList.add(newMarker);
+        }else if(newMarker!=null){
+        secondFloorMarkersList.add(newMarker);
+        }
+        }
+        if(createdMarkers!=null){
+        if(createdMarkers.size()>0){
+        doTheClick(createdMarkers);
+        }
+        }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+@Override
+public void onCancelled(@NonNull DatabaseError error){
+        }
         });
-    }
+        }
 
-    public boolean CheckResultLoadType(String Result) {
-        boolean wasFound = false;
-        if (!Result.equals("b3u") && !Result.equals("b3d") && !Result.equals("b4u") && !Result.equals("b4d") && !Result.equals("b1") && !Result.equals("b2")) {
-            for (int i = 0; i < resultsList.size(); i++) {
-                if (resultsList.get(i).equals(Result)) {
-                    wasFound = true;
-                    break;
-                }
-            }
-            if (!wasFound) {
-                resultsList.add(Result);
-            }
-        } else {
-            switch (Result) {
-                case "b3u":
-                    if (B3U.size() == 3) {
-                        resultsList.add("b3u");
-                        wasFound = true;
-                    }
-                    break;
-                case "b3d":
-                    if (B3D.size() == 4) {
-                        resultsList.add("b3d");
-                        wasFound = true;
-                    }
-                    break;
-                case "b4u":
-                    if (B4U.size() == 4) {
-                        resultsList.add("b4u");
-                        wasFound = true;
-                    }
-                    break;
-                case "b4d":
-                    if (B4D.size() == 3) {
-                        resultsList.add("b4d");
-                        wasFound = true;
-                    }
-                    break;
-                case "b1":
-                    if (B1.size() == 2) {
-                        resultsList.add("b1");
-                        wasFound = true;
-                    }
-                    break;
-                case "b2":
-                    if (B2.size() == 2) {
-                        resultsList.add("b2");
-                        wasFound = true;
-                    }
-            }
+public boolean CheckResultLoadType(String Result){
+        boolean wasFound=false;
+        if(!Result.equals("b3u")&&!Result.equals("b3d")&&!Result.equals("b4u")&&!Result.equals("b4d")&&!Result.equals("b1")&&!Result.equals("b2")){
+        for(int i=0;i<resultsList.size();i++){
+        if(resultsList.get(i).equals(Result)){
+        wasFound=true;
+        break;
+        }
+        }
+        if(!wasFound){
+        resultsList.add(Result);
+        }
+        }else{
+        switch(Result){
+        case"b3u":
+        if(B3U.size()==3){
+        resultsList.add("b3u");
+        wasFound=true;
+        }
+        break;
+        case"b3d":
+        if(B3D.size()==4){
+        resultsList.add("b3d");
+        wasFound=true;
+        }
+        break;
+        case"b4u":
+        if(B4U.size()==4){
+        resultsList.add("b4u");
+        wasFound=true;
+        }
+        break;
+        case"b4d":
+        if(B4D.size()==3){
+        resultsList.add("b4d");
+        wasFound=true;
+        }
+        break;
+        case"b1":
+        if(B1.size()==2){
+        resultsList.add("b1");
+        wasFound=true;
+        }
+        break;
+        case"b2":
+        if(B2.size()==2){
+        resultsList.add("b2");
+        wasFound=true;
+        }
+        }
         }
         return wasFound;
-    }
-
-    public void doTheClick(ArrayList<Marker> ListToClick) {
-        if (isNOTfUCKED) {
-
-            onMarkerClick(FindTheMarker(markerTitle2));
-            btnFavoritesAdd.setVisibility(View.GONE);
-            bntFavoritesRemove.setVisibility(View.VISIBLE);
         }
-    }
 
-    @Override
-    protected void onRestart() {
+public void doTheClick(ArrayList<Marker> ListToClick){
+        if(isNOTfUCKED){
+
+        onMarkerClick(FindTheMarker(markerTitle2));
+        btnFavoritesAdd.setVisibility(View.GONE);
+        bntFavoritesRemove.setVisibility(View.VISIBLE);
+        }
+        }
+
+@Override
+protected void onRestart(){
         super.onRestart();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraLoad));
-    }
+        }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+@Override
+protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        outState.putInt("floorPicked", floorPicked);
-    }
+        outState.putInt("floorPicked",floorPicked);
+        }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle inState) {
+@Override
+protected void onRestoreInstanceState(Bundle inState){
         super.onRestoreInstanceState(inState);
-        floorPicked = inState.getInt("floorPicked");
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        CameraPosition mMyCam = mMap.getCameraPosition();
-        double longitude = mMyCam.target.longitude;
-        double latitude = mMyCam.target.latitude;
-
-        SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putFloat("longitude", (float) longitude);
-        editor.putFloat("latitude", (float) latitude);
-        editor.putInt("floorPicked", floorPicked);
-        editor.commit();
-    }
-
-    public void navloc() {
-        try {
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            if (mLocationPermissionsGranted) {
-                @SuppressLint("MissingPermission") Task location = fusedLocationClient.getLastLocation();
-                location.addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-
-                        if (location != null) {
-                            getDeviceLocation();
-                            if (FollowUser) {
-                                //moveCamera(new LatLng(Latitude, Longitued), 19f);
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-                            }
-                            if (location.getLatitude() != Latitude || location.getLongitude() != Longitued) {
-                                if (wasMarkerClicked) {
-                                    RemoveAllLines();
-                                    getDirectionPoly(markerFragment.MTouch.marker2);
-                                }
-                                // if (FollowUser) {
-                                Latitude = location.getLatitude();
-                                Longitued = location.getLongitude();
-                                //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-                                // }
-                            }
-                        } else {
-                        }
-                    }
-                });
-            }
-        } catch (SecurityException e) {
+        floorPicked=inState.getInt("floorPicked");
 
         }
-    }
 
-    @Override
-    public void onClick(View view) {
+@Override
+protected void onDestroy(){
+        super.onDestroy();
+        CameraPosition mMyCam=mMap.getCameraPosition();
+        double longitude=mMyCam.target.longitude;
+        double latitude=mMyCam.target.latitude;
+
+        SharedPreferences settings=getSharedPreferences("SOME_NAME",0);
+        SharedPreferences.Editor editor=settings.edit();
+        editor.putFloat("longitude",(float)longitude);
+        editor.putFloat("latitude",(float)latitude);
+        editor.putInt("floorPicked",floorPicked);
+        editor.commit();
+        }
+
+public void navloc(){
+        try{
+        fusedLocationClient=LocationServices.getFusedLocationProviderClient(this);
+        if(mLocationPermissionsGranted){
+@SuppressLint("MissingPermission") Task location=fusedLocationClient.getLastLocation();
+        location.addOnSuccessListener(this,new OnSuccessListener<Location>(){
+@Override
+public void onSuccess(Location location){
+
+        if(location!=null){
+        getDeviceLocation();
+        if(FollowUser){
+        //moveCamera(new LatLng(Latitude, Longitued), 19f);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude())));
+        }
+        if(location.getLatitude()!=Latitude||location.getLongitude()!=Longitued){
+        if(wasMarkerClicked){
+        RemoveAllLines();
+        getDirectionPoly(markerFragment.MTouch.marker2);
+        }
+        // if (FollowUser) {
+        Latitude=location.getLatitude();
+        Longitued=location.getLongitude();
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+        // }
+        }
+        }else{
+        }
+        }
+        });
+        }
+        }catch(SecurityException e){
+
+        }
+        }
+
+@Override
+public void onClick(View view){
         //Switch based on what button was clicked
-        switch (view.getId()) {
-            case R.id.userMaps:
-                Intent intent = new Intent(this, Settings.class);
-                startActivity(intent);
-                break;
-            case R.id.NavLock:
-                if (!FollowUser) {
-                    FollowUser = true;
-                    Snackbar snack = Snackbar.make(findViewById(R.id.map), "NavLoc ON", Snackbar.LENGTH_SHORT);
-                    snack.show();
-                } else {
-                    FollowUser = false;
-                    Snackbar snack = Snackbar.make(findViewById(R.id.map), "NavLoc OFF", Snackbar.LENGTH_SHORT);
-                    snack.show();
-                }
-                break;
-            case R.id.navgo:
+        switch(view.getId()){
+        case R.id.userMaps:
+        Intent intent=new Intent(this,Settings.class);
+        startActivity(intent);
+        break;
+        case R.id.NavLock:
+        if(!FollowUser){
+        FollowUser=true;
+        Snackbar snack=Snackbar.make(findViewById(R.id.map),"NavLoc ON",Snackbar.LENGTH_SHORT);
+        snack.show();
+        }else{
+        FollowUser=false;
+        Snackbar snack=Snackbar.make(findViewById(R.id.map),"NavLoc OFF",Snackbar.LENGTH_SHORT);
+        snack.show();
+        }
+        break;
+        case R.id.navgo:
 
-                getDirectionPoly(markerFragment.MTouch.marker2);
-                isTraveling = true;
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
-                // checkDistPoint = new LatLng(Latitude, Longitued);
-                //Setting curlocation and final destination to text boxes
-                AutoCompleteTextView curlocation = findViewById(R.id.From);
-                AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
-                //create strings from textboxes
-                String stringcurlocation = curlocation.getText().toString();
-                String stringfinaldestination = finaldestination.getText().toString();
-                //get the markers
-                Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
-                //Setup string for finding path
-                String RooomtoRoom = "";
-                if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
-                    //remove all lines
-                    RemoveAllLines();
-                    //Logic for deciding the order to place the strings in
-                    int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
-                    int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
-                    if (start > end) {
-                        RooomtoRoom += curlocation.getText().toString();
-                        RooomtoRoom += finaldestination.getText().toString();
-                    } else {
-                        RooomtoRoom += finaldestination.getText().toString();
-                        RooomtoRoom += curlocation.getText().toString();
-                    }
+        getDirectionPoly(markerFragment.MTouch.marker2);
+        isTraveling=true;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude,Longitued),20f));
+        // checkDistPoint = new LatLng(Latitude, Longitued);
+        //Setting curlocation and final destination to text boxes
+        AutoCompleteTextView curlocation=findViewById(R.id.From);
+        AutoCompleteTextView finaldestination=findViewById(R.id.Destination);
+        //create strings from textboxes
+        String stringcurlocation=curlocation.getText().toString();
+        String stringfinaldestination=finaldestination.getText().toString();
+        //get the markers
+        Marker finalDestinationMarker=FindTheMarker(stringfinaldestination);
+        //Setup string for finding path
+        String RooomtoRoom="";
+        if(!(CheckMarkerType(finalDestinationMarker))&&!stringcurlocation.isEmpty()){
+        //remove all lines
+        RemoveAllLines();
+        //Logic for deciding the order to place the strings in
+        int start=Integer.parseInt(stringcurlocation.replaceAll("[^0-9]",""));
+        int end=Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]",""));
+        if(start>end){
+        RooomtoRoom+=curlocation.getText().toString();
+        RooomtoRoom+=finaldestination.getText().toString();
+        }else{
+        RooomtoRoom+=finaldestination.getText().toString();
+        RooomtoRoom+=curlocation.getText().toString();
+        }
 
-                    //Set wasFound to false as standard, if polyline is found dont display error
-                    Boolean wasFound = false;
-                    for (int i = 0; i < LinesTitles.size(); i++) {
-                        //Since the Linestitles and linesShowing are created together, the indexes are the same
-                        if (RooomtoRoom.equals(LinesTitles.get(i))) {
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                            wasFound = true;
-                            break;
-                        }
-                    }
-                    if (!wasFound) {
-                        snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
-                        snack.show();
-                        break;
-                    }
-                }
-                FollowUser = true;
-                //"Select" markers to be used if needed
-                //Removes slideup
-                slideupview.setVisibility(View.GONE);
-                //Allows NavDone button to appear
-                NavDone.setVisibility(View.VISIBLE);
-                //Brings back searchbar (may be depricated, will have to test)
-                Search.setVisibility(View.VISIBLE);
-                //Removes keyboard when Go is hit
-                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-                break;
+        //Set wasFound to false as standard, if polyline is found dont display error
+        Boolean wasFound=false;
+        for(int i=0;i<LinesTitles.size();i++){
+        //Since the Linestitles and linesShowing are created together, the indexes are the same
+        if(RooomtoRoom.equals(LinesTitles.get(i))){
+        linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+        wasFound=true;
+        break;
+        }
+        }
+        if(!wasFound){
+        snack=Snackbar.make(findViewById(R.id.map),"Invalid Route",Snackbar.LENGTH_SHORT);
+        snack.show();
+        break;
+        }
+        }
+        FollowUser=true;
+        //"Select" markers to be used if needed
+        //Removes slideup
+        slideupview.setVisibility(View.GONE);
+        slidepup=false;
+        //Allows NavDone button to appear
+        NavDone.setVisibility(View.VISIBLE);
+        //Brings back searchbar (may be depricated, will have to test)
+        Search.setVisibility(View.VISIBLE);
+        //Removes keyboard when Go is hit
+        InputMethodManager manager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(slideupview.getWindowToken(),0);
+        break;
 
-            case R.id.NavDone:
-                wasMarkerClicked = false;
-                isTraveling = false;
-                FollowUser = false;
-                //Remove all lines
-                RemoveAllLines();
+        case R.id.NavDone:
+        wasMarkerClicked=false;
+        isTraveling=false;
+        FollowUser=false;
+        //Remove all lines
+        RemoveAllLines();
 //                checkIfMarkerNeedVisible();
-                onMapClick(new LatLng(28.595085, -81.308305));
-                //Brings Searchbar back
-                Search.setVisibility(View.VISIBLE);
-                //Removes navdone button
-                NavDone.setVisibility(View.GONE);
-                break;
-            case R.id.btnRemoveFavorites:
-                Favorites.removeFromFavorite(MapsActivity.this, markerFragment.MTouch.marker2);
-                favoritedMarkers.remove(markerFragment.MTouch.marker2);
-                snack = Snackbar.make(findViewById(R.id.map), "Removed From Favorites", Snackbar.LENGTH_SHORT);
-                snack.show();
-                bntFavoritesRemove.setVisibility(View.GONE);
-                btnFavoritesAdd.setVisibility(View.VISIBLE);
-                break;
-            case R.id.RemoveSpot:
-                wasRemoveHit = true;
+        onMapClick(new LatLng(28.595085,-81.308305));
+        //Brings Searchbar back
+        Search.setVisibility(View.VISIBLE);
+        //Removes navdone button
+        NavDone.setVisibility(View.GONE);
+        break;
+        case R.id.btnRemoveFavorites:
+        Favorites.removeFromFavorite(MapsActivity.this,markerFragment.MTouch.marker2);
+        favoritedMarkers.remove(markerFragment.MTouch.marker2);
+        snack=Snackbar.make(findViewById(R.id.map),"Removed From Favorites",Snackbar.LENGTH_SHORT);
+        snack.show();
+        bntFavoritesRemove.setVisibility(View.GONE);
+        btnFavoritesAdd.setVisibility(View.VISIBLE);
+        break;
+        case R.id.RemoveSpot:
+        wasRemoveHit=true;
 
-                for (int i = 0; i < createdMarkers.size(); i++) {
-                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        createdMarkers.get(i).remove();
-                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
-                        createdMarkers.get(i).setVisible(false);
-                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
-                        createdMarkers.remove(i);
-                        createdMarker.remove();
-                        createdMarker = null;
-                    }
-                }
+        for(int i=0;i<createdMarkers.size();i++){
+        if(createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())){
+        createdMarkers.get(i).remove();
+        CustomMarker.removeFromCustomMarkers(MapsActivity.this,createdMarker);
+        createdMarkers.get(i).setVisible(false);
+        CustomMarker.removeFromCustomMarkers(MapsActivity.this,createdMarker);
+        createdMarkers.remove(i);
+        createdMarker.remove();
+        createdMarker=null;
+        }
+        }
 
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
-                    if (favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        Favorites.removeFromFavorite(MapsActivity.this, createdMarker);
-                        favoritedMarkers.remove(i);
-                    }
-                }
-                RemoveAllLines();
-                RemovePoint.setVisibility(View.GONE);
-                slideupview.setVisibility(View.GONE);
-                break;
-            case R.id.OkMarkerTitle:
-                getDeviceLocation();
+        for(int i=0;i<favoritedMarkers.size();i++){
+        if(favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle())){
+        Favorites.removeFromFavorite(MapsActivity.this,createdMarker);
+        favoritedMarkers.remove(i);
+        }
+        }
+        RemoveAllLines();
+        RemovePoint.setVisibility(View.GONE);
+        slideupview.setVisibility(View.GONE);
+        break;
+        case R.id.OkMarkerTitle:
+        getDeviceLocation();
 
-                boolean wasItCreatedAlready = false;
-                boolean nameExistAlready = false;
-                TextView markerName = findViewById(R.id.MarkerName);
-                String name = markerName.getText().toString();
-                markerName.setText(null);
-                if (createdMarkers != null) {
-                    for (Marker marker1 : createdMarkers) {
-                        if (marker1.getTitle().equals(name)) {
-                            wasItCreatedAlready = true;
-                        }
-                    }
-                    for (Marker marker : MarkersList) {
-                        if (marker.getTitle().equals(name)) {
-                            nameExistAlready = true;
-                        }
-                    }
-                }
-                Marker newMarker = null;
-                if (wasItCreatedAlready || nameExistAlready) {
-                    snack = Snackbar.make(findViewById(R.id.map), "Marker Already Exists", Snackbar.LENGTH_SHORT);
-                    snack.show();
-                    saveSpotLayout.setVisibility(View.GONE);
-                } else {
-                    if (!wasRemoveHit) {
-                        if (!name.isEmpty()) {
-                            newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
-                            newMarker.showInfoWindow();
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(LongClickPoint));
-                            createdMarkers.add(newMarker);
-                        } else {
-                            name = "CustomMarkerNumber0" + createdMarkers.size();
-                            newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
-                            newMarker.showInfoWindow();
-                            createdMarkers.add(newMarker);
-                        }
-                        if (floorPicked == 1) {
-                            MarkersList.add(newMarker);
-                        } else {
-                            secondFloorMarkersList.add(newMarker);
-                        }
-                    }
-                    CustomMarker.addToCustomMarkers(MapsActivity.this, newMarker, floorPicked);
-                    saveSpotLayout.setVisibility(View.GONE);
-                }
-                InputMethodManager manager1 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager1.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-                break;
-            case R.id.btnAddFavorites:
-                Favorites.addToFavorite(MapsActivity.this, markerFragment.MTouch.marker2);
+        boolean wasItCreatedAlready=false;
+        boolean nameExistAlready=false;
+        TextView markerName=findViewById(R.id.MarkerName);
+        String name=markerName.getText().toString();
+        markerName.setText(null);
+        if(createdMarkers!=null){
+        for(Marker marker1:createdMarkers){
+        if(marker1.getTitle().equals(name)){
+        wasItCreatedAlready=true;
+        }
+        }
+        for(Marker marker:MarkersList){
+        if(marker.getTitle().equals(name)){
+        nameExistAlready=true;
+        }
+        }
+        }
+        Marker newMarker=null;
+        if(wasItCreatedAlready||nameExistAlready){
+        snack=Snackbar.make(findViewById(R.id.map),"Marker Already Exists",Snackbar.LENGTH_SHORT);
+        snack.show();
+        saveSpotLayout.setVisibility(View.GONE);
+        }else{
+        if(!wasRemoveHit){
+        if(!name.isEmpty()){
+        newMarker=mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
+        newMarker.showInfoWindow();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(LongClickPoint));
+        createdMarkers.add(newMarker);
+        }else{
+        name="CustomMarkerNumber0"+createdMarkers.size();
+        newMarker=mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
+        newMarker.showInfoWindow();
+        createdMarkers.add(newMarker);
+        }
+        if(floorPicked==1){
+        MarkersList.add(newMarker);
+        }else{
+        secondFloorMarkersList.add(newMarker);
+        }
+        }
+        CustomMarker.addToCustomMarkers(MapsActivity.this,newMarker,floorPicked);
+        saveSpotLayout.setVisibility(View.GONE);
+        }
+        InputMethodManager manager1=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager1.hideSoftInputFromWindow(slideupview.getWindowToken(),0);
+        break;
+        case R.id.btnAddFavorites:
+        Favorites.addToFavorite(MapsActivity.this,markerFragment.MTouch.marker2);
 
-                snack = Snackbar.make(findViewById(R.id.map), "Added To Favorites", Snackbar.LENGTH_SHORT);
-                snack.show();
-                bntFavoritesRemove.setVisibility(View.VISIBLE);
-                btnFavoritesAdd.setVisibility(View.GONE);
-                break;
+        snack=Snackbar.make(findViewById(R.id.map),"Added To Favorites",Snackbar.LENGTH_SHORT);
+        snack.show();
+        bntFavoritesRemove.setVisibility(View.VISIBLE);
+        btnFavoritesAdd.setVisibility(View.GONE);
+        break;
+        <<<<<<<HEAD
             case R.id.ZoomIn:
-                mMap.moveCamera(CameraUpdateFactory.zoomIn());
-                checkIfMarkerNeedVisible();
-                break;
-            case R.id.ZoomOut:
-                mMap.moveCamera(CameraUpdateFactory.zoomOut());
-                checkIfMarkerNeedVisible();
-                break;
-            case R.id.FloorUp:
-                floorPicked = 2;
-                upFloor.setVisibility(View.GONE);
-                downFloor.setVisibility(View.VISIBLE);
-                for (Marker markers : secondFloorMarkersList) {
-                    if (markerFragment.MTouch.marker2 != null) {
-                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    } else {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    mMap.moveCamera(CameraUpdateFactory.zoomIn());
+                    checkIfMarkerNeedVisible();
+                    break;
+                    case R.id.ZoomOut:
+                    mMap.moveCamera(CameraUpdateFactory.zoomOut());
+                    checkIfMarkerNeedVisible();
+                    break;
+                    case R.id.FloorUp:
+                    floorPicked=2;
+                    upFloor.setVisibility(View.GONE);
+                    downFloor.setVisibility(View.VISIBLE);
+                    for(Marker markers:secondFloorMarkersList){
+                    if(markerFragment.MTouch.marker2!=null){
+                    if(markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())){
+                    markers.setVisible(mMap.getCameraPosition().zoom>18);
                     }
-                }
-                for (Marker marker : MarkersList) {
-                    marker.setVisible(false);
-                }
-                removeAllOverlays();
-                String result = DoTheChecks();
-                CheckResults(result);
-                break;
-            case R.id.FloorDown:
-                floorPicked = 1;
-                downFloor.setVisibility(View.GONE);
-                upFloor.setVisibility(View.VISIBLE);
-                for (Marker markers : MarkersList) {
-                    if (markerFragment.MTouch.marker2 != null) {
-                        if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    } else {
-                        markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                    }else{
+                    markers.setVisible(mMap.getCameraPosition().zoom>18);
                     }
-                }
-                for (Marker marker : secondFloorMarkersList) {
+                    }
+                    for(Marker marker:MarkersList){
                     marker.setVisible(false);
-                }
-                if (B3U2 != null) {
+                    }
+                    removeAllOverlays();
+                    String result=DoTheChecks();
+                    CheckResults(result);
+                    break;
+                    case R.id.FloorDown:
+                    floorPicked=1;
+                    downFloor.setVisibility(View.GONE);
+                    upFloor.setVisibility(View.VISIBLE);
+                    for(Marker markers:MarkersList){
+                    if(markerFragment.MTouch.marker2!=null){
+                    if(markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())){
+                    markers.setVisible(mMap.getCameraPosition().zoom>18);
+                    }
+                    }else{
+                    markers.setVisible(mMap.getCameraPosition().zoom>18);
+                    }
+                    }
+                    for(Marker marker:secondFloorMarkersList){
+                    marker.setVisible(false);
+                    }
+                    if(B3U2!=null){
                     B3U2.setVisible(false);
-                }
-                removeAllOverlays();
-                String results = DoTheChecks();
-                CheckResults(results);
-            case R.id.FilterButton:
-                FilterShow = !FilterShow;
-                if (FilterShow) {
+                    }
+                    removeAllOverlays();
+                    String results=DoTheChecks();
+                    CheckResults(results);
+                    case R.id.FilterButton:
+                    FilterShow=!FilterShow;
+                    if(FilterShow){
                     Filter.setBackgroundColor(Color.parseColor("#F55E25"));
                     CRFilter.setVisibility(View.VISIBLE);
                     OFFilter.setVisibility(View.VISIBLE);
                     BRFilter.setVisibility(View.VISIBLE);
                     WZFilter.setVisibility(View.VISIBLE);
                     ETCFilter.setVisibility(View.VISIBLE);
-                } else {
+                    }else{
                     Filter.setBackgroundColor(Color.parseColor("#73777B"));
                     CRFilter.setVisibility(View.GONE);
                     OFFilter.setVisibility(View.GONE);
                     BRFilter.setVisibility(View.GONE);
                     WZFilter.setVisibility(View.GONE);
                     ETCFilter.setVisibility(View.GONE);
-                }
-                break;
-            case R.id.CRFilterButton:
-                FilteredMarkers("CR");
-                Filtering = true;
-                break;
+                    }
+                    break;
+                    case R.id.CRFilterButton:
+                    FilteredMarkers("CR");
+                    Filtering=true;
+                    break;
 
-            case R.id.OFFilterButton:
-                FilteredMarkers("OF");
-                Filtering = true;
-                break;
+                    case R.id.OFFilterButton:
+                    FilteredMarkers("OF");
+                    Filtering=true;
+                    break;
 
-            case R.id.BRFilterButton:
-                FilteredMarkers("BR");
-                Filtering = true;
-                break;
+                    case R.id.BRFilterButton:
+                    FilteredMarkers("BR");
+                    Filtering=true;
+                    break;
 
-            case R.id.WZFilterButton:
-                FilteredMarkers("WZ");
-                Filtering = true;
-                break;
+                    case R.id.WZFilterButton:
+                    FilteredMarkers("WZ");
+                    Filtering=true;
+                    break;
 
-            case R.id.ETCFilterButton:
-                FilteredMarkers("ETC");
-                Filtering = true;
-                break;
+                    case R.id.ETCFilterButton:
+                    FilteredMarkers("ETC");
+                    Filtering=true;
+                    break;
+
+//            case R.id.ZoomIn:
+//                mMap.moveCamera(CameraUpdateFactory.zoomIn());
+//                checkIfMarkerNeedVisible();
+//                break;
+//            case R.id.ZoomOut:
+//                mMap.moveCamera(CameraUpdateFactory.zoomOut());
+//                checkIfMarkerNeedVisible();
+//                break;
+                    >>>>>>>ChangeSettings
+                    }
+                    }
+
+private void FilteredMarkers(String type){
+        switch(type){
+        case"CR":
+        CRShow=!CRShow;
+        break;
+        case"OF":
+        OFShow=!OFShow;
+        break;
+        case"BR":
+        BRShow=!BRShow;
+        break;
+        case"WZ":
+        WZShow=!WZShow;
+        break;
+        case"ETC":
+        ETCShow=!ETCShow;
+        break;
         }
+
+        if(CRShow){
+        for(Marker m:ClassRoomMarkers){
+        m.setVisible(true);
+        }
+        CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+        }else{
+        for(Marker m:ClassRoomMarkers){
+        m.setVisible(false);
+        }
+        CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        }
+        if(OFShow){
+        for(Marker m:OFRooms){
+        m.setVisible(true);
+        }
+        OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        }else{
+        for(Marker m:OFRooms){
+        m.setVisible(false);
+        }
+        CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if(BRShow){
+        for(Marker m:BathroomMarkers){
+        m.setVisible(true);
+        }
+        OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        }else{
+        for(Marker m:BathroomMarkers){
+        m.setVisible(false);
+        }
+        BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if(WZShow){
+        for(Marker m:WaterZones){
+        m.setVisible(true);
+        }
+        WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        }else{
+        for(Marker m:WaterZones){
+        m.setVisible(false);
+        }
+        WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+
+        if(ETCShow){
+        for(Marker m:ETCRooms){
+        m.setVisible(true);
+        }
+        ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        }else{
+        for(Marker m:ETCRooms){
+        m.setVisible(false);
+        }
+        ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if(!CRShow&&!OFShow&&!BRShow&&!WZShow&&!ETCShow){
+        Filtering=false;
+        for(Marker m:MarkersList){
+        m.setVisible(true);
+        }
+
+        }
+        }
+protected void removeAllOverlays(){
+
+        }
+
+
+protected void showMapsFloor(int floorPicked){
+
+        }
+
+//Getting permission from user for location
+private void getLocationPermission(){
+        String[]permissions={Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),FINE_lOCATION)==PackageManager.PERMISSION_GRANTED){
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+        //SET A BOOLEAN
+        mLocationPermissionsGranted=true;
+
+        }else{
+        ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        }
+        }else{
+        ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        }
+        }
+
+//Handles what happens when user clicks on the map (not the same as drag)
+@Override
+public void onMapClick(LatLng point){
+        //Hide Keyboard when map is clicked
+        InputMethodManager manager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(slideupview.getWindowToken(),0);
+        if(slidepup){
+        slideupview.setVisibility(View.GONE);
+        slidepup=false;
+        }
+
+
+        if(RemovePoint.getVisibility()==View.VISIBLE)
+        {
+        RemovePoint.setVisibility(View.GONE);
+        }
+        if(saveSpotLayout.getVisibility()==View.VISIBLE)
+        {
+        saveSpotLayout.setVisibility(View.GONE);
+        }
+        //Make all markers visible
+        checkIfMarkerNeedVisible();
+        }
+
+public void RemoveAllLines()
+        {
+        while(linesShowing.size()>0){
+        linesShowing.get(0).remove();
+        linesShowing.remove(0);
+        }
+        }
+
+public Marker FindTheMarker(String title)
+        {
+        Marker foundMarker=null;
+        for(Marker m:createdMarkers)
+        {
+        if(m.getTitle().equals(title))
+        {
+        foundMarker=m;
+        }
+        }
+        for(Marker m1:MarkersList)
+        {
+        if(m1.getTitle().equals(title))
+        {
+        foundMarker=m1;
+        }
+        }
+        for(Marker m2:favoritedMarkers)
+        {
+        if(m2.getTitle().equals(title))
+        {
+        foundMarker=m2;
+        }
+        }
+        return foundMarker;
+        }
+public boolean CheckMarkerType(Marker marker)
+        {
+        boolean isItCreatedMarker=false;
+        for(Marker m:createdMarkers)
+        {
+        if(m.getTitle().equals(marker.getTitle()))
+        {
+        isItCreatedMarker=true;
+        }
+        }
+        return isItCreatedMarker;
+        }
+
+//Credit to Ruben for solving everything below here
+//get directions to marker
+public void getDirectionPoly(Marker marker)
+        {
+        getDeviceLocation();
+        String url1="";
+        if(!CheckMarkerType(marker))
+        {
+        url1=getUrl(new LatLng(Latitude,Longitued),MarkersList.get(0).getPosition());
+        }
+        else
+        {
+        url1=getUrl(new LatLng(Latitude,Longitued),marker.getPosition());
+        }
+        String url=url1;
+
+        TaskRequestDirections taskRequestDirections=new TaskRequestDirections(marker);
+        taskRequestDirections.execute(url);
+        }
+//Get URL for Getting Direction
+private String getUrl(LatLng origin,LatLng dest)
+        {
+        String str_org="origin="+origin.latitude+","+origin.longitude;
+
+        String str_dest="destination="+dest.latitude+","+dest.longitude;
+
+        String sensor="sensor=false";
+
+        String mode="mode=walking";
+
+        String param=str_org+"&"+str_dest+"&"+sensor+"&"+mode;
+
+        String output="json";
+
+        String url="https://maps.googleapis.com/maps/api/directions/"+output+"?"+param+"&key=AIzaSyBXJ-PMOg2kDp8jXih-3ME_52znZc6A2ds ";
+
+        return url;
+        }
+
+private String getDirectionsUrl(String reqUrl)throws IOException{
+        String responseString="";
+        InputStream inputStream=null;
+        HttpURLConnection httpURLConnection=null;
+        try{
+        URL url=new URL(reqUrl);
+        httpURLConnection=(HttpURLConnection)url.openConnection();
+        httpURLConnection.connect();
+
+        inputStream=httpURLConnection.getInputStream();
+        InputStreamReader inputStreamReader=new InputStreamReader(inputStream);
+        BufferedReader bufferedReader=new BufferedReader(inputStreamReader);
+
+        StringBuffer stringBuffer=new StringBuffer();
+        String line="";
+        while((line=bufferedReader.readLine())!=null)
+        {
+        stringBuffer.append(line);
+        }
+        responseString=stringBuffer.toString();
+        bufferedReader.close();
+        inputStreamReader.close();
+        }catch(Exception e){
+        e.printStackTrace();
+        }finally{
+        if(inputStream!=null){
+        inputStream.close();
+        }
+        httpURLConnection.disconnect();
+        }
+        return responseString;
+        }
+
+public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+    Marker marker;
+
+    public TaskRequestDirections() {
     }
 
-    private void FilteredMarkers (String type) {
-        switch (type) {
-            case "CR":
-                CRShow = !CRShow;
-                break;
-            case "OF":
-                OFShow = !OFShow;
-                break;
-            case "BR":
-                BRShow = !BRShow;
-                break;
-            case "WZ":
-                WZShow = !WZShow;
-                break;
-            case "ETC":
-                ETCShow = !ETCShow;
-                break;
-        }
-
-        if (CRShow) {
-            for (Marker m : ClassRoomMarkers) {
-                m.setVisible(true);
-            }
-            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-        } else {
-            for (Marker m : ClassRoomMarkers) {
-                m.setVisible(false);
-            }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
-        }
-        if (OFShow) {
-            for (Marker m : OFRooms) {
-                m.setVisible(true);
-            }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : OFRooms) {
-                m.setVisible(false);
-            }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
-
-        }
-        if (BRShow) {
-            for (Marker m : BathroomMarkers) {
-                m.setVisible(true);
-            }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : BathroomMarkers) {
-                m.setVisible(false);
-            }
-            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
-
-        }
-        if (WZShow) {
-            for (Marker m : WaterZones) {
-                m.setVisible(true);
-            }
-            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : WaterZones) {
-                m.setVisible(false);
-            }
-            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
-
-        }
-
-        if (ETCShow) {
-            for (Marker m : ETCRooms) {
-                m.setVisible(true);
-            }
-            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : ETCRooms) {
-                m.setVisible(false);
-            }
-            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
-
-        }
-        if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
-            Filtering = false;
-            for (Marker m : MarkersList) {
-                m.setVisible(true);
-            }
-
-        }
+    public TaskRequestDirections(Marker _marker) {
+        marker = _marker;
     }
-        protected void removeAllOverlays() {
 
+    @Override
+
+    public void onMapLongClick(LatLng point) {
+        wasRemoveHit = false;
+        saveSpotLayout.setVisibility(View.VISIBLE);
+        LongClickPoint = point;
     }
 
 
-    protected void showMapsFloor(int floorPicked) {
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return true;
+    }
 
-        }
-
-        //Getting permission from user for location
-        private void getLocationPermission () {
-            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION};
-
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_lOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    //SET A BOOLEAN
-                    mLocationPermissionsGranted = true;
-
-                } else {
-                    ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+    public void checkIfMarkerNeedVisible() {
+        if (!wasMarkerClicked) {
+            if (mMap.getCameraPosition().zoom > 18) {
+                for (Marker m : MarkersList) {
+                    if (!Filtering) {
+                        m.setVisible(true);
+                    }
                 }
             } else {
-                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+                for (Marker m2 : MarkersList) {
+                    m2.setVisible(false);
+                }
             }
-        }
-
-        @Override
-        public void onMapLongClick (LatLng point){
-            wasRemoveHit = false;
-            saveSpotLayout.setVisibility(View.VISIBLE);
-            LongClickPoint = point;
-        }
-
-
-        @Override
-        public boolean onMarkerClick (Marker marker){
-            return true;
-        }
-
-        public void checkIfMarkerNeedVisible () {
-            if (!wasMarkerClicked) {
-                if (mMap.getCameraPosition().zoom > 18) {
-                    for (Marker m : MarkersList) {
-                        if (!Filtering) {
-                            m.setVisible(true);
-                        }
-                    }
-                } else {
-                    for (Marker m2 : MarkersList) {
-                        m2.setVisible(false);
-                    }
+            for (Marker mC : createdMarkers) {
+                mC.setVisible(true);
+            }
+        } else {
+            for (Marker m3 : MarkersList) {
+                if (!m3.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                    m3.setVisible(false);
                 }
-                for (Marker mC : createdMarkers) {
-                    mC.setVisible(true);
-                }
-            } else {
-                for (Marker m3 : MarkersList) {
-                    if (!m3.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                        m3.setVisible(false);
-                    }
-                }
-                for (Marker m3C : createdMarkers) {
-                    if (!m3C.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                        m3C.setVisible(false);
-                    }
+            }
+            for (Marker m3C : createdMarkers) {
+                if (!m3C.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                    m3C.setVisible(false);
                 }
             }
         }
+    }
 
-        //Handles what happens when user clicks on the map (not the same as drag)
-        @Override
-        public void onMapClick (LatLng point){
-            //Hide Keyboard when map is clicked
-            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+    //Handles what happens when user clicks on the map (not the same as drag)
+    @Override
+    public void onMapClick(LatLng point) {
+        //Hide Keyboard when map is clicked
+        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
 
-            //slide down slideup when map is clicked
-            if (slideup) {
-                slideupview.setVisibility(View.GONE);
-                //Animation stuff that bugs out
+        //slide down slideup when map is clicked
+        if (slideup) {
+            slideupview.setVisibility(View.GONE);
+            //Animation stuff that bugs out
             /*TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
             animate.setDuration(375);
             animate.setFillAfter(true);
             slideupview.startAnimation(animate);*/
-                slideup = false;
-            }
-            if (RemovePoint.getVisibility() == View.VISIBLE) {
-                RemovePoint.setVisibility(View.GONE);
-            }
-            if (saveSpotLayout.getVisibility() == View.VISIBLE) {
-                saveSpotLayout.setVisibility(View.GONE);
-            }
-            //Make all markers visible
+            slideup = false;
+        }
+        if (RemovePoint.getVisibility() == View.VISIBLE) {
+            RemovePoint.setVisibility(View.GONE);
+        }
+        if (saveSpotLayout.getVisibility() == View.VISIBLE) {
+            saveSpotLayout.setVisibility(View.GONE);
+        }
+        //Make all markers visible
 //        checkIfMarkerNeedVisible();
-        }
+    }
 
-        public void RemoveAllLines () {
-            while (linesShowing.size() > 0) {
-                linesShowing.get(0).remove();
-                linesShowing.remove(0);
-            }
+    public void RemoveAllLines() {
+        while (linesShowing.size() > 0) {
+            linesShowing.get(0).remove();
+            linesShowing.remove(0);
         }
+    }
 
-        public Marker FindTheMarker (String title){
-            Marker foundMarker = null;
-            if (createdMarkers != null) {
-                for (Marker m : createdMarkers) {
-                    if (m.getTitle().equals(title)) {
-                        foundMarker = m;
-                    }
-                }
-            }
-            if (MarkersList != null) {
-                for (Marker m1 : MarkersList) {
-                    if (m1.getTitle().equals(title)) {
-                        foundMarker = m1;
-                    }
-                }
-            }
-            if (favoritedMarkers != null) {
-                for (Marker m2 : favoritedMarkers) {
-                    if (m2.getTitle().equals(title)) {
-                        foundMarker = m2;
-                    }
-                }
-            }
-            if (secondFloorMarkersList != null) {
-                for (Marker m3 : secondFloorMarkersList) {
-                    if (m3.getTitle().equals(title)) {
-                        foundMarker = m3;
-                    }
-                }
-            }
-            return foundMarker;
-        }
-
-        public boolean CheckMarkerType (Marker marker){
-            boolean isItCreatedMarker = false;
+    public Marker FindTheMarker(String title) {
+        Marker foundMarker = null;
+        if (createdMarkers != null) {
             for (Marker m : createdMarkers) {
-                if (m.getTitle().equals(marker.getTitle())) {
-                    isItCreatedMarker = true;
+                if (m.getTitle().equals(title)) {
+                    foundMarker = m;
                 }
             }
-            return isItCreatedMarker;
         }
-
-        //Credit to Ruben for solving everything below here
-        //get directions to marker
-        public void getDirectionPoly (Marker marker){
-            getDeviceLocation();
-            String url1 = "";
-            if (!CheckMarkerType(marker)) {
-                url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
-            } else {
-                url1 = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
+        if (MarkersList != null) {
+            for (Marker m1 : MarkersList) {
+                if (m1.getTitle().equals(title)) {
+                    foundMarker = m1;
+                }
             }
-            String url = url1;
+        }
+        if (favoritedMarkers != null) {
+            for (Marker m2 : favoritedMarkers) {
+                if (m2.getTitle().equals(title)) {
+                    foundMarker = m2;
+                }
+            }
+        }
+        if (secondFloorMarkersList != null) {
+            for (Marker m3 : secondFloorMarkersList) {
+                if (m3.getTitle().equals(title)) {
+                    foundMarker = m3;
+                }
+            }
+        }
+        return foundMarker;
+    }
 
-            TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
-            taskRequestDirections.execute(url);
+    public boolean CheckMarkerType(Marker marker) {
+        boolean isItCreatedMarker = false;
+        for (Marker m : createdMarkers) {
+            if (m.getTitle().equals(marker.getTitle())) {
+                isItCreatedMarker = true;
+            }
+        }
+        return isItCreatedMarker;
+    }
+
+    //Credit to Ruben for solving everything below here
+    //get directions to marker
+    public void getDirectionPoly(Marker marker) {
+        getDeviceLocation();
+        String url1 = "";
+        if (!CheckMarkerType(marker)) {
+            url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
+        } else {
+            url1 = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
+        }
+        String url = url1;
+
+        TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
+        taskRequestDirections.execute(url);
+    }
+
+    //Get URL for Getting Direction
+    private String getUrl(LatLng origin, LatLng dest) {
+        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
+
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+        String sensor = "sensor=false";
+
+        String mode = "mode=walking";
+
+        String param = str_dest + "&" + mode + "&" + str_org + "&" + sensor;
+
+        String output = "json";
+
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=AIzaSyBXJ-PMOg2kDp8jXih-3ME_52znZc6A2ds ";
+
+        return url;
+    }
+
+    private String getDirectionsUrl(String reqUrl) throws IOException {
+        String responseString = "";
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        try {
+            URL url = new URL(reqUrl);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.connect();
+
+            inputStream = httpURLConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+            responseString = stringBuffer.toString();
+            bufferedReader.close();
+            inputStreamReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            httpURLConnection.disconnect();
+        }
+        return responseString;
+    }
+
+    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+        Marker marker;
+
+        public TaskRequestDirections() {
         }
 
-        //Get URL for Getting Direction
-        private String getUrl (LatLng origin, LatLng dest){
-            String str_org = "origin=" + origin.latitude + "," + origin.longitude;
-
-            String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-            String sensor = "sensor=false";
-
-            String mode = "mode=walking";
-
-            String param = str_dest + "&" + mode + "&" + str_org + "&" + sensor;
-
-            String output = "json";
-
-            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=AIzaSyBXJ-PMOg2kDp8jXih-3ME_52znZc6A2ds ";
-
-            return url;
+        public TaskRequestDirections(Marker _marker) {
+            marker = _marker;
         }
 
-        private String getDirectionsUrl (String reqUrl) throws IOException {
+        @Override
+        protected String doInBackground(String... strings) {
             String responseString = "";
-            InputStream inputStream = null;
-            HttpURLConnection httpURLConnection = null;
             try {
-                URL url = new URL(reqUrl);
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.connect();
-
-                inputStream = httpURLConnection.getInputStream();
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuffer stringBuffer = new StringBuffer();
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuffer.append(line);
-                }
-                responseString = stringBuffer.toString();
-                bufferedReader.close();
-                inputStreamReader.close();
-            } catch (Exception e) {
+                responseString = getDirectionsUrl(strings[0]);
+            } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                httpURLConnection.disconnect();
             }
             return responseString;
         }
 
-        public class TaskRequestDirections extends AsyncTask<String, Void, String> {
-            Marker marker;
-
-            public TaskRequestDirections() {
-            }
-
-            public TaskRequestDirections(Marker _marker) {
-                marker = _marker;
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-                String responseString = "";
-                try {
-                    responseString = getDirectionsUrl(strings[0]);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return responseString;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                //parse json here
-                TaskParser taskParser = new TaskParser(marker);
-                taskParser.execute(s);
-            }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //parse json here
+            TaskParser taskParser = new TaskParser(marker);
+            taskParser.execute(s);
         }
-
-        public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
-            Marker marker;
-
-            public TaskParser() {
-            }
-
-            public TaskParser(Marker _marker) {
-                marker = _marker;
-            }
-
-            @Override
-            protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
-                JSONObject jsonObject = null;
-                List<List<HashMap<String, String>>> routes = null;
-                try {
-                    jsonObject = new JSONObject(strings[0]);
-                    DataParser dataParser = new DataParser();
-                    routes = dataParser.parse(jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return routes;
-            }
-
-            @Override
-            protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
-                ArrayList points = null;
-                PolylineOptions polylineOptions = null;
-
-                for (List<HashMap<String, String>> path : lists) {
-                    points = new ArrayList();
-                    polylineOptions = new PolylineOptions();
-
-                    for (HashMap<String, String> point : path) {
-                        double lat = Double.parseDouble(point.get("lat"));
-                        double lon = Double.parseDouble(point.get("lon"));
-
-                        points.add(new LatLng(lat, lon));
-                    }
-
-                    polylineOptions.addAll(points);
-                    polylineOptions.width(15);
-                    if (DarkorLight) {
-                        polylineOptions.color(Color.BLUE);
-                    } else {
-                        polylineOptions.color(Color.parseColor("#FFA500"));
-                    }
-                    polylineOptions.geodesic(true);
-                }
-                Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#22808080")).width(15));
-                linesShowing.add(poly);
-                if (polylineOptions != null) {
-                    if (!CheckMarkerType(marker)) {
-                        List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
-                        polylineOptions.add(outToInPoly.get(0));
-                    }
-                    String outToPolys = "outsideTo" + marker.getTitle();
-                    for (int i = 0; i < LinesTitles.size(); i++) {
-                        if (LinesTitles.get(i).equals(outToPolys)) {
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                        }
-                    }
-                    linesShowing.add(mMap.addPolyline(polylineOptions));
-                } else {
-                    snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
-                    snack.show();
-                }
-            }
-        }
-
-        private class Overlays extends AsyncTask<Void, Void, String> {
-            GoogleMap maps;
-
-            public void sendMap(GoogleMap _maps) {
-                maps = _maps;
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                return "succ";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-            }
-        }
-
     }
+
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
+        Marker marker;
+
+        public TaskParser() {
+        }
+
+        public TaskParser(Marker _marker) {
+            marker = _marker;
+        }
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+            JSONObject jsonObject = null;
+            List<List<HashMap<String, String>>> routes = null;
+            try {
+                jsonObject = new JSONObject(strings[0]);
+                DataParser dataParser = new DataParser();
+                routes = dataParser.parse(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
+            ArrayList points = null;
+            PolylineOptions polylineOptions = null;
+
+            for (List<HashMap<String, String>> path : lists) {
+                points = new ArrayList();
+                polylineOptions = new PolylineOptions();
+
+                for (HashMap<String, String> point : path) {
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lon = Double.parseDouble(point.get("lon"));
+
+                    points.add(new LatLng(lat, lon));
+                }
+
+                polylineOptions.addAll(points);
+                polylineOptions.width(15);
+                if (DarkorLight) {
+                    polylineOptions.color(Color.BLUE);
+                } else {
+                    polylineOptions.color(Color.parseColor("#FFA500"));
+                }
+                polylineOptions.geodesic(true);
+            }
+            Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#22808080")).width(15));
+            linesShowing.add(poly);
+            if (polylineOptions != null) {
+                if (!CheckMarkerType(marker)) {
+                    List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
+                    polylineOptions.add(outToInPoly.get(0));
+                }
+                String outToPolys = "outsideTo" + marker.getTitle();
+                for (int i = 0; i < LinesTitles.size(); i++) {
+                    if (LinesTitles.get(i).equals(outToPolys)) {
+                        linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                    }
+                }
+                linesShowing.add(mMap.addPolyline(polylineOptions));
+            } else {
+                snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
+                snack.show();
+            }
+        }
+    }
+
+    private class Overlays extends AsyncTask<Void, Void, String> {
+        GoogleMap maps;
+
+        public void sendMap(GoogleMap _maps) {
+            maps = _maps;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            return "succ";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+    }
+
+}

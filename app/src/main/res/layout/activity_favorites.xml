@@ -22,7 +22,7 @@
      android:padding="5dp"
      android:text="Favorite List"
      android:textAlignment="center"
-     android:textColor="@color/gray"
+     android:textColor="@color/FS_gray"
      android:textSize="35dp"
      android:textStyle="bold" />
 

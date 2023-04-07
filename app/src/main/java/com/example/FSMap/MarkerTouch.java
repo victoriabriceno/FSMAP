@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +62,8 @@ public class MarkerTouch extends FrameLayout {
     List<Polyline> linesShowing;
 
 
-
+    BottomSheetBehavior bottomSheetBehavior;
+boolean slidepup;
 
 
 
@@ -232,10 +235,16 @@ public class MarkerTouch extends FrameLayout {
                 /*marker.showInfoWindow();*/
 
                 //Slide up code
-                RelativeLayout slideupview = A.findViewById(R.id.slideup);
+                LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
+                bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
                 TextView text = slideupview.findViewById(R.id.roomnumber);
                 text.setText(marker.getTitle());
-                slideupview.setVisibility(View.VISIBLE);
+                if(!slidepup){
+                    slideupview.setVisibility(View.VISIBLE);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    slidepup=true;
+                }
+
 
                 //Creates list of all marker titles
                 ArrayList<String> listfornav = new ArrayList<String>();
