@@ -24,6 +24,8 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -31,6 +33,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +79,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -174,9 +182,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     float zoom;
     boolean slideup;
     double mLastAltitude;
-    RelativeLayout slideupview;
-    ArrayList<String> nameslist = new ArrayList<String>() {
-    };
+
+    LinearLayout slideupview;
+    boolean slidepup;
+    BottomSheetBehavior bottomSheetBehavior;
+   ArrayList<String> nameslist = new ArrayList<String>() {};
+
     boolean DarkorLight;
     RelativeLayout saveSpotLayout;
     //Favorites
@@ -562,6 +573,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }, 5000);
     }
 
+
+
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -582,6 +595,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         super.onCreate(savedInstanceState);
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -604,15 +618,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         markerFragment.getMapAsync(this);
 
+
         userIconMaps = findViewById(R.id.userMaps);
         userIconMaps.setOnClickListener(this);
+
+
 
         mGps = (ImageView) findViewById(R.id.gps);
 
         getLocationPermission();
         //Slide up code
-        slideupview = findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.design_bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         slideupview.setVisibility(View.GONE);
+        slidepup= false;
 
         //save spot code
         saveSpotLayout = findViewById(R.id.saveSpotLayout);
@@ -735,6 +754,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             userLocationAccuracyCircle.setRadius(location.getAccuracy());
         }
     }
+
 
     //Function to obtain device location and store in Latitude and Longitued
     private void getDeviceLocation() {
@@ -1224,6 +1244,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     GPS_UPDATE_TIME, 1, locationListener);
         }
+
         //get latlong for corners for specified place
         LatLng one = new LatLng(28.5899089565466, -81.30689695755838);
         LatLng two = new LatLng(28.597315583066404, -81.29914504373565);
@@ -1756,8 +1777,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         //Slide up code setup
-        slideupview = findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.design_bottom_sheet);
         slideupview.setVisibility(View.GONE);
+        slidepup = false;
 
         //Set Button for save spot
         Set = findViewById(R.id.OkMarkerTitle);
@@ -1909,7 +1931,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
+        }
 
     public boolean CheckResultLoadType(String Result) {
         boolean wasFound = false;
@@ -2113,6 +2135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //"Select" markers to be used if needed
                 //Removes slideup
                 slideupview.setVisibility(View.GONE);
+                slidepup = false;
                 //Allows NavDone button to appear
                 NavDone.setVisibility(View.VISIBLE);
                 //Brings back searchbar (may be depricated, will have to test)
@@ -2226,14 +2249,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
                 btnFavoritesAdd.setVisibility(View.GONE);
                 break;
-            case R.id.ZoomIn:
-                mMap.moveCamera(CameraUpdateFactory.zoomIn());
-                checkIfMarkerNeedVisible();
-                break;
-            case R.id.ZoomOut:
-                mMap.moveCamera(CameraUpdateFactory.zoomOut());
-                checkIfMarkerNeedVisible();
-                break;
             case R.id.FloorUp:
                 floorPicked = 2;
                 upFloor.setVisibility(View.GONE);
@@ -2318,6 +2333,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 FilteredMarkers("ETC");
                 Filtering = true;
                 break;
+
         }
     }
 
@@ -2439,6 +2455,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
         }
+
 
         @Override
         public void onMapLongClick (LatLng point){
@@ -2727,24 +2744,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
-        private class Overlays extends AsyncTask<Void, Void, String> {
-            GoogleMap maps;
-
-            public void sendMap(GoogleMap _maps) {
-                maps = _maps;
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                return "succ";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-            }
-        }
-
     }
+
