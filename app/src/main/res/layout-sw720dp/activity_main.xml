@@ -11,7 +11,7 @@
         android:layout_width="459dp"
         android:layout_height="509dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="228dp"
+        android:layout_marginBottom="224dp"
         android:background="@drawable/vie_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,40 +46,31 @@
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Password1"
+        <EditText
+            android:id="@+id/Password"
             android:layout_width="340dp"
-            android:layout_height="60dp"
+            android:layout_height="54dp"
             android:layout_below="@id/EmailAddress"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="58dp"
-            app:passwordToggleEnabled="true">
-
-            <EditText
-                android:id="@+id/Password"
-                android:layout_width="340dp"
-                android:layout_height="54dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/padlock"
-                android:drawablePadding="10dp"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/padlock"
+            android:drawableRight="@drawable/visible"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:longClickable="false"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <CheckBox
             android:id="@+id/rememberUser"
             android:layout_width="161dp"
             android:layout_height="45dp"
-            android:layout_below="@id/Password1"
+            android:layout_below="@id/Password"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/questrialregular"
@@ -91,7 +82,7 @@
             android:id="@+id/ForgotPassowrd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Password1"
+            android:layout_below="@id/Password"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="71dp"
             android:layout_marginTop="25dp"
@@ -141,17 +132,17 @@
             android:layout_marginRight="104dp"
             app:srcCompat="@drawable/google_logo" />
 
-        <!--        <com.facebook.login.widget.LoginButton-->
-        <!--            android:id="@+id/facebook_button"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignEnd="@+id/LoginBTN"-->
-        <!--            android:layout_alignBottom="@+id/LoginBTN"-->
-        <!--            android:layout_gravity="center_horizontal"-->
-        <!--            android:layout_marginTop="30dp"-->
-        <!--            android:layout_marginEnd="-18dp"-->
-        <!--            android:layout_marginBottom="-52dp"-->
-        <!--             />-->
+<!--        <com.facebook.login.widget.LoginButton-->
+<!--            android:id="@+id/facebook_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignEnd="@+id/LoginBTN"-->
+<!--            android:layout_alignBottom="@+id/LoginBTN"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_marginEnd="-18dp"-->
+<!--            android:layout_marginBottom="-52dp"-->
+<!--             />-->
 
         <ImageButton
             android:id="@+id/facebook_button"
@@ -207,7 +198,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/questrialregular"
         android:text="Welcome to FS Map!"
-        android:textColor="@color/FS_gray"
+        android:textColor="@color/gray"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/constrainLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +214,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
-        android:textColor="@color/FS_gray"
+        android:textColor="@color/gray"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

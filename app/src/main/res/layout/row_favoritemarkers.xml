@@ -10,81 +10,70 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
-        android:layout_width="459dp"
-        android:layout_height="48dp">
+        android:layout_width="412dp"
+        android:layout_height="58dp">
 
 
         <ImageButton
             android:id="@+id/trashFavorites"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="141dp"
-            android:layout_marginBottom="13dp"
-            android:background="@drawable/trash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="320dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/marker"
+            android:background="@drawable/bin"
             android:fontFamily="@font/questrialregular"
             android:textSize="15dp" />
 
         <ImageButton
 
             android:id="@+id/editFavorites"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="179dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/pencil"
+            android:layout_width="35dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="270dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/marker"
+            android:background="@drawable/edit"
             android:fontFamily="@font/questrialregular"
             android:onClick="store_input"
             android:textSize="15dp" />
 
         <RelativeLayout
             android:id="@+id/marker"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="408dp"
-            android:layout_marginBottom="7dp"
-            android:background="@drawable/map_marker">
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/location_marker_favoritedesign">
 
         </RelativeLayout>
 
         <EditText
             android:id="@+id/TitleMarker"
-            android:layout_width="174dp"
+            android:layout_width="226dp"
+
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="222dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/marker"
             android:background="@null"
             android:fontFamily="@font/questrialregular"
             android:imeOptions="actionDone"
+            android:singleLine = "true"
             android:maxLines="1"
-            android:singleLine="true"
             android:text="Title"
-            android:textColor="@color/FS_gray"
+            android:textColor="@color/gray"
             android:textSize="15dp" />
 
-        <EditText
-            android:id="@+id/orginalName"
-            android:layout_width="174dp"
+        <TextView
+            android:id="@+id/OriginalTitle"
+            android:layout_width="244dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="222dp"
-            android:layout_marginBottom="19dp"
-            android:background="@null"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/marker"
             android:fontFamily="@font/questrialregular"
-            android:imeOptions="actionDone"
             android:maxLines="1"
-            android:singleLine="true"
             android:text="Title"
-            android:textColor="@color/FS_gray"
+            android:textColor="@color/gray"
             android:textSize="15dp"
             android:visibility="invisible" />
 

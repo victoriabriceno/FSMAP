@@ -25,7 +25,7 @@
         android:padding="5dp"
         android:text="Custom Markers"
         android:textAlignment="center"
-        android:textColor="@color/FS_gray"
+        android:textColor="@color/gray"
         android:textSize="50dp"
         android:textStyle="bold" />
 

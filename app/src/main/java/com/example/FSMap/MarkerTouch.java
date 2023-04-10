@@ -1,8 +1,6 @@
 package com.example.FSMap;
 
 
-
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,10 +16,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -37,8 +33,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +60,7 @@ public class MarkerTouch extends FrameLayout {
     List<Polyline> linesShowing;
 
 
-    BottomSheetBehavior bottomSheetBehavior;
-boolean slidepup;
+
 
 
 
@@ -136,13 +129,15 @@ boolean slidepup;
 
             Marker marker = null;
             int minDistanceInPixels = Integer.MAX_VALUE;
-            for (Marker markers : AM) {
-                Point markerScreen = projection.toScreenLocation(markers.getPosition());
-                int distanceToMarker = (int) Math.sqrt((screenX - markerScreen.x) * (screenX - markerScreen.x)
-                        + (screenY - markerScreen.y) * (screenY - markerScreen.y));
-                if (distanceToMarker < minDistanceInPixels) {
-                    minDistanceInPixels = distanceToMarker;
-                    marker = markers;
+            if(AM != null) {
+                for (Marker markers : AM) {
+                    Point markerScreen = projection.toScreenLocation(markers.getPosition());
+                    int distanceToMarker = (int) Math.sqrt((screenX - markerScreen.x) * (screenX - markerScreen.x)
+                            + (screenY - markerScreen.y) * (screenY - markerScreen.y));
+                    if (distanceToMarker < minDistanceInPixels) {
+                        minDistanceInPixels = distanceToMarker;
+                        marker = markers;
+                    }
                 }
             }
             if (minDistanceInPixels > ClickRadius) {
@@ -237,16 +232,10 @@ boolean slidepup;
                 /*marker.showInfoWindow();*/
 
                 //Slide up code
-                LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
-                bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
+                RelativeLayout slideupview = A.findViewById(R.id.slideup);
                 TextView text = slideupview.findViewById(R.id.roomnumber);
                 text.setText(marker.getTitle());
-                if(!slidepup){
-                    slideupview.setVisibility(View.VISIBLE);
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    slidepup=true;
-                }
-
+                slideupview.setVisibility(View.VISIBLE);
 
                 //Creates list of all marker titles
                 ArrayList<String> listfornav = new ArrayList<String>();
