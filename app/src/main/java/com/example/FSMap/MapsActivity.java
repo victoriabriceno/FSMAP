@@ -263,7 +263,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    protected String secondCheckForFirstLoad(String result) {
+    protected String secondCheckForFinerArea(String result) {
         double checklong = mMap.getCameraPosition().target.longitude;
         double checklat = mMap.getCameraPosition().target.latitude;
         switch (result) {
@@ -883,6 +883,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+    public void showMarkerInArea(String Area)
+    {
+        switch (Area)
+        {
+            case("b1"):
+                for (int i = 0; i < BuildingOne.size(); i++) {
+                    BuildingOne.get(i).setVisible(true);
+                }
+                break;
+            case("b2"):
+                break;
+            case("3A"):
+                for (int i = 0; i < ThreeAMarkers.size(); i++) {
+                    ThreeAMarkers.get(i).setVisible(true);
+                }
+                break;
+            case("3BConnected"):
+            case("FishBowl"):
+                for (int i = 0; i < ThreeBMarkers.size(); i++) {
+                    ThreeBMarkers.get(i).setVisible(true);
+                }
+                break;
+            case("3C"):
+                for (int i = 0; i < ThreeCMarkers.size(); i++) {
+                    ThreeCMarkers.get(i).setVisible(true);
+                }
+                break;
+            case("3D"):
+                for (int i = 0; i < ThreeDMarkers.size(); i++) {
+                    ThreeDMarkers.get(i).setVisible(true);
+                }
+                break;
+            case("3E"):
+                for (int i = 0; i < ThreeEMarkers.size(); i++) {
+                    ThreeEMarkers.get(i).setVisible(true);
+                }
+                break;
+            case("3F"):
+                for (int i = 0; i < ThreeFMarkers.size(); i++) {
+                    ThreeFMarkers.get(i).setVisible(true);
+                }
+                break;
+
+        }
+    }
 
     //Functions for moving the cammer, overload for zoom option
     private void moveCamera(LatLng latLng) {
@@ -1199,7 +1244,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 groundOverlaysf2.add(build1f2Overlay);
                 groundOverlaysf2.add(build2f2Overlay);
                 String result = DoTheChecks();
-                String secondResult = secondCheckForFirstLoad(result);
+                String secondResult = secondCheckForFinerArea(result);
                 FirstLoad(result, secondResult);
 //                CheckResults(result);
                 prevResult = result;
@@ -1586,6 +1631,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             OFRooms.add(mark);
 
                     }
+                    switch(room[5])
+                    {
+                        case("1"):
+                            BuildingOne.add(mark);
+                            break;
+                        case("2"):
+                            BuildingTwo.add(mark);
+                            break;
+                        case("3A"):
+                            ThreeAMarkers.add(mark);
+                            break;
+                        case("3B"):
+                            ThreeBMarkers.add(mark);
+                            break;
+                        case("3C"):
+                            ThreeCMarkers.add(mark);
+                            break;
+                        case("3D"):
+                            ThreeDMarkers.add(mark);
+                            break;
+                        case("3E"):
+                            ThreeEMarkers.add(mark);
+                            break;
+                        case("3F"):
+                            ThreeFMarkers.add(mark);
+                            break;
+
+                    }
                     //Set Markers image for classrooms
                     for (Marker ClassRoom : ClassRoomMarkers) {
                         ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
@@ -1633,11 +1706,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             if (groundOverlaysf1.size() > 0) {
                 String result = DoTheChecks();
-
+                String FinerResult = secondCheckForFinerArea(result);
+                if(prevResult != FinerResult)
+                {
+                    prevResult = FinerResult;
+                    HideAllOtherMarkers(FinerResult);
+                    showMarkerInArea(FinerResult);
+                }
                 if (CheckResultLoadType(result)) {
                     CheckResults(result);
                 } else {
-                    String secondResult = secondCheckForFirstLoad(result);
+                    String secondResult = secondCheckForFinerArea(result);
                     if (!CheckResultLoadType(secondResult)) {
                         FirstLoad(result, secondResult);
                     }
@@ -1654,36 +1733,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             if(!Filtering)
             {
-                if (floorPicked == 1) {
-                    for (Marker markers : MarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : secondFloorMarkersList) {
-                        marker.setVisible(false);
-                    }
-                } else {
-                    for (Marker markers : secondFloorMarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : MarkersList) {
-                        marker.setVisible(false);
-                    }
-                }
+//                if (floorPicked == 1) {
+//                    for (Marker markers : MarkersList) {
+//                        if (markerFragment.MTouch.marker2 != null) {
+//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                            }
+//                        } else {
+//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                        }
+//                    }
+//                    for (Marker marker : secondFloorMarkersList) {
+//                        marker.setVisible(false);
+//                    }
+//                } else {
+//                    for (Marker markers : secondFloorMarkersList) {
+//                        if (markerFragment.MTouch.marker2 != null) {
+//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                            }
+//                        } else {
+//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                        }
+//                    }
+//                    for (Marker marker : MarkersList) {
+//                        marker.setVisible(false);
+//                    }
+//                }
             }
         });
-
+        
+        
         //On Marker Click Override
         markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
 
@@ -1694,15 +1774,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return true;
             }
         });
-
+        
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(() -> {
             if (groundOverlaysf1.size() > 0) {
                 String result = DoTheChecks();
+                String FinerResult = secondCheckForFinerArea(result);
+                if(prevResult != FinerResult)
+                {
+                    prevResult = FinerResult;
+                    HideAllOtherMarkers(FinerResult);
+                    showMarkerInArea(FinerResult);
+                }
                 if (CheckResultLoadType(result)) {
                     CheckResults(result);
                 } else {
-                    String secondResult = secondCheckForFirstLoad(result);
+                    String secondResult = secondCheckForFinerArea(result);
                     if (!CheckResultLoadType(secondResult)) {
                         FirstLoad(result, secondResult);
                     }
@@ -1726,33 +1813,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
             if (!Filtering){
-                if (floorPicked == 1) {
-                    for (Marker markers : MarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : secondFloorMarkersList) {
-                        marker.setVisible(false);
-                    }
-                } else {
-                    for (Marker markers : secondFloorMarkersList) {
-                        if (markerFragment.MTouch.marker2 != null) {
-                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                            }
-                        } else {
-                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-                        }
-                    }
-                    for (Marker marker : MarkersList) {
-                        marker.setVisible(false);
-                    }
-                }
+//                if (floorPicked == 1) {
+//                    for (Marker markers : MarkersList) {
+//                        if (markerFragment.MTouch.marker2 != null) {
+//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                            }
+//                        } else {
+//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                        }
+//                    }
+//                    for (Marker marker : secondFloorMarkersList) {
+//                        marker.setVisible(false);
+//                    }
+//                } else {
+//                    for (Marker markers : secondFloorMarkersList) {
+//                        if (markerFragment.MTouch.marker2 != null) {
+//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                            }
+//                        } else {
+//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
+//                        }
+//                    }
+//                    for (Marker marker : MarkersList) {
+//                        marker.setVisible(false);
+//                    }
+//                }
             }
         });
         //Slide up code setup
@@ -1910,7 +1997,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
+    public void HideAllOtherMarkers(String typeNotToHide)
+    {
+        if(!typeNotToHide.equals("1"))
+        {
+            for (int i = 0; i < BuildingOne.size(); i++) {
+                BuildingOne.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("2"))
+        {
+            for (int i = 0; i < BuildingTwo.size(); i++) {
+                BuildingTwo.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("3A"))
+        {
+            for (int i = 0; i < ThreeAMarkers.size(); i++) {
+                ThreeAMarkers.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("3B"))
+        {
+            for (int i = 0; i < ThreeBMarkers.size(); i++) {
+                ThreeBMarkers.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("3C"))
+        {
+            for (int i = 0; i < ThreeCMarkers.size(); i++) {
+                ThreeCMarkers.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("3D"))
+        {
+            for (int i = 0; i < ThreeDMarkers.size(); i++) {
+                ThreeDMarkers.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("3E"))
+        {
+            for (int i = 0; i < ThreeEMarkers.size(); i++) {
+                ThreeEMarkers.get(i).setVisible(false);
+            }
+        }
+        if(!typeNotToHide.equals("3F"))
+        {
+            for (int i = 0; i < ThreeFMarkers.size(); i++) {
+                ThreeFMarkers.get(i).setVisible(false);
+            }
+        }
+    }
+    
     public boolean CheckResultLoadType(String Result) {
         boolean wasFound = false;
         if (!Result.equals("b3u") && !Result.equals("b3d") && !Result.equals("b4u") && !Result.equals("b4d") && !Result.equals("b1") && !Result.equals("b2")) {

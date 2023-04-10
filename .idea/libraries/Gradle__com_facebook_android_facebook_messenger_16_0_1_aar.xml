@@ -1,15 +1,15 @@
 <component name="libraryTable">
   <library name="Gradle: com.facebook.android:facebook-messenger:16.0.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f2aeb4f0ce0c971147ce89dc90f745be/transformed/facebook-messenger-16.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f2aeb4f0ce0c971147ce89dc90f745be/transformed/facebook-messenger-16.0.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f2aeb4f0ce0c971147ce89dc90f745be/transformed/facebook-messenger-16.0.1/res" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/f2aeb4f0ce0c971147ce89dc90f745be/transformed/facebook-messenger-16.0.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/f2aeb4f0ce0c971147ce89dc90f745be/transformed/facebook-messenger-16.0.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/f2aeb4f0ce0c971147ce89dc90f745be/transformed/facebook-messenger-16.0.1/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-messenger/16.0.1/f0d21c65c290803c297f33b6dbcb207322694270/facebook-messenger-16.0.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/com.facebook.android/facebook-messenger/16.0.1/f0d21c65c290803c297f33b6dbcb207322694270/facebook-messenger-16.0.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-messenger/16.0.1/8714b6fb1d97c92fea961eb322cb216ea6c4fafd/facebook-messenger-16.0.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/com.facebook.android/facebook-messenger/16.0.1/8714b6fb1d97c92fea961eb322cb216ea6c4fafd/facebook-messenger-16.0.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
