@@ -889,40 +889,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             case("b1"):
                 for (int i = 0; i < BuildingOne.size(); i++) {
-                    BuildingOne.get(i).setVisible(true);
+//                    BuildingOne.get(i).setVisible(true);
+                    //Show based on Filter
+                    ShowTheseMarkers(BuildingOne);
                 }
                 break;
             case("b2"):
                 break;
             case("3A"):
                 for (int i = 0; i < ThreeAMarkers.size(); i++) {
-                    ThreeAMarkers.get(i).setVisible(true);
+//                    ThreeAMarkers.get(i).setVisible(true);
+                    ShowTheseMarkers(ThreeAMarkers);
                 }
                 break;
-            case("3BConnected"):
-            case("FishBowl"):
+            case("3B"):
                 for (int i = 0; i < ThreeBMarkers.size(); i++) {
-                    ThreeBMarkers.get(i).setVisible(true);
+//                    ThreeBMarkers.get(i).setVisible(true);
+                    ShowTheseMarkers(ThreeBMarkers);
                 }
                 break;
             case("3C"):
                 for (int i = 0; i < ThreeCMarkers.size(); i++) {
-                    ThreeCMarkers.get(i).setVisible(true);
+//                    ThreeCMarkers.get(i).setVisible(true);
+                    ShowTheseMarkers(ThreeCMarkers);
                 }
                 break;
             case("3D"):
                 for (int i = 0; i < ThreeDMarkers.size(); i++) {
-                    ThreeDMarkers.get(i).setVisible(true);
+//                    ThreeDMarkers.get(i).setVisible(true);
+                    ShowTheseMarkers(ThreeDMarkers);
                 }
                 break;
             case("3E"):
                 for (int i = 0; i < ThreeEMarkers.size(); i++) {
-                    ThreeEMarkers.get(i).setVisible(true);
+//                    ThreeEMarkers.get(i).setVisible(true);
+                    ShowTheseMarkers(ThreeEMarkers);
                 }
                 break;
             case("3F"):
                 for (int i = 0; i < ThreeFMarkers.size(); i++) {
-                    ThreeFMarkers.get(i).setVisible(true);
+//                    ThreeFMarkers.get(i).setVisible(true);
+                    ShowTheseMarkers(ThreeFMarkers);
                 }
                 break;
 
@@ -1710,15 +1717,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(prevResult != FinerResult)
                 {
                     prevResult = FinerResult;
-                    if(!Filtering) {
+//                    if(!Filtering) {
                         HideAllOtherMarkers(FinerResult);
                         showMarkerInArea(FinerResult);
-                    }
-                    else
-                    {
-                        ShowTheseMarkers();
-                        HideAllOtherMarkers(FinerResult);
-                    }
+//                    }
+//                    else
+//                    {
+//                        ShowTheseMarkers();
+//                        HideAllOtherMarkers(FinerResult);
+//                    }
                 }
                 if (CheckResultLoadType(result)) {
                     CheckResults(result);
@@ -1759,15 +1766,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(prevResult != FinerResult)
                 {
                     prevResult = FinerResult;
-                    if(!Filtering) {
+//                    if(!Filtering) {
                         HideAllOtherMarkers(FinerResult);
                         showMarkerInArea(FinerResult);
-                    }
-                    else
-                    {
-                        HideAllOtherMarkers(FinerResult);
-                        ShowTheseMarkers();
-                    }
+//                    }
+//                    else
+//                    {
+//                        HideAllOtherMarkers(FinerResult);
+//                        ShowTheseMarkers();
+//                    }
                 }
                 if (CheckResultLoadType(result)) {
                     CheckResults(result);
@@ -2505,75 +2512,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-    protected void ShowTheseMarkers()
+    protected void ShowTheseMarkers(ArrayList<Marker> building)
     {
+        //Call from ShowMarkerInArea, pass in what array to look, if filter contains marker from building, go
         if (CRShow) {
-            for (Marker m : ClassRoomMarkers) {
-                m.setVisible(true);
+            for (Marker m : building) {
+                if (ClassRoomMarkers.contains(m)){
+                    m.setVisible(true);
+                }
+                else {
+                    m.setVisible(false);
+                }
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-        } else {
-            for (Marker m : ClassRoomMarkers) {
-                m.setVisible(false);
-            }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
         }
         if (OFShow) {
-            for (Marker m : OFRooms) {
-                m.setVisible(true);
+            for (Marker m : building) {
+                if (OFRooms.contains(m)){
+                    m.setVisible(true);
+                }
+                else {
+                    m.setVisible(false);
+                }
             }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : OFRooms) {
-                m.setVisible(false);
-            }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
 
         }
         if (BRShow) {
-            for (Marker m : BathroomMarkers) {
-                m.setVisible(true);
+            for (Marker m : building) {
+                if (BathroomMarkers.contains(m)){
+                    m.setVisible(true);
+                }
+                else {
+                    m.setVisible(false);
+                }
             }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : BathroomMarkers) {
-                m.setVisible(false);
-            }
-            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
-
         }
         if (WZShow) {
-            for (Marker m : WaterZones) {
-                m.setVisible(true);
+            for (Marker m : building) {
+                if (WaterZones.contains(m)){
+                    m.setVisible(true);
+                }
+                else {
+                    m.setVisible(false);
+                }
             }
-            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : WaterZones) {
-                m.setVisible(false);
-            }
-            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
 
         }
 
         if (ETCShow) {
-            for (Marker m : ETCRooms) {
-                m.setVisible(true);
+            for (Marker m : building) {
+                if (ETCRooms.contains(m)){
+                    m.setVisible(true);
+                }
+                else {
+                    m.setVisible(false);
+                }
             }
-            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
-
-        } else {
-            for (Marker m : ETCRooms) {
-                m.setVisible(false);
-            }
-            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
 
         }
         if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
             Filtering = false;
-            for (Marker m : MarkersList) {
+            for (Marker m : building) {
                 m.setVisible(true);
             }
 
@@ -2659,15 +2657,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
 
             //slide down slideup when map is clicked
-            if (slideup) {
-                slideupview.setVisibility(View.GONE);
-                //Animation stuff that bugs out
-            /*TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
-            animate.setDuration(375);
-            animate.setFillAfter(true);
-            slideupview.startAnimation(animate);*/
-                slideup = false;
-            }
+            slideupview.setVisibility(View.GONE);
+
             if (RemovePoint.getVisibility() == View.VISIBLE) {
                 RemovePoint.setVisibility(View.GONE);
             }
@@ -2675,7 +2666,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 saveSpotLayout.setVisibility(View.GONE);
             }
             //Make all markers visible
-//        checkIfMarkerNeedVisible();
+          checkIfMarkerNeedVisible();
         }
 
         public void RemoveAllLines () {
