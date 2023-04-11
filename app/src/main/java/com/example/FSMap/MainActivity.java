@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -50,7 +49,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.net.NetworkInterface;
 import java.util.Arrays;
 
 
@@ -357,16 +355,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
-        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected= false;
-        if (!connected){
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-
-        }
-        else{
+//        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+//                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+//            connected = true;
+//        else
+//            connected= false;
+//        if (!connected){
+//            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+//
+//        }
+//        else{
             switch(view.getId()){
 
                 case R.id.RegisterBTN:
@@ -380,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(this,ForgotPassword.class));
                     break;
             }
-        }
+//        }
     }
 
     private void userLogin() {

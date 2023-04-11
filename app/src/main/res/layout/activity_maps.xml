@@ -69,7 +69,7 @@
             android:layout_marginHorizontal="280dp"
             android:foreground="@drawable/starvisible" />
     </LinearLayout>
-    //Two Markers
+
     <!--<LinearLayout
         android:id="@+id/navbar"
         android:translationZ="90dp"

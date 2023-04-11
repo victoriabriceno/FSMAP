@@ -162,7 +162,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
             markerClick = itemView.findViewById(R.id.marker);
             trash = itemView.findViewById(R.id.trashFavorites);
             editFavorites = itemView.findViewById(R.id.editFavorites);
-            orginalName = itemView.findViewById(R.id.OriginalTitle);
+            orginalName = itemView.findViewById(R.id.orginalName);
             originalKeyListener = TitleOfTheMarker.getKeyListener();
             TitleOfTheMarker.setKeyListener(null);
         }
