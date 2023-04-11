@@ -1,9 +1,5 @@
 package com.example.FSMap;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -12,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,13 +43,13 @@ FirebaseAuth auth;
             }
         });
 
-        backForget = findViewById(R.id.backBTN);
-        backForget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ForgotPassword.this,MainActivity.class));
-            }
-        });
+//        backForget = findViewById(R.id.backBTN);
+//        backForget.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(ForgotPassword.this,MainActivity.class));
+//            }
+//        });
 
     }
     private void resetpassword(){

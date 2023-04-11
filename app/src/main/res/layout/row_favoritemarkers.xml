@@ -50,7 +50,6 @@
         <EditText
             android:id="@+id/TitleMarker"
             android:layout_width="226dp"
-
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_toEndOf="@+id/marker"
@@ -61,7 +60,8 @@
             android:maxLines="1"
             android:text="Title"
             android:textColor="@color/gray"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/OriginalTitle"

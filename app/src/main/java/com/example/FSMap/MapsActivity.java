@@ -1036,7 +1036,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker found = FindTheMarker(dataSnapshot.getKey());
-                    if (found != null) {
+                    if (found != null && createdMarkers != null) {
                         if (CheckMarkerType(found)) {
                             for (Marker m : createdMarkers) {
                                 if (m.getTitle().equals(found.getTitle())) {
@@ -1716,7 +1716,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     else
                     {
-                        HideAllOtherMarkers(FinerResult);
                         ShowTheseMarkers();
                         HideAllOtherMarkers(FinerResult);
                     }
@@ -1737,37 +1736,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         createdMarkers.remove(i);
                     }
                 }
-            }
-
-            if(!Filtering)
-            {
-//                if (floorPicked == 1) {
-//                    for (Marker markers : MarkersList) {
-//                        if (markerFragment.MTouch.marker2 != null) {
-//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                            }
-//                        } else {
-//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                        }
-//                    }
-//                    for (Marker marker : secondFloorMarkersList) {
-//                        marker.setVisible(false);
-//                    }
-//                } else {
-//                    for (Marker markers : secondFloorMarkersList) {
-//                        if (markerFragment.MTouch.marker2 != null) {
-//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                            }
-//                        } else {
-//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                        }
-//                    }
-//                    for (Marker marker : MarkersList) {
-//                        marker.setVisible(false);
-//                    }
-//                }
             }
         });
         
@@ -1826,35 +1794,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         favoritedMarkers.remove(i);
                     }
                 }
-            }
-            if (!Filtering){
-//                if (floorPicked == 1) {
-//                    for (Marker markers : MarkersList) {
-//                        if (markerFragment.MTouch.marker2 != null) {
-//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                            }
-//                        } else {
-//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                        }
-//                    }
-//                    for (Marker marker : secondFloorMarkersList) {
-//                        marker.setVisible(false);
-//                    }
-//                } else {
-//                    for (Marker markers : secondFloorMarkersList) {
-//                        if (markerFragment.MTouch.marker2 != null) {
-//                            if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
-//                                markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                            }
-//                        } else {
-//                            markers.setVisible(mMap.getCameraPosition().zoom > 18);
-//                        }
-//                    }
-//                    for (Marker marker : MarkersList) {
-//                        marker.setVisible(false);
-//                    }
-//                }
             }
         });
         //Slide up code setup
@@ -1961,18 +1900,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 lines1.color(Color.parseColor("#FFA500"));
             }
         }
-
-        if (favoritedMarkers == null || favoritedMarkers.isEmpty()) {
-            LoadFavoriteMarkers();
-        }
-        if (!favoritedMarkers.isEmpty()) {
-            for (int i = 0; i < favoritedMarkers.size(); i++) {
-                if (favoritedMarkers.get(i).getTitle().equals(markerTitle2)) {
-                    onMarkerClick(favoritedMarkers.get(i));
-                    break;
-                }
-            }
-        }
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraLoad));
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/CustomMarkers/");
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1985,7 +1912,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String markerTitle = dataSnapshot.getKey().toString();
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
                     double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
-                    floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
+                    if(dataSnapshot.child("Floor").getValue() != null) {
+                        floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
+                    }
                     LatLng newLatLng = new LatLng(latitude1, longitude1);
                     MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
                     if (!wasRemoveHit) {
@@ -2011,6 +1940,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        if (favoritedMarkers == null || favoritedMarkers.isEmpty()) {
+            LoadFavoriteMarkers();
+        }
+        if (!favoritedMarkers.isEmpty()) {
+            for (int i = 0; i < favoritedMarkers.size(); i++) {
+                if (favoritedMarkers.get(i).getTitle().equals(markerTitle2)) {
+                    onMarkerClick(favoritedMarkers.get(i));
+                    break;
+                }
+            }
+        }
     }
     public void HideAllOtherMarkers(String typeNotToHide)
     {
