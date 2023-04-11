@@ -2327,14 +2327,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
                 btnFavoritesAdd.setVisibility(View.GONE);
                 break;
-            case R.id.ZoomIn:
-                mMap.moveCamera(CameraUpdateFactory.zoomIn());
-                checkIfMarkerNeedVisible();
-                break;
-            case R.id.ZoomOut:
-                mMap.moveCamera(CameraUpdateFactory.zoomOut());
-                checkIfMarkerNeedVisible();
-                break;
             case R.id.FloorUp:
                 floorPicked = 2;
                 upFloor.setVisibility(View.GONE);
