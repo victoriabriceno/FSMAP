@@ -20,8 +20,8 @@
 
     <RelativeLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="350dp"
-        android:layout_height="430dp"
+        android:layout_width="473dp"
+        android:layout_height="523dp"
         android:layout_below="@id/FSMAP2"
         android:layout_centerInParent="true"
         android:layout_marginBottom="304dp"
@@ -54,10 +54,10 @@
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="User"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
             android:inputType="textPersonName"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/registerEmailAddress"
@@ -71,10 +71,10 @@
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Email"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
             android:inputType="textEmailAddress"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/ConfirmEmailAddress"
@@ -87,11 +87,11 @@
             android:drawableLeft="@drawable/confirmemail"
             android:drawablePadding="10dp"
             android:ems="10"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
             android:hint="Confirmation Email"
             android:inputType="textEmailAddress"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/ConfirmPassword"
@@ -105,18 +105,30 @@
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Confirmation Password"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
             android:inputType="textPassword"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <CheckBox
+            android:id="@+id/checkboxTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ConfirmPassword"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="151dp"
+            android:text="Terms and Conditions" />
 
         <Button
             android:id="@+id/RegisterUser"
             android:layout_width="225dp"
             android:layout_height="44dp"
             android:layout_below="@id/ConfirmPassword"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="98dp"
+            android:layout_marginEnd="131dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="Register User"
@@ -142,11 +154,11 @@
             android:drawableLeft="@drawable/padlock"
             android:drawablePadding="10dp"
             android:ems="10"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
             android:hint="Password"
             android:inputType="textPassword"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
 
     </RelativeLayout>
@@ -172,7 +184,7 @@
         android:layout_marginBottom="28dp"
         android:fontFamily="@font/questrialregular"
         android:text="Join our team!"
-        android:textColor="@color/gray"
+        android:textColor="@color/FS_gray"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/constrainLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -187,7 +199,7 @@
         android:layout_marginBottom="204dp"
         android:fontFamily="@font/questrialregular"
         android:text="Made by SwiftKings"
-        android:textColor="@color/gray"
+        android:textColor="@color/FS_gray"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
