@@ -88,7 +88,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/round_lineralayout">
+                    android:background="@drawable/round_linearlayout">
 
                     <TextView
                         android:id="@+id/favoritesName"
@@ -124,7 +124,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/round_lineralayout">
+                    android:background="@drawable/round_linearlayout">
 
                     <TextView
                         android:id="@+id/CustomMarkersName"
@@ -177,7 +177,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/round_lineralayout">
+                    android:background="@drawable/round_linearlayout">
 
                     <TextView
                         android:id="@+id/AboutName"
@@ -214,7 +214,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/round_lineralayout">
+                    android:background="@drawable/round_linearlayout">
 
                     <TextView
                         android:id="@+id/LogoutName"

@@ -31,6 +31,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -172,9 +174,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     double Latitude, Longitued;
     float zoom;
-    boolean slideup;
+    LinearLayout slideupview;
+    boolean slidepup;
+    BottomSheetBehavior bottomSheetBehavior;
     double mLastAltitude;
-    RelativeLayout slideupview;
     ArrayList<String> nameslist = new ArrayList<String>() {
     };
     boolean DarkorLight;
@@ -611,8 +614,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         getLocationPermission();
         //Slide up code
-        slideupview = findViewById(R.id.slideup);
+        //Slide up code
+        slideupview = findViewById(R.id.design_bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         slideupview.setVisibility(View.GONE);
+        slidepup= false;
 
         //save spot code
         saveSpotLayout = findViewById(R.id.saveSpotLayout);
@@ -1797,8 +1803,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         //Slide up code setup
-        slideupview = findViewById(R.id.slideup);
+        slideupview = findViewById(R.id.design_bottom_sheet);
         slideupview.setVisibility(View.GONE);
+        slidepup = false;
 
         //Set Button for save spot
         Set = findViewById(R.id.OkMarkerTitle);
@@ -2206,6 +2213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //"Select" markers to be used if needed
                 //Removes slideup
                 slideupview.setVisibility(View.GONE);
+                slidepup = false;
                 //Allows NavDone button to appear
                 NavDone.setVisibility(View.VISIBLE);
                 //Brings back searchbar (may be depricated, will have to test)
@@ -2657,16 +2665,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //Hide Keyboard when map is clicked
             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-
-            //slide down slideup when map is clicked
-            if (slideup) {
+            if(slidepup){
                 slideupview.setVisibility(View.GONE);
-                //Animation stuff that bugs out
-            /*TranslateAnimation animate = new TranslateAnimation(0, 0, 0, slideupview.getHeight());
-            animate.setDuration(375);
-            animate.setFillAfter(true);
-            slideupview.startAnimation(animate);*/
-                slideup = false;
+                slidepup = false;
             }
             if (RemovePoint.getVisibility() == View.VISIBLE) {
                 RemovePoint.setVisibility(View.GONE);
