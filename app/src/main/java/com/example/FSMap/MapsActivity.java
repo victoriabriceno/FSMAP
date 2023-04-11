@@ -1710,8 +1710,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(prevResult != FinerResult)
                 {
                     prevResult = FinerResult;
-                    HideAllOtherMarkers(FinerResult);
-                    showMarkerInArea(FinerResult);
+                    if(!Filtering) {
+                        HideAllOtherMarkers(FinerResult);
+                        showMarkerInArea(FinerResult);
+                    }
+                    else
+                    {
+                        HideAllOtherMarkers(FinerResult);
+                        ShowTheseMarkers();
+                        HideAllOtherMarkers(FinerResult);
+                    }
                 }
                 if (CheckResultLoadType(result)) {
                     CheckResults(result);
@@ -1783,8 +1791,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(prevResult != FinerResult)
                 {
                     prevResult = FinerResult;
-                    HideAllOtherMarkers(FinerResult);
-                    showMarkerInArea(FinerResult);
+                    if(!Filtering) {
+                        HideAllOtherMarkers(FinerResult);
+                        showMarkerInArea(FinerResult);
+                    }
+                    else
+                    {
+                        HideAllOtherMarkers(FinerResult);
+                        ShowTheseMarkers();
+                    }
                 }
                 if (CheckResultLoadType(result)) {
                     CheckResults(result);
@@ -1964,20 +1979,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int floor = 1;
+                createdMarkers = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker newMarker = null;
                     String markerTitle = dataSnapshot.getKey().toString();
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
                     double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
-//                    int floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
+                    floor = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
                     LatLng newLatLng = new LatLng(latitude1, longitude1);
                     MarkerOptions newMarkerOption = new MarkerOptions().position(newLatLng).title(markerTitle);
                     if (!wasRemoveHit) {
                         newMarker = mMap.addMarker(newMarkerOption);
                         newMarker.showInfoWindow();
-                        if (createdMarkers != null) {
-                            createdMarkers.add(newMarker);
-                        }
+                        createdMarkers.add(newMarker);
                     }
                     if (floor == 1 && newMarker != null) {
                         MarkersList.add(newMarker);
@@ -1985,6 +1999,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         secondFloorMarkersList.add(newMarker);
                     }
                 }
+                markerFragment.MTouch.CustomMarkers(createdMarkers);
                 if (createdMarkers != null) {
                     if (createdMarkers.size() > 0) {
                         doTheClick(createdMarkers);
@@ -2017,7 +2032,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ThreeAMarkers.get(i).setVisible(false);
             }
         }
-        if(!typeNotToHide.equals("3B"))
+        if(!typeNotToHide.equals("3BConnected") || !typeNotToHide.equals("FishBowl"))
         {
             for (int i = 0; i < ThreeBMarkers.size(); i++) {
                 ThreeBMarkers.get(i).setVisible(false);
@@ -2550,6 +2565,81 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+    protected void ShowTheseMarkers()
+    {
+        if (CRShow) {
+            for (Marker m : ClassRoomMarkers) {
+                m.setVisible(true);
+            }
+            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+        } else {
+            for (Marker m : ClassRoomMarkers) {
+                m.setVisible(false);
+            }
+            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        }
+        if (OFShow) {
+            for (Marker m : OFRooms) {
+                m.setVisible(true);
+            }
+            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : OFRooms) {
+                m.setVisible(false);
+            }
+            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (BRShow) {
+            for (Marker m : BathroomMarkers) {
+                m.setVisible(true);
+            }
+            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : BathroomMarkers) {
+                m.setVisible(false);
+            }
+            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (WZShow) {
+            for (Marker m : WaterZones) {
+                m.setVisible(true);
+            }
+            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : WaterZones) {
+                m.setVisible(false);
+            }
+            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+
+        if (ETCShow) {
+            for (Marker m : ETCRooms) {
+                m.setVisible(true);
+            }
+            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+
+        } else {
+            for (Marker m : ETCRooms) {
+                m.setVisible(false);
+            }
+            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+
+        }
+        if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
+            Filtering = false;
+            for (Marker m : MarkersList) {
+                m.setVisible(true);
+            }
+
+        }
+    }
+
         protected void removeAllOverlays() {
 
     }
