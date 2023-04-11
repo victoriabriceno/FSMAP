@@ -1617,6 +1617,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for (String[] room : roomlist) {
                     MarkerOptions roommarker = new MarkerOptions().position(new LatLng(Double.parseDouble(room[1]), Double.parseDouble(room[2]))).title(room[0]).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    roommarker.anchor(0.5f,0.5f);
                     Marker mark = mMap.addMarker(roommarker);
                     MarkersList.add(mark);
                     switch (room[3]) {
