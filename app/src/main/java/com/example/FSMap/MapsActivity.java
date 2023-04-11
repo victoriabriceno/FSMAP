@@ -899,8 +899,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     ThreeAMarkers.get(i).setVisible(true);
                 }
                 break;
-            case("3BConnected"):
-            case("FishBowl"):
+            case("3B"):
                 for (int i = 0; i < ThreeBMarkers.size(); i++) {
                     ThreeBMarkers.get(i).setVisible(true);
                 }
@@ -1707,6 +1706,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (groundOverlaysf1.size() > 0) {
                 String result = DoTheChecks();
                 String FinerResult = secondCheckForFinerArea(result);
+                if(FinerResult == "3BConnected" || FinerResult == "FishBowl")
+                {
+                    FinerResult = "3B";
+                }
                 if(prevResult != FinerResult)
                 {
                     prevResult = FinerResult;
@@ -1816,34 +1819,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         NavDone = findViewById(R.id.NavDone);
         NavDone.setOnClickListener(this);
 
-        //zoom in
-//        ZoomIn = findViewById(R.id.ZoomIn);
-//        ZoomIn.setOnClickListener(this);
-
-        //zoom out
-//        ZoomOut = findViewById(R.id.ZoomOut);
-//        ZoomOut.setOnClickListener(this);
         //SearchBar
         Search = findViewById(R.id.input_Search);
 
         //upFloor
         upFloor = findViewById(R.id.FloorUp);
+
         //downFloor
         downFloor = findViewById(R.id.FloorDown);
 
         //Nav Lock Button
         NacLock = findViewById(R.id.NavLock);
         NacLock.setOnClickListener(this);
+
         //Marker click function
         mMap.setOnMarkerClickListener(this);
+
         //Map click function
         mMap.setOnMapClickListener(this);
+
         //Map Long Click function
         mMap.setOnMapLongClickListener(this);
+
         //upFloor Click Listener
         upFloor.setOnClickListener(this);
+
         //downFloor Click Listener
         downFloor.setOnClickListener(this);
+
         if (floorPicked == 1) {
             downFloor.setVisibility(View.GONE);
         } else {
@@ -1972,7 +1975,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ThreeAMarkers.get(i).setVisible(false);
             }
         }
-        if(!typeNotToHide.equals("3BConnected") || !typeNotToHide.equals("FishBowl"))
+        if(!typeNotToHide.equals("3B"))
         {
             for (int i = 0; i < ThreeBMarkers.size(); i++) {
                 ThreeBMarkers.get(i).setVisible(false);
@@ -2221,6 +2224,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 FollowUser = false;
                 //Remove all lines
                 RemoveAllLines();
+                for (Marker m:createdMarkers) {
+                    m.setVisible(true);
+                }
 //                checkIfMarkerNeedVisible();
                 onMapClick(new LatLng(28.595085, -81.308305));
                 //Brings Searchbar back
@@ -2240,20 +2246,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 wasRemoveHit = true;
 
                 for (int i = 0; i < createdMarkers.size(); i++) {
-                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
+                    if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
                         createdMarkers.get(i).remove();
-                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
+                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, markerFragment.MTouch.createdMarker);
                         createdMarkers.get(i).setVisible(false);
-                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, createdMarker);
+                        CustomMarker.removeFromCustomMarkers(MapsActivity.this, markerFragment.MTouch.createdMarker);
                         createdMarkers.remove(i);
-                        createdMarker.remove();
-                        createdMarker = null;
+                        markerFragment.MTouch.createdMarker.remove();
+                        markerFragment.MTouch.createdMarker = null;
                     }
                 }
 
                 for (int i = 0; i < favoritedMarkers.size(); i++) {
-                    if (favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        Favorites.removeFromFavorite(MapsActivity.this, createdMarker);
+                    if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
+                        Favorites.removeFromFavorite(MapsActivity.this, markerFragment.MTouch.createdMarker);
                         favoritedMarkers.remove(i);
                     }
                 }
@@ -2318,14 +2324,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 snack.show();
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
                 btnFavoritesAdd.setVisibility(View.GONE);
-                break;
-            case R.id.ZoomIn:
-                mMap.moveCamera(CameraUpdateFactory.zoomIn());
-                checkIfMarkerNeedVisible();
-                break;
-            case R.id.ZoomOut:
-                mMap.moveCamera(CameraUpdateFactory.zoomOut());
-                checkIfMarkerNeedVisible();
                 break;
             case R.id.FloorUp:
                 floorPicked = 2;
