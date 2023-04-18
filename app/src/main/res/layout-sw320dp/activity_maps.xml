@@ -7,26 +7,28 @@
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        map:layout_anchor="@+id/relativeLayout"
+        map:layout_anchorGravity="center">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.example.FSMap.MarkerFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MapsActivity"
-            tools:layout_editor_absoluteX="-5dp"
-            tools:layout_editor_absoluteY="0dp"
-            tools:ignore="FragmentTagUsage">
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.example.FSMap.MarkerFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".MapsActivity"
+                    tools:layout_editor_absoluteX="-5dp"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:ignore="FragmentTagUsage">
 
-        </fragment>
+                </fragment>
 
         <Button
             android:id="@+id/NavDone"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:layout_above="@+id/slideup"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginVertical="190dp"
@@ -43,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="37dp"
             android:layout_alignWithParentIfMissing="true"
-            android:layout_above="@+id/slideup"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="8dp"
             android:background="@drawable/custom_input"
@@ -167,6 +168,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/userMaps"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="3dp"
             android:text="U" />
 
         <Button
@@ -190,104 +192,164 @@
             android:text="Nav Lock" />
 
 
-        <RelativeLayout
-            android:layout_width="141dp"
-            android:layout_height="409dp"
+        <LinearLayout
+            android:layout_width="114dp"
+            android:layout_height="352dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="144dp"
-            android:layout_marginEnd="262dp"
-            android:layout_marginBottom="177dp">
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="143dp"
+            android:layout_marginEnd="295dp"
+            android:orientation="vertical">
+
 
             <Button
                 android:id="@+id/FilterButton"
-                android:layout_width="118dp"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="350dp"
-                android:text="Filter" />
+                android:background="@drawable/roundforthefilters"
+                android:layout_marginLeft="15dp"
+                android:text="F" />
 
             <Button
                 android:id="@+id/CRFilterButton"
-                android:layout_width="118dp"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="300dp"
-                android:text="Classes" />
+                android:background="@drawable/roundforthefilters"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="C" />
 
             <Button
                 android:id="@+id/OFFilterButton"
-                android:layout_width="118dp"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="110dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="250dp"
-                android:text="Offices" />
+                android:background="@drawable/roundforthefilters"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="O" />
 
             <Button
                 android:id="@+id/BRFilterButton"
-                android:layout_width="118dp"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="160dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="200dp"
-                android:text="Bathrooms" />
+                android:background="@drawable/roundforthefilters"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="BR" />
 
             <Button
                 android:id="@+id/WZFilterButton"
-                android:layout_width="118dp"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="210dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="150dp"
-                android:text="Water" />
+                android:background="@drawable/roundforthefilters"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="W" />
 
             <Button
                 android:id="@+id/ETCFilterButton"
-                android:layout_width="118dp"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="260dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="100dp"
-                android:text="ETC" />
+                android:background="@drawable/roundforthefilters"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Et"/>
+
+            <!--            <Button-->
+            <!--                android:id="@+id/FilterButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="42dp"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="22dp"-->
+            <!--                android:layout_marginTop="11dp"-->
+            <!--                android:layout_marginEnd="77dp"-->
+            <!--                android:layout_marginBottom="463dp"-->
+            <!--                android:back-->
+            <!--                android:text="F" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/CRFilterButton"-->
+            <!--                android:layout_width="38dp"-->
+            <!--                android:layout_height="35dp"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="26dp"-->
+            <!--                android:layout_marginTop="68dp"-->
+            <!--                android:layout_marginEnd="77dp"-->
+            <!--                android:layout_marginBottom="413dp"-->
+            <!--                android:background="@drawable/roundforthefilters"-->
+            <!--                android:text="C" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/OFFilterButton"-->
+            <!--                android:layout_width="48dp"-->
+            <!--                android:layout_height="48dp"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="32dp"-->
+            <!--                android:layout_marginTop="129dp"-->
+            <!--                android:layout_marginEnd="80dp"-->
+            <!--                android:layout_marginBottom="354dp"-->
+            <!--                android:background="@drawable/roundforthefilters"-->
+            <!--                android:text="O" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/BRFilterButton"-->
+            <!--                android:layout_width="34dp"-->
+            <!--                android:layout_height="31dp"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="29dp"-->
+            <!--                android:layout_marginTop="195dp"-->
+            <!--                android:layout_marginEnd="78dp"-->
+            <!--                android:layout_marginBottom="290dp"-->
+            <!--                android:background="@drawable/roundforthefilters"-->
+            <!--                android:text="B" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/WZFilterButton"-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="36dp"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="25dp"-->
+            <!--                android:layout_marginTop="256dp"-->
+            <!--                android:layout_marginEnd="76dp"-->
+            <!--                android:layout_marginBottom="224dp"-->
+            <!--                android:background="@drawable/roundforthefilters"-->
+            <!--                android:text="W" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/ETCFilterButton"-->
+            <!--                android:layout_width="35dp"-->
+            <!--                android:layout_height="31dp"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="27dp"-->
+            <!--                android:layout_marginTop="314dp"-->
+            <!--                android:layout_marginEnd="79dp"-->
+            <!--                android:layout_marginBottom="171dp"-->
+            <!--                android:background="@drawable/roundforthefilters"-->
+            <!--                android:text="ETC" />-->
 
 
-        </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
+
     <include layout="@layout/bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

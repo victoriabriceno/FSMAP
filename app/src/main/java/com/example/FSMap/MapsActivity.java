@@ -644,12 +644,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         WZFilter.setOnClickListener(this);
         ETCFilter.setOnClickListener(this);
 
-        Filter.setBackgroundColor(Color.parseColor("#73777B"));
-        CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
-        OFFilter.setBackgroundColor(Color.parseColor("#73777B"));
-        BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
-        WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
-        ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+        Filter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+        CRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+        OFFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+        BRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+        WZFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+        ETCFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         CRFilter.setVisibility(View.GONE);
         OFFilter.setVisibility(View.GONE);
@@ -2379,14 +2379,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.FilterButton:
                 FilterShow = !FilterShow;
                 if (FilterShow) {
-                    Filter.setBackgroundColor(Color.parseColor("#F55E25"));
+                    Filter.setBackground(getDrawable(R.drawable.roundforthefilters));
                     CRFilter.setVisibility(View.VISIBLE);
                     OFFilter.setVisibility(View.VISIBLE);
                     BRFilter.setVisibility(View.VISIBLE);
                     WZFilter.setVisibility(View.VISIBLE);
                     ETCFilter.setVisibility(View.VISIBLE);
                 } else {
-                    Filter.setBackgroundColor(Color.parseColor("#73777B"));
+                    Filter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
                     CRFilter.setVisibility(View.GONE);
                     OFFilter.setVisibility(View.GONE);
                     BRFilter.setVisibility(View.GONE);
@@ -2444,50 +2444,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (Marker m : ClassRoomMarkers) {
                 m.setVisible(true);
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+           CRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
         } else {
             for (Marker m : ClassRoomMarkers) {
                 m.setVisible(false);
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            CRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
         }
         if (OFShow) {
             for (Marker m : OFRooms) {
                 m.setVisible(true);
             }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            OFFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : OFRooms) {
                 m.setVisible(false);
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            OFFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
         if (BRShow) {
             for (Marker m : BathroomMarkers) {
                 m.setVisible(true);
             }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            BRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : BathroomMarkers) {
                 m.setVisible(false);
             }
-            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            BRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
         if (WZShow) {
             for (Marker m : WaterZones) {
                 m.setVisible(true);
             }
-            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            WZFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : WaterZones) {
                 m.setVisible(false);
             }
-            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            WZFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
 
@@ -2495,13 +2495,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (Marker m : ETCRooms) {
                 m.setVisible(true);
             }
-            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            ETCFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : ETCRooms) {
                 m.setVisible(false);
             }
-            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            ETCFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
         if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
@@ -2518,50 +2518,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (Marker m : ClassRoomMarkers) {
                 m.setVisible(true);
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            CRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
         } else {
             for (Marker m : ClassRoomMarkers) {
                 m.setVisible(false);
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            CRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
         }
         if (OFShow) {
             for (Marker m : OFRooms) {
                 m.setVisible(true);
             }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            OFFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : OFRooms) {
                 m.setVisible(false);
             }
-            CRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            OFFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
         if (BRShow) {
             for (Marker m : BathroomMarkers) {
                 m.setVisible(true);
             }
-            OFFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            BRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : BathroomMarkers) {
                 m.setVisible(false);
             }
-            BRFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            BRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
         if (WZShow) {
             for (Marker m : WaterZones) {
                 m.setVisible(true);
             }
-            WZFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            WZFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : WaterZones) {
                 m.setVisible(false);
             }
-            WZFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            WZFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
 
@@ -2569,13 +2569,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (Marker m : ETCRooms) {
                 m.setVisible(true);
             }
-            ETCFilter.setBackgroundColor(Color.parseColor("#F55E25"));
+            ETCFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
         } else {
             for (Marker m : ETCRooms) {
                 m.setVisible(false);
             }
-            ETCFilter.setBackgroundColor(Color.parseColor("#73777B"));
+            ETCFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
         }
         if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
