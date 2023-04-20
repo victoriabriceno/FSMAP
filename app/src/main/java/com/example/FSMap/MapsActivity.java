@@ -1726,7 +1726,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     else
                     {
-                        ShowTheseMarkers();
+                        ShowTheseMarkers(FinerResult);
                         HideAllOtherMarkers(FinerResult);
                     }
                 }
@@ -1776,7 +1776,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     else
                     {
                         HideAllOtherMarkers(FinerResult);
-                        ShowTheseMarkers();
+                        ShowTheseMarkers(FinerResult);
                     }
                 }
                 if (CheckResultLoadType(result)) {
@@ -2512,79 +2512,121 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-    protected void ShowTheseMarkers()
+    protected void ShowTheseMarkers(String area)
     {
-        if (CRShow) {
-            for (Marker m : ClassRoomMarkers) {
-                m.setVisible(true);
-            }
-            CRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
-        } else {
-            for (Marker m : ClassRoomMarkers) {
-                m.setVisible(false);
-            }
-            CRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
-        }
-        if (OFShow) {
-            for (Marker m : OFRooms) {
-                m.setVisible(true);
-            }
-            OFFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
+        //Function For filtering by area
+        ArrayList <Marker> curbuild = null;
 
-        } else {
-            for (Marker m : OFRooms) {
-                m.setVisible(false);
-            }
-            OFFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
-
-        }
-        if (BRShow) {
-            for (Marker m : BathroomMarkers) {
-                m.setVisible(true);
-            }
-            BRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
-
-        } else {
-            for (Marker m : BathroomMarkers) {
-                m.setVisible(false);
-            }
-            BRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+        switch (area)
+        {
+            case("b1"):
+                curbuild = BuildingOne;
+                break;
+            case("b2"):
+                curbuild = BuildingTwo;
+                break;
+            case("3A"):
+                curbuild = ThreeAMarkers;
+                break;
+            case("3B"):
+                curbuild = ThreeBMarkers;
+                break;
+            case("3C"):
+                curbuild = ThreeCMarkers;
+                break;
+            case("3D"):
+                curbuild = ThreeDMarkers;
+                break;
+            case("3E"):
+                curbuild = ThreeEMarkers;
+                break;
+            case("3F"):
+                curbuild = ThreeFMarkers;
+                break;
 
         }
-        if (WZShow) {
-            for (Marker m : WaterZones) {
-                m.setVisible(true);
+        if (curbuild != null) {
+            if (CRShow) {
+                for (Marker m : curbuild) {
+                    if (ClassRoomMarkers.contains(m)){
+                        m.setVisible(true);
+                    }
+                }
+                CRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
+            } else {
+                for (Marker m : ClassRoomMarkers) {
+                    m.setVisible(false);
+                }
+                CRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
             }
-            WZFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
 
-        } else {
-            for (Marker m : WaterZones) {
-                m.setVisible(false);
+            if (OFShow) {
+                for (Marker m : curbuild) {
+                    if (OFRooms.contains(m)){
+                        m.setVisible(true);
+                    }
+                }
+                OFFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
+            } else {
+                for (Marker m : OFRooms) {
+                    m.setVisible(false);
+                }
+                OFFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
             }
-            WZFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
 
+            if (BRShow) {
+                for (Marker m : curbuild) {
+                    if (BathroomMarkers.contains(m)){
+                        m.setVisible(true);
+                    }
+                }
+                BRFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
+            } else {
+                for (Marker m : BathroomMarkers) {
+                    m.setVisible(false);
+                }
+                BRFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+
+            }
+
+            if (WZShow) {
+                for (Marker m : curbuild) {
+                    if (WaterZones.contains(m)){
+                        m.setVisible(true);
+                    }
+                }
+                WZFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
+            } else {
+                for (Marker m : WaterZones) {
+                    m.setVisible(false);
+                }
+                WZFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+            }
+
+            if (ETCShow) {
+                for (Marker m : curbuild) {
+                    if (ETCRooms.contains(m)){
+                        m.setVisible(true);
+                    }
+                }
+                ETCFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
+
+            } else {
+                for (Marker m : ETCRooms) {
+                    m.setVisible(false);
+                }
+                ETCFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
+
+            }
+            if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
+                Filtering = false;
+//            for (Marker m : MarkersList) {
+//                m.setVisible(true);
+//            }
+
+            }
         }
 
-        if (ETCShow) {
-            for (Marker m : ETCRooms) {
-                m.setVisible(true);
-            }
-            ETCFilter.setBackground(getDrawable(R.drawable.roundforthefilters));
-
-        } else {
-            for (Marker m : ETCRooms) {
-                m.setVisible(false);
-            }
-            ETCFilter.setBackground(getDrawable(R.drawable.roundfilterbuttongray));
-
-        }
-        if (!CRShow && !OFShow && !BRShow && !WZShow && !ETCShow) {
-            Filtering = false;
-            for (Marker m : MarkersList) {
-                m.setVisible(true);
-            }
-
-        }
     }
 
         protected void removeAllOverlays() {
