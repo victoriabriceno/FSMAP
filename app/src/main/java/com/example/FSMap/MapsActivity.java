@@ -350,7 +350,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     B3D.get(B3D.size() - 1).setDimensions(40, 42);
                 } else if (firstLoadResults.equals("3D")) {
                     B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(4)));
-                    B3D.get(B3D.size() - 1).setDimensions(20, 25);
+                    B3D.get(B3D.size() - 1).setDimensions(40, 30);
                 } else if (firstLoadResults.equals("3E")) {
                     B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(5)));
                     B3D.get(B3D.size() - 1).setDimensions(37, 28);
@@ -365,7 +365,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     B4U.get(B4U.size() - 1).setDimensions(90, 50);
                 } else if (firstLoadResults.equals("4AWD2")) {
                     B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(8)));
-                    B4U.get(B4U.size() - 1).setDimensions(58, 32);
+                    B4U.get(B4U.size() - 1).setDimensions(56, 43);
                 } else if (firstLoadResults.equals("4AFC")) {
                     B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(9)));
                     B4U.get(B4U.size() - 1).setDimensions(70, 50);
@@ -454,8 +454,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch (result) {
             case "b3u"://check if result was building 3 top half.
                 if (floorPicked == 1) {
-                    for (int i = 0; i < B3U.size(); i++) {
-                        B3U.get(i).setVisible(true);
+                    for (GroundOverlay overlay: B3U) {
+                        overlay.setVisible(true);
                     }
                 } else {
                     HideAllOverlays();
@@ -464,22 +464,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             case "b3d"://check if result was building 3 bottom half
                 if (floorPicked == 1) {
-                    for (int i = 0; i < B3D.size(); i++) {
-                        B3D.get(i).setVisible(true);
+                    for (GroundOverlay overlay: B3D) {
+                        overlay.setVisible(true);
                     }
                 }
                 break;
             case "b4u":
                 if (floorPicked == 1) {
-                    for (int i = 0; i < B4U.size(); i++) {
-                        B4U.get(i).setVisible(true);
+                    for (GroundOverlay overlay: B4U) {
+                        overlay.setVisible(true);
                     }
                 }
                 break;
             case "b4d":
                 if (floorPicked == 1) {
-                    for (int i = 0; i < B4D.size(); i++) {
-                        B4D.get(i).setVisible(true);
+                    for (GroundOverlay overlay: B4D) {
+                        overlay.setVisible(true);
                     }
                 }
                 break;
@@ -1172,13 +1172,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .anchor(0.45f, 0.45f);
                 GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
                         .positionFromBounds(build3BConnect)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd));
+                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd))
+                        .anchor(0.08f,0.77f);
                 GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3C)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
                 GroundOverlayOptions build3DOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3CMP)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp));
+                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp))
+                        .anchor(0.7f,0.7f);
                 GroundOverlayOptions build3FOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3F)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3f_1f));
@@ -1196,7 +1198,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 GroundOverlayOptions build4AWD2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build4AWD2)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd2))
-                        .bearing(42);
+                        .bearing(44)
+                        .anchor(0.6f,0.75f);
                 GroundOverlayOptions build4AFCOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4AFC)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_fc))
@@ -1208,7 +1211,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 GroundOverlayOptions build4EOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4E)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
-                        .bearing(45);
+                        .bearing(45)
+                        .anchor(0.5f,0.5f);
                 GroundOverlayOptions build1f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build1_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_1f))
@@ -1219,7 +1223,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_2f))
                         .bearing(180)
                         .anchor(0.558f, 0.485f);
-                ;
+
                 GroundOverlayOptions build2f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
@@ -1739,17 +1743,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
             }
-            if (wasRemoveHit) {
-                for (int i = 0; i < createdMarkers.size(); i++) {
-                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        createdMarkers.get(i).remove();
-                        createdMarkers.remove(i);
-                    }
-                }
-            }
+//            if (wasRemoveHit) {
+//                for (int i = 0; i < createdMarkers.size(); i++) {
+//                    if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
+//                        createdMarkers.get(i).remove();
+//                        createdMarkers.remove(i);
+//                    }
+//                }
+//            }
         });
         
-        
+
         //On Marker Click Override
         markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
 
@@ -1766,6 +1770,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (groundOverlaysf1.size() > 0) {
                 String result = DoTheChecks();
                 String FinerResult = secondCheckForFinerArea(result);
+                if(FinerResult == "3BConnected" || FinerResult == "FishBowl")
+                {
+                    FinerResult = "3B";
+                }
                 if(prevResult != FinerResult)
                 {
                     prevResult = FinerResult;
@@ -1792,19 +1800,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (FollowUser || wasMarkerClicked) {
                 navloc();
             }
-            if (wasRemoveHit) {
-                for (int i = 0; i < createdMarkers.size(); i++) {
-                    if (createdMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        createdMarkers.get(i).remove();
-                        createdMarkers.remove(i);
-                    }
-                }
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
-                    if (favoritedMarkers.get(i).getTitle().equals(createdMarker.getTitle())) {
-                        favoritedMarkers.remove(i);
-                    }
-                }
-            }
+//            if (wasRemoveHit) {
+//                for (int i = 0; i < createdMarkers.size(); i++) {
+//                    if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
+//                        createdMarkers.get(i).remove();
+//                        createdMarkers.remove(i);
+//                    }
+//                }
+//                for (int i = 0; i < favoritedMarkers.size(); i++) {
+//                    if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
+//                        favoritedMarkers.remove(i);
+//                    }
+//                }
+//            }
         });
         //Slide up code setup
         slideupview = findViewById(R.id.design_bottom_sheet);
@@ -1963,6 +1971,173 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+    ArrayList<LatLng> Q1 = new ArrayList<>(Arrays.asList(new LatLng(28.595217682239355,-81.30385525524616),new LatLng(28.595218270999617,-81.30383245646954), new LatLng(28.595219742900227,-81.30377478897572), new LatLng(28.595214738438067,-81.30369365215302), new LatLng(28.595217387859222,-81.30366180092096), new LatLng(28.595217387859222,-81.30359776318073), new LatLng(28.59519059926425,-81.30358066409826), new LatLng(28.595216504718856,-81.30352735519409)));
+    ArrayList<LatLng> Q2 = new ArrayList<>(Arrays.asList(new LatLng(28.595212677777095,-81.30417109),new LatLng(28.59521562157846,-81.30409933626652), new LatLng(28.595226219262685,-81.30408190190792), new LatLng(28.595226513642796,-81.30406312644482), new LatLng(28.595225041742264,-81.30404904484749), new LatLng(28.595218270999617,-81.30403999239206), new LatLng(28.595211500256514,-81.30402792245148), new LatLng(28.595218270999617,-81.3039967417717), new LatLng(28.595219742900227,-81.30395483225584), new LatLng(28.595217976619487,-81.3039256632328)));
+    ArrayList<LatLng> Q3 = new ArrayList<>(Arrays.asList(new LatLng(28.595091687469754,-81.30420729517937),new LatLng(28.595101402025108,-81.30417343229055), new LatLng(28.59507461340057,-81.30415465682745), new LatLng(28.59507284711739,-81.30410704761744), new LatLng(28.595052829239282,-81.30406580865383), new LatLng(28.595054889903384,-81.30396254360676), new LatLng(28.59499984072009,-81.30391594022512), new LatLng(28.59495273979169,-81.303915604949), new LatLng(28.594935960080836,-81.30391493439674)));
+    ArrayList<LatLng> Q4 = new ArrayList<>(Arrays.asList(new LatLng(28.595049591052774,-81.30383715033533),new LatLng(28.595052240478108,-81.30379255861044), new LatLng(28.595052829239282,-81.30375735461712), new LatLng(28.595048119149773,-81.30369331687689), new LatLng(28.595049591052774,-81.30366079509258), new LatLng(28.595050179813978,-81.3035749644041), new LatLng(28.595105228970915,-81.30357999354601), new LatLng(28.595050179813978,-81.3035749644041)));
+    //latitude for fish bowl: 28.595124658078248
+    //longitude for fish bowl: -81.30386296659708
+    public String FindQuadrantForArea(LatLng position)
+    {
+        double _longitude = position.longitude;
+        double _latitdue = position.latitude;
+        double longToCheck = -81.30386296659708;
+        double latToCheck = 28.595124658078248;
+        if(_longitude < longToCheck && _latitdue < latToCheck )
+        {
+            return "Q3";
+        }
+        else if(_longitude < longToCheck && _latitdue > latToCheck)
+        {
+            return "Q2";
+        }
+        else if(_longitude > longToCheck && _latitdue > latToCheck)
+        {
+            return  "Q1";
+        } else if (_longitude > longToCheck && _latitdue < latToCheck) {
+            return "Q4";
+        }
+        else {
+            return "NotFound";
+        }
+    }
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside(String QuadrantDestination, LatLng Destination)
+    {   ArrayList<LatLng> points =  new ArrayList<>();
+        //all of these paths only consider travel from outside to inside. Not travel withing the building.
+        //Within building travel will require different logic because there may be shortcuts to be taken within the building.
+
+        if(QuadrantDestination.equals("Q1"))
+        {
+            //grab first two points of quadrant3
+            points.add(Q3.get(0));
+            points.add(Q3.get(1));
+            //use all points from quadrant2
+            for (LatLng point:Q2) {
+                points.add(point);
+            }
+            // grab all points from quadrant1 that has a long less than the destiantion point whichever that may be.
+            for (LatLng point:Q1) {
+                if(point.longitude < Destination.longitude)
+                {
+                    points.add(point);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        else if(QuadrantDestination.equals("Q2"))
+        {
+            //-81.30417109
+            //grab first two points of quadrant3
+            points.add(Q3.get(0));
+            points.add(Q3.get(1));
+            //then grab all points from quadrant2 till you get to destination(lat is less than destination)
+            for(LatLng point: Q2)
+            {
+                if(point.longitude <= Destination.longitude)
+                {
+                    points.add(point);
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        else if(QuadrantDestination.equals("Q3"))
+        {
+            //grab all points from qudrant 3 until you get to destination. quadrant 3 is by the entrance of the building.
+            for(LatLng point: Q3)
+            {
+                if(point.longitude <= Destination.longitude)
+                {
+                    points.add(point);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        else if(QuadrantDestination.equals("Q4"))
+        {
+            //grab first part of quadrant 3's points.(quadrant three will have points that lead down into the next building)
+            for(LatLng point: Q3)
+            {
+                if(point.latitude > 28.59499984072009)
+                {
+                    points.add(point);
+                }
+                else {
+                    break;
+                }
+            }
+            //then grab all quadrant 4 points until you reach the destination.
+            for(LatLng point: Q4)
+            {
+                if(Destination.latitude > 28.595050179813978)
+                {
+                    if(point.longitude < -81.3035411015153 )
+                    {
+                        points.add(point);
+                    }
+                    if(point.latitude > 28.595050179813978)
+                    {
+                        points.add(point);
+                    }
+                }
+                else
+                {
+                    if(point.longitude <= Destination.longitude)
+                    {
+                        points.add(point);
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+        }
+        return points;
+    }
+    public LatLng FindMarkerAreaForTravel(Marker marker)
+    {
+        LatLng returnArea = null;
+        if(ThreeAMarkers.contains(marker))
+        {
+//            return "3A";
+        }
+        else if(ThreeBMarkers.contains(marker))
+        {
+            returnArea = new LatLng(28.59504105401512,-81.30434174090624);
+        }
+        else if(ThreeCMarkers.contains(marker))
+        {
+//            return "3C";
+        }
+        else if(ThreeDMarkers.contains(marker))
+        {
+//            return "3D";
+        }
+        else if(ThreeEMarkers.contains(marker))
+        {
+//            return "3E";
+        }
+        else if(ThreeFMarkers.contains(marker))
+        {
+//            return "3F";
+        }
+        else if(FourAMarkers.contains(marker))
+        {
+//            return "4A";
+        }
+        else {
+            return null;
+        }
+        return returnArea;
+    }
+
     public void HideAllOtherMarkers(String typeNotToHide)
     {
         if(!typeNotToHide.equals("1"))
@@ -2031,37 +2206,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             switch (Result) {
                 case "b3u":
                     if (B3U.size() == 3) {
-                        resultsList.add("b3u");
+                        if(!resultsList.contains("b3u")) {
+                            resultsList.add("b3u");
+                        }
                         wasFound = true;
                     }
                     break;
                 case "b3d":
                     if (B3D.size() == 4) {
-                        resultsList.add("b3d");
+                        if(!resultsList.contains("b3d") && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
+                            resultsList.add("b3d");
+                        }
                         wasFound = true;
                     }
                     break;
                 case "b4u":
                     if (B4U.size() == 4) {
-                        resultsList.add("b4u");
+                        if(!resultsList.contains("b4u")) {
+                            resultsList.add("b4u");
+                        }
                         wasFound = true;
                     }
                     break;
                 case "b4d":
-                    if (B4D.size() == 3) {
-                        resultsList.add("b4d");
+                    if (B4D.size() >= 3 && resultsList.contains("4D") && resultsList.contains("4C") && resultsList.contains("4E")) {
+                        if(!resultsList.contains("b4d")) {
+                            resultsList.add("b4d");
+                        }
                         wasFound = true;
                     }
                     break;
                 case "b1":
                     if (B1.size() == 2) {
-                        resultsList.add("b1");
+                        if(!resultsList.contains("b1")) {
+                            resultsList.add("b1");
+                        }
                         wasFound = true;
                     }
                     break;
                 case "b2":
                     if (B2.size() == 2) {
-                        resultsList.add("b2");
+                        if(!resultsList.contains("b2")) {
+                            resultsList.add("b2");
+                        }
                         wasFound = true;
                     }
             }
@@ -2254,6 +2441,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.RemoveSpot:
                 wasRemoveHit = true;
 
+                for (int i = 0; i < favoritedMarkers.size(); i++) {
+                    if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
+                        Favorites.removeFromFavorite(MapsActivity.this, markerFragment.MTouch.createdMarker);
+                        favoritedMarkers.remove(i);
+                    }
+                }
+
                 for (int i = 0; i < createdMarkers.size(); i++) {
                     if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
                         createdMarkers.get(i).remove();
@@ -2263,13 +2457,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         createdMarkers.remove(i);
                         markerFragment.MTouch.createdMarker.remove();
                         markerFragment.MTouch.createdMarker = null;
-                    }
-                }
-
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
-                    if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
-                        Favorites.removeFromFavorite(MapsActivity.this, markerFragment.MTouch.createdMarker);
-                        favoritedMarkers.remove(i);
+                        break;
                     }
                 }
                 RemoveAllLines();
@@ -2366,6 +2554,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     } else {
                         markers.setVisible(mMap.getCameraPosition().zoom > 18);
                     }
+                }
+                if(B1 != null && B1.size() > 0)
+                {
+                    B1.get(1).setVisible(false);
                 }
                 for (Marker marker : secondFloorMarkersList) {
                     marker.setVisible(false);
@@ -2732,12 +2924,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //get directions to marker
         public void getDirectionPoly (Marker marker){
             getDeviceLocation();
+            LatLng dest = FindMarkerAreaForTravel(marker);
             String url1 = "";
-            if (!CheckMarkerType(marker)) {
-                url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
-            } else {
-                url1 = getUrl(new LatLng(Latitude, Longitued), marker.getPosition());
-            }
+//            if (!CheckMarkerType(marker)) {
+//                url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
+//            } else {
+            url1 = getUrl(new LatLng(Latitude, Longitued),dest);
+//            }
             String url = url1;
 
             TaskRequestDirections taskRequestDirections = new TaskRequestDirections(marker);
@@ -2864,7 +3057,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         points.add(new LatLng(lat, lon));
                     }
-
+                    String area = FindQuadrantForArea(marker.getPosition());
+                    points.addAll(ChoosePointsToGrabOutsideToInside(area,marker.getPosition()));
                     polylineOptions.addAll(points);
                     polylineOptions.width(15);
                     if (DarkorLight) {
@@ -2877,16 +3071,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#22808080")).width(15));
                 linesShowing.add(poly);
                 if (polylineOptions != null) {
-                    if (!CheckMarkerType(marker)) {
-                        List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
-                        polylineOptions.add(outToInPoly.get(0));
-                    }
-                    String outToPolys = "outsideTo" + marker.getTitle();
-                    for (int i = 0; i < LinesTitles.size(); i++) {
-                        if (LinesTitles.get(i).equals(outToPolys)) {
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                        }
-                    }
+//                    if (!CheckMarkerType(marker)) {
+//                        List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
+//                        polylineOptions.add(outToInPoly.get(0));
+//                    }
+//                    String outToPolys = "outsideTo" + marker.getTitle();
+//                    for (int i = 0; i < LinesTitles.size(); i++) {
+//                        if (LinesTitles.get(i).equals(outToPolys)) {
+//                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+//                        }
+//                    }
                     linesShowing.add(mMap.addPolyline(polylineOptions));
                 } else {
                     snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);

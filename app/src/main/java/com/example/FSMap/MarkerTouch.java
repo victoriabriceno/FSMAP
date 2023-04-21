@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -216,7 +215,7 @@ public class MarkerTouch extends FrameLayout {
                 if(markersClicked.size()!= 0) {
                     if (!markersClicked.get(0).equals(marker)) {
                         clickCount++;
-                        RemoveAllLines();
+//                        RemoveAllLines();
                         markersClicked.add(marker);
                     }
                     //triggers if user clicks on same marker twice
@@ -225,7 +224,7 @@ public class MarkerTouch extends FrameLayout {
                 }
                 else
                 {
-                    RemoveAllLines();
+//                    RemoveAllLines();
                     markersClicked.add(marker);
                 }
                 //Remove marker from markers clicked when more than 1 marker has been clicked
@@ -284,12 +283,12 @@ public class MarkerTouch extends FrameLayout {
                     To.setBackgroundColor(Color.TRANSPARENT);
                 }
                 //hide markers after one is clicked
-                for (Marker m : AM)
-                {
-                    if(!m.getTitle().equals(marker.getTitle())) {
-                        m.setVisible(false);
-                    }
-                }
+//                for (Marker m : AM)
+//                {
+//                    if(!m.getTitle().equals(marker.getTitle())) {
+//                        m.setVisible(false);
+//                    }
+//                }
                 marker2 = marker;
 
             }
@@ -361,6 +360,7 @@ public class MarkerTouch extends FrameLayout {
             if(m.getTitle().equals(marker.getTitle()))
             {
                 isItCreatedMarker = true;
+                break;
             }
         }
         return isItCreatedMarker;
