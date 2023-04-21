@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/design_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    app:behavior_hideable='true'
+    app:behavior_hideable="true"
     app:behavior_peekHeight="80dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -18,7 +19,7 @@
         app:cardElevation="20dp">
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/Slide_up"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,82 +32,114 @@
                 android:layout_width="30dp"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:background="@color/FS_ORANGE">
+                android:background="@color/FS_ORANGE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.527"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.075">
 
             </View>
-
 
             <TextView
                 android:id="@+id/roomnumber"
                 android:layout_width="232dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:fontFamily="@font/questrialregular"
-                android:text="Potato Holder"
                 android:paddingLeft="10dp"
+                android:text="Potato Holder"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.155" />
 
             <AutoCompleteTextView
                 android:id="@+id/From"
                 android:layout_width="252dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/custom_imput2"
                 android:fontFamily="@font/questrialregular"
                 android:hint="From"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.589" />
 
             <AutoCompleteTextView
                 android:id="@+id/Destination"
                 android:layout_width="254dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/custom_imput2"
                 android:hint="To"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
-            <ImageButton
-                android:id="@+id/btnRemoveFavorites"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_above="@id/navgo"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="10dp"
-                android:layout_toRightOf="@id/Destination"
-                android:background="@null"
-                android:foreground="@drawable/starfull" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="104dp"
+                android:layout_height="186dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.948"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
 
-            <ImageButton
-                android:id="@+id/btnAddFavorites"
-                android:layout_width="48dp"
-                android:layout_height="45dp"
-                android:layout_above="@id/navgo"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="10dp"
-                android:layout_toRightOf="@id/Destination"
-                android:background="@null"
-                android:foreground="@drawable/star"
-                android:visibility="gone" />
+                <ImageButton
+                    android:id="@+id/btnRemoveFavorites"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_above="@id/navgo"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="75dp"
+                    android:layout_toRightOf="@id/Destination"
+                    android:background="@null"
+                    android:foreground="@drawable/starfull" />
 
-            <Button
-                android:id="@+id/navgo"
-                android:layout_width="66dp"
-                android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="30dp"
-                android:layout_toRightOf="@id/From"
-                android:background="@drawable/custom_imput2"
-                android:backgroundTint="@color/FS_ORANGE"
-                android:fontFamily="@font/questrialregular"
-                android:text="GO" />
+                <ImageButton
+                    android:id="@+id/btnAddFavorites"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_above="@id/navgo"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="55dp"
+                    android:layout_toRightOf="@id/Destination"
+                    android:background="@null"
+                    android:foreground="@drawable/star"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/navgo"
+                    android:layout_width="66dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_toRightOf="@id/From"
+                    android:background="@drawable/custom_imput2"
+                    android:backgroundTint="@color/FS_ORANGE"
+                    android:fontFamily="@font/questrialregular"
+                    android:text="GO" />
+
+            </LinearLayout>
 
 
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>
