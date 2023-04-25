@@ -175,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double Latitude, Longitued;
     float zoom;
     LinearLayout slideupview;
-    boolean slidepup;
+    boolean slidepup = false;
     BottomSheetBehavior bottomSheetBehavior;
     double mLastAltitude;
     ArrayList<String> nameslist = new ArrayList<String>() {

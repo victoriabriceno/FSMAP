@@ -62,7 +62,7 @@ public class MarkerTouch extends FrameLayout {
 
 
     BottomSheetBehavior bottomSheetBehavior;
-    boolean slidepup;
+    MapsActivity mapsActivity;
 
 
 
@@ -239,10 +239,10 @@ public class MarkerTouch extends FrameLayout {
                 bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
                 TextView text = slideupview.findViewById(R.id.roomnumber);
                 text.setText(marker.getTitle());
-                if(!slidepup){
+                if(!mapsActivity.slidepup == false){
                     slideupview.setVisibility(View.VISIBLE);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    slidepup=true;
+                    mapsActivity.slidepup=true;
                 }
 
                 //Creates list of all marker titles
