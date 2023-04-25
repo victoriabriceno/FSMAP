@@ -459,7 +459,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 } else {
                     HideAllOverlays();
-                    B3U2.setVisible(true);
+                    if(B3U2 != null) {
+                        B3U2.setVisible(true);
+                    }
                 }
                 break;
             case "b3d"://check if result was building 3 bottom half
@@ -1318,267 +1320,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             Init();
         }
-        //Creating polylines
-        PolylineOptions outSideTo119 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593989, -81.304514));
-        PolylineOptions room119to118 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593959, -81.304514));
-        PolylineOptions outSideTo118 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593959, -81.304514));
-        PolylineOptions room118to117 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304514));
-        PolylineOptions room118to116 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room118to115 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room118to113 = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room118toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593959, -81.304514))
-                .add(new LatLng(28.593959, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room119to117 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304514));
-        PolylineOptions outSideTo117 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304514));
-        PolylineOptions room117To116 = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room117to115 = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room117to113 = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room117toWater = new PolylineOptions()
-                .add(new LatLng(28.593929, -81.304514))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room119to116 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room116to115 = new PolylineOptions()
-                .add(new LatLng(28.593898, -81.304514))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room116to113 = new PolylineOptions()
-                .add(new LatLng(28.593898, -81.304514))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room116toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593898, -81.304514))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions outsideTo116 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593898, -81.304514));
-        PolylineOptions room119to115 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room115to113 = new PolylineOptions()
-                .add(new LatLng(28.593858, -81.304514))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room115toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593858, -81.304514))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions outsideTo115 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304514));
-        PolylineOptions room119to113 = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions outsideTo113 = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593838, -81.304444));
-        PolylineOptions room119toWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593989, -81.304514))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions room113ToWaterZone = new PolylineOptions()
-                .add(new LatLng(28.593838, -81.304444))
-                .add(new LatLng(28.593838, -81.304400))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        PolylineOptions outsideToWaterZone = new PolylineOptions()
-                .add(new LatLng(28.594075, -81.304381))
-                .add(new LatLng(28.593989, -81.304386))
-                .add(new LatLng(28.593989, -81.304484))
-                .add(new LatLng(28.593929, -81.304484))
-                .add(new LatLng(28.593929, -81.304464))
-                .add(new LatLng(28.593898, -81.304464))
-                .add(new LatLng(28.593858, -81.304464))
-                .add(new LatLng(28.593858, -81.304400))
-                .add(new LatLng(28.593818, -81.304400));
-        //Adding polylines to list for lines and string list for searching
-        customPolyLines.add(outSideTo119);
-        LinesTitles.add("outsideToMeeting 119");
-        customPolyLines.add(room119to118);
-        LinesTitles.add("Meeting 119Meeting 118");
-        customPolyLines.add(outSideTo118);
-        LinesTitles.add("outsideToMeeting 118");
-        customPolyLines.add(room118to117);
-        LinesTitles.add("Meeting 118Meeting 117");
-        customPolyLines.add(room118to116);
-        LinesTitles.add("Meeting 118Meeting 116");
-        customPolyLines.add(room118to115);
-        LinesTitles.add("Meeting 118Meeting 115");
-        customPolyLines.add(room118to113);
-        LinesTitles.add("Meeting 118Boys Bathroom (113)");
-        customPolyLines.add(room118toWaterZone);
-        LinesTitles.add("Meeting 118Water Zone(112)");
-        customPolyLines.add(room119to117);
-        LinesTitles.add("Meeting 119Meeting 117");
-        customPolyLines.add(outSideTo117);
-        LinesTitles.add("outsideToMeeting 117");
-        customPolyLines.add(room119to117);
-        LinesTitles.add("Meeting 119Meeting 117");
-        customPolyLines.add(room117To116);
-        LinesTitles.add("Meeting 117Meeting 116");
-        customPolyLines.add(room117to115);
-        LinesTitles.add("Meeting 117Meeting 115");
-        customPolyLines.add(room117to113);
-        LinesTitles.add("Meeting 117Boys Bathroom (113)");
-        customPolyLines.add(room117toWater);
-        LinesTitles.add("Meeting 117Water Zone (112)");
-        customPolyLines.add(room116to115);
-        LinesTitles.add("Meeting 116Meeting 115");
-        customPolyLines.add(room116to113);
-        LinesTitles.add("Meeting 116Boys Bathroom (113)");
-        customPolyLines.add(room116toWaterZone);
-        LinesTitles.add("Meeting 116Water Zone (112)");
-        customPolyLines.add(room119to116);
-        LinesTitles.add("Meeting 119Meeting 116");
-        customPolyLines.add(outsideTo116);
-        LinesTitles.add("outsideToMeeting 116");
-        customPolyLines.add(outsideTo115);
-        LinesTitles.add("outsideToMeeting 115");
-        customPolyLines.add(room115to113);
-        LinesTitles.add("Meeting 115Boys Bathroom (113)");
-        customPolyLines.add(room115toWaterZone);
-        LinesTitles.add("Meeting 115Water Zone (112)");
-        customPolyLines.add(room119to115);
-        LinesTitles.add("Meeting 119Meeting 115");
-        customPolyLines.add(room119to113);
-        LinesTitles.add("Meeting 119Boys Bathroom (113)");
-        customPolyLines.add(outsideTo113);
-        LinesTitles.add("outsideToBoys Bathroom (113)");
-        customPolyLines.add(room113ToWaterZone);
-        LinesTitles.add("Boys Bathroom (113)Water Zone (112)");
-        customPolyLines.add(room119toWaterZone);
-        LinesTitles.add("Meeting 119Water Zone (112)");
-        customPolyLines.add(outsideToWaterZone);
-        LinesTitles.add("outsideToWater Zone (112)");
 
         //Marker stuffs
         //Markers for classrooms
@@ -1759,35 +1500,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(() -> {
-            if (groundOverlaysf1.size() > 0) {
-                String result = DoTheChecks();
-                String FinerResult = secondCheckForFinerArea(result);
-                if(FinerResult == "3BConnected" || FinerResult == "FishBowl")
-                {
-                    FinerResult = "3B";
-                }
-                if(prevResult != FinerResult)
-                {
-
-                    prevResult = FinerResult;
-                    if (!Filtering) {
-                        HideAllOtherMarkers(FinerResult);
-                        showMarkerInArea(FinerResult);
-                    } else {
-                        HideAllOtherMarkers(FinerResult);
-                        ShowTheseMarkers();
-                    }
-                }
-                if (CheckResultLoadType(result)) {
-                    CheckResults(result);
-                } else {
-                    String secondResult = secondCheckForFinerArea(result);
-                    if (!CheckResultLoadType(secondResult)) {
-                        FirstLoad(result, secondResult);
-                    }
-                }
-
-            }
+//            if (groundOverlaysf1.size() > 0) {
+//                String result = DoTheChecks();
+//                String FinerResult = secondCheckForFinerArea(result);
+//                if(FinerResult == "3BConnected" || FinerResult == "FishBowl")
+//                {
+//                    FinerResult = "3B";
+//                }
+//                if(prevResult != FinerResult)
+//                {
+//
+//                    prevResult = FinerResult;
+//                    if (!Filtering) {
+//                        HideAllOtherMarkers(FinerResult);
+//                        showMarkerInArea(FinerResult);
+//                    } else {
+//                        HideAllOtherMarkers(FinerResult);
+//                        ShowTheseMarkers();
+//                    }
+//                }
+//                if (CheckResultLoadType(result)) {
+//                    CheckResults(result);
+//                } else {
+//                    String secondResult = secondCheckForFinerArea(result);
+//                    if (!CheckResultLoadType(secondResult)) {
+//                        FirstLoad(result, secondResult);
+//                    }
+//                }
+//
+//            }
             if (FollowUser || wasMarkerClicked) {
                 navloc();
             }
@@ -2191,7 +1932,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             switch (Result) {
                 case "b3u":
-                    if (B3U.size() == 3) {
+                    if (B3U.size() >= 3 && resultsList.contains("3A") && resultsList.contains("FishBowl") && resultsList.contains("3BConnected")) {
                         if(!resultsList.contains("b3u")) {
                             resultsList.add("b3u");
                         }
@@ -2199,8 +1940,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     break;
                 case "b3d":
-                    if (B3D.size() == 4) {
-                        if(!resultsList.contains("b3d") && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
+                    if (B3D.size() >= 4 && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
+                        if(!resultsList.contains("b3d")) {
                             resultsList.add("b3d");
                         }
                         wasFound = true;
@@ -2690,7 +2431,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-
     protected void ShowTheseMarkers() {
         if (CRShow) {
             for (Marker m : ClassRoomMarkers) {
