@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,17 +14,17 @@
         map:layout_anchor="@+id/relativeLayout"
         map:layout_anchorGravity="center">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.example.FSMap.MarkerFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".MapsActivity"
-                    tools:layout_editor_absoluteX="-5dp"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:ignore="FragmentTagUsage">
+        <fragment
+            android:id="@+id/map"
+            android:name="com.example.FSMap.MarkerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MapsActivity"
+            tools:ignore="FragmentTagUsage"
+            tools:layout_editor_absoluteX="-5dp"
+            tools:layout_editor_absoluteY="0dp">
 
-                </fragment>
+        </fragment>
 
         <Button
             android:id="@+id/NavDone"
@@ -57,31 +58,35 @@
             android:id="@+id/userMaps"
             android:layout_width="76dp"
             android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="327dp"
             android:layout_marginRight="5dp"
             android:src="@drawable/userprofilefinalexpanded" />
+
 
         <ImageView
             android:id="@+id/gps"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_below="@id/NavLock"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/gps"
+            android:layout_marginVertical="20dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/placeholder"
             map:layout_constraintEnd_toEndOf="parent"
             map:layout_constraintHorizontal_bias="0.969"
             map:layout_constraintStart_toStartOf="parent"
             map:layout_constraintTop_toTopOf="parent"
             map:layout_constraintVertical_bias="0.84" />
 
-
         <RelativeLayout
             android:id="@+id/search_bar"
-            android:layout_width="300dp"
-            android:layout_height="57dp"
+            android:layout_width="314dp"
+            android:layout_height="54dp"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="6dp"
             android:layout_marginVertical="20dp"
@@ -162,23 +167,29 @@
                 android:textColor="@color/FS_light_gray" />
         </RelativeLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/FloorUp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@id/userMaps"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="3dp"
-            android:text="U" />
+            app:icon="@drawable/upstairs"
+            app:iconGravity="start">
 
-        <Button
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/FloorDown"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@id/userMaps"
             android:layout_marginLeft="20dp"
-            android:text="D"
-            android:visibility="gone" />
+            app:icon="@drawable/downstairs"
+            app:iconGravity="start"
+            android:visibility="gone">
+
+        </com.google.android.material.button.MaterialButton>
 
         <Button
             android:id="@+id/NavLock"
@@ -187,6 +198,7 @@
             android:layout_below="@id/search_bar"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/custom_input"
             android:backgroundTint="@color/FS_ORANGE"
             android:text="Nav Lock" />
@@ -204,58 +216,76 @@
             android:orientation="vertical">
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/FilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
-                android:text="F" />
+                android:background="@drawable/roundforthefilters"
+                app:icon="@drawable/filter_iphone_icon"
+                app:iconGravity="start">
 
-            <Button
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/CRFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="C" />
+                android:background="@drawable/roundforthefilters"
+                app:icon="@drawable/classroom"
+                app:iconGravity="start">
 
-            <Button
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/OFFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="O" />
+                android:background="@drawable/roundforthefilters"
+                app:icon="@drawable/workspace"
+                app:iconGravity="start">
 
-            <Button
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/BRFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="BR" />
+                android:background="@drawable/roundforthefilters"
+                app:icon="@drawable/toilet"
+                app:iconGravity="start">
 
-            <Button
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/WZFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="W" />
+                android:background="@drawable/roundforthefilters"
+                app:icon="@drawable/water"
+                app:iconGravity="start">
 
-            <Button
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/ETCFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="Et"/>
+                android:background="@drawable/roundforthefilters"
+                app:icon="@drawable/surprise_box"
+                app:iconGravity="start">
+
+            </com.google.android.material.button.MaterialButton>
 
 
         </LinearLayout>

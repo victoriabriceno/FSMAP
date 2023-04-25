@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -14,14 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPassword extends AppCompatActivity {
 
-    private EditText emailEditText;
+    private TextInputLayout emailEditText;
     private Button resetPassword;
     private ProgressBar progressbar;
-    ImageView backForget;
+    ImageView backForgot;
 
 FirebaseAuth auth;
     @Override
@@ -30,9 +32,10 @@ FirebaseAuth auth;
         setContentView(R.layout.activity_forgot_password);
 
 
-        emailEditText = (EditText) findViewById(R.id.ForgotPasswordEmail);
+        emailEditText =  findViewById(R.id.ForgotPasswordEmail);
         resetPassword = (Button) findViewById(R.id.resetBTN);
         progressbar = (ProgressBar) findViewById(R.id.ProgressBar);
+        backForgot = findViewById(R.id.backForgot);
 
         auth = FirebaseAuth.getInstance();
 
@@ -43,18 +46,18 @@ FirebaseAuth auth;
             }
         });
 
-//        backForget = findViewById(R.id.backBTN);
-//        backForget.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(ForgotPassword.this,MainActivity.class));
-//            }
-//        });
+        backForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(v.getContext(),MainActivity.class);
+               startActivity(intent);
+            }
+        });
 
     }
     private void resetpassword(){
 
-        String email = emailEditText.getText().toString().trim();
+        String email = emailEditText.getEditText().getText().toString().trim();
 
         if (email.isEmpty()){
             emailEditText.setError("Email is required");

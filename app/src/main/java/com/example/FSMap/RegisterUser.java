@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,7 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private TextView registerUser;
-    private EditText editEmail, editPassword,confirmEmail , confirmPassword, editUser;
+    private TextInputLayout editEmail, editPassword,confirmEmail , confirmPassword, editUser;
     private ProgressBar progressBar;
     private Button registerBack;
     ImageView registerBackButton;
@@ -61,11 +62,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
             }
         });
-        editEmail = (EditText) findViewById(R.id.registerEmailAddress);
-        editPassword = (EditText)  findViewById(R.id.registerPassword);
-        confirmEmail = (EditText) findViewById(R.id.ConfirmEmailAddress) ;
-        confirmPassword = (EditText) findViewById(R.id.ConfirmPassword);
-        editUser  =(EditText) findViewById(R.id.Username) ;
+        editEmail =  findViewById(R.id.registerEmailAddress);
+        editPassword =  findViewById(R.id.registerPassword);
+        confirmPassword = findViewById(R.id.ConfirmPassword);
+        editUser  =findViewById(R.id.Username) ;
 
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
 
@@ -219,11 +219,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     private void registerUser() {
 
-        String userName = editUser.getText().toString().trim();
-        String email = editEmail.getText().toString().trim();
-        String password = editPassword.getText().toString().trim();
-        String confirmE = confirmEmail.getText().toString().trim();
-        String confirmP = confirmPassword.getText().toString().trim();
+        String userName = editUser.getEditText().getText().toString().trim();
+        String email = editEmail.getEditText().getText().toString().trim();
+        String password = editPassword.getEditText().getText().toString().trim();
+        String confirmP = confirmPassword.getEditText().getText().toString().trim();
 
 
         if (userName.isEmpty()){
@@ -237,20 +236,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             editEmail.requestFocus();
             return;
         }
-        if (confirmE.isEmpty()){
-            confirmEmail.setError("You need to confirm the email!");
-            confirmEmail.requestFocus();
-            return;
-        }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
             editEmail.setError("Please provide a valid email!");
             editEmail.requestFocus();
-            return;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(confirmE).matches()){
-            confirmEmail.setError("You need to confirm the email");
-            confirmEmail.requestFocus();
             return;
         }
         if (password.isEmpty()){
@@ -280,7 +269,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            User user = new User(confirmE,userName);
+                            User user = new User(email,userName);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {

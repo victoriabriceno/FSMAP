@@ -42,6 +42,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -55,7 +56,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register, forgetPassword;
-    private EditText editTextEmail, editTextPassword;
+    private TextInputLayout editTextEmail, editTextPassword;
     private Button login;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = (Button) findViewById(R.id.LoginBTN);
         login.setOnClickListener(this);
 
-        editTextEmail = (EditText) findViewById(R.id.EmailAddress);
-        editTextPassword=(EditText) findViewById(R.id.Password);
+        editTextEmail =  findViewById(R.id.EmailAddress);
+        editTextPassword= findViewById(R.id.Password);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -115,42 +116,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else {
             connected = false;
         }
-        //PASSWORD VISIBLE
-
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int Right =2;
-                if (motionEvent.getAction()==MotionEvent.ACTION_UP){
-                    if (motionEvent.getRawX()>= editTextPassword.getRight()-
-                            editTextPassword.getCompoundDrawables()[Right].getBounds().width()){
-                        int selection = editTextPassword.getSelectionEnd();
-                        if (passwordVisible){
-                            //set drawable image here
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                    0,0,R.drawable.visible,0);
-
-                            //for hide password
-                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible = false;
-                        }else{
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                    0,0,R.drawable.eye1,0);
-
-                            //for show password
-                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible = true;
-                        }
-                        editTextPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
 
         // Google
-        ImageButton googleButton = (ImageButton) findViewById(R.id.google_login);
+        Button googleButton = findViewById(R.id.google_login);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
                 requestIdToken(getString(R.string.default_web_client_id))
@@ -173,80 +141,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        // FACEBOOK
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        ImageButton facebookButton = findViewById(R.id.facebook_button);
-        mCallbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-            }
-
-            @Override
-            public void onError(@NonNull FacebookException e) {
-                Log.d(TAG, "facebook:onError", e);
-            }
-        });
-
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList("email","public_profile"));
-            }
-        });
-
 
 
     }
 
-    // Facebook [START]
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
-
-    private void updateUI(FirebaseUser user) {
-        FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-        if (users != null) {
-            // User is signed in
-            Intent i = new Intent(MainActivity.this, MapsActivity.class);
-            startActivity(i);
-            finish();
-
-        } else {
-
-            // No user is signed in
-        }
-    }
-    // Facebook [ENDS]
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -382,8 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void userLogin() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        String email = editTextEmail.getEditText().toString().trim();
+        String password = editTextPassword.getEditText().toString().trim();
 
 
         if (email.isEmpty()){

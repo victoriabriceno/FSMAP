@@ -67,8 +67,8 @@
 
         <LinearLayout
             android:id="@+id/row1"
-            android:layout_width="621dp"
-            android:layout_height="289dp"
+            android:layout_width="455dp"
+            android:layout_height="192dp"
             android:layout_marginTop="116dp"
             android:orientation="horizontal"
             android:padding="10dp"
@@ -96,18 +96,18 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/favoritesImage"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/questrialregular"
                         android:text="Favorites"
                         android:textColor="@color/FS_dark_gray"
-                        android:textSize="30sp"></TextView>
+                        android:textSize="20sp"></TextView>
 
                     <ImageView
                         android:id="@+id/favoritesImage"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="69dp"
+                        android:layout_height="69dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/favorite_logo" />
 
                 </RelativeLayout>
@@ -132,18 +132,18 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/CustomMarkersImage"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/questrialregular"
                         android:text="Custom Markers"
                         android:textColor="@color/FS_dark_gray"
-                        android:textSize="30sp"></TextView>
+                        android:textSize="20sp"></TextView>
 
                     <ImageView
                         android:id="@+id/CustomMarkersImage"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="69dp"
+                        android:layout_height="69dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/location_marker" />
 
                 </RelativeLayout>
@@ -153,8 +153,8 @@
 
         <LinearLayout
             android:id="@+id/row2"
-            android:layout_width="621dp"
-            android:layout_height="277dp"
+            android:layout_width="455dp"
+            android:layout_height="192dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal"
@@ -185,18 +185,18 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/AboutImage"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/questrialregular"
                         android:text="About"
                         android:textColor="@color/FS_dark_gray"
-                        android:textSize="30sp"></TextView>
+                        android:textSize="20sp"></TextView>
 
                     <ImageView
                         android:id="@+id/AboutImage"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="69dp"
+                        android:layout_height="69dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/information" />
 
                 </RelativeLayout>
@@ -222,18 +222,18 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/LogoutImage"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/questrialregular"
                         android:text="Logout"
                         android:textColor="@color/FS_dark_gray"
-                        android:textSize="30sp"></TextView>
+                        android:textSize="20sp"></TextView>
 
                     <ImageView
                         android:id="@+id/LogoutImage"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="69dp"
+                        android:layout_height="69dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/exit" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
