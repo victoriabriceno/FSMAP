@@ -219,6 +219,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private MarkerFragment markerFragment;
     boolean isAndroidReady = false;
     boolean csvmarkerready, cmmarkerready = false;
+    ArrayList<String> SearchList;
     View importPanel;
     LocationListener locationListener = new LocationListener() {
         @Override
@@ -388,9 +389,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             case "b2":
                 B2.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 1)));
-                B2.get(B2.size() - 1).setDimensions(140, 90);
+                B2.get(B2.size() - 1).setDimensions(157, 95);
                 B2.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 1)));
-                B2.get(B2.size() - 1).setDimensions(140, 90);
+                B2.get(B2.size() - 1).setDimensions(157, 95);
                 if (floorPicked == 1) {
                     B2.get(1).setVisible(false);
                 } else {
@@ -956,7 +957,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Runs on map ready, used for search bar
     private void SearchReady() {
-        ArrayList<String> SearchList = new ArrayList<String>();
+        SearchList = new ArrayList<String>();
         for (Marker m : MarkersList) {
             if (m.getTitle() != null) {
                 SearchList.add(m.getTitle());
@@ -992,7 +993,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         if (null != searched) {
-            onMarkerClick(searched);
+//            onMarkerClick(searched);
+            markerFragment.MTouch.moveCamera(searched.getPosition());
+            markerFragment.MTouch.ManualTouch(searched);
         } else {
             Toast.makeText(getApplicationContext(), "No Results Found", Toast.LENGTH_SHORT).show();
         }
@@ -1228,11 +1231,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 GroundOverlayOptions build2f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
-                        .bearing(-120);
+                        .bearing(-117.5f)
+                        .anchor(0.598f,0.41f);
                 GroundOverlayOptions build2f2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_2f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_2f))
-                        .bearing(-120);
+                        .bearing(-117.5f)
+                        .anchor(0.598f,0.41f);
                 //add groundOverlay and create reference.
                 groundOverlaysf1.add(build3aOverlay);
                 groundOverlaysf2.add(build3aF2Overlay);
@@ -1406,33 +1411,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         case ("3F"):
                             ThreeFMarkers.add(mark);
                             break;
-
-                    }
-                    //Set Markers image for classrooms
-                    for (Marker ClassRoom : ClassRoomMarkers) {
-                        ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
                     }
 
-                    //Set Markers image for bathrooms
-                    for (Marker Bathrooms : BathroomMarkers) {
-                        Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
-                    }
 
-                    //Set Markers image for Waterzones
-                    for (Marker WaterStation : WaterZones) {
-                        WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
-                    }
-                    //Set Markers image for ETC rooms
-                    for (Marker etc : ETCRooms) {
-                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
-                    }
-                    //Set Marker image for OF rooms
-                    for (Marker etc : OFRooms) {
-                        etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
-                    }
+                }
+
+                //Set Markers image for classrooms
+                for (Marker ClassRoom : ClassRoomMarkers) {
+                    ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
+                }
+
+                //Set Markers image for bathrooms
+                for (Marker Bathrooms : BathroomMarkers) {
+                    Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+                }
+
+                //Set Markers image for Waterzones
+                for (Marker WaterStation : WaterZones) {
+                    WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+                }
+                //Set Markers image for ETC rooms
+                for (Marker etc : ETCRooms) {
+                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
+                }
+                //Set Marker image for OF rooms
+                for (Marker etc : OFRooms) {
+                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
                 }
                 markerFragment.MTouch.CSVMarkers(MarkersList);
 
+                SearchReady();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -1603,7 +1611,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         //prepares searchbar
-        SearchReady();
+
 
         //Getting Darkmode option from database
         DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/DarkMode/");

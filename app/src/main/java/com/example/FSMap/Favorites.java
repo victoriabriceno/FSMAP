@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class Favorites extends AppCompatActivity {
     ImageView backFavorites;
     MapsActivity mapsActivity;
     public static HashMap<String,Object> markerEditHash = new HashMap<>();
+    Button rmvallfav;
 
 
      @Override
@@ -71,6 +73,15 @@ public class Favorites extends AppCompatActivity {
                startActivity(new Intent(Favorites.this,Settings.class));
            }
        });
+
+         Context c = this;
+         rmvallfav = findViewById(R.id.rmvallfav);
+         rmvallfav.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 removeAllFromFavorite(c);
+             }
+         });
 
        adapterUserFavoriteList = new AdapterUserFavoriteList(this,list,mapsActivity);
         recyclerView.setAdapter(adapterUserFavoriteList);
@@ -185,6 +196,29 @@ public class Favorites extends AppCompatActivity {
 
 
 
+    }
+
+    public static void removeAllFromFavorite(Context context){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser()==null){
+            Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
+        }else{
+            //Save to db
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(firebaseAuth.getUid()).child("Favorites")
+                    .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(context, "Removed all favorites.", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Failed to remove from your favorite list due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+        }
     }
 
     public static void renameMarker(Context context,String title,String originalTitle){
