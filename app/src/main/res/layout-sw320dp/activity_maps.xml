@@ -10,49 +10,36 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         map:layout_anchor="@+id/relativeLayout"
         map:layout_anchorGravity="center">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.example.FSMap.MarkerFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".MapsActivity"
-                    tools:ignore="FragmentTagUsage"
-                    tools:layout_editor_absoluteX="-5dp"
-                    tools:layout_editor_absoluteY="0dp">
+        <fragment
+            android:id="@+id/map"
+            android:name="com.example.FSMap.MarkerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MapsActivity"
+            tools:ignore="FragmentTagUsage"
+            tools:layout_editor_absoluteX="-5dp"
+            tools:layout_editor_absoluteY="0dp">
 
-                </fragment>
+        </fragment>
 
         <Button
             android:id="@+id/NavDone"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_width="76dp"
+            android:layout_height="37dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginVertical="190dp"
+            android:layout_marginVertical="270dp"
+            android:layout_marginEnd="6dp"
             android:background="@drawable/custom_input"
             android:backgroundTint="@color/FS_ORANGE"
             android:gravity="center"
             android:text="Done"
             android:visibility="gone"
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/RemoveSpot"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp"
-            android:background="@drawable/custom_input"
-            android:backgroundTint="@color/FS_ORANGE"
-            android:gravity="center"
-            android:text="Remove Spot"
-            android:visibility="gone" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="210dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userMaps"
@@ -185,8 +172,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@id/userMaps"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/downstairs"
             android:paddingLeft="16dp"
             android:paddingRight="50dp"

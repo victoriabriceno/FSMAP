@@ -1,6 +1,8 @@
 package com.example.FSMap;
 
 
+import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -220,11 +222,10 @@ public class MarkerTouch extends FrameLayout {
                 bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
                 TextView text = slideupview.findViewById(R.id.roomnumber);
                 text.setText(marker.getTitle());
+
                 if (!slideup|| bottomSheetBehavior.getState()!=BottomSheetBehavior.STATE_COLLAPSED) {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     bottomSheetBehavior.setFitToContents(false);
-
-                    //bottomSheetBehavior.setExpandedOffset(10);
                     slideupview.setVisibility(View.VISIBLE);
                     slideup = true;
                 }
