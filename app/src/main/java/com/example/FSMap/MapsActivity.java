@@ -1232,12 +1232,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .positionFromBounds(build2_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
                         .bearing(-117.5f)
-                        .anchor(0.598f,0.41f);
+                        .anchor(0.605f,0.387f);
                 GroundOverlayOptions build2f2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_2f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_2f))
                         .bearing(-117.5f)
-                        .anchor(0.598f,0.41f);
+                        .anchor(0.605f,0.387f);
                 //add groundOverlay and create reference.
                 groundOverlaysf1.add(build3aOverlay);
                 groundOverlaysf2.add(build3aF2Overlay);
