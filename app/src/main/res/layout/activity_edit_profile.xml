@@ -6,17 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".EditProfile">
 
-    <ImageView
-        android:id="@+id/backBTN"
-        android:layout_width="30dp"
-        android:layout_height="29dp"
-        android:background="@drawable/back"
-        app:layout_constraintBottom_toTopOf="@+id/profile_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.592" />
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -28,102 +18,105 @@
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
+        app:layout_constraintVertical_bias="0.08" />
+
 
     <ImageView
         android:id="@+id/pencil_change_profile"
-        android:layout_width="22dp"
-        android:layout_height="25dp"
-        android:background="@drawable/pencilgrey"
+        android:layout_width="26dp"
+        android:layout_height="28dp"
+        android:background="@drawable/pencil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintHorizontal_bias="0.698"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225" />
+        app:layout_constraintVertical_bias="0.258" />
 
     <Button
         android:id="@+id/Closebtn"
-        android:layout_width="164dp"
-        android:layout_height="wrap_content"
+        android:layout_width="162dp"
+        android:layout_height="35dp"
         android:background="@drawable/custom_input"
         android:fontFamily="@font/questrialregular"
         android:text="Close"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
-
-    <Button
-        android:id="@+id/Savebtn"
-        android:layout_width="164dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_input"
-        android:fontFamily="@font/questrialregular"
-        android:text="Save"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.877"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
-
-    <EditText
-        android:id="@+id/UserChange"
-        android:layout_width="371dp"
-        android:layout_height="53dp"
-        android:background="@null"
-        android:drawableLeft="@drawable/usericon"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:foreground="@drawable/custom_input"
-        android:hint="Change user name"
-        android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/questrialregular"
-        android:text="YOUR EMAIL: "
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.374" />
-
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Account"
+        android:textSize="11dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.665" />
+
+    <Button
+        android:id="@+id/Savebtn"
+        android:layout_width="162dp"
+        android:layout_height="35dp"
+        android:background="@drawable/custom_input"
+        android:fontFamily="@font/questrialregular"
+        android:text="Save"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="11dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.575" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/UserChange"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="255dp"
+        android:layout_height="53dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
+        android:background="@null"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="Change user name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.349">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/user_avatar"
+            android:drawablePadding="10dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="162dp"
+        android:layout_height="35dp"
+        android:background="@drawable/custom_input"
+        android:text="Delete Account"
+        android:textSize="12dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.751" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="410dp"
+        android:layout_width="411dp"
         android:layout_height="52dp"
         android:background="@color/FS_light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,21 +124,23 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UserChange"
-        app:layout_constraintVertical_bias="0.109">
+        app:layout_constraintVertical_bias="0.043"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/EmailEditprofile"
             android:layout_width="266dp"
             android:layout_height="37dp"
             android:fontFamily="@font/questrialregular"
-            android:text="email"
+            android:gravity="center"
+            android:text="Email"
             android:textColor="@color/FS_dark_gray"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.111"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.533" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -156,11 +151,12 @@
         android:text="Made by Swift Kings "
         android:textAlignment="center"
         android:textSize="18dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.825" />
+        app:layout_constraintVertical_bias="0.911" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,149 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterUser">
 
+    <ImageView
+        android:id="@+id/FSMAP"
+        android:layout_width="wrap_content"
+        android:layout_height="157dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginBottom="-21dp"
+        android:background="@null"
+        android:foreground="@drawable/finallogo" />
+
+    <TextView
+        android:id="@+id/WelcomeText"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/FSMAP"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="99dp"
+        android:fontFamily="@font/amaticscbold"
+        android:gravity="center"
+        android:text="Join our Team"
+        android:textColor="@color/FS_dark_gray"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
     <RelativeLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="348dp"
-        android:layout_height="448dp"
-        android:layout_below="@id/FSMAP2"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/vie_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684">
+        android:layout_width="wrap_content"
+        android:layout_height="395dp"
+        android:layout_below="@id/WelcomeText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="52dp"
+        android:background="@drawable/round_linearlayout">
 
         <TextView
-            android:id="@+id/SIGNUPText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/amaticscbold"
-            android:text="Create an account"
-            android:textColor="@color/black"
-            android:textSize="45dp"
+            android:id="@+id/SIGNUPTextText"
+            android:layout_width="125dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="86dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="95dp"
+            android:fontFamily="@font/questrialregular"
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="@color/FS_dark_gray"
+            android:textSize="25dp"
             android:textStyle="normal" />
 
-        <EditText
+        <Button
+            android:id="@+id/LoginBTN"
+            android:layout_width="188dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginStart="59dp"
+            android:layout_marginEnd="58dp"
+            android:layout_marginBottom="17dp"
+            android:background="@drawable/custom_input"
+            android:fontFamily="@font/questrialregular"
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/Username"
-            android:layout_width="307dp"
-            android:layout_height="47dp"
-            android:layout_below="@id/SIGNUPText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:drawableLeft="@drawable/usericon"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="User"
-            android:inputType="textPersonName"
-            android:padding="10dp" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="255dp"
+            android:layout_height="53dp"
+            android:layout_below="@id/SIGNUPTextText"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="18dp"
+            android:hint="Username"
+            android:inputType="textEmailAddress">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/user_icon_iphone"
+                android:drawablePadding="10dp"
+                android:paddingStart="5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/registerEmailAddress"
-            android:layout_width="307dp"
-            android:layout_height="47dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="255dp"
+            android:layout_height="53dp"
             android:layout_below="@id/Username"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:drawableLeft="@drawable/email"
-            android:drawablePadding="10dp"
-            android:ems="10"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="18dp"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp" />
+            android:inputType="textEmailAddress">
 
-        <EditText
-            android:id="@+id/ConfirmEmailAddress"
-            android:layout_width="307dp"
-            android:layout_height="47dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/mail_icon_phone"
+                android:drawablePadding="10dp"
+                android:paddingStart="5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="255dp"
+            android:layout_height="53dp"
             android:layout_below="@id/registerEmailAddress"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:drawableLeft="@drawable/confirmemail"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="Confirmation Email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="18dp"
+            android:hint="Password"
+            app:passwordToggleEnabled="true">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/padlock_iphone"
+                android:drawablePadding="6dp"
+                android:paddingStart="1dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ConfirmPassword"
-            android:layout_width="307dp"
-            android:layout_height="47dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="255dp"
+            android:layout_height="53dp"
             android:layout_below="@id/registerPassword"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:drawableLeft="@drawable/confirmpassword"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="Confirmation Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="18dp"
+            android:hint="Password"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/padlock_confimartion"
+                android:drawablePadding="6dp"
+                android:paddingStart="1dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
             android:id="@+id/checkboxTerms"
-            android:layout_width="186dp"
-            android:layout_height="35dp"
+            android:layout_width="199dp"
+            android:layout_height="27dp"
             android:layout_below="@+id/ConfirmPassword"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="79dp"
+            android:layout_marginStart="55dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="83dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="53dp"
             android:text="Terms and Conditions" />
+
 
         <Button
             android:id="@+id/RegisterUser"
-            android:layout_width="228dp"
-            android:layout_height="41dp"
+            android:layout_width="221dp"
+            android:layout_height="35dp"
             android:layout_below="@id/ConfirmPassword"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginBottom="11dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="63dp"
+            android:layout_marginBottom="43dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:text="Register User"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
-        <ProgressBar
-            android:id="@+id/ProgressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/registerPassword"
-            android:layout_width="307dp"
-            android:layout_height="47dp"
-            android:layout_below="@id/ConfirmEmailAddress"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:drawableLeft="@drawable/padlock"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
+        <!--        <ProgressBar-->
+        <!--            android:id="@+id/ProgressBar"-->
+        <!--            style="?android:attr/progressBarStyleLarge"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:visibility="gone" />-->
 
 
     </RelativeLayout>
@@ -152,36 +220,13 @@
         android:id="@+id/backBTN"
         android:layout_width="30dp"
         android:layout_height="29dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="363dp"
+        android:layout_marginBottom="599dp"
         android:background="@drawable/back"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="24dp" />
 
-    <ImageView
-        android:id="@+id/FSMAP2"
-        android:layout_width="265dp"
-        android:layout_height="176dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="600dp"
-        android:background="@null"
-        android:foreground="@drawable/finallogo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/RegisterText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/FSMAP2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="572dp"
-        android:fontFamily="@font/questrialregular"
-        android:text="Join our team!"
-        android:textColor="@color/FS_gray"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
 

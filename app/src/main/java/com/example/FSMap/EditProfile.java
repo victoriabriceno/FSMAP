@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -48,7 +49,7 @@ public class EditProfile extends AppCompatActivity  {
     FirebaseAuth fAuth;
     FirebaseUser firebaseAuth;
     ImageView pencilProfilechange , backEditPROFILE;
-    EditText changeUser;
+    TextInputLayout changeUser;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -73,16 +74,7 @@ public class EditProfile extends AppCompatActivity  {
         changeUser = findViewById(R.id.UserChange);
         emailProfile = findViewById(R.id.EmailEditprofile);
         delete = findViewById(R.id.delete);
-
-        backEditPROFILE =findViewById(R.id.backBTN);
-        backEditPROFILE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EditProfile.this,Settings.class));
-            }
-        });
-
-
+        
         //FIREBASE
         firebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
         useriD = firebaseAuth.getUid();
@@ -174,7 +166,7 @@ public class EditProfile extends AppCompatActivity  {
 
         markerEdit = data.getStringExtra("Favorites");
 
-        changeUser.setText(fullName);
+        changeUser.setHint(fullName);
 
         databaseReference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -228,10 +220,10 @@ public class EditProfile extends AppCompatActivity  {
 
     private boolean isNameChanged() {
 
-        if (!fullName.equals(changeUser.getText().toString())){
+        if (!fullName.equals(changeUser.getEditText().getText().toString())){
             // Toast.makeText(this, "User name changed", Toast.LENGTH_SHORT).show();
-            databaseReference.child(fAuth.getUid()).child("fullName").setValue(changeUser.getText().toString());
-            fullName = changeUser.getText().toString();
+            databaseReference.child(fAuth.getUid()).child("fullName").setValue(changeUser.getEditText().getText().toString());
+            fullName = changeUser.getEditText().getText().toString();
             return true;
         }else{
             // Toast.makeText(this, "User name not updated", Toast.LENGTH_SHORT).show();

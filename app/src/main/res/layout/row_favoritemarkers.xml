@@ -10,8 +10,8 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
-        android:layout_width="459dp"
-        android:layout_height="48dp">
+        android:layout_width="wrap_content"
+        android:layout_height="56dp">
 
 
         <ImageButton
@@ -20,8 +20,8 @@
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="141dp"
-            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="62dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/trash"
             android:fontFamily="@font/questrialregular"
             android:textSize="15dp" />
@@ -33,8 +33,8 @@
             android:layout_height="29dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="179dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="98dp"
+            android:layout_marginBottom="11dp"
             android:background="@drawable/pencil"
             android:fontFamily="@font/questrialregular"
             android:onClick="store_input"
@@ -46,20 +46,20 @@
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="408dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginEnd="291dp"
+            android:layout_marginBottom="11dp"
             android:background="@drawable/map_marker">
 
         </RelativeLayout>
 
         <EditText
             android:id="@+id/TitleMarker"
-            android:layout_width="174dp"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="222dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="27dp"
             android:background="@null"
             android:fontFamily="@font/questrialregular"
             android:imeOptions="actionDone"
@@ -71,13 +71,13 @@
 
         <EditText
             android:id="@+id/orginalName"
-            android:layout_width="174dp"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="222dp"
-            android:layout_marginBottom="19dp"
+            android:layout_marginEnd="133dp"
+            android:layout_marginBottom="25dp"
             android:background="@null"
             android:fontFamily="@font/questrialregular"
             android:imeOptions="actionDone"

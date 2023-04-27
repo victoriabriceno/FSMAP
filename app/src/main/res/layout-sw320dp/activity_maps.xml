@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,79 +10,70 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         map:layout_anchor="@+id/relativeLayout"
         map:layout_anchorGravity="center">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.example.FSMap.MarkerFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".MapsActivity"
-                    tools:layout_editor_absoluteX="-5dp"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:ignore="FragmentTagUsage">
+        <fragment
+            android:id="@+id/map"
+            android:name="com.example.FSMap.MarkerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MapsActivity"
+            tools:ignore="FragmentTagUsage"
+            tools:layout_editor_absoluteX="-5dp"
+            tools:layout_editor_absoluteY="0dp">
 
-                </fragment>
+        </fragment>
 
         <Button
             android:id="@+id/NavDone"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_width="76dp"
+            android:layout_height="37dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginVertical="190dp"
+            android:layout_marginVertical="270dp"
+            android:layout_marginEnd="6dp"
             android:background="@drawable/custom_input"
             android:backgroundTint="@color/FS_ORANGE"
             android:gravity="center"
             android:text="Done"
             android:visibility="gone"
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/RemoveSpot"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp"
-            android:background="@drawable/custom_input"
-            android:backgroundTint="@color/FS_ORANGE"
-            android:gravity="center"
-            android:text="Remove Spot"
-            android:visibility="gone" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="210dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userMaps"
             android:layout_width="76dp"
             android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="327dp"
             android:layout_marginRight="5dp"
             android:src="@drawable/userprofilefinalexpanded" />
+
 
         <ImageView
             android:id="@+id/gps"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_below="@id/NavLock"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/gps"
+            android:layout_marginVertical="20dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/placeholder"
             map:layout_constraintEnd_toEndOf="parent"
             map:layout_constraintHorizontal_bias="0.969"
             map:layout_constraintStart_toStartOf="parent"
             map:layout_constraintTop_toTopOf="parent"
             map:layout_constraintVertical_bias="0.84" />
 
-
         <RelativeLayout
             android:id="@+id/search_bar"
-            android:layout_width="300dp"
-            android:layout_height="57dp"
+            android:layout_width="314dp"
+            android:layout_height="54dp"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="6dp"
             android:layout_marginVertical="20dp"
@@ -168,8 +160,12 @@
             android:layout_height="50dp"
             android:layout_below="@id/userMaps"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:text="U" />
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/upstairs"
+            android:paddingLeft="16dp"
+            android:paddingRight="50dp">
+
+        </Button>
 
         <Button
             android:id="@+id/FloorDown"
@@ -177,8 +173,13 @@
             android:layout_height="50dp"
             android:layout_below="@id/userMaps"
             android:layout_marginLeft="20dp"
-            android:text="D"
-            android:visibility="gone" />
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/downstairs"
+            android:paddingLeft="16dp"
+            android:paddingRight="50dp"
+            android:visibility="gone">
+
+        </Button>
 
         <Button
             android:id="@+id/NavLock"
@@ -187,6 +188,7 @@
             android:layout_below="@id/search_bar"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/custom_input"
             android:backgroundTint="@color/FS_ORANGE"
             android:text="Nav Lock" />
@@ -199,7 +201,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="143dp"
+            android:layout_marginTop="150dp"
             android:layout_marginEnd="295dp"
             android:orientation="vertical">
 
@@ -208,58 +210,79 @@
                 android:id="@+id/FilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
-                android:text="F" />
+                android:background="@drawable/roundforthefilters"
+                android:drawableLeft="@drawable/filter_iphone_icon"
+                android:paddingLeft="16dp"
+                android:paddingRight="50dp">
+
+            </Button>
 
             <Button
                 android:id="@+id/CRFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="C" />
+                android:background="@drawable/roundforthefilters"
+                android:drawableLeft="@drawable/classroom"
+                android:paddingLeft="16dp"
+                android:paddingRight="50dp"></Button>
 
             <Button
                 android:id="@+id/OFFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="O" />
+                android:background="@drawable/roundforthefilters"
+                android:drawableLeft="@drawable/workspace"
+                android:paddingLeft="16dp"
+                android:paddingRight="50dp">
+
+            </Button>
 
             <Button
                 android:id="@+id/BRFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="BR" />
+                android:background="@drawable/roundforthefilters"
+                android:drawableLeft="@drawable/toilet"
+                android:paddingLeft="16dp"
+                android:paddingRight="50dp">
+
+            </Button>
 
             <Button
                 android:id="@+id/WZFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="W" />
+                android:background="@drawable/roundforthefilters"
+                android:drawableLeft="@drawable/water"
+                android:paddingLeft="16dp"
+                android:paddingRight="50dp">
+
+            </Button>
 
             <Button
                 android:id="@+id/ETCFilterButton"
                 android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundforthefilters"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="Et"/>
+                android:background="@drawable/roundforthefilters"
+                android:drawableLeft="@drawable/surprise_box"
+                android:paddingLeft="16dp"
+                android:paddingRight="50dp">
+
+            </Button>
 
 
         </LinearLayout>
     </RelativeLayout>
-
     <include layout="@layout/bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
