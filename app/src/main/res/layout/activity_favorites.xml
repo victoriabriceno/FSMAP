@@ -9,41 +9,55 @@
      android:id="@+id/backBTN"
      android:layout_width="20dp"
      android:layout_height="20dp"
+     android:layout_alignParentEnd="true"
      android:layout_marginHorizontal="10dp"
-     android:layout_marginTop="20dp"
+     android:layout_marginTop="38dp"
+     android:layout_marginEnd="351dp"
      android:background="@drawable/back" />
 
  <TextView
-     android:id="@+id/favoriteMarkerLabel"
-     android:layout_width="match_parent"
+     android:id="@+id/customMarkerLabel"
+     android:layout_width="257dp"
      android:layout_height="wrap_content"
+     android:layout_centerHorizontal="true"
+     android:layout_marginTop="10dp"
      android:fontFamily="@font/amaticscbold"
      android:gravity="center"
      android:padding="5dp"
-     android:text="Favorite List"
+     android:text="Favorites"
      android:textAlignment="center"
-     android:textColor="@color/FS_gray"
-     android:textSize="35dp"
+     android:textColor="@color/FS_dark_gray"
+     android:textSize="40dp"
      android:textStyle="bold" />
 
  <androidx.recyclerview.widget.RecyclerView
      android:id="@+id/markersRV"
      android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:layout_below="@id/favoriteMarkerLabel"
-     android:layout_marginTop="12dp"
+     android:layout_height="517dp"
+     android:layout_below="@id/customMarkerLabel"
+     android:layout_marginTop="72dp"
      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.333"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintVertical_bias="1.0"
      tools:listitem="@layout/row_favoritemarkers" />
 
  <Button
      android:id="@+id/rmvallfav"
      android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
+     android:layout_height="40dp"
+     android:layout_alignParentStart="true"
+     android:layout_alignParentTop="true"
      android:layout_alignParentEnd="true"
-     android:layout_alignParentBottom="true"
-     android:layout_marginEnd="20dp"
-     android:layout_marginBottom="598dp"
-     android:text="RMV ALL" />
+     android:layout_marginStart="129dp"
+     android:layout_marginTop="81dp"
+     android:layout_marginEnd="133dp"
+     android:overScrollMode="never"
+     android:text="Clear List"
+     android:textSize="12dp" />
 
 
 </RelativeLayout>

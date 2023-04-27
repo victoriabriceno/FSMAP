@@ -19,108 +19,95 @@
         app:cardElevation="20dp">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/Slide_up"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/FS_light_gray"
+            android:layout_height="392dp"
+            android:background="@drawable/round_linearlayout"
             android:orientation="vertical"
             android:padding="16dp">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center"
-                android:background="@color/FS_ORANGE"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.527"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.075">
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="30dp"
+                    android:layout_height="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/FS_ORANGE"
+                    android:foregroundGravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </View>
+                </View>
 
-            <TextView
-                android:id="@+id/roomnumber"
-                android:layout_width="232dp"
-                android:layout_height="32dp"
-                android:fontFamily="@font/questrialregular"
-                android:paddingLeft="10dp"
-                android:text="Potato Holder"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.155" />
+                <TextView
+                    android:id="@+id/roomnumber"
+                    android:layout_width="232dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/questrialregular"
+                    android:paddingLeft="10dp"
+                    android:text="Potato Holder"
+                    android:textColor="@color/FS_dark_gray"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.054"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <AutoCompleteTextView
-                android:id="@+id/From"
-                android:layout_width="252dp"
-                android:layout_height="48dp"
-                android:background="@drawable/custom_imput2"
-                android:fontFamily="@font/questrialregular"
-                android:hint="From"
-                android:paddingLeft="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.589" />
-
-            <AutoCompleteTextView
-                android:id="@+id/Destination"
-                android:layout_width="254dp"
-                android:layout_height="48dp"
-                android:background="@drawable/custom_imput2"
-                android:hint="To"
-                android:paddingLeft="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="104dp"
-                android:layout_height="186dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.948"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0">
-
-                <ImageButton
-                    android:id="@+id/btnRemoveFavorites"
-                    android:layout_width="48dp"
+                <AutoCompleteTextView
+                    android:id="@+id/From"
+                    android:layout_width="252dp"
                     android:layout_height="48dp"
-                    android:layout_above="@id/navgo"
-                    android:layout_marginHorizontal="25dp"
-                    android:layout_marginTop="75dp"
-                    android:layout_toRightOf="@id/Destination"
-                    android:background="@null"
-                    android:foreground="@drawable/starfull" />
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_input"
+                    android:fontFamily="@font/questrialregular"
+                    android:hint="From"
+                    android:padding="10dp"
+                    app:backgroundTint="@null"
+                    android:textColor="@color/FS_dark_gray"
+                    android:textColorHint="@color/FS_dark_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.274" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/Destination"
+                    android:layout_width="254dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="To"
+                    app:backgroundTint="@null"
+                    android:padding="10dp"
+                    android:textColor="@color/FS_dark_gray"
+                    android:textColorHint="@color/FS_dark_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/btnAddFavorites"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_above="@id/navgo"
-                    android:layout_marginHorizontal="25dp"
-                    android:layout_marginTop="55dp"
-                    android:layout_toRightOf="@id/Destination"
+                    android:layout_marginHorizontal="280dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="36dp"
                     android:background="@null"
                     android:foreground="@drawable/star"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/navgo"
@@ -128,18 +115,64 @@
                     android:layout_height="48dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginEnd="28dp"
                     android:layout_toRightOf="@id/From"
                     android:background="@drawable/custom_imput2"
                     android:backgroundTint="@color/FS_ORANGE"
                     android:fontFamily="@font/questrialregular"
-                    android:text="GO" />
+                    android:text="GO"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.532" />
 
-            </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnRemoveFavorites"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="280dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="36dp"
+                    android:background="@null"
+                    android:foreground="@drawable/starfull"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/RemoveSpot"
+                    android:layout_width="167dp"
+                    android:layout_height="48dp"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="284dp"
+                    android:layout_marginEnd="104dp"
+                    android:background="@drawable/custom_input"
+                    android:backgroundTint="@color/FS_ORANGE"
+                    android:gravity="center"
+                    android:text="Remove Spot"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/questrialregular"
+                    android:text="Swift King wish you the best navigating through campus!
+Just don't enter in places that you can't."
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.736"
+                    tools:layout_editor_absoluteX="0dp">
+
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>

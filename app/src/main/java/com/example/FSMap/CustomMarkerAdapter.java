@@ -19,17 +19,19 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
     Context context;
     ArrayList<CustomMarkersList> listCustomMarkers;
 
+    MapsActivity mapsActivity;
 
     //Constructor
-    public CustomMarkerAdapter(Context context,ArrayList<CustomMarkersList> customMarkersLists) {
+    public CustomMarkerAdapter(Context context, ArrayList<CustomMarkersList> customMarkersLists, MapsActivity mapsActivity) {
         this.context = context;
         this.listCustomMarkers = customMarkersLists;
+        this.mapsActivity = mapsActivity;
     }
 
     @NonNull
     @Override
     public CustomMarkerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.row_custommarker,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.row_custommarker, parent, false);
         return new CustomMarkerViewHolder(v);
     }
 
@@ -45,7 +47,7 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
                 String markerTitle = holder.TitleOfTheMarker.getText().toString();
 
                 Intent intent = new Intent(context, MapsActivity.class);
-                intent.putExtra("marker",markerTitle);
+                intent.putExtra("marker", markerTitle);
                 context.startActivity(intent);
             }
         });
@@ -57,10 +59,11 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
         return listCustomMarkers.size();
     }
 
-    public static class CustomMarkerViewHolder extends RecyclerView.ViewHolder{
+    public static class CustomMarkerViewHolder extends RecyclerView.ViewHolder {
 
         TextView TitleOfTheMarker;
         RelativeLayout markerclick;
+
         public CustomMarkerViewHolder(@NonNull View itemView) {
             super(itemView);
 

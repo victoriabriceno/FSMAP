@@ -39,6 +39,7 @@ public class CustomMarker extends AppCompatActivity {
     List<String> markerList;
     ImageView markerCUstomMarkers;
     Button rmvallcustom;
+    MapsActivity mapsActivity = new MapsActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class CustomMarker extends AppCompatActivity {
 
         list = new ArrayList<CustomMarkersList>();
 
-        customMarkerAdapter = new CustomMarkerAdapter(this,list);
+        customMarkerAdapter = new CustomMarkerAdapter(this,list,mapsActivity);
         recyclerView.setAdapter(customMarkerAdapter);
 
 
