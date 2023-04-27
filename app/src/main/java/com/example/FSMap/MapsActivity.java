@@ -905,7 +905,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             case ("3A"):
                 for (int i = 0; i < ThreeAMarkers.size(); i++) {
-                    ThreeAMarkers.get(i).setVisible(true);fin
+                    ThreeAMarkers.get(i).setVisible(true);
                 }
                 break;
             case ("3B"):
@@ -1926,9 +1926,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if (B3U.size() >= 3 && resultsList.contains("3A") && resultsList.contains("FishBowl") && resultsList.contains("3BConnected")) {
                         if(!resultsList.contains("b3u")) {
 
-                    if (B3U.size() == 3) {
-                        if (!resultsList.contains("b3u")) {
-
                             resultsList.add("b3u");
                         }
                         wasFound = true;
@@ -1938,10 +1935,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     if (B3D.size() >= 4 && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
                         if(!resultsList.contains("b3d")) {
-
-                    if (B3D.size() == 4) {
-                        if (!resultsList.contains("b3d") && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
-
                             resultsList.add("b3d");
                         }
                         wasFound = true;

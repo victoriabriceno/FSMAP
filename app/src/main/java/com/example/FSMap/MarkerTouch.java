@@ -361,10 +361,10 @@ public class MarkerTouch extends FrameLayout {
         bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
-        if (!slidepup) {
+        if (!slideup) {
             slideupview.setVisibility(View.VISIBLE);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            slidepup = true;
+            slideup = true;
         }
 
         //Creates list of all marker titles
@@ -478,7 +478,7 @@ public class MarkerTouch extends FrameLayout {
     }
 
 
-    private void moveCamera(LatLng latLng) {
+    public void moveCamera(LatLng latLng) {
 
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
@@ -493,5 +493,6 @@ public class MarkerTouch extends FrameLayout {
             linesShowing.remove(0);
         }
     }
+}
 
 

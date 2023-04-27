@@ -280,8 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void userLogin() {
-        String email = editTextEmail.getEditText().toString().trim();
-        String password = editTextPassword.getEditText().toString().trim();
+        String email = editTextEmail.getEditText().getText().toString();
+        String password = editTextPassword.getEditText().getText().toString();
 
 
         if (email.isEmpty()){

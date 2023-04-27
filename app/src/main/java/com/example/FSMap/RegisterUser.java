@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
-    private TextView registerUser;
+    private Button registerUser;
     private TextInputLayout editEmail, editPassword,confirmEmail , confirmPassword, editUser;
     private ProgressBar progressBar;
     private Button registerBack;
@@ -44,7 +44,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         mAuth = FirebaseAuth.getInstance();
 
-        registerUser = (TextView) findViewById(R.id.RegisterUser);
+        registerUser = findViewById(R.id.RegisterUser);
         registerUser.setOnClickListener(this);
 
         registerBackButton = findViewById(R.id.backBTN);
@@ -219,10 +219,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     private void registerUser() {
 
-        String userName = editUser.getEditText().getText().toString().trim();
-        String email = editEmail.getEditText().getText().toString().trim();
-        String password = editPassword.getEditText().getText().toString().trim();
-        String confirmP = confirmPassword.getEditText().getText().toString().trim();
+        String userName = editUser.getEditText().getText().toString();
+        String email = editEmail.getEditText().getText().toString();
+        String password = editPassword.getEditText().getText().toString();
+        String confirmP = confirmPassword.getEditText().getText().toString();
 
 
         if (userName.isEmpty()){
