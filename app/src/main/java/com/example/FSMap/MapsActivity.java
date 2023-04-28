@@ -77,7 +77,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -118,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Set;
-    private Button RemovePoint;
+    private Button RemovePoint;w
     private ImageView ZoomIn;
     private ImageView ZoomOut;
     private Button NavGo;
