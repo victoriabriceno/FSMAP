@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,11 +75,6 @@ public class CustomMarker extends AppCompatActivity {
 
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if(dataSnapshot.child("CustomName").getValue() != null){
-                        markerTitle =  dataSnapshot.child("CustomName").getKey().toString();
-                    }else{
-                        markerTitle = dataSnapshot.getKey().toString();
-                    }
                     String markerTitle = dataSnapshot.getKey().toString();
                     String originalName = dataSnapshot.getKey().toString();
                     int floorCustom = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
@@ -120,10 +116,24 @@ public class CustomMarker extends AppCompatActivity {
             hashMap.put(marker.getTitle(), marker.getPosition());
             HashMap<String, Object> hashMap1 = new HashMap<>();
             hashMap1.put("Floor", floor);
+            HashMap<String,Object> hashMap2 = new HashMap<>();
+            hashMap2.put("CustomName",marker.getTitle());
 
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(firebaseAuth.getUid()).child("CustomMarkers").updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, "Failed to add to you Marker list due to " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(marker.getTitle()).updateChildren(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
@@ -150,7 +160,7 @@ public class CustomMarker extends AppCompatActivity {
         }
     }
 
-    public static void renameCUstomMarkers(Context context, String titleCustom, String OriginalCustomTitle, int floor, LatLng position) {
+    public static void renameCUstomMarkers(Context context,String titleCustom, String OriginalCustomTitle, int floor, LatLng position) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
             Toast.makeText(context, "You're not logged in", Toast.LENGTH_SHORT).show();
@@ -165,7 +175,8 @@ public class CustomMarker extends AppCompatActivity {
 
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid()).child("CustomMarkers").updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(OriginalCustomTitle).setValue(titleCustom).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
@@ -177,7 +188,8 @@ public class CustomMarker extends AppCompatActivity {
 
                 }
             });
-            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(OriginalCustomTitle).updateChildren(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(OriginalCustomTitle).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
@@ -189,7 +201,20 @@ public class CustomMarker extends AppCompatActivity {
 
                 }
             });
+
             ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(titleCustom).updateChildren(hashMap1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context, "Failed to add to you Marker list due to " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(titleCustom).updateChildren(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();

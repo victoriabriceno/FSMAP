@@ -49,8 +49,8 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
         CustomMarkersList customMarkersList = listCustomMarkers.get(position);
         holder.TitleOfTheMarker.setText(customMarkersList.getMarkerTitle());
         holder.OriginalOfTheMarker.setText(customMarkersList.getMarkerTitle());
-        int floorCustomAdapter = customMarkersList.floor;
-        LatLng positionAdapter = customMarkersList.position;
+        int floor = customMarkersList.floor;
+        LatLng postionCustom = customMarkersList.position;
         holder.markerclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,13 +67,11 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             @Override
             public void onClick(View v) {
 
-                String markerTitleCustom = holder.OriginalOfTheMarker.getText().toString();
-                CustomMarker.removeFromCustom(context, markerTitleCustom);
+                String markerTitleCustom= holder.OriginalOfTheMarker.getText().toString();
+                CustomMarker.removeFromCustom(context,markerTitleCustom);
                 int size = listCustomMarkers.size();
                 listCustomMarkers.clear();
-                notifyItemRangeRemoved(0, size);
-
-
+                notifyItemRangeRemoved(0,size);
 
             }
         });
@@ -82,11 +80,16 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
-                        event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH|| actionId == EditorInfo.IME_ACTION_DONE||
+                        event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER){
 
                     holder.TitleOfTheMarker.setKeyListener(null);
-                    CustomMarker.renameCUstomMarkers(context,holder.TitleOfTheMarker.getText().toString(),holder.OriginalOfTheMarker.getText().toString(),floorCustomAdapter,positionAdapter);
+
+
+                   CustomMarker.renameCUstomMarkers(context,holder.TitleOfTheMarker.getText().toString(),holder.OriginalOfTheMarker.getText().toString(),floor ,postionCustom);
+//                    int size = listFavorite.size();
+//                    listFavorite.clear();
+//                    notifyItemRangeInserted(0,size);
 
 
 
@@ -101,7 +104,7 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     // Hide soft keyboard.
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(holder.TitleOfTheMarker.getWindowToken(), 0);
                     // Make it non-editable again.
                     holder.TitleOfTheMarker.setKeyListener(null);
@@ -116,7 +119,7 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
 
                 holder.TitleOfTheMarker.setKeyListener(holder.originalKeyListener);
                 holder.TitleOfTheMarker.requestFocus();
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(holder.TitleOfTheMarker, InputMethodManager.SHOW_IMPLICIT);
                 holder.TitleOfTheMarker.setSelection(holder.TitleOfTheMarker.getText().length());
 
@@ -134,8 +137,8 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
 
     public static class CustomMarkerViewHolder extends RecyclerView.ViewHolder {
 
-        EditText TitleOfTheMarker, OriginalOfTheMarker;
-        ImageButton trash, pencil;
+        EditText TitleOfTheMarker,OriginalOfTheMarker;
+        ImageButton trash,pencil;
         RelativeLayout markerclick;
 
         KeyListener originalKeyListener;

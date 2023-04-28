@@ -117,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Set;
-    private Button RemovePoint;w
+    private Button RemovePoint;
     private ImageView ZoomIn;
     private ImageView ZoomOut;
     private Button NavGo;
@@ -1699,7 +1699,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                  String markerTitle;
                     if(dataSnapshot.child("CustomName").getValue() != null){
-                        markerTitle =  dataSnapshot.child("CustomName").getKey().toString();
+                        markerTitle =  dataSnapshot.child("CustomName").getValue().toString();
                     }else{
                         markerTitle = dataSnapshot.getKey().toString();
                     }
