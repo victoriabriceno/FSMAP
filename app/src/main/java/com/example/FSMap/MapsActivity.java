@@ -1697,7 +1697,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 createdMarkers = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker newMarker = null;
-                    String markerTitle = dataSnapshot.getKey().toString();
+
+                 String markerTitle;
+                    if(dataSnapshot.child("CustomName").getValue() != null){
+                        markerTitle =  dataSnapshot.child("CustomName").getKey().toString();
+                    }else{
+                        markerTitle = dataSnapshot.getKey().toString();
+                    }
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
                     double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
                     if (dataSnapshot.child("Floor").getValue() != null) {
