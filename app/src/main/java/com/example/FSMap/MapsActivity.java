@@ -175,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double Latitude, Longitued;
     float zoom;
     LinearLayout slideupview;
-   public boolean slidepup;
+    public boolean slidepup;
     BottomSheetBehavior bottomSheetBehavior;
     double mLastAltitude;
     ArrayList<String> nameslist = new ArrayList<String>() {
@@ -227,6 +227,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             setUserLocationMarker(location);
             ComparePoints(location);
 
+        }
+        @Override
+        public void onProviderEnabled(@NonNull String provider) {
+            Toast.makeText(MapsActivity.this, "GPS Enabled", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider) {
+
+            Toast.makeText(MapsActivity.this, "GPS Disabled", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
         }
     };
 
@@ -460,7 +474,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 } else {
                     HideAllOverlays();
-                    if(B3U2 != null) {
+                    if (B3U2 != null) {
                         B3U2.setVisible(true);
                     }
                 }
@@ -713,7 +727,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mLocationManager.addNmeaListener(onNmeaMessageListener);
                 }
             }
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
         }
 
@@ -956,10 +970,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 try {
-                    if (mLocationPermissionsGranted){
+                    if (mLocationPermissionsGranted) {
                         getDeviceLocationCameraMove();
                     }
-                }catch (SecurityException e){
+                } catch (SecurityException e) {
                     Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
                 }
 
@@ -1244,12 +1258,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .positionFromBounds(build2_1f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
                         .bearing(-117.5f)
-                        .anchor(0.605f,0.387f);
+                        .anchor(0.605f, 0.387f);
                 GroundOverlayOptions build2f2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_2f)
                         .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_2f))
                         .bearing(-117.5f)
-                        .anchor(0.605f,0.387f);
+                        .anchor(0.605f, 0.387f);
                 //add groundOverlay and create reference.
                 groundOverlaysf1.add(build3aOverlay);
                 groundOverlaysf2.add(build3aF2Overlay);
@@ -1290,15 +1304,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .target(startPosition)
                 .zoom(zoomload)
                 .build();
-        registerLocationManager();
 
         try {
             if (mLocationPermissionsGranted) {
+                registerLocationManager();
                 mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                         GPS_UPDATE_TIME, 1, locationListener);
             }
-
-        } catch (SecurityException e){
+        } catch (SecurityException e) {
             Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
         }
         //get latlong for corners for specified place
@@ -1343,7 +1356,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
                 Init();
             }
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
 
         }
@@ -1720,10 +1733,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Marker newMarker = null;
 
-                 String markerTitle;
-                    if(dataSnapshot.child("CustomName").getValue() != null){
-                        markerTitle =  dataSnapshot.child("CustomName").getValue().toString();
-                    }else{
+                    String markerTitle;
+                    if (dataSnapshot.child("CustomName").getValue() != null) {
+                        markerTitle = dataSnapshot.child("CustomName").getValue().toString();
+                    } else {
                         markerTitle = dataSnapshot.getKey().toString();
                     }
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
@@ -1772,92 +1785,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Victoria Building 2
 
-    ArrayList<LatLng> Q1Building2Down = new ArrayList<>(Arrays.asList(new LatLng(28.596566523323645,-81.30287457257509),
-              new LatLng(28.596641294889583,-81.302948333323),
-              new LatLng(28.596690455693327,-81.30294196307659),
-              new LatLng(28.596731962701362,-81.30293928086758),
-              new LatLng(28.596850007365035,-81.30269721150398),
-              new LatLng(28.596860899259983,-81.30281589925289),
-              new LatLng(28.596862371137615,-81.30278337746859),
-              new LatLng(28.59685824988025,-81.30275152623653),
-              new LatLng(28.59684500298048,-81.30288798362017),
-              new LatLng(28.596862665513115,-81.30268346518278),
-              new LatLng(28.596855011749334,-81.30266603082418),
-              new LatLng(28.596810561033315,-81.30272973328829),
-              new LatLng(28.596806439773914,-81.30269721150398),
-              new LatLng(28.59682380793741,-81.30266066640615),
-              new LatLng(28.59681880355161,-81.30263820290565),
-              new LatLng(28.596170292011557,-81.30186472088099),
-              new LatLng(28.596819686678543,-81.302610039711),
-              new LatLng(28.596834111083876,-81.30261104553938),
-              new LatLng(28.596813504789925,-81.30257483571768),
-              new LatLng(28.596774058444492,-81.30256108939648),
-              new LatLng(28.596735495211924,-81.3025550544262),
-              new LatLng(28.59672372017625,-81.30253560841084),
-              new LatLng(28.596716066402344,-81.30258791148663),
-              new LatLng(28.596731668325454,-81.30263585597277),
-              new LatLng(28.596673970635955,-81.30259864032269),
-              new LatLng(28.59669251632532,-81.30264054983854),
-              new LatLng(28.596639823008875,-81.30274683237076),
-              new LatLng(28.596676031268277,-81.30251381546259),
-              new LatLng(28.596661901217324,-81.3025014102459),
-              new LatLng(28.59663393548586,-81.30247827619314),
-              new LatLng(28.59663393548586,-81.30247827619314),
-              new LatLng(28.59640491058401,-81.30136851221323),
-              new LatLng(28.59659125093402,-81.30244340747595),
-              new LatLng(28.596559458291043,-81.30243267863989))
+    ArrayList<LatLng> Q1Building2Down = new ArrayList<>(Arrays.asList(new LatLng(28.596566523323645, -81.30287457257509),
+            new LatLng(28.596641294889583, -81.302948333323),
+            new LatLng(28.596690455693327, -81.30294196307659),
+            new LatLng(28.596731962701362, -81.30293928086758),
+            new LatLng(28.596850007365035, -81.30269721150398),
+            new LatLng(28.596860899259983, -81.30281589925289),
+            new LatLng(28.596862371137615, -81.30278337746859),
+            new LatLng(28.59685824988025, -81.30275152623653),
+            new LatLng(28.59684500298048, -81.30288798362017),
+            new LatLng(28.596862665513115, -81.30268346518278),
+            new LatLng(28.596855011749334, -81.30266603082418),
+            new LatLng(28.596810561033315, -81.30272973328829),
+            new LatLng(28.596806439773914, -81.30269721150398),
+            new LatLng(28.59682380793741, -81.30266066640615),
+            new LatLng(28.59681880355161, -81.30263820290565),
+            new LatLng(28.596170292011557, -81.30186472088099),
+            new LatLng(28.596819686678543, -81.302610039711),
+            new LatLng(28.596834111083876, -81.30261104553938),
+            new LatLng(28.596813504789925, -81.30257483571768),
+            new LatLng(28.596774058444492, -81.30256108939648),
+            new LatLng(28.596735495211924, -81.3025550544262),
+            new LatLng(28.59672372017625, -81.30253560841084),
+            new LatLng(28.596716066402344, -81.30258791148663),
+            new LatLng(28.596731668325454, -81.30263585597277),
+            new LatLng(28.596673970635955, -81.30259864032269),
+            new LatLng(28.59669251632532, -81.30264054983854),
+            new LatLng(28.596639823008875, -81.30274683237076),
+            new LatLng(28.596676031268277, -81.30251381546259),
+            new LatLng(28.596661901217324, -81.3025014102459),
+            new LatLng(28.59663393548586, -81.30247827619314),
+            new LatLng(28.59663393548586, -81.30247827619314),
+            new LatLng(28.59640491058401, -81.30136851221323),
+            new LatLng(28.59659125093402, -81.30244340747595),
+            new LatLng(28.596559458291043, -81.30243267863989))
     );
-    ArrayList Q2Building2Down = new ArrayList<>(Arrays.asList(new LatLng(28.596387836728155,-81.30145233124495),
-            new LatLng(28.596416685655406,-81.30133129656315),
-            new LatLng(28.596618627924432,-81.30165986716747),
-            new LatLng(28.596479387888337,-81.30245950073004),
-            new LatLng(28.59646113653801,-81.30236897617579),
-            new LatLng(28.596389308612373,-81.3024115562439),
-            new LatLng(28.596417863162472,-81.30234349519014),
-            new LatLng(28.59637370663845,-81.3023180142045),
-            new LatLng(28.59632484006357,-81.3022942095995),
-            new LatLng(28.596288337306074,-81.3022643700242),
-            new LatLng(28.596327195079738,-81.30237635225058)));
+    ArrayList Q2Building2Down = new ArrayList<>(Arrays.asList(new LatLng(28.596387836728155, -81.30145233124495),
+            new LatLng(28.596416685655406, -81.30133129656315),
+            new LatLng(28.596618627924432, -81.30165986716747),
+            new LatLng(28.596479387888337, -81.30245950073004),
+            new LatLng(28.59646113653801, -81.30236897617579),
+            new LatLng(28.596389308612373, -81.3024115562439),
+            new LatLng(28.596417863162472, -81.30234349519014),
+            new LatLng(28.59637370663845, -81.3023180142045),
+            new LatLng(28.59632484006357, -81.3022942095995),
+            new LatLng(28.596288337306074, -81.3022643700242),
+            new LatLng(28.596327195079738, -81.30237635225058)));
 
-    ArrayList Q3Building3Down = new ArrayList<>(Arrays.asList(new LatLng(28.596419629423036,-81.30126055330038),
-            new LatLng(28.596130845424735,-81.30256544798613),
-            new LatLng(28.596222396808777,-81.30250409245491),
-            new LatLng(28.596174707673327,-81.30253527313471),
-            new LatLng(28.59613732173104,-81.30257818847895),
-            new LatLng(28.596700464476914,-81.30142517387867),
-            new LatLng(28.596184422128612,-81.30247358232737),
-            new LatLng(28.59616823136931,-81.30243670195341),
-            new LatLng(28.596221513676827,-81.30235623568296),
-            new LatLng(28.596060783539997,-81.30214601755142),
-            new LatLng(28.596046064650718,-81.30212020128965),
-            new LatLng(28.59588445111078,-81.30231365561485),
-            new LatLng(28.59605813414006,-81.30201492458582),
-            new LatLng(28.595919776495936,-81.3020658865571),
-            new LatLng(28.59605842851785,-81.3019485399127),
-            new LatLng(28.596037527693976,-81.30190093070269),
-            new LatLng(28.596016332488063,-81.3018573448062),
-            new LatLng(28.59602810760297,-81.30178961902857)
+    ArrayList Q3Building3Down = new ArrayList<>(Arrays.asList(new LatLng(28.596419629423036, -81.30126055330038),
+            new LatLng(28.596130845424735, -81.30256544798613),
+            new LatLng(28.596222396808777, -81.30250409245491),
+            new LatLng(28.596174707673327, -81.30253527313471),
+            new LatLng(28.59613732173104, -81.30257818847895),
+            new LatLng(28.596700464476914, -81.30142517387867),
+            new LatLng(28.596184422128612, -81.30247358232737),
+            new LatLng(28.59616823136931, -81.30243670195341),
+            new LatLng(28.596221513676827, -81.30235623568296),
+            new LatLng(28.596060783539997, -81.30214601755142),
+            new LatLng(28.596046064650718, -81.30212020128965),
+            new LatLng(28.59588445111078, -81.30231365561485),
+            new LatLng(28.59605813414006, -81.30201492458582),
+            new LatLng(28.595919776495936, -81.3020658865571),
+            new LatLng(28.59605842851785, -81.3019485399127),
+            new LatLng(28.596037527693976, -81.30190093070269),
+            new LatLng(28.596016332488063, -81.3018573448062),
+            new LatLng(28.59602810760297, -81.30178961902857)
     ));
 
-    ArrayList Q4Building4Down = new ArrayList<>(Arrays.asList(new LatLng(28.59588445111078,-81.30231365561485),
-            new LatLng(28.59594067734322,-81.30235187709332),
-            new LatLng(28.595848536957064,-81.30228985100985),
-            new LatLng(28.595829991118773,-81.30234617739916),
-            new LatLng(28.59642257319061,-81.30129911005497),
-            new LatLng(28.595951274954345,-81.30222044885159),
-            new LatLng(28.59593478978102,-81.3021731749177),
-            new LatLng(28.59584500441668,-81.30221877247095),
-            new LatLng(28.59576728849843,-81.30216378718615),
-            new LatLng(28.59593272913417,-81.30210544914007),
-            new LatLng(28.595919776495936,-81.3020658865571),
-            new LatLng(28.59594891992973,-81.30205381661654),
-            new LatLng(28.595985717183076,-81.30202163010836),
-            new LatLng(28.595766699741244,-81.30193881690502),
-            new LatLng(28.595794076946433,-81.30180202424526),
-            new LatLng(28.595894754349356,-81.30172323435545),
-            new LatLng(28.595993959766073,-81.30182281136513),
-            new LatLng(28.59595922316197,-81.30184695124626),
-            new LatLng(28.595930668487295,-81.3018412515521)));
+    ArrayList Q4Building4Down = new ArrayList<>(Arrays.asList(new LatLng(28.59588445111078, -81.30231365561485),
+            new LatLng(28.59594067734322, -81.30235187709332),
+            new LatLng(28.595848536957064, -81.30228985100985),
+            new LatLng(28.595829991118773, -81.30234617739916),
+            new LatLng(28.59642257319061, -81.30129911005497),
+            new LatLng(28.595951274954345, -81.30222044885159),
+            new LatLng(28.59593478978102, -81.3021731749177),
+            new LatLng(28.59584500441668, -81.30221877247095),
+            new LatLng(28.59576728849843, -81.30216378718615),
+            new LatLng(28.59593272913417, -81.30210544914007),
+            new LatLng(28.595919776495936, -81.3020658865571),
+            new LatLng(28.59594891992973, -81.30205381661654),
+            new LatLng(28.595985717183076, -81.30202163010836),
+            new LatLng(28.595766699741244, -81.30193881690502),
+            new LatLng(28.595794076946433, -81.30180202424526),
+            new LatLng(28.595894754349356, -81.30172323435545),
+            new LatLng(28.595993959766073, -81.30182281136513),
+            new LatLng(28.59595922316197, -81.30184695124626),
+            new LatLng(28.595930668487295, -81.3018412515521)));
 
 
     //latitude for CenterQuadrant1: 28.59656328518375
@@ -1881,7 +1894,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double longToCheckQ2 = 28.59627038029975;
         double latToCheckQ2 = -81.30249939858913;
 
-        double longToCheckQ3= 28.596130256669586;
+        double longToCheckQ3 = 28.596130256669586;
         double latToCheckQ3 = -81.3023317605257;
 
         double longToCheckQ4 = 28.595877974788902;
@@ -1900,10 +1913,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    ArrayList<LatLng> Q1 = new ArrayList<>(Arrays.asList(new LatLng(28.595217682239355,-81.30385525524616),new LatLng(28.595218270999617,-81.30383245646954), new LatLng(28.595219742900227,-81.30377478897572), new LatLng(28.595214738438067,-81.30369365215302), new LatLng(28.595217387859222,-81.30366180092096), new LatLng(28.595217387859222,-81.30359776318073), new LatLng(28.59519059926425,-81.30358066409826), new LatLng(28.595216504718856,-81.30352735519409)));
-    ArrayList<LatLng> Q2 = new ArrayList<>(Arrays.asList(new LatLng(28.595212677777095,-81.30417109),new LatLng(28.59521562157846,-81.30409933626652), new LatLng(28.595226219262685,-81.30408190190792), new LatLng(28.595226513642796,-81.30406312644482), new LatLng(28.595225041742264,-81.30404904484749), new LatLng(28.595218270999617,-81.30403999239206), new LatLng(28.595211500256514,-81.30402792245148), new LatLng(28.595218270999617,-81.3039967417717), new LatLng(28.595219742900227,-81.30395483225584), new LatLng(28.595217976619487,-81.3039256632328)));
-    ArrayList<LatLng> Q3 = new ArrayList<>(Arrays.asList(new LatLng(28.595091687469754,-81.30420729517937),new LatLng(28.595101402025108,-81.30417343229055), new LatLng(28.59507461340057,-81.30415465682745), new LatLng(28.59507284711739,-81.30410704761744), new LatLng(28.595052829239282,-81.30406580865383), new LatLng(28.595054889903384,-81.30396254360676), new LatLng(28.59499984072009,-81.30391594022512), new LatLng(28.59495273979169,-81.303915604949), new LatLng(28.594935960080836,-81.30391493439674)));
-    ArrayList<LatLng> Q4 = new ArrayList<>(Arrays.asList(new LatLng(28.595049591052774,-81.30383715033533),new LatLng(28.595052240478108,-81.30379255861044), new LatLng(28.595052829239282,-81.30375735461712), new LatLng(28.595048119149773,-81.30369331687689), new LatLng(28.595049591052774,-81.30366079509258), new LatLng(28.595050179813978,-81.3035749644041), new LatLng(28.595105228970915,-81.30357999354601), new LatLng(28.595050179813978,-81.3035749644041)));
+    ArrayList<LatLng> Q1 = new ArrayList<>(Arrays.asList(new LatLng(28.595217682239355, -81.30385525524616), new LatLng(28.595218270999617, -81.30383245646954), new LatLng(28.595219742900227, -81.30377478897572), new LatLng(28.595214738438067, -81.30369365215302), new LatLng(28.595217387859222, -81.30366180092096), new LatLng(28.595217387859222, -81.30359776318073), new LatLng(28.59519059926425, -81.30358066409826), new LatLng(28.595216504718856, -81.30352735519409)));
+    ArrayList<LatLng> Q2 = new ArrayList<>(Arrays.asList(new LatLng(28.595212677777095, -81.30417109), new LatLng(28.59521562157846, -81.30409933626652), new LatLng(28.595226219262685, -81.30408190190792), new LatLng(28.595226513642796, -81.30406312644482), new LatLng(28.595225041742264, -81.30404904484749), new LatLng(28.595218270999617, -81.30403999239206), new LatLng(28.595211500256514, -81.30402792245148), new LatLng(28.595218270999617, -81.3039967417717), new LatLng(28.595219742900227, -81.30395483225584), new LatLng(28.595217976619487, -81.3039256632328)));
+    ArrayList<LatLng> Q3 = new ArrayList<>(Arrays.asList(new LatLng(28.595091687469754, -81.30420729517937), new LatLng(28.595101402025108, -81.30417343229055), new LatLng(28.59507461340057, -81.30415465682745), new LatLng(28.59507284711739, -81.30410704761744), new LatLng(28.595052829239282, -81.30406580865383), new LatLng(28.595054889903384, -81.30396254360676), new LatLng(28.59499984072009, -81.30391594022512), new LatLng(28.59495273979169, -81.303915604949), new LatLng(28.594935960080836, -81.30391493439674)));
+    ArrayList<LatLng> Q4 = new ArrayList<>(Arrays.asList(new LatLng(28.595049591052774, -81.30383715033533), new LatLng(28.595052240478108, -81.30379255861044), new LatLng(28.595052829239282, -81.30375735461712), new LatLng(28.595048119149773, -81.30369331687689), new LatLng(28.595049591052774, -81.30366079509258), new LatLng(28.595050179813978, -81.3035749644041), new LatLng(28.595105228970915, -81.30357999354601), new LatLng(28.595050179813978, -81.3035749644041)));
 
     //latitude for fish bowl: 28.595124658078248
     //longitude for fish bowl: -81.30386296659708
@@ -2081,7 +2094,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 case "b3u":
 
                     if (B3U.size() >= 3 && resultsList.contains("3A") && resultsList.contains("FishBowl") && resultsList.contains("3BConnected")) {
-                        if(!resultsList.contains("b3u")) {
+                        if (!resultsList.contains("b3u")) {
 
                             resultsList.add("b3u");
                         }
@@ -2091,7 +2104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 case "b3d":
 
                     if (B3D.size() >= 4 && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
-                        if(!resultsList.contains("b3d")) {
+                        if (!resultsList.contains("b3d")) {
                             resultsList.add("b3d");
                         }
                         wasFound = true;
@@ -2232,70 +2245,75 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
             case R.id.navgo:
-                if (mLocationPermissionsGranted){
+                try {
+                    if (mLocationPermissionsGranted) {
 
-                    getDirectionPoly(markerFragment.MTouch.marker2);
-                    isTraveling = true;
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
-                    // checkDistPoint = new LatLng(Latitude, Longitued);
-                    //Setting curlocation and final destination to text boxes
-                    AutoCompleteTextView curlocation = findViewById(R.id.From);
-                    AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
-                    //create strings from textboxes
-                    String stringcurlocation = curlocation.getText().toString();
-                    String stringfinaldestination = finaldestination.getText().toString();
-                    //get the markers
-                    Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
-                    //Setup string for finding path
-                    String RooomtoRoom = "";
-                    if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
-                        //remove all lines
-                        RemoveAllLines();
-                        //Logic for deciding the order to place the strings in
-                        int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
-                        int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
-                        if (start > end) {
-                            RooomtoRoom += curlocation.getText().toString();
-                            RooomtoRoom += finaldestination.getText().toString();
-                        } else {
-                            RooomtoRoom += finaldestination.getText().toString();
-                            RooomtoRoom += curlocation.getText().toString();
-                        }
+                        getDirectionPoly(markerFragment.MTouch.marker2);
+                        isTraveling = true;
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
+                        // checkDistPoint = new LatLng(Latitude, Longitued);
+                        //Setting curlocation and final destination to text boxes
+                        AutoCompleteTextView curlocation = findViewById(R.id.From);
+                        AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
+                        //create strings from textboxes
+                        String stringcurlocation = curlocation.getText().toString();
+                        String stringfinaldestination = finaldestination.getText().toString();
+                        //get the markers
+                        Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
+                        //Setup string for finding path
+                        String RooomtoRoom = "";
+                        if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
+                            //remove all lines
+                            RemoveAllLines();
+                            //Logic for deciding the order to place the strings in
+                            int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
+                            int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
+                            if (start > end) {
+                                RooomtoRoom += curlocation.getText().toString();
+                                RooomtoRoom += finaldestination.getText().toString();
+                            } else {
+                                RooomtoRoom += finaldestination.getText().toString();
+                                RooomtoRoom += curlocation.getText().toString();
+                            }
 
-                        //Set wasFound to false as standard, if polyline is found dont display error
-                        Boolean wasFound = false;
-                        for (int i = 0; i < LinesTitles.size(); i++) {
-                            //Since the Linestitles and linesShowing are created together, the indexes are the same
-                            if (RooomtoRoom.equals(LinesTitles.get(i))) {
-                                linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                                wasFound = true;
+                            //Set wasFound to false as standard, if polyline is found dont display error
+                            Boolean wasFound = false;
+                            for (int i = 0; i < LinesTitles.size(); i++) {
+                                //Since the Linestitles and linesShowing are created together, the indexes are the same
+                                if (RooomtoRoom.equals(LinesTitles.get(i))) {
+                                    linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                                    wasFound = true;
+                                    break;
+                                }
+                            }
+                            if (!wasFound) {
+                                snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
+                                snack.show();
                                 break;
                             }
                         }
-                        if (!wasFound) {
-                            snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
-                            snack.show();
-                            break;
+                        if (mLocationPermissionsGranted) {
+                            FollowUser = true;
                         }
-                    }
-                    if (mLocationPermissionsGranted){
-                        FollowUser = true;
-                    }
-                    //"Select" markers to be used if needed
-                    //Removes slideup
-                    slideupview.setVisibility(View.GONE);
-                    slidepup = false;
-                    //Allows NavDone button to appear
-                    NavDone.setVisibility(View.VISIBLE);
-                    //Brings back searchbar (may be depricated, will have to test)
-                    Search.setVisibility(View.VISIBLE);
-                    //Removes keyboard when Go is hit
-                    InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+                        //"Select" markers to be used if needed
+                        //Removes slideup
+                        slideupview.setVisibility(View.GONE);
+                        slidepup = false;
+                        //Allows NavDone button to appear
+                        NavDone.setVisibility(View.VISIBLE);
+                        //Brings back searchbar (may be depricated, will have to test)
+                        Search.setVisibility(View.VISIBLE);
+                        //Removes keyboard when Go is hit
+                        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
 
-                }else{
-                    Toast.makeText(MapsActivity.this, "No Location permission", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MapsActivity.this, "No Location permission", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (SecurityException e) {
+                    Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
                 }
+
                 break;
 
             case R.id.NavDone:
@@ -2589,6 +2607,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+
     protected void ShowTheseMarkers() {
         if (CRShow) {
             for (Marker m : ClassRoomMarkers) {
@@ -2674,21 +2693,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Getting permission from user for location
     private void getLocationPermission() {
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION};
+        try {
+            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_lOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_lOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                //SET A BOOLEAN
-                mLocationPermissionsGranted = true;
+                if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    //SET A BOOLEAN
+                    mLocationPermissionsGranted = true;
 
+                } else {
+                    ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+                }
             } else {
                 ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        } catch (SecurityException e) {
+            Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     @Override
