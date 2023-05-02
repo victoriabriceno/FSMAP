@@ -700,18 +700,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @SuppressLint("MissingPermission")
     public void registerLocationManager() {
-        mLocationManager = (LocationManager) MapsActivity.this.getSystemService(LOCATION_SERVICE);
-        if (mLocationPermissionsGranted) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
+        try {
+            mLocationManager = (LocationManager) MapsActivity.this.getSystemService(LOCATION_SERVICE);
+            if (mLocationPermissionsGranted) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
 
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mLocationManager.addNmeaListener(onNmeaMessageListener);
+                }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mLocationManager.addNmeaListener(onNmeaMessageListener);
-            }
+        }catch (SecurityException e){
+            Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void setUserLocationMarker(Location location) {
@@ -888,7 +893,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         } catch (SecurityException e) {
-
+            Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -950,7 +955,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDeviceLocationCameraMove();
+                try {
+                    if (mLocationPermissionsGranted){
+                        getDeviceLocationCameraMove();
+                    }
+                }catch (SecurityException e){
+                    Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -1280,9 +1292,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         registerLocationManager();
 
-        if (mLocationPermissionsGranted) {
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    GPS_UPDATE_TIME, 1, locationListener);
+        try {
+            if (mLocationPermissionsGranted) {
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                        GPS_UPDATE_TIME, 1, locationListener);
+            }
+
+        } catch (SecurityException e){
+            Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
         }
         //get latlong for corners for specified place
         LatLng one = new LatLng(28.5899089565466, -81.30689695755838);
@@ -1312,19 +1329,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMinZoomPreference(mMap.getCameraPosition().zoom);
         moveCamera(mMap.getCameraPosition().target, 16f);
         //Location tracking
-        if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+        try {
+            if (mLocationPermissionsGranted) {
+                getDeviceLocation();
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
 
-            }
+                }
 //            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-            Init();
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                Init();
+            }
+        }catch (SecurityException e){
+            Toast.makeText(MapsActivity.this, "Error: " + e, Toast.LENGTH_SHORT).show();
+
         }
+
 
         //Marker stuffs
         //Markers for classrooms
