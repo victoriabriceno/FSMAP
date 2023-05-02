@@ -1804,10 +1804,78 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             new LatLng(28.596700464476914,-81.30142517387867),
             new LatLng(28.596184422128612,-81.30247358232737),
             new LatLng(28.59616823136931,-81.30243670195341),
-            new LatLng(28.596221513676827,-81.30235623568296)
-
+            new LatLng(28.596221513676827,-81.30235623568296),
+            new LatLng(28.596060783539997,-81.30214601755142),
+            new LatLng(28.596046064650718,-81.30212020128965),
+            new LatLng(28.59588445111078,-81.30231365561485),
+            new LatLng(28.59605813414006,-81.30201492458582),
+            new LatLng(28.595919776495936,-81.3020658865571),
+            new LatLng(28.59605842851785,-81.3019485399127),
+            new LatLng(28.596037527693976,-81.30190093070269),
+            new LatLng(28.596016332488063,-81.3018573448062),
+            new LatLng(28.59602810760297,-81.30178961902857)
     ));
 
+    ArrayList Q4Building4Down = new ArrayList<>(Arrays.asList(new LatLng(28.59588445111078,-81.30231365561485),
+            new LatLng(28.59594067734322,-81.30235187709332),
+            new LatLng(28.595848536957064,-81.30228985100985),
+            new LatLng(28.595829991118773,-81.30234617739916),
+            new LatLng(28.59642257319061,-81.30129911005497),
+            new LatLng(28.595951274954345,-81.30222044885159),
+            new LatLng(28.59593478978102,-81.3021731749177),
+            new LatLng(28.59584500441668,-81.30221877247095),
+            new LatLng(28.59576728849843,-81.30216378718615),
+            new LatLng(28.59593272913417,-81.30210544914007),
+            new LatLng(28.595919776495936,-81.3020658865571),
+            new LatLng(28.59594891992973,-81.30205381661654),
+            new LatLng(28.595985717183076,-81.30202163010836),
+            new LatLng(28.595766699741244,-81.30193881690502),
+            new LatLng(28.595794076946433,-81.30180202424526),
+            new LatLng(28.595894754349356,-81.30172323435545),
+            new LatLng(28.595993959766073,-81.30182281136513),
+            new LatLng(28.59595922316197,-81.30184695124626),
+            new LatLng(28.595930668487295,-81.3018412515521)));
+
+
+    //latitude for CenterQuadrant1: 28.59656328518375
+    //longitude for CenterQUadrant1: -81.30264725536108
+
+    //Latitude for Center Quadrant2:28.59627038029975
+    //Lonngitude For CenterQUadrant2:-81.30249939858913
+
+    //Latitude for Center Quadrant3:28.596130256669586
+    //Lonngitude For CenterQUadrant3:-81.3023317605257
+
+    //Latitude for Center Quadrant4:28.595877974788902
+    //Lonngitude For CenterQUadrant4:-81.30213160067797
+    public String FindQuadrantForAreaBuilding2(LatLng position) {
+        double _longitude = position.longitude;
+        double _latitdue = position.latitude;
+
+        double longToCheckQ1 = 28.59656328518375;
+        double latToCheckQ1 = -81.30264725536108;
+
+        double longToCheckQ2 = 28.59627038029975;
+        double latToCheckQ2 = -81.30249939858913;
+
+        double longToCheckQ3= 28.596130256669586;
+        double latToCheckQ3 = -81.3023317605257;
+
+        double longToCheckQ4 = 28.595877974788902;
+        double latToCheckQ4 = -81.30213160067797;
+
+        if (_longitude < longToCheckQ3 && _latitdue < latToCheckQ3) {
+            return "Q3";
+        } else if (_longitude < longToCheckQ2 && _latitdue > latToCheckQ2) {
+            return "Q2";
+        } else if (_longitude > longToCheckQ1 && _latitdue > latToCheckQ1) {
+            return "Q1";
+        } else if (_longitude > longToCheckQ4 && _latitdue < latToCheckQ4) {
+            return "Q4";
+        } else {
+            return "NotFound";
+        }
+    }
 
     ArrayList<LatLng> Q1 = new ArrayList<>(Arrays.asList(new LatLng(28.595217682239355,-81.30385525524616),new LatLng(28.595218270999617,-81.30383245646954), new LatLng(28.595219742900227,-81.30377478897572), new LatLng(28.595214738438067,-81.30369365215302), new LatLng(28.595217387859222,-81.30366180092096), new LatLng(28.595217387859222,-81.30359776318073), new LatLng(28.59519059926425,-81.30358066409826), new LatLng(28.595216504718856,-81.30352735519409)));
     ArrayList<LatLng> Q2 = new ArrayList<>(Arrays.asList(new LatLng(28.595212677777095,-81.30417109),new LatLng(28.59521562157846,-81.30409933626652), new LatLng(28.595226219262685,-81.30408190190792), new LatLng(28.595226513642796,-81.30406312644482), new LatLng(28.595225041742264,-81.30404904484749), new LatLng(28.595218270999617,-81.30403999239206), new LatLng(28.595211500256514,-81.30402792245148), new LatLng(28.595218270999617,-81.3039967417717), new LatLng(28.595219742900227,-81.30395483225584), new LatLng(28.595217976619487,-81.3039256632328)));
