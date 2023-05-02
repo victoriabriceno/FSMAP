@@ -1858,24 +1858,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double longToCheckQ2 = 28.59627038029975;
         double latToCheckQ2 = -81.30249939858913;
 
-        double longToCheckQ3= 28.596130256669586;
-        double latToCheckQ3 = -81.3023317605257;
+        double longToCheckQ3= 28.59600808990682;
+        double latToCheckQ3 = -81.30207393318415;
 
-        double longToCheckQ4 = 28.595877974788902;
-        double latToCheckQ4 = -81.30213160067797;
+        double longToCheckQ4 = 28.59577906364125;
+        double latToCheckQ4 = -81.3020645454526;
 
-        if (_longitude < longToCheckQ3 && _latitdue < latToCheckQ3) {
-            return "Q3";
-        } else if (_longitude < longToCheckQ2 && _latitdue > latToCheckQ2) {
-            return "Q2";
-        } else if (_longitude > longToCheckQ1 && _latitdue > latToCheckQ1) {
+        if(_latitdue > latToCheckQ1){
             return "Q1";
-        } else if (_longitude > longToCheckQ4 && _latitdue < latToCheckQ4) {
+        }else if(_latitdue > latToCheckQ2){
+            return "Q2";
+        }else if(_latitdue > latToCheckQ3){
+            return "Q3";
+
+        }else if(_latitdue > latToCheckQ4){
             return "Q4";
-        } else {
-            return "NotFound";
+        }else{
+            return "Not found";
         }
     }
+
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInsideBuilding2(String QuadrantDestination, LatLng Destination) {
+        ArrayList<LatLng> points = new ArrayList<>();
+        //all of these paths only consider travel from outside to inside. Not travel withing the building.
+        //Within building travel will require different logic because there may be shortcuts to be taken within the building.
+
+        if (QuadrantDestination.equals("Q1")) {
+
+
+
+        } else if (QuadrantDestination.equals("Q2")) {
+
+        } else if (QuadrantDestination.equals("Q3")) {
+
+        } else if (QuadrantDestination.equals("Q4")) {
+
+        }
+        return points;
+    }
+
 
     ArrayList<LatLng> Q1 = new ArrayList<>(Arrays.asList(new LatLng(28.595217682239355,-81.30385525524616),new LatLng(28.595218270999617,-81.30383245646954), new LatLng(28.595219742900227,-81.30377478897572), new LatLng(28.595214738438067,-81.30369365215302), new LatLng(28.595217387859222,-81.30366180092096), new LatLng(28.595217387859222,-81.30359776318073), new LatLng(28.59519059926425,-81.30358066409826), new LatLng(28.595216504718856,-81.30352735519409)));
     ArrayList<LatLng> Q2 = new ArrayList<>(Arrays.asList(new LatLng(28.595212677777095,-81.30417109),new LatLng(28.59521562157846,-81.30409933626652), new LatLng(28.595226219262685,-81.30408190190792), new LatLng(28.595226513642796,-81.30406312644482), new LatLng(28.595225041742264,-81.30404904484749), new LatLng(28.595218270999617,-81.30403999239206), new LatLng(28.595211500256514,-81.30402792245148), new LatLng(28.595218270999617,-81.3039967417717), new LatLng(28.595219742900227,-81.30395483225584), new LatLng(28.595217976619487,-81.3039256632328)));
