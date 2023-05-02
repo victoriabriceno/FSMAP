@@ -117,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private CircleImageView userIconMaps;
     private ImageView mGps;
     private Button Set;
-    private Button RemovePoint;w
+    private Button RemovePoint;
     private ImageView ZoomIn;
     private ImageView ZoomOut;
     private Button NavGo;
@@ -145,8 +145,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Marker> secondFloorMarkersList = new ArrayList<Marker>();
 
     ArrayList<Marker> BuildingOne = new ArrayList<>();
+    ArrayList<Marker> BuildingOneF2 = new ArrayList<>();
     ArrayList<Marker> BuildingTwo = new ArrayList<>();
+    ArrayList<Marker> BuildingTwoF2 = new ArrayList<>();
     ArrayList<Marker> ThreeAMarkers = new ArrayList<>();
+    ArrayList<Marker> ThreeAMarkersF2 = new ArrayList<>();
     ArrayList<Marker> ThreeBMarkers = new ArrayList<>();
     ArrayList<Marker> ThreeCMarkers = new ArrayList<>();
     ArrayList<Marker> ThreeDMarkers = new ArrayList<>();
@@ -896,40 +899,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showMarkerInArea(String Area) {
         switch (Area) {
             case ("b1"):
-                for (int i = 0; i < BuildingOne.size(); i++) {
-                    BuildingOne.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (int i = 0; i < BuildingOne.size(); i++) {
+                        BuildingOne.get(i).setVisible(true);
+                    }
+                }
+                else {
+                    for (Marker m: BuildingOneF2) {
+                        m.setVisible(true);
+                    }
                 }
                 break;
             case ("b2"):
+                if(floorPicked == 1)
+                {
+                    for(Marker m2 : BuildingTwoF2)
+                    {
+                        m2.setVisible(false);
+                    }
+                    for (Marker m: BuildingTwo) {
+                        m.setVisible(true);
+                    }
+                }
+                else {
+                    for(Marker m2 : BuildingTwo)
+                    {
+                        m2.setVisible(false);
+                    }
+                    for (Marker m: BuildingTwoF2)
+                    {
+                        m.setVisible(true);
+                    }
+                }
                 break;
             case ("3A"):
-                for (int i = 0; i < ThreeAMarkers.size(); i++) {
-                    ThreeAMarkers.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (Marker m: ThreeAMarkersF2) {
+                        m.setVisible(false);
+                    }
+                    for (int i = 0; i < ThreeAMarkers.size(); i++) {
+                        ThreeAMarkers.get(i).setVisible(true);
+                    }
+                }
+                else
+                {
+                    for (Marker m: ThreeAMarkers) {
+                        m.setVisible(false);
+                    }
+                    for(Marker m2: ThreeAMarkersF2)
+                    {
+                        m2.setVisible(true);
+                    }
                 }
                 break;
             case ("3B"):
-                for (int i = 0; i < ThreeBMarkers.size(); i++) {
-                    ThreeBMarkers.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (int i = 0; i < ThreeBMarkers.size(); i++) {
+                        ThreeBMarkers.get(i).setVisible(true);
+                    }
                 }
                 break;
             case ("3C"):
-                for (int i = 0; i < ThreeCMarkers.size(); i++) {
-                    ThreeCMarkers.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (int i = 0; i < ThreeCMarkers.size(); i++) {
+                        ThreeCMarkers.get(i).setVisible(true);
+                    }
                 }
                 break;
             case ("3D"):
-                for (int i = 0; i < ThreeDMarkers.size(); i++) {
-                    ThreeDMarkers.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (int i = 0; i < ThreeDMarkers.size(); i++) {
+                        ThreeDMarkers.get(i).setVisible(true);
+                    }
                 }
                 break;
             case ("3E"):
-                for (int i = 0; i < ThreeEMarkers.size(); i++) {
-                    ThreeEMarkers.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (int i = 0; i < ThreeEMarkers.size(); i++) {
+                        ThreeEMarkers.get(i).setVisible(true);
+                    }
                 }
                 break;
             case ("3F"):
-                for (int i = 0; i < ThreeFMarkers.size(); i++) {
-                    ThreeFMarkers.get(i).setVisible(true);
+                if(floorPicked == 1) {
+                    for (int i = 0; i < ThreeFMarkers.size(); i++) {
+                        ThreeFMarkers.get(i).setVisible(true);
+                    }
                 }
                 break;
 
@@ -1386,15 +1441,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             OFRooms.add(mark);
 
                     }
+                    int floorgrabbed = 0;
+                    switch (room[4])
+                    {
+                        case "1":
+                            floorgrabbed = 1;
+                            break;
+                        case "2":
+                            floorgrabbed = 2;
+                            break;
+                    }
                     switch (room[5]) {
                         case ("1"):
-                            BuildingOne.add(mark);
+                            if(floorgrabbed == 1) {
+                                BuildingOne.add(mark);
+                            }
+                            else if(floorgrabbed == 2)
+                            {
+                                BuildingOneF2.add(mark);
+                            }
                             break;
                         case ("2"):
-                            BuildingTwo.add(mark);
+                            if(floorgrabbed == 1)
+                            {
+                                BuildingTwo.add(mark);
+                            }
+                            else if(floorgrabbed == 2)
+                            {
+                                BuildingTwoF2.add(mark);
+                            }
                             break;
                         case ("3A"):
-                            ThreeAMarkers.add(mark);
+                            if(floorgrabbed == 1)
+                            {
+                                ThreeAMarkers.add(mark);
+                            }
+                            else if(floorgrabbed == 2)
+                            {
+                                ThreeAMarkersF2.add(mark);
+                            }
                             break;
                         case ("3B"):
                             ThreeBMarkers.add(mark);
@@ -1749,7 +1834,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //latitude for fish bowl: 28.595124658078248
     //longitude for fish bowl: -81.30386296659708
-    public String FindQuadrantForArea(LatLng position) {
+    public String FindQuadrantForArea(LatLng position, LatLng AreaToCheck) {
         double _longitude = position.longitude;
         double _latitdue = position.latitude;
         double longToCheck = -81.30386296659708;
@@ -1839,13 +1924,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return points;
     }
-
-    public LatLng FindMarkerAreaForTravel(Marker marker) {
+    //SearchType is wether youre looking for the area youre traveling to or if you want the spot by the front door. 1 is front door 2 is just the area return.
+    public LatLng FindMarkerAreaForTravel(Marker marker, int SearchType) {
         LatLng returnArea = null;
         if (ThreeAMarkers.contains(marker)) {
 //            return "3A";
         } else if (ThreeBMarkers.contains(marker)) {
-            returnArea = new LatLng(28.59504105401512, -81.30434174090624);
+            if(SearchType == 1) {
+                returnArea = new LatLng(28.59504105401512, -81.30434174090624);
+            }
+            else
+            {
+                returnArea = new LatLng( -81.30386296659708, 28.595124658078248);
+            }
         } else if (ThreeCMarkers.contains(marker)) {
 //            return "3C";
         } else if (ThreeDMarkers.contains(marker)) {
@@ -1864,7 +1955,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void HideAllOtherMarkers(String typeNotToHide) {
         if (!typeNotToHide.equals("1")) {
-
             for (int i = 0; i < BuildingOne.size(); i++) {
                 BuildingOne.get(i).setVisible(false);
             }
@@ -2279,8 +2369,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (B1 != null && B1.size() > 0) {
                     B1.get(1).setVisible(false);
                 }
+                if(B2 != null && B2.size() > 0)
+                {
+                    B2.get(1).setVisible(false);
+                }
                 for (Marker marker : secondFloorMarkersList) {
                     marker.setVisible(false);
+                }
+                for(Marker m : ThreeAMarkersF2)
+                {
+                    m.setVisible(false);
+                }
+                for(Marker m2: BuildingOneF2)
+                {
+                    m2.setVisible(false);
+                }
+                for(Marker m3: BuildingTwoF2)
+                {
+                    m3.setVisible(false);
                 }
                 if (B3U2 != null) {
                     B3U2.setVisible(false);
@@ -2644,7 +2750,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //get directions to marker
     public void getDirectionPoly(Marker marker) {
         getDeviceLocation();
-        LatLng dest = FindMarkerAreaForTravel(marker);
+        LatLng dest = FindMarkerAreaForTravel(marker,1);
         String url1 = "";
 //            if (!CheckMarkerType(marker)) {
 //                url1 = getUrl(new LatLng(Latitude, Longitued), MarkersList.get(0).getPosition());
@@ -2776,7 +2882,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         points.add(new LatLng(lat, lon));
                     }
-                    String area = FindQuadrantForArea(marker.getPosition());
+                    LatLng PosToCheck = FindMarkerAreaForTravel(marker,2);
+                    String area = FindQuadrantForArea(marker.getPosition(),PosToCheck);
                     points.addAll(ChoosePointsToGrabOutsideToInside(area, marker.getPosition()));
                     polylineOptions.addAll(points);
                     polylineOptions.width(15);
