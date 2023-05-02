@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: io.github.pilgr:paperdb:2.7.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/726606194c96cd2f9f7c322303d9e2b2/transformed/paperdb-2.7.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/726606194c96cd2f9f7c322303d9e2b2/transformed/paperdb-2.7.2/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/726606194c96cd2f9f7c322303d9e2b2/transformed/paperdb-2.7.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/726606194c96cd2f9f7c322303d9e2b2/transformed/paperdb-2.7.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.pilgr/paperdb/2.7.2/a7b37d661e6fb721f95d247850fc540708fd20c3/paperdb-2.7.2-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/io.github.pilgr/paperdb/2.7.2/a7b37d661e6fb721f95d247850fc540708fd20c3/paperdb-2.7.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
