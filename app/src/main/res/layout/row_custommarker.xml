@@ -25,22 +25,44 @@
 
         </RelativeLayout>
 
-        <TextView
+        <EditText
             android:id="@+id/TitleMarker1"
-            android:layout_width="155dp"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="27dp"
+            android:background="@null"
             android:fontFamily="@font/questrialregular"
+            android:imeOptions="actionDone"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="Title"
             android:textColor="@color/FS_gray"
-            android:textSize="15dp" />
+            android:textSize="15dp" /> />
+
+        <EditText
+            android:id="@+id/TitleMarker2"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="133dp"
+            android:layout_marginBottom="25dp"
+            android:background="@null"
+            android:fontFamily="@font/questrialregular"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Title"
+            android:textColor="@color/FS_gray"
+            android:textSize="15dp"
+            android:visibility="invisible" />
 
         <ImageButton
-            android:id="@+id/trashFavorites"
+            android:id="@+id/trashCustom"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
@@ -53,7 +75,7 @@
 
         <ImageButton
 
-            android:id="@+id/editFavorites"
+            android:id="@+id/editCustom"
             android:layout_width="29dp"
             android:layout_height="29dp"
             android:layout_alignParentEnd="true"

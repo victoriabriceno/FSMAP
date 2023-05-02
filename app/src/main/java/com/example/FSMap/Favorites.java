@@ -232,7 +232,7 @@ public class Favorites extends AppCompatActivity {
 
             //Save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid()).child("Favorites")/*child(marker.getTitle())*/.child(originalTitle).setValue(title)./*.
+            ref.child(firebaseAuth.getUid()).child("Favorites").child(originalTitle).setValue(title)./*.
                      setValue(hashMap).*/addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
