@@ -2232,63 +2232,70 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
             case R.id.navgo:
+                if (mLocationPermissionsGranted){
 
-                getDirectionPoly(markerFragment.MTouch.marker2);
-                isTraveling = true;
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
-                // checkDistPoint = new LatLng(Latitude, Longitued);
-                //Setting curlocation and final destination to text boxes
-                AutoCompleteTextView curlocation = findViewById(R.id.From);
-                AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
-                //create strings from textboxes
-                String stringcurlocation = curlocation.getText().toString();
-                String stringfinaldestination = finaldestination.getText().toString();
-                //get the markers
-                Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
-                //Setup string for finding path
-                String RooomtoRoom = "";
-                if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
-                    //remove all lines
-                    RemoveAllLines();
-                    //Logic for deciding the order to place the strings in
-                    int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
-                    int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
-                    if (start > end) {
-                        RooomtoRoom += curlocation.getText().toString();
-                        RooomtoRoom += finaldestination.getText().toString();
-                    } else {
-                        RooomtoRoom += finaldestination.getText().toString();
-                        RooomtoRoom += curlocation.getText().toString();
-                    }
+                    getDirectionPoly(markerFragment.MTouch.marker2);
+                    isTraveling = true;
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
+                    // checkDistPoint = new LatLng(Latitude, Longitued);
+                    //Setting curlocation and final destination to text boxes
+                    AutoCompleteTextView curlocation = findViewById(R.id.From);
+                    AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
+                    //create strings from textboxes
+                    String stringcurlocation = curlocation.getText().toString();
+                    String stringfinaldestination = finaldestination.getText().toString();
+                    //get the markers
+                    Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
+                    //Setup string for finding path
+                    String RooomtoRoom = "";
+                    if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
+                        //remove all lines
+                        RemoveAllLines();
+                        //Logic for deciding the order to place the strings in
+                        int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
+                        int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
+                        if (start > end) {
+                            RooomtoRoom += curlocation.getText().toString();
+                            RooomtoRoom += finaldestination.getText().toString();
+                        } else {
+                            RooomtoRoom += finaldestination.getText().toString();
+                            RooomtoRoom += curlocation.getText().toString();
+                        }
 
-                    //Set wasFound to false as standard, if polyline is found dont display error
-                    Boolean wasFound = false;
-                    for (int i = 0; i < LinesTitles.size(); i++) {
-                        //Since the Linestitles and linesShowing are created together, the indexes are the same
-                        if (RooomtoRoom.equals(LinesTitles.get(i))) {
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                            wasFound = true;
+                        //Set wasFound to false as standard, if polyline is found dont display error
+                        Boolean wasFound = false;
+                        for (int i = 0; i < LinesTitles.size(); i++) {
+                            //Since the Linestitles and linesShowing are created together, the indexes are the same
+                            if (RooomtoRoom.equals(LinesTitles.get(i))) {
+                                linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                                wasFound = true;
+                                break;
+                            }
+                        }
+                        if (!wasFound) {
+                            snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
+                            snack.show();
                             break;
                         }
                     }
-                    if (!wasFound) {
-                        snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
-                        snack.show();
-                        break;
+                    if (mLocationPermissionsGranted){
+                        FollowUser = true;
                     }
+                    //"Select" markers to be used if needed
+                    //Removes slideup
+                    slideupview.setVisibility(View.GONE);
+                    slidepup = false;
+                    //Allows NavDone button to appear
+                    NavDone.setVisibility(View.VISIBLE);
+                    //Brings back searchbar (may be depricated, will have to test)
+                    Search.setVisibility(View.VISIBLE);
+                    //Removes keyboard when Go is hit
+                    InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+
+                }else{
+                    Toast.makeText(MapsActivity.this, "No Location permission", Toast.LENGTH_SHORT).show();
                 }
-                FollowUser = true;
-                //"Select" markers to be used if needed
-                //Removes slideup
-                slideupview.setVisibility(View.GONE);
-                slidepup = false;
-                //Allows NavDone button to appear
-                NavDone.setVisibility(View.VISIBLE);
-                //Brings back searchbar (may be depricated, will have to test)
-                Search.setVisibility(View.VISIBLE);
-                //Removes keyboard when Go is hit
-                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
                 break;
 
             case R.id.NavDone:
