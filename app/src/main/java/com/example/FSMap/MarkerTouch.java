@@ -64,6 +64,8 @@ public class MarkerTouch extends FrameLayout {
     MapsActivity mapsActivity = new MapsActivity();
 
     boolean slideup = mapsActivity.slidepup;
+    boolean filter= mapsActivity.FilterShow;
+
 
 
     BottomSheetBehavior bottomSheetBehavior;
@@ -229,6 +231,8 @@ public class MarkerTouch extends FrameLayout {
                     bottomSheetBehavior.setFitToContents(false);
                     slideupview.setVisibility(View.VISIBLE);
                     slideup = true;
+                   // filter = false;
+
                 }
 
 
