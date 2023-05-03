@@ -104,12 +104,18 @@ public class CustomMarker extends AppCompatActivity {
         markerCUstomMarkers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CustomMarker.this, Settings.class));
+                onBackPressed();
             }
         });
 
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
 
     public static void addToCustomMarkers(Context context, Marker marker, int floor) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();

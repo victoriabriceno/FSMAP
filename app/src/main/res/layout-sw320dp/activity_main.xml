@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/constrainLayout"
         android:layout_width="293dp"
-        android:layout_height="308dp"
+        android:layout_height="329dp"
         android:layout_below="@id/WelcomeText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -45,10 +45,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
             android:layout_marginTop="5dp"
-            android:inputType="textEmailAddress"
-            android:hint="Email">
+            android:layout_marginEnd="18dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -151,7 +151,7 @@
         <Button
             android:id="@+id/google_login"
             android:layout_width="257dp"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:layout_below="@id/RegisterBTN"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -162,6 +162,7 @@
             android:layout_marginEnd="18dp"
             android:layout_marginRight="18dp"
             android:background="@drawable/drawable_google"
+            android:drawableLeft="@drawable/google_logo"
             android:fontFamily="@font/questrialregular"
             android:text="Google Login"
             android:textColor="@color/FS_dark_gray"
