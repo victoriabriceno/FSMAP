@@ -149,6 +149,7 @@ public class MarkerTouch extends FrameLayout {
                     getDeviceLocation();
                 }
 
+
                 if (!wasRemoveHit) {
                     wasRemoveHit = true;
                 } else {
