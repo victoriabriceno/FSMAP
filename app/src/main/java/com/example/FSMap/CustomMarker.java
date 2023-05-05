@@ -74,15 +74,25 @@ public class CustomMarker extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 list.clear();
-                String markerTitle = null;
-                String originalName = null;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String markerTitle = null;
+                    String originalName = null;
                     if(dataSnapshot != null){
                         markerTitle = dataSnapshot.getKey().toString();
                         originalName =dataSnapshot.getKey().toString();
                     }
+                    if(dataSnapshot.child("CustomName").getValue() != null){
 
-                    int floorCustom = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
+                        markerTitle = dataSnapshot.child("CustomName").getValue().toString();
+
+                    }
+
+                    int floorCustom = 0;
+                    if(dataSnapshot.child("Floor").getValue() != null){
+
+                       floorCustom = Integer.parseInt(dataSnapshot.child("Floor").getValue().toString());
+                    }
+
                     double latitude1 = Double.parseDouble(dataSnapshot.child("latitude").getValue().toString());
                     double longitude1 = Double.parseDouble(dataSnapshot.child("longitude").getValue().toString());
                     LatLng positionCustom = new LatLng(latitude1, longitude1);

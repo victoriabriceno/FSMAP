@@ -40,6 +40,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.motion.widget.DesignTool;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
@@ -1883,7 +1884,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     new LatLng(28.596184422128612, -81.30247358232737),
                     new LatLng(28.596126724138692, -81.30246687680483),
                     new LatLng(28.59606814298387, -81.30243133753538),
-                    new LatLng(28.596010444930112, -81.30239479243755),
                     new LatLng(28.596181183976935, -81.30236327648163),
                     new LatLng(28.59614997996497, -81.3023491948843),
                     new LatLng(28.596130256669586, -81.3023317605257),
@@ -1898,7 +1898,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             new LatLng(28.595829991118773, -81.30234617739916),
             new LatLng(28.59580938462796, -81.30238708108664),
             new LatLng(28.595848536957064, -81.30228985100985),
-            new LatLng(28.59584500441668, -81.30221877247095),
+            new LatLng(28.59585177511897,-81.30226135253905),
+            new LatLng(28.59585236387567,-81.30220972001553),
+            new LatLng(28.595854718902423,-81.30219262093307),
             new LatLng(28.595951274954345, -81.30222044885159),
             new LatLng(28.59593478978102, -81.3021731749177),
             new LatLng(28.595894754349356, -81.30219664424658),
@@ -1910,17 +1912,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<LatLng> Q5Building5Down = new ArrayList<>(Arrays.asList(
             new LatLng(28.59593272913417, -81.30210544914007),
             new LatLng(28.595919776495936, -81.3020658865571),
-            new LatLng(28.59594891992973, -81.30205381661654),
             new LatLng(28.595902408183058, -81.30203671753407),
             new LatLng(28.59602604695795, -81.30199447274208),
             new LatLng(28.595985717183076, -81.30202163010836),
-            new LatLng(28.596046064650718, -81.30212020128965),
-            new LatLng(28.59605813414006, -81.30201492458582),
             new LatLng(28.595950391820107, -81.30186740309),
             new LatLng(28.59605842851785, -81.3019485399127),
-            new LatLng(28.596044887139456, -81.3018811494112),
             new LatLng(28.596037527693976, -81.30190093070269),
-            new LatLng(28.59602251442357, -81.30189456045628),
             new LatLng(28.596016332488063, -81.3018573448062),
             new LatLng(28.595993959766073, -81.30182281136513),
             new LatLng(28.59595922316197, -81.30184695124626),
@@ -1957,16 +1954,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double latToCheckQ4 = 28.59577906364125;
         double longToCheckQ4 = -81.3020645454526;
 
+        double latToCheck5=28.595936556049697;
+        double longToCheckQ5 = -81.30215071141718;
+
         if (_latitdue > latToCheckQ1) {
             return "Q1";
         } else if (_latitdue > latToCheckQ2) {
             return "Q2";
-        } else if (_latitdue > latToCheckQ3) {
+        } else if (_latitdue > latToCheckQ3 && _longitude < longToCheckQ5) {
             return "Q3";
 
-        } else if (_latitdue > latToCheckQ4) {
+        } else if (_latitdue > latToCheckQ4 && _longitude < longToCheckQ5) {
             return "Q4";
-        } else {
+        }
+        else if(_longitude > longToCheckQ5){
+            return "Q5";
+        }else {
             return "Not found";
         }
     }
@@ -2104,6 +2107,362 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         } else if (QuadrantDestination.equals("Q4")) {
+            if(rightside) {
+                //top hallway
+                if (Destination.latitude > 28.595894754349356 && Destination.longitude > -81.30226403474809) {
+                    for (LatLng point: Q3Building3Down) {
+                        if(point.longitude >= -81.30242429673672)
+                        {
+                            points.add(point);
+                        }
+                    }
+
+                    for (LatLng point: Q4Building4Down){
+
+                        if(point.latitude > 28.595894754349356 && point.longitude > -81.30226403474809){
+                            if(point.longitude < Destination.longitude){
+                                points.add(point);
+                            }
+
+
+                        }
+                    }
+                }
+                //bot hallway
+                else {
+                    //add start point of hallways for right side hallway
+                    for (LatLng point: Q3Building3Down) {
+                        if(point.latitude >= 28.5961888377898 && point.longitude >= -81.30239512771368)
+                        {
+                            points.add(point);
+                        }
+                    }
+                    for (int i = Q3Building3Down.size() - 1; i >= 0;i--){
+
+                        LatLng point = Q3Building3Down.get(i);
+                        if(point.latitude < 28.596184422128612 && point.longitude > -81.30253527313471 && point.longitude < -81.30239512771368
+                        && point.latitude > 28.596126724138692){
+                            points.add(point);
+                        }
+                    }
+                    for (LatLng point: Q3Building3Down)
+                    {
+                        if(point.latitude <= 28.596126724138692 && point.longitude < -81.30239512771368){
+                            points.add(point);
+                        }
+                    }
+                    if(Destination.latitude >28.595861783982404 && Destination.longitude < -81.30230896174908){
+
+                        for (LatLng point: Q4Building4Down) {
+                            if(Destination.latitude <= point.latitude){
+                                points.add(point);
+                            }
+                        }
+                    }
+                    else if(Destination.latitude <28.595861783982404 && Destination.longitude <  -81.30230896174908){
+
+                        if(Destination.latitude > 28.595829991118773){
+
+                            for (LatLng point: Q4Building4Down){
+
+                                if(point.longitude <= -81.30230896174908 && point.latitude >=28.595829991118773){
+                                    points.add(point);
+                                }else{
+                                    break;
+                                }
+                            }
+
+                        }else{
+                            for (LatLng point: Q4Building4Down){
+
+                                if(point.longitude <= -81.30230896174908){
+                                    points.add(point);
+                                }
+                            }
+
+                        }
+
+                    }else{
+
+
+                        for (LatLng point: Q4Building4Down){
+                            if (point.latitude > 28.595861783982404 && point.longitude <= -81.30230896174908){
+                                points.add(point);
+                            }
+                        }
+                        for (LatLng point: Q4Building4Down){
+                            if (point.longitude >= -81.30230896174908 && point.latitude < 28.595894754349356){
+                                if(point.longitude <= Destination.longitude){
+                                    points.add(point);
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }else{
+                //top hallway right side
+                if (Destination.latitude > 28.595894754349356 && Destination.longitude > -81.30226403474809) {
+                    for (LatLng point: Q3Building3Down) {
+                        if(point.latitude < 28.596174707673327 && point.latitude > 28.596126724138692 && point.longitude<-81.30239512771368)
+                        {
+                            points.add(point);
+                        }
+                    }
+                    for(LatLng point2: Q3Building3Down){
+                        if(point2.latitude <=28.5961888377898 && point2.longitude >=-81.30239512771368)
+                        {
+                            points.add(point2);
+                        }
+                    }
+                    for (LatLng point: Q4Building4Down){
+
+                        if(point.latitude > 28.595894754349356 && point.longitude > -81.30226403474809){
+                            if(point.longitude < Destination.longitude){
+                                points.add(point);
+                            }
+
+
+                        }
+                    }
+                }
+                //bot hallway left side
+                else{
+                    for (LatLng point: Q3Building3Down )
+                    {
+                        if(point.latitude < 28.596162638197345 && point.longitude < -81.30239512771368)
+                        {
+                            points.add(point);
+                        }
+                    }
+                    if(Destination.latitude >28.595861783982404 && Destination.longitude < -81.30230896174908){
+
+                        for (LatLng point: Q4Building4Down) {
+                            if(Destination.latitude <= point.latitude){
+                                points.add(point);
+                            }
+                        }
+                    }
+                    else if(Destination.latitude <28.595861783982404 && Destination.longitude <  -81.30230896174908){
+
+                        if(Destination.latitude > 28.595829991118773){
+
+                            for (LatLng point: Q4Building4Down){
+
+                                if(point.longitude <= -81.30230896174908 && point.latitude >=28.595829991118773){
+                                    points.add(point);
+                                }else{
+                                    break;
+                                }
+                            }
+
+                        }else{
+                            for (LatLng point: Q4Building4Down){
+
+                                if(point.longitude <= -81.30230896174908){
+                                    points.add(point);
+                                }
+                            }
+
+                        }
+
+                    }else{
+
+
+                        for (LatLng point: Q4Building4Down){
+                            if (point.latitude > 28.595861783982404 && point.longitude <= -81.30230896174908){
+                                points.add(point);
+                            }
+                        }
+                        for (LatLng point: Q4Building4Down){
+                            if (point.longitude >= -81.30230896174908 && point.latitude < 28.595894754349356){
+                                if(point.longitude <= Destination.longitude){
+                                    points.add(point);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+
+        }else if(QuadrantDestination.equals("Q5")){
+
+            if(rightside){
+                for (LatLng point: Q3Building3Down) {
+                    if(point.longitude >= -81.30242429673672)
+                    {
+                        points.add(point);
+                    }
+                }
+                for (LatLng point: Q4Building4Down){
+                        if(point.longitude < Destination.longitude){
+                            points.add(point);
+                        }
+                }
+
+                if(Destination.latitude < 28.595902408183058 && Destination.longitude < -81.30203671753407){
+
+                    points.add(Q5Building5Down.get(0));
+                    points.add(Q5Building5Down.get(1));
+                }else if(Destination.latitude > 28.59594891992973 && Destination.longitude < -81.30205381661654){
+                    points.add(Q5Building5Down.get(0));
+                    points.add(Q5Building5Down.get(1));
+                    points.add(Q5Building5Down.get(2));
+                } else if (Destination.latitude >28.596037527693976 && Destination.longitude > -81.30190093070269) {
+                    for (LatLng point: Q5Building5Down){
+                        if(point.latitude >28.595902408183058 ) {
+                            if(point.longitude < Destination.longitude){
+                                points.add(point);
+                            }
+
+                        }
+                    }
+                } else if (Destination.longitude < -81.30190093070269 && Destination.latitude > 28.595950391820107) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude < 28.596056367873416 && point.longitude < -81.30197033286095 && point.latitude > 28.595902408183058){
+                            points.add(point);
+                        }
+                    }
+                } else if (Destination.longitude > -81.30190093070269 && Destination.latitude > 28.596016332488063) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude < Destination.longitude) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                } else if (Destination.latitude > 28.595930668487295 && Destination.longitude >-81.3018412515521 ) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude <= -81.30190093070269) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                    for (LatLng point: Q5Building5Down){
+                        if(point.longitude > -81.30190093070269 && point.latitude > 28.595930668487295){
+                            points.add(point);
+                        }
+                    }
+                } else if (Destination.latitude < 28.595930668487295 && Destination.longitude >-81.3018412515521) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude <= -81.30190093070269) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                    for (LatLng point: Q5Building5Down){
+                        if(point.longitude > -81.30190093070269 && point.latitude > 28.595930668487295){
+                            points.add(point);
+                        }
+                    }
+                }else{
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude <= -81.30190093070269) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                    for (LatLng point: Q5Building5Down){
+                        if(point.longitude > -81.30190093070269){
+                            points.add(point);
+                        }
+                    }
+                }
+
+            }else{
+                for (LatLng point: Q3Building3Down) {
+                    if(point.latitude < 28.596174707673327 && point.latitude > 28.596126724138692 && point.longitude<-81.30239512771368)
+                    {
+                        points.add(point);
+                    }
+                }
+                for(LatLng point2: Q3Building3Down){
+                    if(point2.latitude <=28.5961888377898 && point2.longitude >=-81.30239512771368)
+                    {
+                        points.add(point2);
+                    }
+                }
+                for (LatLng point: Q4Building4Down){
+
+                    if(point.latitude > 28.595894754349356 && point.longitude > -81.30226403474809){
+                            points.add(point);
+                    }
+                }
+                if(Destination.latitude < 28.595902408183058 && Destination.longitude < -81.30203671753407){
+
+                    points.add(Q5Building5Down.get(0));
+                    points.add(Q5Building5Down.get(1));
+                }else if(Destination.latitude > 28.59594891992973 && Destination.longitude < -81.30205381661654){
+                    points.add(Q5Building5Down.get(0));
+                    points.add(Q5Building5Down.get(1));
+                    points.add(Q5Building5Down.get(2));
+                } else if (Destination.latitude >28.596037527693976 && Destination.longitude > -81.30190093070269) {
+                    for (LatLng point: Q5Building5Down){
+                        if(point.latitude >28.595902408183058 ) {
+                            if(point.longitude < Destination.longitude)
+                                points.add(point);
+                        }
+                    }
+                } else if (Destination.longitude < -81.30190093070269 && Destination.latitude > 28.595950391820107) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude < 28.596056367873416 && point.longitude < -81.30197033286095 && point.latitude > 28.595902408183058){
+                            points.add(point);
+                        }
+                    }
+                } else if (Destination.longitude > -81.30190093070269 && Destination.latitude > 28.596016332488063) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude < Destination.longitude) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                } else if (Destination.latitude > 28.595930668487295 && Destination.longitude >-81.3018412515521 ) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude <= -81.30190093070269) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                    for (LatLng point: Q5Building5Down){
+                        if(point.longitude > -81.30190093070269 && point.latitude > 28.595930668487295){
+                            points.add(point);
+                        }
+                    }
+                } else if (Destination.latitude < 28.595930668487295 && Destination.longitude >-81.3018412515521) {
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude <= -81.30190093070269) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                    for (LatLng point: Q5Building5Down){
+                        if(point.longitude > -81.30190093070269 && point.latitude > 28.595930668487295){
+                            points.add(point);
+                        }
+                    }
+                }else{
+                    for (LatLng point:  Q5Building5Down) {
+                        if(point.latitude > 28.596056367873416){
+                            if(point.longitude <= -81.30190093070269) {
+                                points.add(point);
+                            }
+                        }
+                    }
+                    for (LatLng point: Q5Building5Down){
+                        if(point.longitude > -81.30190093070269){
+                            points.add(point);
+                        }
+                    }
+                }
+            }
 
         }
         return points;
