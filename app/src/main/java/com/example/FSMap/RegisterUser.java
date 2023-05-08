@@ -226,41 +226,48 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
 
         if (userName.isEmpty()){
-            editUser.setError("An user is required!");
+            Toast.makeText(this, "An username is required!", Toast.LENGTH_SHORT).show();
             editUser.requestFocus();
             return;
         }
         if(email.isEmpty()){
 
-            editEmail.setError("An email is required!");
+            Toast.makeText(this, "An email is required!", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
-            editEmail.setError("Please provide a valid email!");
+            Toast.makeText(this, "Please provide a valid email", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
         if (password.isEmpty()){
-            editPassword.setError("A password is required!");
+            Toast.makeText(this, "A password is require!", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
         if (confirmP.isEmpty()){
-            confirmPassword.setError("You need to confirm the password!");
+            Toast.makeText(this, "You need to confirm the password", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
         if (password.length() < 6 ){
-            editPassword.setError("The password should be at least 6 characters!");
+            Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
         if (confirmP.length()<6){
-            confirmPassword.setError("The password should be the same amount than the other password!");
+            Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
+        }
+        if(!password.equals(confirmP)){
+            Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+            confirmPassword.requestFocus();
+            return;
+        }else{
+            Toast.makeText(this, "The password match", Toast.LENGTH_SHORT).show();
         }
 
         progressBar.setVisibility(View.VISIBLE);

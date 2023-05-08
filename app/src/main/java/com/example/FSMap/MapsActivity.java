@@ -126,7 +126,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button NavDone;
     private Button NacLock;
     private AutoCompleteTextView Search;
-    private Button Filter, CRFilter, OFFilter, BRFilter, WZFilter, ETCFilter;
+    public Button Filter, CRFilter, OFFilter, BRFilter, WZFilter, ETCFilter;
     public boolean FilterShow, CRShow, OFShow, BRShow, WZShow, ETCShow, Filtering = false;
     private static final String FINE_lOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -661,11 +661,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+
         CRFilter.setVisibility(View.GONE);
         OFFilter.setVisibility(View.GONE);
         BRFilter.setVisibility(View.GONE);
         WZFilter.setVisibility(View.GONE);
         ETCFilter.setVisibility(View.GONE);
+
 
 
         //Loading markers from CSV
@@ -1913,9 +1915,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             new LatLng(28.59593272913417, -81.30210544914007),
             new LatLng(28.595919776495936, -81.3020658865571),
             new LatLng(28.595902408183058, -81.30203671753407),
-            new LatLng(28.59602604695795, -81.30199447274208),
+            new LatLng(28.59594891992973,-81.30205381661654),
             new LatLng(28.595985717183076, -81.30202163010836),
-            new LatLng(28.595950391820107, -81.30186740309),
+            new LatLng(28.59602604695795, -81.30199447274208),
+            new LatLng(28.596056367873416, -81.30197033286095),
             new LatLng(28.59605842851785, -81.3019485399127),
             new LatLng(28.596037527693976, -81.30190093070269),
             new LatLng(28.596016332488063, -81.3018573448062),
@@ -1924,7 +1927,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             new LatLng(28.595950391820107, -81.30186740309),
             new LatLng(28.595930668487295, -81.3018412515521),
             new LatLng(28.595916832714288, -81.30185667425395),
-            new LatLng(28.596056367873416, -81.30197033286095)));
+            new LatLng(28.595993959766073, -81.30182281136513),
+            new LatLng(28.595950391820107, -81.30186740309)));
 
 
     //latitude for CenterQuadrant1: 28.59656328518375
@@ -2886,6 +2890,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.NavDone:
                 slideupview.setVisibility(View.GONE);
                 markerFragment.MTouch.slideup = false;
+                if(markerFragment.MTouch.FilterMarker != null){
+                    markerFragment.MTouch.FilterMarker.setEnabled(true);
+                }
                 wasMarkerClicked = false;
                 isTraveling = false;
                 FollowUser = false;
