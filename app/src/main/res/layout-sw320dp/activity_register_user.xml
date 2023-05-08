@@ -162,13 +162,13 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
-            android:hint="Password"
+            android:hint="Confirm Password"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/padlock_confimartion"
+                android:drawableStart="@drawable/padlock_iphone"
                 android:drawablePadding="6dp"
                 android:paddingStart="1dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -186,14 +186,40 @@
             android:layout_marginEnd="85dp"
             android:text="Terms and Conditions" />
 
-        <ProgressBar
-            android:id="@+id/ProgressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminateTint="@color/FS_ORANGE"
-            android:visibility="gone" />
+        <RelativeLayout
+            android:id="@+id/LoadingDesignRegister"
+            android:layout_width="168dp"
+            android:layout_height="117dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="103dp"
+            android:layout_marginBottom="130dp"
+            android:background="@drawable/round_linearlayout"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/ProgressBarRegister"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="55dp"
+                android:layout_height="54dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="58dp"
+                android:layout_marginBottom="44dp"
+                android:indeterminateTint="@color/FS_ORANGE" />
+
+            <TextView
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="82dp"
+                android:layout_marginEnd="20dp"
+                android:text="Colleting the data..."
+                android:textColor="@color/FS_dark_gray" />
+        </RelativeLayout>
 
 
     </RelativeLayout>

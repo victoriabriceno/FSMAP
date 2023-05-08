@@ -48,6 +48,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
             android:hint="Email"
+
             android:inputType="textEmailAddress">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -146,6 +147,7 @@
             android:textColor="@color/white"
             android:textSize="10dp" />
 
+
         <Button
             android:id="@+id/google_login"
             android:layout_width="wrap_content"
@@ -156,7 +158,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="18dp"
             android:layout_marginRight="18dp"
             android:background="@drawable/drawable_google"
@@ -167,15 +169,41 @@
             android:textSize="10dp"
             app:backgroundTint="@null" />
 
+        <RelativeLayout
+            android:id="@+id/LoadingDesign"
+            android:layout_width="168dp"
+            android:layout_height="117dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="103dp"
+            android:layout_marginBottom="130dp"
+            android:background="@drawable/round_linearlayout"
+            android:visibility="gone">
 
-        <ProgressBar
-            android:id="@+id/ProgressBarMain"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminateTint="@color/FS_ORANGE"
-            android:visibility="gone" />
+            <ProgressBar
+                android:id="@+id/ProgressBarMain"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="55dp"
+                android:layout_height="54dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="58dp"
+                android:layout_marginBottom="44dp"
+                android:indeterminateTint="@color/FS_ORANGE" />
+
+            <TextView
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="82dp"
+                android:layout_marginEnd="20dp"
+                android:text="Loading data..."
+                android:textColor="@color/FS_dark_gray" />
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

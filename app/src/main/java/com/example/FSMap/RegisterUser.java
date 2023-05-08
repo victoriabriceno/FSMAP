@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +38,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private Button registerBack;
     ImageView registerBackButton;
     CheckBox checkBox;
+    RelativeLayout loadingRegister;
     MaterialAlertDialogBuilder materialAlertDialogBuilder;
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         editUser  =findViewById(R.id.Username) ;
 
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
+        loadingRegister = (RelativeLayout) findViewById(R.id.LoadingDesignRegister);
 
         checkBox = findViewById(R.id.checkboxTerms);
         materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
@@ -270,7 +275,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "The password match", Toast.LENGTH_SHORT).show();
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        loadingRegister.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -299,14 +304,14 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                             }else{
                                                 Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
                                             }
-                                            progressBar.setVisibility(View.GONE);
+                                            loadingRegister.setVisibility(View.GONE);
 
                                         }
                                     });
                         }
                         else{
                             Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(View.GONE);
+                            loadingRegister.setVisibility(View.GONE);
                         }
                     }
                 });

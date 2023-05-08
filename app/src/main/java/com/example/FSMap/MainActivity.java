@@ -21,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CallbackManager mCallbackManager;
 
     ProgressBar progressBar;
+    RelativeLayout relativeLayoutLoading;
 
     @SuppressLint({"MissingPermission", "MissingInflatedId"})
     @Override
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Internet Check
         progressBar = (ProgressBar) findViewById(R.id.ProgressBarMain);
+        relativeLayoutLoading = findViewById(R.id.LoadingDesign);
 
         register = (TextView) findViewById(R.id.RegisterBTN);
         register.setOnClickListener(this);
@@ -140,6 +143,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
+
+    }
+
+    int counter =0;
+    @Override
+    public void onBackPressed() {
+
+
+        if (counter ==2){
+            super.onBackPressed();
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
 
 
 
@@ -308,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        progressBar.setVisibility(View.VISIBLE);
+        relativeLayoutLoading.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -322,12 +341,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
                     }
-                    progressBar.setVisibility(View.GONE);
+                    relativeLayoutLoading.setVisibility(View.GONE);
 
 
                 }else{
                     Toast.makeText(MainActivity.this, "Check your email box to verify the email or you have the incorrect information", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
+                    relativeLayoutLoading.setVisibility(View.GONE);
                 }
 
             }

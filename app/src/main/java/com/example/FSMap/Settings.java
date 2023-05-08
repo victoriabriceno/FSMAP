@@ -217,6 +217,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 editor.putString("remember", "false");
                 editor.apply();
                 finish();
+
                 break;
 
             case R.id.userSettings:
