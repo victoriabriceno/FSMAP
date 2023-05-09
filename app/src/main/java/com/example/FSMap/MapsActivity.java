@@ -1993,8 +1993,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String FindQuadrantForArea(LatLng position, LatLng AreaToCheck) {
         double _longitude = position.longitude;
         double _latitdue = position.latitude;
-        double longToCheck = -81.30386296659708;
-        double latToCheck = 28.595124658078248;
+        double longToCheck = AreaToCheck.longitude;
+        double latToCheck = AreaToCheck.latitude;
         if (_longitude < longToCheck && _latitdue < latToCheck) {
             return "Q3";
         } else if (_longitude < longToCheck && _latitdue > latToCheck) {
@@ -2008,7 +2008,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside(String QuadrantDestination, LatLng Destination) {
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInsideFishBowl(String QuadrantDestination, LatLng Destination) {
         ArrayList<LatLng> points = new ArrayList<>();
         //all of these paths only consider travel from outside to inside. Not travel withing the building.
         //Within building travel will require different logic because there may be shortcuts to be taken within the building.
@@ -2080,11 +2080,76 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return points;
     }
-    //SearchType is wether youre looking for the area youre traveling to or if you want the spot by the front door. 1 is front door 2 is just the area return.
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside3C(String QuadrantDestination, LatLng Destination) {
+        ArrayList<LatLng> points = new ArrayList<>();
+        //all of these paths only consider travel from outside to inside. Not travel withing the building.
+        //Within building travel will require different logic because there may be shortcuts to be taken within the building.
+
+        if (QuadrantDestination.equals("Q1")) {
+
+        } else if (QuadrantDestination.equals("Q2")) {
+
+        } else if (QuadrantDestination.equals("Q3")) {
+
+        } else if (QuadrantDestination.equals("Q4")) {
+
+        }
+        return points;
+    }
+    ArrayList<LatLng> Q13A = new ArrayList<>(Arrays.asList(new LatLng(28.595617744069802,-81.30403161048888),new LatLng(28.595562400802088,-81.30402825772762),new LatLng(28.595628341713468,-81.30408894270658)));
+    ArrayList<LatLng> Q23A = new ArrayList<>(Arrays.asList(new LatLng(28.59561126773146,-81.30416605621576),new LatLng(28.595624220407736,-81.30416605621576)));
+    ArrayList<LatLng> Q33A = new ArrayList<>(Arrays.asList(new LatLng(28.595419332432524,-81.3042401522398)));
+    ArrayList<LatLng> Q43A = new ArrayList<>(Arrays.asList(new LatLng(28.595422276228085,-81.30402356386185),new LatLng(28.595457013009668,28.595457013009668)));
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside3A(String QuadrantDestination, LatLng Destination) {
+        ArrayList<LatLng> points = new ArrayList<>();
+        //all of these paths only consider travel from outside to inside. Not travel withing the building.
+        //Within building travel will require different logic because there may be shortcuts to be taken within the building.
+        boolean topEntrance = false;
+        if(Latitude > 28.59563746746134 || Longitued > -81.30403395742178)
+        {
+            topEntrance = true;
+        }
+        if (QuadrantDestination.equals("Q1")) {
+            for (LatLng point: Q13A) {
+                if(point.longitude>-81.30404636263847)
+                {
+                    if(Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847 && point.latitude > 28.595520598952945) {
+                        points.add(point);
+                    }
+                    else
+                    {
+                        if(point.latitude < Destination.latitude)
+                        {
+                            points.add(point);
+                        }
+                    }
+                }
+            }
+        } else if (QuadrantDestination.equals("Q2")) {
+
+        } else if (QuadrantDestination.equals("Q3")) {
+
+        } else if (QuadrantDestination.equals("Q4")) {
+
+        }
+        return points;
+    }
+    //SearchType is whether youre looking for the area youre traveling to or if you want the spot by the front door. 1 is front door 2 is just the area return.
     public LatLng FindMarkerAreaForTravel(Marker marker, int SearchType) {
         LatLng returnArea = null;
         if (ThreeAMarkers.contains(marker)) {
-//            return "3A";
+            if(SearchType == 1)
+            {
+                if(Latitude > 28.59563746746134 || Longitued > -81.30403395742178)
+                {
+                    return new LatLng(28.59563746746134,-81.30403395742178);
+                }
+                else {
+                    return new LatLng(28.595412856081968,-81.30432799458504);
+                }
+            }else {
+                return new LatLng(28.595520598952945,-81.30410872399807);
+            }
         } else if (ThreeBMarkers.contains(marker)) {
             if(SearchType == 1) {
                 returnArea = new LatLng(28.59504105401512, -81.30434174090624);
@@ -2094,7 +2159,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 returnArea = new LatLng( -81.30386296659708, 28.595124658078248);
             }
         } else if (ThreeCMarkers.contains(marker)) {
-//            return "3C";
+            if(SearchType == 1)
+            {
+                returnArea = new LatLng(28.594441398979445,-81.30426932126284);
+            }else{
+                returnArea = new LatLng(28.594457001240205,-81.30404971539974);
+            }
         } else if (ThreeDMarkers.contains(marker)) {
 //            return "3D";
         } else if (ThreeEMarkers.contains(marker)) {
@@ -3040,7 +3110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     LatLng PosToCheck = FindMarkerAreaForTravel(marker,2);
                     String area = FindQuadrantForArea(marker.getPosition(),PosToCheck);
-                    points.addAll(ChoosePointsToGrabOutsideToInside(area, marker.getPosition()));
+                    points.addAll(ChoosePointsToGrabOutsideToInsideFishBowl(area, marker.getPosition()));
                     polylineOptions.addAll(points);
                     polylineOptions.width(15);
                     if (DarkorLight) {
