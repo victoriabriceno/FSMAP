@@ -40,7 +40,7 @@ import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditProfile extends AppCompatActivity  {
+public class EditProfile extends AppCompatActivity {
 
     CircleImageView profileImage;
     Button saveProfile, closeProfile, delete;
@@ -48,7 +48,7 @@ public class EditProfile extends AppCompatActivity  {
     StorageReference storageReference;
     FirebaseAuth fAuth;
     FirebaseUser firebaseAuth;
-    ImageView pencilProfilechange , backEditPROFILE;
+    ImageView pencilProfilechange, backEditPROFILE;
     TextInputLayout changeUser;
 
     GoogleSignInOptions gso;
@@ -58,7 +58,7 @@ public class EditProfile extends AppCompatActivity  {
     String fullName;
     String markerEdit;
     String useriD;
-    TextView emailProfile,getEmailProfile;
+    TextView emailProfile, getEmailProfile;
 
 
     @Override
@@ -74,21 +74,20 @@ public class EditProfile extends AppCompatActivity  {
         changeUser = findViewById(R.id.UserChange);
         emailProfile = findViewById(R.id.EmailEditprofile);
         delete = findViewById(R.id.delete);
-        
+
         //FIREBASE
         firebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
         useriD = firebaseAuth.getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         fAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profileRef = storageReference.child("Users/"+fAuth.getCurrentUser().getUid()+"/ProfilePicture.jpg");
+        StorageReference profileRef = storageReference.child("Users/" + fAuth.getCurrentUser().getUid() + "/ProfilePicture.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(profileImage);
             }
         });
-
 
 
         //CODE FOR CLOSE THE EDIT PROFILE CLASS
@@ -104,9 +103,9 @@ public class EditProfile extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                if (isNameChanged() && isImageChanged()){
+                if (isNameChanged() && isImageChanged()) {
                     Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
-                }else if (isNameChanged() || isImageChanged()){
+                } else if (isNameChanged() || isImageChanged()) {
                     //UploadImageToFirebase(imageUriSave);
                     Toast.makeText(EditProfile.this, "Profile changed", Toast.LENGTH_SHORT).show();
                 }
@@ -121,7 +120,7 @@ public class EditProfile extends AppCompatActivity  {
             public void onClick(View view) {
                 //Open the gallery
                 Intent OpenGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(OpenGalleryIntent,1000);
+                startActivityForResult(OpenGalleryIntent, 1000);
             }
         });
 
@@ -144,9 +143,9 @@ public class EditProfile extends AppCompatActivity  {
                 Intent i = new Intent(EditProfile.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences("checkBox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember","false");
+                editor.putString("remember", "false");
                 editor.apply();
                 startActivity(i);
 
@@ -158,7 +157,7 @@ public class EditProfile extends AppCompatActivity  {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
                 requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
-        gsc = GoogleSignIn.getClient(this,gso);
+        gsc = GoogleSignIn.getClient(this, gso);
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
 
         Intent data = getIntent();
@@ -174,16 +173,15 @@ public class EditProfile extends AppCompatActivity  {
 
                 User userProfile = snapshot.getValue(User.class);
 
-                if(userProfile != null && gAccount!= null){
+                if (userProfile != null) {
+
                     String email = userProfile.email;
-
-
-
                     emailProfile.setText(email);
 
 
-                    String emailGoogle = gAccount.getEmail();
+                } else if (gAccount != null) {
 
+                    String emailGoogle = gAccount.getEmail().toString();
                     emailProfile.setText(emailGoogle);
 
                 }
@@ -198,9 +196,8 @@ public class EditProfile extends AppCompatActivity  {
         });
 
 
-
-
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -212,38 +209,35 @@ public class EditProfile extends AppCompatActivity  {
 
         File pfp = new File(imageUri.getPath());
         long size = pfp.length();
-        if (size > 10500000)
-        {
+        if (size > 10500000) {
             Toast.makeText(this, "File too large, upload image under 10 MB", Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else{
+        } else {
             UploadImageToFirebase(imageUri);
-            return  true;
+            return true;
         }
     }
 
 
     private boolean isNameChanged() {
 
-        if (!fullName.equals(changeUser.getEditText().getText().toString())){
+        if (!fullName.equals(changeUser.getEditText().getText().toString())) {
             // Toast.makeText(this, "User name changed", Toast.LENGTH_SHORT).show();
             databaseReference.child(fAuth.getUid()).child("fullName").setValue(changeUser.getEditText().getText().toString());
             fullName = changeUser.getEditText().getText().toString();
             return true;
-        }else{
+        } else {
             // Toast.makeText(this, "User name not updated", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
 
-
     private void UploadImageToFirebase(Uri uri) {
 
 
         //IF EVERYTHING GOES TO SHIT THIS IS THE GOOD CODE!!!
-        final StorageReference fileReference = storageReference.child("Users/"+fAuth.getCurrentUser().getUid()+"/ProfilePicture.jpg");
+        final StorageReference fileReference = storageReference.child("Users/" + fAuth.getCurrentUser().getUid() + "/ProfilePicture.jpg");
         fileReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -267,8 +261,8 @@ public class EditProfile extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000){
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
                 imageUri = data.getData();
                 profileImage.setImageURI(imageUri); //you has this comment before
             }
