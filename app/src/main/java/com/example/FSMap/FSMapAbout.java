@@ -20,8 +20,14 @@ public class FSMapAbout extends AppCompatActivity {
         backAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FSMapAbout.this,Settings.class));
+                onBackPressed();
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
 }

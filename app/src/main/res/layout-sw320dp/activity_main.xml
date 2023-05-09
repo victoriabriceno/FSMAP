@@ -8,15 +8,15 @@
 
     <RelativeLayout
         android:id="@+id/constrainLayout"
-        android:layout_width="293dp"
-        android:layout_height="308dp"
+        android:layout_width="wrap_content"
+        android:layout_height="337dp"
         android:layout_below="@id/WelcomeText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="53dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="23dp"
-        android:layout_marginEnd="53dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/round_linearlayout">
 
         <TextView
@@ -40,15 +40,16 @@
             android:id="@+id/EmailAddress"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="255dp"
-            android:layout_height="53dp"
+            android:layout_height="60dp"
             android:layout_below="@id/LoginText"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
             android:layout_marginTop="5dp"
-            android:inputType="textEmailAddress"
-            android:hint="Email">
+            android:layout_marginEnd="18dp"
+            android:hint="Email"
+
+            android:inputType="textEmailAddress">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -62,7 +63,7 @@
             android:id="@+id/Password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="255dp"
-            android:layout_height="53dp"
+            android:layout_height="60dp"
             android:layout_below="@id/EmailAddress"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -116,15 +117,13 @@
 
         <Button
             android:id="@+id/LoginBTN"
-            android:layout_width="122dp"
+            android:layout_width="160dp"
             android:layout_height="35dp"
             android:layout_below="@id/rememberUser"
             android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="165dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:gravity="center"
@@ -134,13 +133,13 @@
 
         <Button
             android:id="@+id/RegisterBTN"
-            android:layout_width="122dp"
+            android:layout_width="160dp"
             android:layout_height="35dp"
             android:layout_below="@id/rememberUser"
             android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="19dp"
+            android:layout_marginEnd="18dp"
             android:background="@drawable/custom_input"
             android:fontFamily="@font/questrialregular"
             android:gravity="center"
@@ -148,42 +147,62 @@
             android:textColor="@color/white"
             android:textSize="10dp" />
 
+
         <Button
             android:id="@+id/google_login"
-            android:layout_width="257dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
             android:layout_below="@id/RegisterBTN"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="18dp"
             android:layout_marginRight="18dp"
             android:background="@drawable/drawable_google"
+            android:drawableLeft="@drawable/google_symbol"
             android:fontFamily="@font/questrialregular"
             android:text="Google Login"
             android:textColor="@color/FS_dark_gray"
             android:textSize="10dp"
             app:backgroundTint="@null" />
 
+        <RelativeLayout
+            android:id="@+id/LoadingDesign"
+            android:layout_width="168dp"
+            android:layout_height="117dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="103dp"
+            android:layout_marginBottom="130dp"
+            android:background="@drawable/round_linearlayout"
+            android:visibility="gone">
 
-        <!--        <ProgressBar-->
-        <!--            android:id="@+id/ProgressBar"-->
-        <!--            style="?android:attr/progressBarStyleLarge"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_centerInParent="true"-->
-        <!--            android:background="@color/dark_orange"-->
-        <!--            android:visibility="gone"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--            app:layout_constraintRight_toRightOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            tools:ignore="MissingConstraints"-->
+            <ProgressBar
+                android:id="@+id/ProgressBarMain"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="55dp"
+                android:layout_height="54dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="58dp"
+                android:layout_marginBottom="44dp"
+                android:indeterminateTint="@color/FS_ORANGE" />
 
-        <!--            />-->
+            <TextView
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="82dp"
+                android:layout_marginEnd="20dp"
+                android:text="Loading data..."
+                android:textColor="@color/FS_dark_gray" />
+        </RelativeLayout>
 
 
     </RelativeLayout>
@@ -196,7 +215,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="89dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="89dp"
         android:layout_marginBottom="-21dp"
         android:background="@null"
@@ -210,7 +229,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="99dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="99dp"
         android:fontFamily="@font/amaticscbold"
         android:gravity="center"

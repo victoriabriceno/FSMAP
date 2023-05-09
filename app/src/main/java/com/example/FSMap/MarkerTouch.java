@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -65,6 +66,7 @@ public class MarkerTouch extends FrameLayout {
 
     boolean slideup = mapsActivity.slidepup;
 
+    public Button FilterMarker;
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -149,6 +151,7 @@ public class MarkerTouch extends FrameLayout {
                     getDeviceLocation();
                 }
 
+
                 if (!wasRemoveHit) {
                     wasRemoveHit = true;
                 } else {
@@ -218,6 +221,7 @@ public class MarkerTouch extends FrameLayout {
 
                 //Slide up code
 
+                FilterMarker = A.findViewById(R.id.FilterButton);
                 LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
                 bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
                 TextView text = slideupview.findViewById(R.id.roomnumber);
@@ -228,6 +232,10 @@ public class MarkerTouch extends FrameLayout {
                     bottomSheetBehavior.setFitToContents(false);
                     slideupview.setVisibility(View.VISIBLE);
                     slideup = true;
+                    FilterMarker.setEnabled(false);
+
+                }else{
+                    FilterMarker.setEnabled(true);
                 }
 
 
@@ -357,16 +365,22 @@ public class MarkerTouch extends FrameLayout {
 
         //Slide up code
 
+        FilterMarker = A.findViewById(R.id.FilterButton);
         LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
-        if (!slideup) {
-            slideupview.setVisibility(View.VISIBLE);
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            slideup = true;
-        }
 
+        if (!slideup || bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            bottomSheetBehavior.setFitToContents(false);
+            slideupview.setVisibility(View.VISIBLE);
+            slideup = true;
+            FilterMarker.setEnabled(false);
+
+        }else{
+            FilterMarker.setEnabled(true);
+        }
         //Creates list of all marker titles
         ArrayList<String> listfornav = new ArrayList<String>();
         for (Marker m : AM) {

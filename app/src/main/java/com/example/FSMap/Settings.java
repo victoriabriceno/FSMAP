@@ -185,6 +185,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             //Starts activity corresponding to button
@@ -211,6 +217,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 editor.putString("remember", "false");
                 editor.apply();
                 finish();
+
                 break;
 
             case R.id.userSettings:
@@ -220,7 +227,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.backBTN:
-                startActivity(new Intent(this, MapsActivity.class));
+                onBackPressed();
                 break;
 
         }

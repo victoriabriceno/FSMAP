@@ -21,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GoogleSignInClient gsc;
 
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
     //Save email and password
     private CheckBox rememberMe;
     //Visible password
@@ -74,15 +74,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Facebook
     CallbackManager mCallbackManager;
 
+    ProgressBar progressBar;
+    RelativeLayout relativeLayoutLoading;
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //Internet Check
-
+        progressBar = (ProgressBar) findViewById(R.id.ProgressBarMain);
+        relativeLayoutLoading = findViewById(R.id.LoadingDesign);
 
         register = (TextView) findViewById(R.id.RegisterBTN);
         register.setOnClickListener(this);
@@ -140,6 +143,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
+
+    }
+
+    int counter =0;
+    @Override
+    public void onBackPressed() {
+
+
+        if (counter ==2){
+            super.onBackPressed();
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
 
 
 
@@ -285,29 +304,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         if (email.isEmpty()){
-            editTextEmail.setError("Email is required!");
+            Toast.makeText(this, "Email is require!", Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
-            editTextEmail.setError("Please enter a valid email");
+            Toast.makeText(this, "Please enter a valid email!", Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();
             return;
         }
         if (password.isEmpty()){
-            editTextPassword.setError("Password is required!");
+            Toast.makeText(this, "Password is require!", Toast.LENGTH_SHORT).show();
             editTextPassword.requestFocus();
             return;
         }
         if (password.length() < 6){
-            editTextPassword.setError("Password legnth is 6 characters!");
+            Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             editTextPassword.requestFocus();
             return;
         }
 
 
 
+        relativeLayoutLoading.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -321,10 +341,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
                     }
+                    relativeLayoutLoading.setVisibility(View.GONE);
 
 
                 }else{
-                    Toast.makeText(MainActivity.this, "Failed to login check your email and password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Check your email box to verify the email or you have the incorrect information", Toast.LENGTH_SHORT).show();
+                    relativeLayoutLoading.setVisibility(View.GONE);
                 }
 
             }

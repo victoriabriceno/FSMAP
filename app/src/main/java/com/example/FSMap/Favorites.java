@@ -70,7 +70,7 @@ public class Favorites extends AppCompatActivity {
        backFavorites.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               startActivity(new Intent(Favorites.this,Settings.class));
+              onBackPressed();
            }
        });
 

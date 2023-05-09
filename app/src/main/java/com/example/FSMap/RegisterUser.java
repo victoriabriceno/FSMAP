@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +38,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private Button registerBack;
     ImageView registerBackButton;
     CheckBox checkBox;
+    RelativeLayout loadingRegister;
     MaterialAlertDialogBuilder materialAlertDialogBuilder;
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         editUser  =findViewById(R.id.Username) ;
 
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
+        loadingRegister = (RelativeLayout) findViewById(R.id.LoadingDesignRegister);
 
         checkBox = findViewById(R.id.checkboxTerms);
         materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
@@ -226,44 +231,51 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
 
         if (userName.isEmpty()){
-            editUser.setError("An user is required!");
+            Toast.makeText(this, "An username is required!", Toast.LENGTH_SHORT).show();
             editUser.requestFocus();
             return;
         }
         if(email.isEmpty()){
 
-            editEmail.setError("An email is required!");
+            Toast.makeText(this, "An email is required!", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
-            editEmail.setError("Please provide a valid email!");
+            Toast.makeText(this, "Please provide a valid email", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
         if (password.isEmpty()){
-            editPassword.setError("A password is required!");
+            Toast.makeText(this, "A password is require!", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
         if (confirmP.isEmpty()){
-            confirmPassword.setError("You need to confirm the password!");
+            Toast.makeText(this, "You need to confirm the password", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
         if (password.length() < 6 ){
-            editPassword.setError("The password should be at least 6 characters!");
+            Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
         if (confirmP.length()<6){
-            confirmPassword.setError("The password should be the same amount than the other password!");
+            Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
+        if(!password.equals(confirmP)){
+            Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+            confirmPassword.requestFocus();
+            return;
+        }else{
+            Toast.makeText(this, "The password match", Toast.LENGTH_SHORT).show();
+        }
 
-        progressBar.setVisibility(View.VISIBLE);
+        loadingRegister.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -292,14 +304,14 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                             }else{
                                                 Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
                                             }
-                                            progressBar.setVisibility(View.GONE);
+                                            loadingRegister.setVisibility(View.GONE);
 
                                         }
                                     });
                         }
                         else{
                             Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(View.GONE);
+                            loadingRegister.setVisibility(View.GONE);
                         }
                     }
                 });

@@ -95,7 +95,7 @@ public class EditProfile extends AppCompatActivity  {
         closeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(EditProfile.this,Settings.class));
+                onBackPressed();
             }
         });
 
@@ -201,6 +201,12 @@ public class EditProfile extends AppCompatActivity  {
 
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
 
     private boolean isImageChanged() {
 
