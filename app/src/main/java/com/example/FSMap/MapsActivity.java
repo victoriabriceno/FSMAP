@@ -1913,8 +1913,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     ArrayList<LatLng> Q5Building5Down = new ArrayList<>(Arrays.asList(
             new LatLng(28.59593272913417, -81.30210544914007),
-            new LatLng(28.595919776495936, -81.3020658865571),
             new LatLng(28.595902408183058, -81.30203671753407),
+            new LatLng(28.595919776495936, -81.3020658865571),
             new LatLng(28.59594891992973,-81.30205381661654),
             new LatLng(28.595985717183076, -81.30202163010836),
             new LatLng(28.59602604695795, -81.30199447274208),
@@ -1927,6 +1927,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             new LatLng(28.595950391820107, -81.30186740309),
             new LatLng(28.595930668487295, -81.3018412515521),
             new LatLng(28.595916832714288, -81.30185667425395),
+            //desconocidos pero a la chingada
             new LatLng(28.595993959766073, -81.30182281136513),
             new LatLng(28.595950391820107, -81.30186740309)));
 
