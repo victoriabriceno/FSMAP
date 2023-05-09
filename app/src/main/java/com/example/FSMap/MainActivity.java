@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
+
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        relativeLayoutLoading.setVisibility(View.VISIBLE);
         if(requestCode == 1234){
 
                  Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -184,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                  startActivity(intent);
                              }else{
                                  Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                 relativeLayoutLoading.setVisibility(View.GONE);
                              }
 
 
@@ -196,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                  }
         }else{
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            relativeLayoutLoading.setVisibility(View.GONE);
         }
 
 
