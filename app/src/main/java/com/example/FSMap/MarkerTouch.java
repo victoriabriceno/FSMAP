@@ -1,8 +1,6 @@
 package com.example.FSMap;
 
 
-import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Filter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -235,7 +232,7 @@ public class MarkerTouch extends FrameLayout {
                     FilterMarker.setEnabled(false);
 
                 }else{
-                    FilterMarker.setEnabled(true);
+                   FilterMarker.setEnabled(true);
                 }
 
 
@@ -376,7 +373,7 @@ public class MarkerTouch extends FrameLayout {
             bottomSheetBehavior.setFitToContents(false);
             slideupview.setVisibility(View.VISIBLE);
             slideup = true;
-            FilterMarker.setEnabled(false);
+           FilterMarker.setEnabled(false);
 
         }else{
             FilterMarker.setEnabled(true);
