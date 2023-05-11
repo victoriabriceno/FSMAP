@@ -575,21 +575,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //onCreate gets rebuilt each time the map is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen screen = SplashScreen.installSplashScreen(this);
-        isAndroidReady = false;
 
-        View content = findViewById(android.R.id.content);
-        content.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (isAndroidReady) {
-                    content.getViewTreeObserver().removeOnPreDrawListener(this);
-                }
-                dismissSplashScreen();
-                return false;
-            }
-
-        });
 
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {

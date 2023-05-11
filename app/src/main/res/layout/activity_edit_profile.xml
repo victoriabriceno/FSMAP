@@ -76,7 +76,7 @@
         android:id="@+id/UserChange"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="255dp"
-        android:layout_height="53dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="18dp"
         android:background="@null"
