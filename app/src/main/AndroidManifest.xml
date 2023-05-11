@@ -26,9 +26,6 @@
             android:name=".EditProfile"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.Themes"
-            android:exported="false" />
-        <activity
             android:name="com.example.FSMap.Favorites"
             android:exported="false" />
         <activity

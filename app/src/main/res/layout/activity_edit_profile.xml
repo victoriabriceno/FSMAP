@@ -83,7 +83,8 @@
         android:ems="10"
         android:layout_marginTop="10dp"
         android:hint="Change user name"
-        android:inputType="textPersonName"
+        android:textColorHint="@color/FS_dark_gray"
+        app:boxStrokeColor="@color/FS_ORANGE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.601"
@@ -96,6 +97,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/user_avatar"
             android:drawablePadding="10dp"
+            android:inputType="textPersonName"
             />
     </com.google.android.material.textfield.TextInputLayout>
 

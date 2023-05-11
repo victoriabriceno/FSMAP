@@ -82,6 +82,7 @@
             android:fontFamily="@font/questrialregular"
             android:gravity="center"
             android:text="Register"
+            android:enabled="false"
             android:textColor="@color/white"
             android:textSize="10dp" />
 
@@ -96,13 +97,15 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
-            android:hint="Username"
-            android:inputType="textEmailAddress">
+            android:textColorHint="@color/FS_dark_gray"
+            app:boxStrokeColor="@color/FS_ORANGE"
+            android:hint="Username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/user_icon_iphone"
+                android:inputType="textEmailAddress"
                 android:drawablePadding="10dp"
                 android:paddingStart="5dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -118,6 +121,8 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
+            android:textColorHint="@color/FS_dark_gray"
+            app:boxStrokeColor="@color/FS_ORANGE"
             android:hint="Email"
             android:inputType="textEmailAddress">
 
@@ -140,14 +145,18 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
+            android:textColorHint="@color/FS_dark_gray"
+            app:boxStrokeColor="@color/FS_ORANGE"
             android:hint="Password"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/FS_dark_gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/padlock_iphone"
                 android:drawablePadding="6dp"
+                android:inputType="textPassword"
                 android:paddingStart="1dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,13 +172,17 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
             android:hint="Confirm Password"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/FS_dark_gray"
+            android:textColorHint="@color/FS_dark_gray"
+            app:boxStrokeColor="@color/FS_ORANGE">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/padlock_iphone"
                 android:drawablePadding="6dp"
+                android:inputType="textPassword"
                 android:paddingStart="1dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,7 +197,8 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="85dp"
-            android:text="Terms and Conditions" />
+            android:text="Terms and Conditions"
+            android:textColor="@color/black"/>
 
         <RelativeLayout
             android:id="@+id/LoadingDesignRegister"
@@ -218,7 +232,8 @@
                 android:layout_marginTop="82dp"
                 android:layout_marginEnd="20dp"
                 android:text="Colleting the data..."
-                android:textColor="@color/FS_dark_gray" />
+                android:textColor="@color/FS_dark_gray"
+                android:fontFamily="@font/questrialregular"/>
         </RelativeLayout>
 
 

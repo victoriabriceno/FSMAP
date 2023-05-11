@@ -668,7 +668,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ETCFilter.setVisibility(View.GONE);
 
 
-
         //Loading markers from CSV
 
         //PROFILE PICTURE
@@ -1916,6 +1915,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     public ArrayList<LatLng> ChoosePointsToGrabOutsideToInsideBuilding2UP(String QuadrantDestination, LatLng Destination) {
         ArrayList<LatLng> points = new ArrayList<>();
         //all of these paths only consider travel from outside to inside. Not travel withing the building.
@@ -3392,7 +3392,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.NavDone:
                 slideupview.setVisibility(View.GONE);
                 markerFragment.MTouch.slideup = false;
-                //Filter.setEnabled(true);
+                Filter.setEnabled(true);
                 wasMarkerClicked = false;
                 isTraveling = false;
                 FollowUser = false;
