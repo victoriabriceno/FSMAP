@@ -217,7 +217,7 @@ public class MarkerTouch extends FrameLayout {
                 if (markersClicked.size() > 1) {
                     markersClicked.remove(0);
                 }
-                /*marker.showInfoWindow();*/
+                marker.showInfoWindow();
 
                 //Slide up code
 
@@ -361,7 +361,7 @@ public class MarkerTouch extends FrameLayout {
         if (markersClicked.size() > 1) {
             markersClicked.remove(0);
         }
-        /*marker.showInfoWindow();*/
+        marker.showInfoWindow();
 
         //Slide up code
 
