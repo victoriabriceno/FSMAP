@@ -26,9 +26,6 @@
             android:name=".EditProfile"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.Themes"
-            android:exported="false" />
-        <activity
             android:name="com.example.FSMap.Favorites"
             android:exported="false" />
         <activity
@@ -59,8 +56,7 @@
             android:name="com.example.FSMap.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.SplashTheme"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.example.FSMap.ForgotPassword"
             android:exported="false" />

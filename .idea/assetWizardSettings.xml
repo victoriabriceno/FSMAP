@@ -309,9 +309,10 @@
                       <PersistentState>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="e87630" />
-                            <entry key="outputName" value="animationforloading" />
-                            <entry key="sourceFile" value="C:\Users\victo\OneDrive\Desktop\FSMAP\LoginTesting - Copy" />
+                            <entry key="outputName" value="splashscreen" />
+                            <entry key="sourceFile" value="C:\Users\victo\Downloads\splashscreen.svg" />
                           </map>
                         </option>
                       </PersistentState>

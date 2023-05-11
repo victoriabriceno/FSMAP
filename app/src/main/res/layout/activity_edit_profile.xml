@@ -76,14 +76,15 @@
         android:id="@+id/UserChange"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="255dp"
-        android:layout_height="53dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="18dp"
         android:background="@null"
         android:ems="10"
         android:layout_marginTop="10dp"
         android:hint="Change user name"
-        android:inputType="textPersonName"
+        android:textColorHint="@color/FS_dark_gray"
+        app:boxStrokeColor="@color/FS_ORANGE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.601"
@@ -96,6 +97,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/user_avatar"
             android:drawablePadding="10dp"
+            android:inputType="textPersonName"
             />
     </com.google.android.material.textfield.TextInputLayout>
 

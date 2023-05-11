@@ -48,13 +48,13 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
             android:hint="Email"
-
-            android:inputType="textEmailAddress">
-
+            android:textColorHint="@color/FS_dark_gray"
+            app:boxStrokeColor="@color/FS_ORANGE">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/mail_icon_phone"
+                android:inputType="textEmailAddress"
                 android:drawablePadding="10dp"
                 android:paddingStart="5dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,13 +71,17 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="18dp"
             android:hint="Password"
-            app:passwordToggleEnabled="true">
+            android:textColorHint="@color/FS_dark_gray"
+            app:boxStrokeColor="@color/FS_ORANGE"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/FS_dark_gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/padlock_iphone"
                 android:drawablePadding="6dp"
+                android:inputType="textPassword"
                 android:paddingStart="1dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +97,7 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="142dp"
+            android:textColor="@color/black"
             android:fontFamily="@font/questrialregular"
             android:text="Remember Me"
             android:textSize="12dp" />
@@ -201,7 +206,8 @@
                 android:layout_marginTop="82dp"
                 android:layout_marginEnd="20dp"
                 android:text="Loading data..."
-                android:textColor="@color/FS_dark_gray" />
+                android:textColor="@color/FS_dark_gray"
+                android:fontFamily="@font/questrialregular"/>
         </RelativeLayout>
 
 
