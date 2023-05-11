@@ -48,7 +48,7 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
 
         CustomMarkersList customMarkersList = listCustomMarkers.get(position);
         holder.TitleOfTheMarker.setText(customMarkersList.getMarkerTitle());
-        holder.OriginalOfTheMarker.setText(customMarkersList.getMarkerTitle());
+        holder.OriginalOfTheMarker.setText(customMarkersList.getOrginalNameCustom());
         int floor = customMarkersList.floor;
         LatLng postionCustom = customMarkersList.position;
         holder.markerclick.setOnClickListener(new View.OnClickListener() {
