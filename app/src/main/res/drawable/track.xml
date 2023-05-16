@@ -6,12 +6,13 @@
         <shape
             android:shape="rectangle">
             <solid
-                android:color="@color/FS_dark_gray"/>
+                android:color="@color/FS_ORANGE">
+
+            </solid>
 
             <size
-                android:height="2dp">
+                android:height="8dp"/>
 
-            </size>
             <corners
                 android:radius="100dp"/>
         </shape>
@@ -22,12 +23,13 @@
         <shape
             android:shape="rectangle">
             <solid
-                android:color="@color/FS_ORANGE"/>
+                android:color="@color/FS_light_gray">
+
+            </solid>
 
             <size
-                android:height="2dp">
+                android:height="8dp"/>
 
-            </size>
             <corners
                 android:radius="100dp"/>
         </shape>
