@@ -153,6 +153,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Marker> ThreeAMarkers = new ArrayList<>();
     ArrayList<Marker> ThreeAMarkersF2 = new ArrayList<>();
     ArrayList<Marker> ThreeBMarkers = new ArrayList<>();
+    ArrayList<Marker> ThreeBCMarkers = new ArrayList<>();
     ArrayList<Marker> ThreeCMarkers = new ArrayList<>();
     ArrayList<Marker> ThreeDMarkers = new ArrayList<>();
     ArrayList<Marker> ThreeEMarkers = new ArrayList<>();
@@ -1456,6 +1457,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         case ("3B"):
                             ThreeBMarkers.add(mark);
                             break;
+                        case("3BC"):
+                            ThreeBCMarkers.add(mark);
+                            break;
                         case ("3C"):
                             ThreeCMarkers.add(mark);
                             break;
@@ -2173,12 +2177,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                         }
                     }
-
                 }
-
-
-
-
             } else {
 
                 if(Latitude > 28.596310709965394){
@@ -2193,7 +2192,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 if(point1.latitude >= Destination.latitude){
                                     points.add(point1);
                                 }
-
                             }
                         }else{
                             for (LatLng point2: Q2Building2UP){
@@ -2205,23 +2203,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 }else{
-
-
                     points.add(Q3Building2UP.get(0));
-
                     for (LatLng point: Q2Building2UP){
                         if(Destination.longitude <-81.30245883017778){
-
                             for (LatLng point1: Q2Building2UP){
                                 if(point1.latitude >= Destination.latitude){
                                     points.add(point1);
                                 }
-
                             }
                         }else{
                             for (LatLng point2: Q2Building2UP){
                                 if(point2.latitude >=28.596422867567355){
-
                                     points.add(point2);
                                 }
                             }
@@ -2229,20 +2221,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
             }
-
-
         } else if (QuadrantDestination.equals("Q3")) {
-
-
             if (rightside){
                 if(Destination.latitude > 28.59595156933239 && Destination.longitude > -81.30241021513939){
                     for (LatLng point :Q3Building2UP){
-
                         if(point.latitude >= 28.596157045025098 && point.longitude >= -81.30236964672804)
-                        points.add(point);
+                        {
+                            points.add(point);
+                        }
                     }
                 }else {
-
                    if(Destination.latitude > 28.596147036189763 && Destination.longitude < -81.30244106054306){
                        for (LatLng point : Q3Building2UP){
                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608){
@@ -2264,7 +2252,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                            }
                        }
                    } else if (Destination.longitude <-81.30233678966759){
-
                        for(LatLng point : Q3Building2UP){
                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102){
                                points.add(point);
@@ -2279,16 +2266,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                        }
                    }
                 }
-
             }else{
                 if(Destination.latitude > 28.59595156933239 && Destination.longitude > -81.30241021513939){
                     points.add(Q3Building2UP.get(0));
                     points.add(Q3Building2UP.get(4));
                     points.add(Q3Building2UP.get(2));
                     points.add(Q3Building2UP.get(3));
-
                 }else {
-
                     if(Destination.latitude > 28.596147036189763 && Destination.longitude < -81.30244106054306){
                         for (LatLng point : Q3Building2UP){
                             if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude <-81.30236964672804 ){
@@ -2334,67 +2318,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 }
-
             }
-
         } else if (QuadrantDestination.equals("Q4")) {
-
-
-            if(rightside){
-
-                for (LatLng point: Q3Building2UP){
-                    if(point.longitude > -81.30248330533504 &&
-                            point.latitude > 28.596147036189763 && point.latitude <28.59622269118608 ){
+            if (rightside) {
+                for (LatLng point : Q3Building2UP) {
+                    if (point.longitude > -81.30248330533504 &&
+                            point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608) {
                         points.add(point);
                     }
                 }
-                for (int i = 9; i <Q3Building2UP.size();i++){
+                for (int i = 9; i < Q3Building2UP.size(); i++) {
                     LatLng point = Q1Building2UP.get(i);
-                    if(point.latitude>=28.595911239528938 && point.longitude > -81.30245681852102){
-
+                    if (point.latitude >= 28.595911239528938 && point.longitude > -81.30245681852102) {
                         points.add(point);
                     }
                 }
-                if(Destination.longitude <-81.30211886018515 ){
+                if (Destination.longitude < -81.30211886018515) {
                     points.add(Q4Building2UP.get(0));
                     points.add(Q4Building2UP.get(1));
-                }else{
-                    for(LatLng point1: Q4Building2UP){
-                        if(point1.longitude <= Destination.longitude){
+                } else {
+                    for (LatLng point1 : Q4Building2UP) {
+                        if (point1.longitude <= Destination.longitude) {
                             points.add(point1);
                         }
                     }
                 }
-
-            }else{
-
+            } else {
                 points.add(Q3Building2UP.get(0));
                 points.add(Q3Building2UP.get(4));
                 points.add(Q3Building2UP.get(5));
                 points.add(Q3Building2UP.get(6));
-
-                for (int i = 9; i <Q3Building2UP.size();i++){
+                for (int i = 9; i < Q3Building2UP.size(); i++) {
                     LatLng point = Q1Building2UP.get(i);
-                    if(point.latitude>=28.595911239528938 && point.longitude > -81.30245681852102){
-
+                    if (point.latitude >= 28.595911239528938 && point.longitude > -81.30245681852102) {
                         points.add(point);
                     }
                 }
-                if(Destination.longitude <-81.30211886018515 ){
+                if (Destination.longitude < -81.30211886018515) {
                     points.add(Q4Building2UP.get(0));
                     points.add(Q4Building2UP.get(1));
-                }else{
-                    for(LatLng point1: Q4Building2UP){
-                        if(point1.longitude <= Destination.longitude){
+                } else {
+                    for (LatLng point1 : Q4Building2UP) {
+                        if (point1.longitude <= Destination.longitude) {
                             points.add(point1);
                         }
                     }
                 }
             }
-
-
-
-
         }
         return points;
     }
@@ -3063,7 +3033,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return "NotFound";
         }
     }
-
     public ArrayList<LatLng> ChoosePointsToGrabOutsideToInsideFishBowl(String QuadrantDestination, LatLng Destination) {
         ArrayList<LatLng> points = new ArrayList<>();
         //all of these paths only consider travel from outside to inside. Not travel withing the building.
@@ -3136,23 +3105,284 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return points;
     }
+    ArrayList<LatLng> Q13BC = new ArrayList<>(Arrays.asList(new LatLng(28.594776699884957,-81.30389012396336),new LatLng(28.594774639215387,-81.30391828715801), new LatLng(28.594882382740593,-81.30391459912062)));
+    ArrayList<LatLng> Q23BC = new ArrayList<>(Arrays.asList(new LatLng(28.594776699884957,-81.30419488996267),new LatLng(28.594879144548813,-81.30419589579105)));
+    ArrayList<LatLng> Q33BC = new ArrayList<>(Arrays.asList(new LatLng(28.594752560610537,-81.30419522523879),new LatLng(28.594753149373393,-81.30411174148321),new LatLng(28.594750499940506,-81.30407955497503),new LatLng(28.594753149373393,-81.30397494882345),new LatLng(28.594753149373393,-81.30393370985985)));
+    ArrayList<LatLng> Q43BC = new ArrayList<>(Arrays.asList(new LatLng(28.594749911177647,-81.3039068877697),new LatLng(28.59475167746625,-81.30386833101511), new LatLng(28.594752560610537,-81.30376003682613),new LatLng(28.594752266229108,-81.30373019725086)));
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside3BC(String QuadrantDestination, LatLng Destination){
+        ArrayList<LatLng> points = new ArrayList<>();
+        if(QuadrantDestination.equals("Q1")){
+            for(LatLng point: Q33BC)
+            {
+                points.add(point);
+            }
+            points.add(Q43BC.get(0));
+            points.add(Q13BC.get(0));
+        } else if (QuadrantDestination.equals("Q2")) {
+            if(Destination.longitude < -81.30404770374298)
+            {
+                points.add(Q33BC.get(0));
+                points.add(Q23BC.get(0));
+            }
+            else{
+                for(LatLng point: Q33BC)
+                {
+                    points.add(point);
+                }
+                points.add(Q43BC.get(0));
+                points.add(Q13BC.get(1));
+            }
+        } else if (QuadrantDestination.equals("Q3")) {
+            for(LatLng point: Q33BC)
+            {
+                if(point.longitude<Destination.longitude)
+                {
+                    points.add(point);
+                }
+            }
+        } else if (QuadrantDestination.equals("Q4")) {
+            for(LatLng point:Q33BC)
+            {
+                points.add(point);
+            }
+            for(LatLng point:Q43BC){
+                if(point.longitude < Destination.longitude){
+                    points.add(point);
+                }
+            }
+        }
+        return points;
+    }
+    ArrayList<LatLng> Q13C = new ArrayList<>(Arrays.asList(new LatLng(28.594494976544492,-81.30402322858573),new LatLng(28.594497920365935,-81.30400780588388),new LatLng(28.59445759000472,-81.30394041538239),new LatLng(28.594462594502932,-81.30387872457504), new LatLng(28.594596243955476,-81.30387905985117)));
+    ArrayList<LatLng> Q23C = new ArrayList<>(Arrays.asList(new LatLng(28.594499686658786,-81.30418047308923),new LatLng(28.5944929158694,-81.3040966540575)));
+    ArrayList<LatLng> Q33C = new ArrayList<>(Arrays.asList(new LatLng(28.594446992243014,-81.30417779088022),new LatLng(28.594397241625096,-81.30418147891758),new LatLng(28.594398419154782,-81.3041090592742),new LatLng(28.594400185449288,-81.304095312953)));
+    ArrayList<LatLng> Q43C = new ArrayList<>(Arrays.asList(new LatLng(28.594398419154782,-81.30402356386185),new LatLng(28.594401362978946,-81.30394209176302),new LatLng(28.594372807881026,-81.30394008010626), new LatLng(28.594349257278985,-81.303939409554),new LatLng(28.594318347105794,-81.30394041538239), new LatLng(28.594430212451424,-81.30394142121078), new LatLng(28.59442932930444,-81.30390387028456)));
     public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside3C(String QuadrantDestination, LatLng Destination) {
         ArrayList<LatLng> points = new ArrayList<>();
         //all of these paths only consider travel from outside to inside. Not travel withing the building.
         //Within building travel will require different logic because there may be shortcuts to be taken within the building.
 
         if (QuadrantDestination.equals("Q1")) {
-
+            points.add(Q33C.get(0));
+            for(LatLng point: Q23C){
+                points.add(point);
+            }
+            for(LatLng point: Q13C){
+                if(point.longitude < Destination .longitude){
+                    points.add(point);
+                }
+            }
         } else if (QuadrantDestination.equals("Q2")) {
-
+            points.add(Q33C.get(0));
+            for(LatLng point: Q23C){
+                if(point.longitude< Destination.longitude){
+                    points.add(point);
+                }
+            }
         } else if (QuadrantDestination.equals("Q3")) {
-
+            for(LatLng point: Q33C){
+                if(point.longitude < Destination.longitude){
+                    points.add(point);
+                }
+            }
         } else if (QuadrantDestination.equals("Q4")) {
-
+            for(LatLng point:Q33C){
+                points.add(point);
+            }
+            if(Destination.longitude<-81.30394209176302){
+                for(LatLng point: Q43C){
+                    if(point.longitude < Destination.longitude)
+                    {
+                        points.add(point);
+                    }
+                }
+            }else{
+                if(Destination.latitude > 28.594401362978946){
+                    for(LatLng point: Q43C){
+                        if(point.latitude >= 28.594401362978946){
+                            points.add(point);
+                        }
+                    }
+                }else{
+                    for(LatLng point: Q43C){
+                        if(point.latitude <= 28.594401362978946 && point.latitude >= Destination.latitude){
+                            points.add(point);
+                        }
+                    }
+                }
+            }
         }
         return points;
     }
-    ArrayList<LatLng> Q13A = new ArrayList<>(Arrays.asList(new LatLng(28.595617744069802,-81.30403161048888),new LatLng(28.595562400802088,-81.30402825772762),new LatLng(28.595628341713468,-81.30408894270658)));
+
+    ArrayList<LatLng> Q13D = new ArrayList<>(Arrays.asList(new LatLng(28.594210897385395,-81.30406580865383), new LatLng(28.594210014236552,-81.30402524024248)));
+    ArrayList<LatLng> Q23D = new ArrayList<>(Arrays.asList(new LatLng(28.594175277042876,-81.30418583750725),new LatLng(28.594208542321798,-81.30418147891758),new LatLng(28.59421030861951,-81.30414325743914),new LatLng(28.594210897385395,-81.30410436540842)));
+    ArrayList<LatLng> Q33D = new ArrayList<>(Arrays.asList(new LatLng(28.594117577950065,-81.30418483167887),new LatLng(28.59411698918364,-81.30414593964815),new LatLng(28.594118166716456,-81.30412112921476),new LatLng(28.59411698918364,-81.3041016831994),new LatLng(28.594045748422907,-81.3041865080595),new LatLng(28.59404663157312,-81.30416471511126), new LatLng(28.59404663157312,-81.3041466102004),new LatLng(28.59404722033995,-81.30411811172962), new LatLng(28.59404780910675,-81.30410101264715)));
+    ArrayList<LatLng> Q43D = new ArrayList<>(Arrays.asList(new LatLng(28.594119638632485,-81.30408190190792),new LatLng(28.594119049866087,-81.30405575037001),new LatLng(28.594119049866087,-81.30404267460108),new LatLng(28.594104330704887,-81.304029263556),new LatLng(28.59404722033995,-81.30407318472862),new LatLng(28.59404722033995,-81.3040567561984),new LatLng(28.59404780910675,-81.30402758717537),new LatLng(28.59406517772608,-81.30402825772762)));
+    public ArrayList<LatLng> ChoosePointToGrabOutsideToInside3D(String QuadrantDestination, LatLng Destination){
+        ArrayList<LatLng> points = new ArrayList<>();
+        if(QuadrantDestination.equals("Q1")){
+            if(Destination.latitude > 28.59416350172039){
+                for(LatLng point: Q23D){
+                    points.add(point);
+                }
+                for(LatLng point: Q13D) {
+                    if (point.longitude < Destination.longitude)
+                    {
+                        points.add(point);
+                    }
+                }
+            }else{
+                points.add(Q23D.get(0));
+                for(LatLng point: Q33D){
+                    if(point.latitude > 28.594082546342538)
+                    {
+                        points.add(point);
+                    }
+                }
+                for(LatLng point: Q43D){
+                    if(point.latitude >28.594104330704887 && point.longitude< Destination.longitude){
+                        points.add(point);
+                    }
+                }
+            }
+        } else if (QuadrantDestination.equals("Q2")) {
+            if(Destination.latitude >28.59416350172039)
+            {
+                for(LatLng point: Q23D){
+                    if(point.longitude<Destination.longitude){
+                        points.add(point);
+                    }
+                }
+            }else{
+                points.add(Q23D.get(0));
+                for(LatLng point:Q33D){
+                    if(point.latitude>28.594082546342538 && point.longitude < Destination.longitude){
+                        points.add(point);
+                    }
+                }
+            }
+        } else if (QuadrantDestination.equals("Q3")) {
+            if(Destination.latitude>28.594082546342538){
+                points.add(Q23D.get(0));
+                for(LatLng point:Q33D){
+                    if(point.latitude>28.594082546342538 && point.longitude < Destination.longitude){
+                        points.add(point);
+                    }
+                }
+            }else{
+                points.add(Q23D.get(0));
+                points.add(Q33D.get(0));
+                for(LatLng point:Q33D){
+                    if(point.latitude<28.594082546342538 && point.longitude < Destination.longitude){
+                        points.add(point);
+                    }
+                }
+            }
+        } else if (QuadrantDestination.equals("Q4")) {
+            if(Destination.latitude >28.594082546342538){
+                points.add(Q23D.get(0));
+                for(LatLng point:Q33D){
+                    if(point.latitude>28.594082546342538){
+                        points.add(point);
+                    }
+                }
+                for(LatLng point:Q43D){
+                    if(point.latitude> 28.594082546342538 && point.longitude < Destination.longitude){
+                        points.add(point);
+                    }
+                }
+            }else{
+                if(Destination.latitude > 28.594054285541397 && Destination.longitude >-81.30402222275734){
+                    points.add(Q23D.get(0));
+                    for(LatLng point:Q33D){
+                        if(point.latitude>28.594082546342538){
+                            points.add(point);
+                        }
+                    }
+                    for(LatLng point: Q43D){
+                        if(point.latitude > 28.594054285541397){
+                            points.add(point);
+                        }
+                    }
+                }
+                else{
+                    points.add(Q23D.get(0));
+                    points.add(Q33D.get(0));
+                    for(LatLng point:Q33D){
+                        if(point.latitude<28.594082546342538){
+                            points.add(point);
+                        }
+                    }
+                    for(LatLng point:Q43D){
+                        if(point.latitude < 28.594054285541397 && point.longitude < Destination.longitude){
+                            points.add(point);
+                        }
+                    }
+                }
+            }
+        }
+        return points;
+    }
+
+
+    ArrayList<LatLng> Q13E = new ArrayList<>(Arrays.asList(new LatLng(28.59399982460113,-81.30436655133964),new LatLng(28.593970975010514,-81.30431659519672)));
+    ArrayList<LatLng> Q23E = new ArrayList<>(Arrays.asList(new LatLng(28.593997469532802,-81.30447551608086),new LatLng(28.593970975010514,-81.30447551608086),new LatLng(28.59394359733048,-81.30447585135698),new LatLng(28.593928289377235,-81.30446009337902)));
+    ArrayList<LatLng> Q33E = new ArrayList<>(Arrays.asList(new LatLng(28.593911215119075,-81.30446009337902),new LatLng(28.593864702470704,-81.30446009337902),new LatLng(28.593858520408276,-81.30438331514597)));
+    ArrayList<LatLng> Q43E = new ArrayList<>(Arrays.asList(new LatLng(28.593884131807343,-81.30432933568954),new LatLng(28.59386411370286,-81.30432933568954),new LatLng(28.593847333818246,-81.30431391298771),new LatLng(28.593835852843018,-81.30432967096567),new LatLng(28.593812596504723,-81.30433201789856),new LatLng(28.593852338345513,-81.30421433597803),new LatLng(28.593814951577173,-81.30421500653028)));
+    public ArrayList<LatLng> ChoosePointToGrabOutsideToInside3E(String QuadrantDestination,LatLng Destination){
+        ArrayList<LatLng> points = new ArrayList<>();
+        if(QuadrantDestination.equals("Q1"))
+        {
+
+        } else if (QuadrantDestination.equals("Q2")) {
+            points.add(Q13E.get(0));
+            for(LatLng point: Q23E){
+                if(point.latitude > Destination.latitude){
+                    points.add(point);
+                }
+            }
+        } else if (QuadrantDestination.equals("Q3")) {
+            points.add(Q13E.get(0));
+            for(LatLng point:Q23E){
+                points.add(point);
+            }
+
+            if(Destination.latitude < 28.593847922586168){
+                for(LatLng point:Q33E){
+                    points.add(point);
+                }
+            }else{
+                for(LatLng point:Q33E){
+                    if(point.latitude > Destination.latitude && point.latitude >28.593858520408276){
+                        points.add(point);
+                    }
+                }
+            }
+        } else if (QuadrantDestination.equals("Q4")) {
+            if(Destination.longitude < -81.30431391298771)
+            {
+                points.add(Q13E.get(0));
+                points.add(Q13E.get(1));
+                for(LatLng point: Q43E){
+                    if(point.longitude < -81.30431391298771 && point.latitude > Destination.latitude){
+                        points.add(point);
+                    }
+                }
+            }else{
+                points.add(Q13E.get(0));
+                points.add(Q13E.get(1));
+                for(LatLng point: Q43E){
+                    if(point.longitude >=-81.30431391298771){
+                        points.add(point);
+                    }
+                }
+            }
+        }
+
+        return points;
+    }
+    ArrayList<LatLng> Q13A = new ArrayList<>(Arrays.asList(new LatLng(28.595617744069802,-81.30403161048888),new LatLng(28.595614505900667,-81.30407586693764),new LatLng(28.595628341713468,-81.30408894270658),new LatLng(28.595562400802088,-81.30402825772762)));
     ArrayList<LatLng> Q23A = new ArrayList<>(Arrays.asList(new LatLng(28.59561126773146,-81.30416605621576),new LatLng(28.595624220407736,-81.30416605621576)));
     ArrayList<LatLng> Q33A = new ArrayList<>(Arrays.asList(new LatLng(28.595419332432524,-81.3042401522398)));
     ArrayList<LatLng> Q43A = new ArrayList<>(Arrays.asList(new LatLng(28.595422276228085,-81.30402356386185),new LatLng(28.595457013009668,28.595457013009668)));
@@ -3166,27 +3396,99 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             topEntrance = true;
         }
         if (QuadrantDestination.equals("Q1")) {
-            for (LatLng point: Q13A) {
-                if(point.longitude>-81.30404636263847)
-                {
-                    if(Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847 && point.latitude > 28.595520598952945) {
-                        points.add(point);
+                if(topEntrance) {
+                    if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                        for(LatLng point: Q13A){
+                            if(point.longitude > -81.30404636263847){
+                                points.add(point);
+                            }
+                        }
                     }
-                    else
-                    {
-                        if(point.latitude < Destination.latitude)
-                        {
+                }else{
+                    if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                        points.add(Q33A.get(0));
+                        points.add(Q43A.get(0));
+                        points.add(Q43A.get(1));
+                        for(LatLng point: Q13A){
+                            if(point.latitude < 28.595605674529853){
+                                points.add(point);
+                            }
+                        }
+                    }
+                }
+        } else if (QuadrantDestination.equals("Q2")) {
+            if(topEntrance)
+            {
+                if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                    for(LatLng point: Q13A){
+                        if(point.longitude > -81.30404636263847){
+                            points.add(point);
+                        }
+                    }
+                }
+            }else{
+                if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                    points.add(Q33A.get(0));
+                    points.add(Q43A.get(0));
+                    points.add(Q43A.get(1));
+                    for(LatLng point: Q13A){
+                        if(point.latitude < 28.595605674529853){
                             points.add(point);
                         }
                     }
                 }
             }
-        } else if (QuadrantDestination.equals("Q2")) {
-
         } else if (QuadrantDestination.equals("Q3")) {
-
+            if(topEntrance){
+                if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                    for(LatLng point: Q13A){
+                        if(point.longitude > -81.30404636263847){
+                            points.add(point);
+                        }
+                    }
+                }
+            }else{
+                if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                    points.add(Q33A.get(0));
+                }
+            }
         } else if (QuadrantDestination.equals("Q4")) {
-
+            if(topEntrance){
+                if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                    for(LatLng point: Q13A){
+                        if(point.longitude > -81.30404636263847){
+                            points.add(point);
+                        }
+                    }
+                }else{
+                    for(LatLng point: Q13A){
+                        if(point.longitude > -81.30404636263847){
+                            points.add(point);
+                        }
+                    }
+                    for(LatLng point: Q43A){
+                        if(point.latitude>= Destination.latitude){
+                            points.add(point);
+                        }
+                    }
+                }
+            }else{
+                if (Destination.latitude < 28.595605674529853 && Destination.longitude < -81.30404636263847) {
+                    points.add(Q33A.get(0));
+                    points.add(Q43A.get(0));
+                    points.add(Q43A.get(1));
+                    for(LatLng point: Q13A){
+                        if(point.latitude < 28.595605674529853){
+                            points.add(point);
+                        }
+                    }
+                }
+                else{
+                    points.add(Q33A.get(0));
+                    points.add(Q43A.get(0));
+                    points.add(Q43A.get(1));
+                }
+            }
         }
         return points;
     }
@@ -3212,7 +3514,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             } else {
                 returnArea = new LatLng(-81.30386296659708, 28.595124658078248);
             }
-        } else if (ThreeCMarkers.contains(marker)) {
+        } else if (ThreeBCMarkers.contains(marker)) {
+            if(SearchType == 1){
+                return new LatLng(28.59475167746625,-81.30431525409222);
+            }else{
+                return new LatLng(28.59476433586704,-81.3039256632328);
+            }
+        }
+        if (ThreeCMarkers.contains(marker)) {
             if(SearchType == 1)
             {
                 returnArea = new LatLng(28.594441398979445,-81.30426932126284);
@@ -3220,9 +3529,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 returnArea = new LatLng(28.594457001240205,-81.30404971539974);
             }
         } else if (ThreeDMarkers.contains(marker)) {
-//            return "3D";
+            if(SearchType == 1){
+                return new LatLng(28.59417262759543,-81.30432464182375);
+            } else{
+                return new LatLng(28.59412434876362,-81.3040879368782);
+            }
         } else if (ThreeEMarkers.contains(marker)) {
-//            return "3E";
+            if(SearchType == 1){
+                return new LatLng(28.594129353277687,-81.3043739274144);
+            }else{
+                return new LatLng(28.59392387362109,-81.30436789244413);
+            }
         } else if (ThreeFMarkers.contains(marker)) {
 //            return "3F";
         } else if (FourAMarkers.contains(marker)) {
@@ -3545,8 +3862,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 FollowUser = false;
                 //Remove all lines
                 RemoveAllLines();
-                for (Marker m : createdMarkers) {
-                    m.setVisible(true);
+                if(createdMarkers != null) {
+                    for (Marker m : createdMarkers) {
+                        m.setVisible(true);
+                    }
                 }
 //                checkIfMarkerNeedVisible();
                 onMapClick(new LatLng(28.595085, -81.308305));
@@ -3566,13 +3885,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.RemoveSpot:
                 wasRemoveHit = true;
 
-                for (int i = 0; i < favoritedMarkers.size(); i++) {
+                for (int i = 0; i < favoritedMarkers.size()-1; i++) {
                     if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
                         Favorites.removeFromFavorite(MapsActivity.this, markerFragment.MTouch.createdMarker);
                         favoritedMarkers.remove(i);
                     }
                 }
-
+                markerFragment.MTouch.mMarkers.remove(markerFragment.MTouch.marker2);
+                markerFragment.MTouch.AM.remove(markerFragment.MTouch.marker2);
                 for (int i = 0; i < createdMarkers.size(); i++) {
                     if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
                         createdMarkers.get(i).remove();
@@ -3580,8 +3900,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         createdMarkers.get(i).setVisible(false);
                         CustomMarker.removeFromCustomMarkers(MapsActivity.this, markerFragment.MTouch.createdMarker);
                         createdMarkers.remove(i);
+                        if(i != markerFragment.MTouch.CM.size()) {
+                            if (markerFragment.MTouch.CM.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
+                                markerFragment.MTouch.CM.get(i).remove();
+                                markerFragment.MTouch.CM.remove(i);
+                            }
+                        }
                         markerFragment.MTouch.createdMarker.remove();
                         markerFragment.MTouch.createdMarker = null;
+                        markerFragment.MTouch.marker2.remove();
+                        markerFragment.MTouch.marker2 = null;
                         break;
                     }
                 }
@@ -3621,11 +3949,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                            newMarker.showInfoWindow();
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(LongClickPoint));
                             createdMarkers.add(newMarker);
+                            markerFragment.MTouch.mMarkers.add(newMarker);
+                            markerFragment.MTouch.CM.add(newMarker);
                         } else {
                             name = "CustomMarkerNumber0" + createdMarkers.size();
                             newMarker = mMap.addMarker(new MarkerOptions().position(LongClickPoint).title(name));
 //                            newMarker.showInfoWindow();
                             createdMarkers.add(newMarker);
+                            markerFragment.MTouch.mMarkers.add(newMarker);
+                            markerFragment.MTouch.CM.add(newMarker);
                         }
                         if (floorPicked == 1) {
                             MarkersList.add(newMarker);
@@ -3840,7 +4172,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-
+    protected String FindDestinationArea(Marker m){
+        if(BuildingOne.contains(m)) {
+            return "B1";
+        } else if (BuildingOneF2.contains(m)) {
+            return "B1F2";
+        } else if (BuildingTwo.contains(m)) {
+            return "B2";
+        }else if(BuildingTwoF2.contains(m)){
+            return "B2F2";
+        } else if (ThreeAMarkers.contains(m)) {
+            return "3A";
+        } else if (ThreeAMarkersF2.contains(m)) {
+            return "3AF2";
+        } else if (ThreeBMarkers.contains(m)) {
+            return "3B";
+        }else if(ThreeBCMarkers.contains(m)){
+            return "3BC";
+        } else if (ThreeCMarkers.contains(m)) {
+            return "3C";
+        } else if (ThreeDMarkers.contains(m)) {
+            return "3D";
+        }else if(ThreeEMarkers.contains(m)){
+            return "3E";
+        }else if(FourAMarkers.contains(m)){
+            return "4A";
+        }
+        return "NotFound";
+    }
+    
     protected void ShowTheseMarkers() {
         if (CRShow) {
             for (Marker m : ClassRoomMarkers) {
@@ -4197,17 +4557,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         points.add(new LatLng(lat, lon));
                     }
-//                    LatLng PosToCheck = FindMarkerAreaForTravel(marker,2);
-//                    String area = FindQuadrantForArea(marker.getPosition(),PosToCheck);
-//                    points.addAll(ChoosePointsToGrabOutsideToInsideFishBowl(area, marker.getPosition()));
 
-                    LatLng PosToCheck = FindMarkerAreaForTravel(marker, 2);
-//                    String area = FindQuadrantForAreaBuilding2(marker.getPosition());
-//                    String area = FindQuadrantForArea(marker.getPosition(), PosToCheck);
-//                    points.addAll(ChoosePointsToGrabOutsideToInsideBuilding2(area, marker.getPosition()));
-//                    points.addAll(ChoosePointsToGrabOutsideToInsideBuilding1(area, marker.getPosition()));
-                    String area = FindQuadrantForAreaBuilding2(marker.getPosition());
-                    points.addAll(ChoosePointsToGrabOutsideToInsideBuilding2(area, marker.getPosition()));
+                    String TravelingTo = FindDestinationArea(marker);
+                    LatLng PosToCheck = FindMarkerAreaForTravel(marker,2);
+                    LatLng PosOfMarker = marker.getPosition();
+                    String area = FindQuadrantForArea(marker.getPosition(),PosToCheck);
+                    switch (TravelingTo){
+                        case "B1":
+                            break;
+                        case"B1F2":
+                            break;
+                        case"B2":
+                             area = FindQuadrantForAreaBuilding2(marker.getPosition());
+                            points.addAll(ChoosePointsToGrabOutsideToInsideBuilding2(area, PosOfMarker));
+                            break;
+                        case "B2F2":
+                            break;
+                        case "3A":
+                            points.addAll(ChoosePointsToGrabOutsideToInside3A(area,PosOfMarker));
+                            break;
+                        case "3AF2":
+                            break;
+                        case "3B":
+                            points.addAll(ChoosePointsToGrabOutsideToInsideFishBowl(area, PosOfMarker));
+                            break;
+                        case "3BC":
+                            points.addAll(ChoosePointsToGrabOutsideToInside3BC(area,PosOfMarker));
+                            break;
+                        case "3C":
+                            points.addAll(ChoosePointsToGrabOutsideToInside3C(area,PosOfMarker));
+                            break;
+                        case "3D":
+                            points.addAll(ChoosePointToGrabOutsideToInside3D(area,PosOfMarker));
+                            break;
+                        case "3E":
+                            points.addAll(ChoosePointToGrabOutsideToInside3E(area,PosOfMarker));
+                    }
+
 
                     polylineOptions.addAll(points);
                     polylineOptions.width(15);

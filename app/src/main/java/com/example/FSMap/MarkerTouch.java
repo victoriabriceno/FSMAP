@@ -49,7 +49,7 @@ public class MarkerTouch extends FrameLayout {
     private static final int ClickRadius = 50;
 
     private GoogleMap mGoogleMap;
-    private List<Marker> mMarkers, Favs, CM, AM;
+    public List<Marker> mMarkers, Favs, CM, AM;
     ArrayList<Marker> markersClicked = new ArrayList<>();
     public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
