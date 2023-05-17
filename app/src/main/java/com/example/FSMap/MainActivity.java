@@ -328,8 +328,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
+                        relativeLayoutLoading.setVisibility(View.GONE);
                     }
-                    relativeLayoutLoading.setVisibility(View.GONE);
+
 
 
                 }else{
