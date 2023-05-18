@@ -57,6 +57,7 @@ public class MarkerTouch extends FrameLayout {
     public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
     private boolean mLocationPermissionsGranted, wasRemoveHit, wasMarkerClicked, csvReady, cReady, fReady = false;
+    public boolean markerready = false;
     private Context C;
     private Activity A;
     private double Latitude, Longitude;
@@ -284,6 +285,7 @@ public class MarkerTouch extends FrameLayout {
 //                    }
 //                }
                     marker2 = marker;
+                    markerready = true;
 
                 } else {
                     return true;
@@ -431,6 +433,7 @@ public class MarkerTouch extends FrameLayout {
 //                    }
 //                }
         marker2 = marker;
+        markerready = true;
     }
 
     private void getDeviceLocation() {

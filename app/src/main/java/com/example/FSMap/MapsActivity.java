@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.PrecomputedText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -209,7 +211,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     StorageReference storageReference;
     LocationManager mLocationManager;
     String markerTitle2;
-    boolean isNOTfUCKED = false;
+    boolean isNOTfUCKED, isRouting = false;
     int floorPicked = 1;
     CameraPosition cameraLoad;
     int altitudesCollectedNumber;
@@ -226,6 +228,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean isAndroidReady = false;
     boolean csvmarkerready, cmmarkerready = false;
     ArrayList<String> SearchList;
+    boolean isReady;
     View importPanel;
     LocationListener locationListener = new LocationListener() {
         @Override
@@ -3791,63 +3794,75 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
             case R.id.navgo:
+                if (!isTraveling)
+                {
+                    isTraveling = true;
+                    getDirectionPoly(markerFragment.MTouch.marker2);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
+                    // checkDistPoint = new LatLng(Latitude, Longitued);
+                    //Setting curlocation and final destination to text boxes
+                    AutoCompleteTextView curlocation = findViewById(R.id.From);
+                    AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
+                    //create strings from textboxes
+                    String stringcurlocation = curlocation.getText().toString();
+                    String stringfinaldestination = finaldestination.getText().toString();
+                    //get the markers
+                    Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
+                    //Setup string for finding path
+                    String RooomtoRoom = "";
+                    if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
+                        //remove all lines
+                        RemoveAllLines();
+                        //Logic for deciding the order to place the strings in
+                        int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
+                        int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
+                        if (start > end) {
+                            RooomtoRoom += curlocation.getText().toString();
+                            RooomtoRoom += finaldestination.getText().toString();
+                        } else {
+                            RooomtoRoom += finaldestination.getText().toString();
+                            RooomtoRoom += curlocation.getText().toString();
+                        }
 
-                getDirectionPoly(markerFragment.MTouch.marker2);
-                isTraveling = true;
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
-                // checkDistPoint = new LatLng(Latitude, Longitued);
-                //Setting curlocation and final destination to text boxes
-                AutoCompleteTextView curlocation = findViewById(R.id.From);
-                AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
-                //create strings from textboxes
-                String stringcurlocation = curlocation.getText().toString();
-                String stringfinaldestination = finaldestination.getText().toString();
-                //get the markers
-                Marker finalDestinationMarker = FindTheMarker(stringfinaldestination);
-                //Setup string for finding path
-                String RooomtoRoom = "";
-                if (!(CheckMarkerType(finalDestinationMarker)) && !stringcurlocation.isEmpty()) {
-                    //remove all lines
-                    RemoveAllLines();
-                    //Logic for deciding the order to place the strings in
-                    int start = Integer.parseInt(stringcurlocation.replaceAll("[^0-9]", ""));
-                    int end = Integer.parseInt(stringfinaldestination.replaceAll("[^0-9]", ""));
-                    if (start > end) {
-                        RooomtoRoom += curlocation.getText().toString();
-                        RooomtoRoom += finaldestination.getText().toString();
-                    } else {
-                        RooomtoRoom += finaldestination.getText().toString();
-                        RooomtoRoom += curlocation.getText().toString();
-                    }
-
-                    //Set wasFound to false as standard, if polyline is found dont display error
-                    Boolean wasFound = false;
-                    for (int i = 0; i < LinesTitles.size(); i++) {
-                        //Since the Linestitles and linesShowing are created together, the indexes are the same
-                        if (RooomtoRoom.equals(LinesTitles.get(i))) {
-                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-                            wasFound = true;
+                        //Set wasFound to false as standard, if polyline is found dont display error
+                        Boolean wasFound = false;
+                        for (int i = 0; i < LinesTitles.size(); i++) {
+                            //Since the Linestitles and linesShowing are created together, the indexes are the same
+                            if (RooomtoRoom.equals(LinesTitles.get(i))) {
+                                linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
+                                wasFound = true;
+                                break;
+                            }
+                        }
+                        if (!wasFound) {
+                            snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
+                            snack.show();
                             break;
                         }
                     }
-                    if (!wasFound) {
-                        snack = Snackbar.make(findViewById(R.id.map), "Invalid Route", Snackbar.LENGTH_SHORT);
-                        snack.show();
-                        break;
-                    }
+                    FollowUser = true;
+                    //"Select" markers to be used if needed
+                    //Removes slideup
+                    slideupview.setVisibility(View.GONE);
+                    slidepup = false;
+                    //Allows NavDone button to appear
+                    NavDone.setVisibility(View.VISIBLE);
+                    //Brings back searchbar (may be depricated, will have to test)
+                    Search.setVisibility(View.VISIBLE);
+                    //Removes keyboard when Go is hit
+                    InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+
+                } else {
+                    snack = Snackbar.make(findViewById(R.id.map), "Already routing, please cancel previous route", Snackbar.LENGTH_SHORT);
+                    snack.show();
+//                    Toast toast1 = Toast.makeText(this,"Already routing, please cancel previous route", Toast.LENGTH_LONG);
+////                    toast1.getView().setBackgroundResource(R.drawable.round_linearlayout);
+//                    toast1.show();
+
+
+
                 }
-                FollowUser = true;
-                //"Select" markers to be used if needed
-                //Removes slideup
-                slideupview.setVisibility(View.GONE);
-                slidepup = false;
-                //Allows NavDone button to appear
-                NavDone.setVisibility(View.VISIBLE);
-                //Brings back searchbar (may be depricated, will have to test)
-                Search.setVisibility(View.VISIBLE);
-                //Removes keyboard when Go is hit
-                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
                 break;
 
             case R.id.NavDone:
@@ -4314,6 +4329,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(Marker marker) {
         dest = FindMarkerAreaForTravel(markerFragment.MTouch.marker2, 1);
+        new MarkerShowInfo().execute();
+
         return true;
     }
 
@@ -4489,6 +4506,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return responseString;
     }
 
+    private class MarkerShowInfo extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            while(!markerFragment.MTouch.markerready){
+
+            }
+            return "succ" ;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s.equals("succ")){
+                FindTheMarker(markerFragment.MTouch.marker2.getTitle()).showInfoWindow();
+                markerFragment.MTouch.markerready = false;
+            }
+        }
+    }
+
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
         Marker marker;
 
@@ -4622,26 +4660,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
                     snack.show();
                 }
-            }
-        }
-
-        private class Overlays extends AsyncTask<Void, Void, String> {
-            GoogleMap maps;
-
-            public void sendMap(GoogleMap _maps) {
-                maps = _maps;
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                return "succ";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
             }
         }
     }
