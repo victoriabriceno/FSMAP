@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ProgressBar progressBar;
     RelativeLayout relativeLayoutLoading;
 
+    SharedPreferences onBoardingScreen;
+
+
     @SuppressLint({"MissingPermission", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,33 +76,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register = (TextView) findViewById(R.id.RegisterBTN);
         register.setOnClickListener(this);
 
-        forgetPassword=(TextView)findViewById(R.id.ForgotPassowrd);
+        forgetPassword = (TextView) findViewById(R.id.ForgotPassowrd);
         forgetPassword.setOnClickListener(this);
 
         login = (Button) findViewById(R.id.LoginBTN);
         login.setOnClickListener(this);
 
-        editTextEmail =  findViewById(R.id.EmailAddress);
-        editTextPassword= findViewById(R.id.Password);
+        editTextEmail = findViewById(R.id.EmailAddress);
+        editTextPassword = findViewById(R.id.Password);
 
         mAuth = FirebaseAuth.getInstance();
 
         //Internet connection check
         cm = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (cm != null)
-        {
+        if (cm != null) {
             NetworkInfo nim = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             NetworkInfo niw = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if ((nim != null && nim.isConnectedOrConnecting()) || (niw != null && niw.isConnectedOrConnecting())) {
                 connected = true;
-            }
-            else {
+            } else {
                 connected = false;
             }
 
-        }
-        else {
+        } else {
             connected = false;
         }
 
@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
                 requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
-        gsc = GoogleSignIn.getClient(this,gso);
+        gsc = GoogleSignIn.getClient(this, gso);
 
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if(gAccount != null){
+        if (gAccount != null) {
             finish();
-            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(intent);
         }
 
@@ -123,21 +123,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 Intent signInIntent = gsc.getSignInIntent();
-               startActivityForResult(signInIntent,1234);
+                startActivityForResult(signInIntent, 1234);
             }
         });
 
 
-
-
     }
 
-    int counter =0;
+    int counter = 0;
+
     @Override
     public void onBackPressed() {
 
 
-        if (counter ==2){
+        if (counter == 2) {
             super.onBackPressed();
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -146,42 +145,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
+
+        boolean isFirsTime = onBoardingScreen.getBoolean("firsTime", true);
         relativeLayoutLoading.setVisibility(View.VISIBLE);
-        if(requestCode == 1234){
+        if (requestCode == 1234) {
 
-                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                 try {
-                     GoogleSignInAccount account = task.getResult(ApiException.class);
-                     AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),
-                             null);
-                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                         @Override
-                         public void onComplete(@NonNull Task<AuthResult> task) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),
+                        null);
+                FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                             if(task.isSuccessful()){
-                                 Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-                                 startActivity(intent);
-                             }else{
-                                 Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                                 relativeLayoutLoading.setVisibility(View.GONE);
-                             }
+                        if (task.isSuccessful()) {
+
+                            if(isFirsTime){
+                                SharedPreferences.Editor editor = onBoardingScreen.edit();
+                                editor.putBoolean("firsTime",false);
+                                editor.commit();
+                                startActivity(new Intent(getApplicationContext(), OnBoarding.class));
+                                finish();
+                            }else{
+                                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                                startActivity(intent);
+                            }
+
+                        } else {
+                            Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            relativeLayoutLoading.setVisibility(View.GONE);
+                        }
 
 
-                         }
-                     });
+                    }
+                });
 
 
-                 }catch (ApiException e){
-                     e.printStackTrace();
-                 }
-        }else{
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
+        } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
             relativeLayoutLoading.setVisibility(View.GONE);
         }
@@ -197,54 +209,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Creates a save instance of the previous ui
     //Runs right before everything is destroyed
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("firstload", firstload);
     }
+
     //run right before onPostCreate
     @Override
-    protected void onRestoreInstanceState(Bundle inState){
+    protected void onRestoreInstanceState(Bundle inState) {
         super.onRestoreInstanceState(inState);
         firstload = inState.getBoolean("firstload");
     }
+
     @Override
-    protected void onPostCreate(Bundle savedInstanceState){
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (!connected){
+        if (!connected) {
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else{
+        } else {
             //SAVE THE USER AND PASSWORD
             rememberMe = (CheckBox) findViewById(R.id.rememberUser);
-            SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
-            String checkBox = preferences.getString("remember","");
-            if (!firstload){
-                if (checkBox.equals("true")){
-                    Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+            SharedPreferences preferences = getSharedPreferences("checkBox", MODE_PRIVATE);
+            String checkBox = preferences.getString("remember", "");
+            if (!firstload) {
+                if (checkBox.equals("true")) {
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                     startActivity(intent);
 
-                }else if (checkBox.equals("false")){
-                  //  Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
+                } else if (checkBox.equals("false")) {
+                    //  Toast.makeText(this, "You have Logout.", Toast.LENGTH_SHORT).show();
                 }
                 firstload = true;
             }
 
 
-
             rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (compoundButton.isChecked()){
-                        SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                    if (compoundButton.isChecked()) {
+                        SharedPreferences preferences = getSharedPreferences("checkBox", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("remember","true");
+                        editor.putString("remember", "true");
                         editor.apply();
                         Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-                    }else if(!compoundButton.isChecked()){
-                        SharedPreferences preferences  = getSharedPreferences("checkBox",MODE_PRIVATE);
+                    } else if (!compoundButton.isChecked()) {
+                        SharedPreferences preferences = getSharedPreferences("checkBox", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("remember","false");
+                        editor.putString("remember", "false");
                         editor.apply();
                         Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
                     }
@@ -270,19 +282,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //        }
 //        else{
-            switch(view.getId()){
+        switch (view.getId()) {
 
-                case R.id.RegisterBTN:
-                    startActivity(new Intent(this,RegisterUser.class));
-                    break;
+            case R.id.RegisterBTN:
+                startActivity(new Intent(this, RegisterUser.class));
+                break;
 
-                case R.id.LoginBTN:
-                    userLogin();
-                    break;
-                case R.id.ForgotPassowrd:
-                    startActivity(new Intent(this,ForgotPassword.class));
-                    break;
-            }
+            case R.id.LoginBTN:
+
+                userLogin();
+                break;
+            case R.id.ForgotPassowrd:
+                startActivity(new Intent(this, ForgotPassword.class));
+                break;
+        }
 //        }
     }
 
@@ -291,48 +304,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getEditText().getText().toString();
 
 
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             Toast.makeText(this, "Email is require!", Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();
             return;
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
             Toast.makeText(this, "Please enter a valid email!", Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();
             return;
         }
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             Toast.makeText(this, "Password is require!", Toast.LENGTH_SHORT).show();
             editTextPassword.requestFocus();
             return;
         }
-        if (password.length() < 6){
+        if (password.length() < 6) {
             Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             editTextPassword.requestFocus();
             return;
         }
 
 
+        onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
+
+        boolean isFirsTime = onBoardingScreen.getBoolean("firsTime", true);
 
         relativeLayoutLoading.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
-                    if (user.isEmailVerified()){
-                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                if (task.isSuccessful()) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user.isEmailVerified()) {
+                        if(isFirsTime){
+                            SharedPreferences.Editor editor = onBoardingScreen.edit();
+                            editor.putBoolean("firsTime",false);
+                            editor.commit();
+                            startActivity(new Intent(getApplicationContext(), OnBoarding.class));
+                            finish();
+                        }else{
+                            startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                        }
 
 
-                    }else{
+
+                    } else {
                         user.sendEmailVerification();
-                        Toast.makeText(MainActivity.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Check your email box to verify the email!", Toast.LENGTH_LONG).show();
+                        relativeLayoutLoading.setVisibility(View.GONE);
                     }
-                    relativeLayoutLoading.setVisibility(View.GONE);
 
 
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Check your email box to verify the email or you have the incorrect information", Toast.LENGTH_SHORT).show();
                     relativeLayoutLoading.setVisibility(View.GONE);
                 }
@@ -340,8 +365,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
-
 
 
 }

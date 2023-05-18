@@ -26,6 +26,11 @@
                 android:color="@color/FS_light_gray">
 
             </solid>
+            <stroke
+                android:color="@color/FS_ORANGE"
+                android:width="2dp">
+
+            </stroke>
 
             <size
                 android:height="8dp"/>

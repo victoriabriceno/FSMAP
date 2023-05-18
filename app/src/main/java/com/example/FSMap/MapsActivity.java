@@ -35,6 +35,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.FSMap.databinding.ActivityMapsBinding;
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -98,6 +100,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -227,6 +230,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private MarkerFragment markerFragment;
     boolean isAndroidReady = false;
     boolean csvmarkerready, cmmarkerready = false;
+
+    RelativeLayout loadingScreenMaps ;
     ArrayList<String> SearchList;
     boolean isReady;
     View importPanel;
@@ -656,6 +661,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ETCFilter.setVisibility(View.GONE);
 
 
+
+        loadingScreenMaps = findViewById(R.id.LoadingDesignMaps);
         //Loading markers from CSV
 
         //PROFILE PICTURE
@@ -1128,9 +1135,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+
+
+
+        loadingScreenMaps.setVisibility(View.VISIBLE);
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
+
+
                 BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
 
                 //Set the bounds for overlays
@@ -1304,6 +1317,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                CheckResults(result);
                 prevResult = result;
 
+
+                loadingScreenMaps.setVisibility(View.GONE);
             }
         });
         SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
@@ -2373,7 +2388,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    //Victoria Building 2
+    //Victoria Building 2Down
 
     ArrayList<LatLng> Q1Building2Down = new ArrayList<>(Arrays.asList(new LatLng(28.596566523323645, -81.30287457257509),
             new LatLng(28.596641294889583, -81.302948333323),
@@ -3011,6 +3026,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return points;
     }
 
+    // Victoria Briceno Q3AF2
+
+    ArrayList<LatLng> Q13AF2 = new ArrayList<>(Arrays.asList(
+            new LatLng(28.5956351124297,-81.30407653748989),
+            new LatLng(28.5956215709968,-81.30407452583312),
+            new LatLng(28.595623042891766,-81.30403161048888),
+            new LatLng(28.595597137537357,-81.3040554150939),
+            new LatLng(28.595572115313963,-81.30408760160208)
+    ));
+
+    ArrayList<LatLng> Q23AF2 = new ArrayList<>(Arrays.asList(
+            new LatLng(28.595547093084633,-81.30412917584181),
+            new LatLng(28.595536495432746,-81.30415163934231),
+            new LatLng(28.595527369676127,-81.30418483167887)));
+
+    ArrayList<LatLng> Q33AF2 = new ArrayList<>(Arrays.asList(
+            new LatLng(28.595474970154942,-81.30418147891758),
+            new LatLng(28.595470260084344,-81.3041278347373)));
+
+    ArrayList<LatLng> Q43AF2 = new ArrayList<>(Arrays.asList(
+            new LatLng(28.5954684938078,-81.30407754331827),
+            new LatLng(28.595474675775527,-81.3040456920862),
+            new LatLng(28.59547614767257,-81.30402188748121)
+    ));
+
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInside3AF2(String QuadrantDestination, LatLng Destination) {
+        ArrayList<LatLng> points = new ArrayList<>();
+        //all of these paths only consider travel from outside to inside. Not travel withing the building.
+        //Within building travel will require different logic because there may be shortcuts to be taken within the building.
+
+        if (QuadrantDestination.equals("Q1")) {
+
+            points.add(Q13AF2.get(0));
+            points.add(Q13AF2.get(1));
+            points.add(Q13AF2.get(2));
+            points.add(Q13AF2.get(3));
+
+        } else if (QuadrantDestination.equals("Q2")) {
+
+            for (LatLng point : Q13AF2){
+                points.add(point);
+            }
+
+            if(Destination.longitude <-81.30418483167887){
+                for(LatLng point: Q23AF2){
+                 points.add(point);
+                }
+            }else{
+                Q23AF2.get(0);
+                Q23AF2.get(1);
+            }
+
+        } else if (QuadrantDestination.equals("Q3")) {
+            for(LatLng point: Q13AF2){
+                points.add(point);
+            }
+            for(LatLng point: Q23AF2){
+                points.add(point);
+            }
+            points.add(Q33AF2.get(0));
+        } else if (QuadrantDestination.equals("Q4")) {
+            for(LatLng point: Q13AF2){
+                points.add(point);
+            }
+            for(LatLng point: Q23AF2){
+                points.add(point);
+            }
+            for(LatLng point: Q33AF2){
+                points.add(point);
+            }
+            if(Destination.longitude < -81.3040456920862){
+                for(LatLng point: Q43AF2){
+                    if(point.longitude < -81.3040456920862){
+                        points.add(point);
+                    }
+                }
+            }else{
+                for(LatLng point: Q43AF2){
+                    points.add(point);
+                }
+            }
+        }
+        return points;
+    }
+
+
 
     ArrayList<LatLng> Q1 = new ArrayList<>(Arrays.asList(new LatLng(28.595217682239355, -81.30385525524616), new LatLng(28.595218270999617, -81.30383245646954), new LatLng(28.595219742900227, -81.30377478897572), new LatLng(28.595214738438067, -81.30369365215302), new LatLng(28.595217387859222, -81.30366180092096), new LatLng(28.595217387859222, -81.30359776318073), new LatLng(28.59519059926425, -81.30358066409826), new LatLng(28.595216504718856, -81.30352735519409)));
     ArrayList<LatLng> Q2 = new ArrayList<>(Arrays.asList(new LatLng(28.595212677777095, -81.30417109), new LatLng(28.59521562157846, -81.30409933626652), new LatLng(28.595226219262685, -81.30408190190792), new LatLng(28.595226513642796, -81.30406312644482), new LatLng(28.595225041742264, -81.30404904484749), new LatLng(28.595218270999617, -81.30403999239206), new LatLng(28.595211500256514, -81.30402792245148), new LatLng(28.595218270999617, -81.3039967417717), new LatLng(28.595219742900227, -81.30395483225584), new LatLng(28.595217976619487, -81.3039256632328)));
@@ -3511,6 +3612,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }else {
                 return new LatLng(28.595520598952945,-81.30410872399807);
             }
+        } else if (ThreeAMarkersF2.contains(marker)) {
+            if(SearchType == 1 ){
+                if(Latitude < 28.595632463019054){
+                    return new LatLng(28.595416977396,-81.30433067679405);
+                }else{
+                    return new LatLng(28.59563364053492,-81.30403395742178);
+                }
+            }else{
+                return new LatLng(28.5955282528139,-81.30411978811026);
+            }
         } else if (ThreeBMarkers.contains(marker)) {
             if (SearchType == 1) {
                 returnArea = new LatLng(28.59504105401512, -81.30434174090624);
@@ -3575,8 +3686,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             } else {
                 if (Longitued < -81.30249939858913) {
                     return new LatLng(28.596084922513946, -81.30266435444355);
-                } else if (Latitude > -81.30249939858913) {
+                } else{
                     return new LatLng(28.596334260127957, -81.302160769701);
+                }
+            }
+        } else if (BuildingTwoF2.contains(marker)) {
+            boolean rightside = false;
+            if (Longitued > -81.30276795476675) {
+                rightside = true;
+            }
+            if(marker.getPosition().latitude > 28.596601259727045){
+                return new LatLng(28.5967084126279,-81.30242194980383);
+            }
+            else {
+                if(rightside){
+                    return new LatLng(28.596311298719524,-81.30214400589466);
+                }else{
+                    return new LatLng(28.596102290796672,-81.3026137277484);
                 }
             }
         }
@@ -3794,10 +3920,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
             case R.id.navgo:
-                if (!isTraveling)
-                {
-                    isTraveling = true;
+
+                if(!isTraveling) {
                     getDirectionPoly(markerFragment.MTouch.marker2);
+                    isTraveling = true;
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
                     // checkDistPoint = new LatLng(Latitude, Longitued);
                     //Setting curlocation and final destination to text boxes
@@ -3839,6 +3965,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             snack.show();
                             break;
                         }
+
                     }
                     FollowUser = true;
                     //"Select" markers to be used if needed
@@ -3852,7 +3979,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //Removes keyboard when Go is hit
                     InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
-
                 } else {
                     snack = Snackbar.make(findViewById(R.id.map), "Already routing, please cancel previous route", Snackbar.LENGTH_SHORT);
                     snack.show();
@@ -3989,7 +4115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.btnAddFavorites:
                 Favorites.addToFavorite(MapsActivity.this, markerFragment.MTouch.marker2);
 
-                snack = Snackbar.make(findViewById(R.id.map), "Added To Favorites", Snackbar.LENGTH_SHORT);
+                snack = Snackbar.make(findViewById(R.id.map), "Toa To Favorites", Snackbar.LENGTH_SHORT);
                 snack.show();
                 bntFavoritesRemove.setVisibility(View.VISIBLE);
                 btnFavoritesAdd.setVisibility(View.GONE);
@@ -4010,12 +4136,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (Marker marker : MarkersList) {
                     marker.setVisible(false);
                 }
+                if(isTraveling){
+                    linesShowing.get(0).setVisible(false);
+                    linesShowing.get(1).setVisible(true);
+                }
                 removeAllOverlays();
                 String result = DoTheChecks();
                 CheckResults(result);
                 break;
             case R.id.FloorDown:
                 floorPicked = 1;
+
                 downFloor.setVisibility(View.GONE);
                 upFloor.setVisibility(View.VISIBLE);
                 for (Marker markers : MarkersList) {
@@ -4048,9 +4179,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (B3U2 != null) {
                     B3U2.setVisible(false);
                 }
+                if(isTraveling){
+                    linesShowing.get(1).setVisible(false);
+                    linesShowing.get(0).setVisible(true);
+                }
                 removeAllOverlays();
                 String results = DoTheChecks();
                 CheckResults(results);
+                break;
             case R.id.FilterButton:
                 FilterShow = !FilterShow;
                 if (FilterShow) {
@@ -4317,7 +4453,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
-
     @Override
     public void onMapLongClick(LatLng point) {
         wasRemoveHit = false;
@@ -4424,6 +4559,85 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return foundMarker;
     }
 
+    ArrayList<LatLng> Pathfloor3A = new ArrayList<>(Arrays.asList(
+            new LatLng(28.595419921191642,-81.30425088107586),
+            new LatLng(28.595421393089424,-81.30402222275734),
+            new LatLng(28.595618332827797,-81.30403496325016),
+            new LatLng(28.595613917142643,-81.30408123135567),
+            new LatLng(28.59561156211047,-81.30416739732026),
+            new LatLng(28.59562510354469,-81.30416505038738),
+            new LatLng(28.595627752955522,-81.30407486110926)));
+    ArrayList<LatLng> BuildingStairEntryPointsTop = new ArrayList<>(Arrays.asList(
+            new LatLng(28.596682801917005,-81.30251448601486),
+            new LatLng(28.59665984058472,-81.30256544798613)
+    ));
+    ArrayList<LatLng> BuildingStairEntryPointsRight = new ArrayList<>(Arrays.asList(
+            new LatLng(28.59627832848325,-81.3022429123521),
+            new LatLng(28.59624947951801,-81.30222883075477),
+            new LatLng(28.59627273531714,-81.30218122154474),
+            new LatLng(28.59628421602619,-81.30218490958214),
+            new LatLng(28.59627450158014,-81.30220770835876)
+    ));
+    ArrayList<LatLng> BuildingStairEntryPointsLeft = new ArrayList<>(Arrays.asList(
+            new LatLng(28.596132906067687,-81.30256243050098),
+            new LatLng(28.596138793618795,-81.30250677466393),
+            new LatLng(28.596191192809023,-81.302385404706),
+            new LatLng(28.596227401222972,-81.30236864089966),
+            new LatLng(28.59624918514078,-81.3023766875267),
+            new LatLng(28.59622534058185,-81.302430331707),
+            new LatLng(28.59621621488502,-81.30242496728897),
+            new LatLng(28.596224457449928,-81.30240518599749)
+    ));
+    public ArrayList<LatLng> GetPathToSecondFloor(String Destination,LatLng DestinationPoint){
+        ArrayList<LatLng> points = new ArrayList<>();
+        switch(Destination){
+            case "3AF2":
+                if(Latitude < 28.595632463019054){
+
+
+                    for (LatLng point : Pathfloor3A){
+                        points.add(point);
+                    }
+
+
+                } else {
+
+                    for (LatLng point: Pathfloor3A){
+                        if(point.latitude > 28.595421393089424){
+
+                            points.add(point);
+
+                        }
+                    }
+                }
+                break;
+            case "B2F2":
+                boolean rightside = false;
+                if (Longitued > -81.30276795476675) {
+                    rightside = true;
+                }
+                if(DestinationPoint.latitude > 28.596601259727045){
+                    for(LatLng point: BuildingStairEntryPointsTop){
+                        points.add(point);
+                    }
+                }
+                else {
+                    if(rightside){
+                        for(LatLng point: BuildingStairEntryPointsRight){
+                            points.add(point);
+                        }
+                    }else{
+                        for(LatLng point: BuildingStairEntryPointsLeft){
+                            points.add(point);
+                        }
+                    }
+                }
+                break;
+            case "B1F2":
+                break;
+        }
+        return points;
+    }
 
     public boolean CheckMarkerType(Marker marker) {
         boolean isItCreatedMarker = false;
@@ -4583,6 +4797,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
                 ArrayList points = null;
+                ArrayList SecondFloorPoints = null;
                 PolylineOptions polylineOptions = null;
 
                 for (List<HashMap<String, String>> path : lists) {
@@ -4610,11 +4825,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             points.addAll(ChoosePointsToGrabOutsideToInsideBuilding2(area, PosOfMarker));
                             break;
                         case "B2F2":
+                            SecondFloorPoints = new ArrayList();
+                            area = FindQuadrantForAreaBuilding2UP(marker.getPosition());
+                            points.addAll(GetPathToSecondFloor("B2F2",marker.getPosition()));
+                            SecondFloorPoints.addAll(ChoosePointsToGrabOutsideToInsideBuilding2UP(area,marker.getPosition()));
                             break;
                         case "3A":
                             points.addAll(ChoosePointsToGrabOutsideToInside3A(area,PosOfMarker));
                             break;
                         case "3AF2":
+                            SecondFloorPoints = new ArrayList();
+                            points.addAll(GetPathToSecondFloor("3AF2",marker.getPosition()));
+                            SecondFloorPoints.addAll(ChoosePointsToGrabOutsideToInside3AF2(area,PosOfMarker));
                             break;
                         case "3B":
                             points.addAll(ChoosePointsToGrabOutsideToInsideFishBowl(area, PosOfMarker));
@@ -4642,25 +4864,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     polylineOptions.geodesic(true);
                 }
-                Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#22808080")).width(15));
+                Polyline poly = mMap.addPolyline(new PolylineOptions().addAll(points).color(Color.parseColor("#E65400")).width(15));
                 linesShowing.add(poly);
+                if(SecondFloorPoints != null){
+                    Polyline second = mMap.addPolyline(new PolylineOptions().addAll(SecondFloorPoints).color(Color.parseColor("#E65400")).width(15));
+                    second.setVisible(false);
+                    linesShowing.add(second);
+                    changeInmmediatelyFloor();
+                }
                 if (polylineOptions != null) {
-//                    if (!CheckMarkerType(marker)) {
-//                        List<LatLng> outToInPoly = customPolyLines.get(0).getPoints();
-//                        polylineOptions.add(outToInPoly.get(0));
-//                    }
-//                    String outToPolys = "outsideTo" + marker.getTitle();
-//                    for (int i = 0; i < LinesTitles.size(); i++) {
-//                        if (LinesTitles.get(i).equals(outToPolys)) {
-//                            linesShowing.add(mMap.addPolyline(customPolyLines.get(i)));
-//                        }
-//                    }
-                    linesShowing.add(mMap.addPolyline(polylineOptions));
+//Q
                 } else {
                     snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
                     snack.show();
                 }
             }
         }
+    }
+
+    private void changeInmmediatelyFloor() {
+        floorPicked = 1;
+
+        downFloor.setVisibility(View.GONE);
+        upFloor.setVisibility(View.VISIBLE);
+        for (Marker markers : MarkersList) {
+            if (markerFragment.MTouch.marker2 != null) {
+                if (markers.getTitle().equals(markerFragment.MTouch.marker2.getTitle())) {
+                    markers.setVisible(mMap.getCameraPosition().zoom > 18);
+                }
+            } else {
+                markers.setVisible(mMap.getCameraPosition().zoom > 18);
+            }
+        }
+        if (B1 != null && B1.size() > 0) {
+            B1.get(1).setVisible(false);
+        }
+        if (B2 != null && B2.size() > 0) {
+            B2.get(1).setVisible(false);
+        }
+        for (Marker marker : secondFloorMarkersList) {
+            marker.setVisible(false);
+        }
+        for (Marker m : ThreeAMarkersF2) {
+            m.setVisible(false);
+        }
+        for (Marker m2 : BuildingOneF2) {
+            m2.setVisible(false);
+        }
+        for (Marker m3 : BuildingTwoF2) {
+            m3.setVisible(false);
+        }
+        if (B3U2 != null) {
+            B3U2.setVisible(false);
+        }
+        if(isTraveling){
+            linesShowing.get(1).setVisible(false);
+            linesShowing.get(0).setVisible(true);
+        }
+        removeAllOverlays();
+        String results = DoTheChecks();
+        CheckResults(results);
+
     }
 }

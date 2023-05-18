@@ -28,4 +28,18 @@
     <string name="previous">Previous</string>
     <string name="message">Already routing, please cancel previous route</string>
 
+
+
+    //String for Onboarding screens
+    <string name="fist_slide_title">Navigate Through Campus</string>
+    <string name="second_slide_title">Make Custom Markers</string>
+    <string name="third_slide_title">Add To Favorites</string>
+    <string name="fourth_slide_title">Manage Your Profile</string>
+
+
+    <string name="first_slide_desc">Fs map shows the route from your current location to any classroom at Full Sail. Click on a marker to get started.</string>
+    <string name="second_slide_desc">Press and hold at any location on the map to create a custom marker.</string>
+    <string name="third_slide_desc">To save to favorites just click the marker to see the slide-up and click the star to add it to your list</string>
+    <string name="fourth_slide_desc">To see your custom markers, favorites or change your profile click on the icon in the top left of the map.</string>
+
 </resources>
