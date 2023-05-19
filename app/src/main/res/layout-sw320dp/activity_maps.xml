@@ -212,7 +212,48 @@
             android:backgroundTint="@color/FS_ORANGE"
             android:text="Nav Lock" />
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/LoadingDesignMaps"
+            android:layout_width="168dp"
+            android:layout_height="117dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="289dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginBottom="252dp"
+            android:background="@drawable/round_linearlayout"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/ProgressBarMain"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="55dp"
+                android:layout_height="54dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="58dp"
+                android:layout_marginEnd="58dp"
+                android:layout_marginBottom="46dp"
+                android:indeterminateTint="@color/FS_ORANGE" />
+
+            <TextView
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="82dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/questrialregular"
+                android:text="Loading data..."
+                android:gravity="center"
+                android:textColor="@color/FS_dark_gray" />
+        </RelativeLayout>
+
+                <LinearLayout
             android:layout_width="114dp"
             android:layout_height="352dp"
             android:layout_alignParentStart="true"
@@ -306,44 +347,6 @@
         </LinearLayout>
     </RelativeLayout>
     <include layout="@layout/bottom_sheet" />
-
-    <RelativeLayout
-        android:id="@+id/LoadingDesignMaps"
-        android:layout_width="168dp"
-        android:layout_height="117dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="289dp"
-        android:layout_marginEnd="102dp"
-        android:layout_marginBottom="252dp"
-        android:background="@drawable/round_linearlayout"
-        app:layout_anchor="@+id/relativeLayout"
-        app:layout_anchorGravity="center"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:id="@+id/ProgressBarMain"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="55dp"
-            android:layout_height="54dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="58dp"
-            android:layout_marginBottom="46dp"
-            android:indeterminateTint="@color/FS_ORANGE" />
-
-        <TextView
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="82dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/questrialregular"
-            android:text="Loading data..."
-            android:textColor="@color/FS_dark_gray" />
-    </RelativeLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

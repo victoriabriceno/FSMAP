@@ -2068,11 +2068,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else if(_latitdue > latToCheckQ2UP){
 
             return "Q2";
-        }else if(_latitdue < latToCheckQ3UP){
+        }else if(_latitdue < latToCheckQ3UP && _longitude < longToCheckQ4Up){
 
             return "Q3";
 
-        }else if(_longitude < longToCheckQ4Up){
+        }else if(_longitude > longToCheckQ4Up){
 
             return "Q4";
         }else{
@@ -2143,7 +2143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             if (rightside) {
 
-                if(Latitude > 28.596310709965394){
+                if(Latitude > 28.59658124214005){
 
                     for (int i =1; i < 6; i++){
 
@@ -2154,7 +2154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(Destination.longitude <-81.30245883017778){
 
                             for (LatLng point1: Q2Building2UP){
-                                if(point1.latitude >= Destination.latitude){
+                                if(point1.latitude <= Destination.latitude){
                                     points.add(point1);
                                 }
 
@@ -2178,14 +2178,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     if(Destination.longitude <-81.30245883017778){
 
-                        for (LatLng point1: Q2Building2UP){
+                        for (int i = Q2Building2UP.size()-1; i >= 0; i--){
+                            LatLng point1 = Q2Building2UP.get(i);
                             if(point1.latitude <= Destination.latitude){
                                 points.add(point1);
                             }
 
                         }
                     }else{
-                        for (LatLng point2: Q2Building2UP){
+                        for (int i = Q2Building2UP.size()-1; i >= 0; i--){
+                            LatLng point2 = Q2Building2UP.get(i);
                             if(point2.latitude <=28.596422867567355){
 
                                 points.add(point2);
@@ -2195,42 +2197,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             } else {
 
-                if(Latitude > 28.596310709965394){
+                if(Latitude > 28.59658124214005){
+                    for (int i =1; i < 6; i++){
 
-                    for (int i = Q1Building2UP.size()- 1; i > 5;i--){
                         points.add(Q1Building2UP.get(i));
+
                     }
-                    for (LatLng point: Q2Building2UP){
-                        if(Destination.longitude <-81.30245883017778){
-
-                            for (LatLng point1: Q2Building2UP){
-                                if(point1.latitude >= Destination.latitude){
+                    if(Destination.longitude <-81.30245883017778){
+                        for (LatLng point1: Q2Building2UP){
+                            if(point1.latitude >= Destination.latitude){
                                     points.add(point1);
-                                }
                             }
-                        }else{
-                            for (LatLng point2: Q2Building2UP){
-                                if(point2.latitude >=28.596422867567355){
-
-                                    points.add(point2);
-                                }
+                        }
+                    }else{
+                        for (LatLng point2: Q2Building2UP){
+                            if(point2.latitude >=28.596422867567355){
+                                points.add(point2);
                             }
                         }
                     }
                 }else{
                     points.add(Q3Building2UP.get(0));
-                    for (LatLng point: Q2Building2UP){
-                        if(Destination.longitude <-81.30245883017778){
-                            for (LatLng point1: Q2Building2UP){
-                                if(point1.latitude >= Destination.latitude){
+                    if(Destination.longitude <-81.30245883017778){
+                            for (int i = Q2Building2UP.size()-1; i>=0;i--){
+                                LatLng point1 = Q2Building2UP.get(i);
+                                if(point1.latitude <= Destination.latitude){
                                     points.add(point1);
                                 }
                             }
-                        }else{
-                            for (LatLng point2: Q2Building2UP){
-                                if(point2.latitude >=28.596422867567355){
+                    }else{
+                        for (int i = Q2Building2UP.size()-1; i >= 0; i--){
+                            LatLng point2 = Q2Building2UP.get(i);
+                            if(point2.latitude <=28.596422867567355){
                                     points.add(point2);
-                                }
                             }
                         }
                     }
@@ -2238,7 +2237,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         } else if (QuadrantDestination.equals("Q3")) {
             if (rightside){
-                if(Destination.latitude > 28.59595156933239 && Destination.longitude > -81.30241021513939){
+                if(Destination.latitude > 28.59596569947886 && Destination.longitude > -81.30241088569164 && Destination.longitude < -81.30215641111135){
                     for (LatLng point :Q3Building2UP){
                         if(point.latitude >= 28.596157045025098 && point.longitude >= -81.30236964672804)
                         {
@@ -2246,89 +2245,166 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 }else {
-                   if(Destination.latitude > 28.596147036189763 && Destination.longitude < -81.30244106054306){
-                       for (LatLng point : Q3Building2UP){
-                           if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608){
-                               points.add(point);
-                           }
-                       }
+                   if(Destination.latitude > 28.59613908799633 && Destination.longitude < -81.30245614796877){
+                       points.add(Q3Building2UP.get(1));
+                       points.add(Q3Building2UP.get(2));
+                       points.add(Q3Building2UP.get(4));
+                       points.add(Q3Building2UP.get(5));
+                       points.add(Q3Building2UP.get(6));
+                       points.add(Q3Building2UP.get(7));
+                       points.add(Q3Building2UP.get(8));
                    }
                    else if(Destination.longitude < -81.3025004044175)
                    {
+                       points.add(Q3Building2UP.get(1));
+                       points.add(Q3Building2UP.get(2));
+                       points.add(Q3Building2UP.get(4));
+                       points.add(Q3Building2UP.get(5));
+                       points.add(Q3Building2UP.get(6));
                        for(LatLng point : Q3Building2UP){
-                           if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30248330533504 && point.latitude >= Destination.latitude){
+                           if( point.longitude < -81.30237434 &&  point.latitude < Q3Building2UP.get(7).latitude){
                                points.add(point);
                            }
                        }
-                   } else if (Destination.longitude  > -81.3025004044175 && Destination.latitude > 28.59595156933239) {
+                   } else if (Destination.longitude  > -81.3025004044175 && Destination.latitude > 28.595958634405854) {
+                       points.add(Q3Building2UP.get(1));
+                       points.add(Q3Building2UP.get(2));
+                       points.add(Q3Building2UP.get(4));
+                       points.add(Q3Building2UP.get(5));
+                       points.add(Q3Building2UP.get(6));
                        for(LatLng point : Q3Building2UP){
-                           if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102 && point.latitude >= Destination.latitude){
+                           if(point.latitude < Q3Building2UP.get(7).latitude && point.longitude> Q3Building2UP.get(11).longitude  && point.latitude >= Destination.latitude){
                                points.add(point);
                            }
                        }
-                   } else if (Destination.longitude <-81.30233678966759){
+                   } else if (Destination.longitude <-81.30231902003288){
+                       points.add(Q3Building2UP.get(1));
+                       points.add(Q3Building2UP.get(2));
+                       points.add(Q3Building2UP.get(4));
+                       points.add(Q3Building2UP.get(5));
+                       points.add(Q3Building2UP.get(6));
                        for(LatLng point : Q3Building2UP){
-                           if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102){
+                           if(point.latitude < Q3Building2UP.get(7).latitude && point.longitude> Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854){
+                               points.add(point);
+                           }
+                       }
+                       for(int i = 13; i < Q3Building2UP.size() -1; i ++){
+                           LatLng point = Q3Building2UP.get(i);
+                           if(point.longitude < -81.30228951573372){
                                points.add(point);
                            }
                        }
                    }
                    else {
-                       for(LatLng point : Q3Building2UP){
-                           if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102 &&point.latitude >= Destination.latitude){
-                               points.add(point);
+                       if(Destination.latitude > 28.595902408183058) {
+                           points.add(Q3Building2UP.get(1));
+                           points.add(Q3Building2UP.get(2));
+                           points.add(Q3Building2UP.get(4));
+                           points.add(Q3Building2UP.get(5));
+                           points.add(Q3Building2UP.get(6));
+                           for(LatLng point : Q3Building2UP){
+                               if(point.latitude < Q3Building2UP.get(7).latitude && point.longitude> Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854){
+                                   points.add(point);
+                               }
+                           }
+                            points.add(Q3Building2UP.get(13));
+                       }else{
+                           points.add(Q3Building2UP.get(1));
+                           points.add(Q3Building2UP.get(2));
+                           points.add(Q3Building2UP.get(4));
+                           points.add(Q3Building2UP.get(5));
+                           points.add(Q3Building2UP.get(6));
+                           for(LatLng point : Q3Building2UP){
+                               if(point.latitude < Q3Building2UP.get(7).latitude && point.longitude> Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854){
+                                   points.add(point);
+                               }
+                           }
+                           points.add(Q3Building2UP.get(13));
+                           for (LatLng point: Q3Building2UP){
+                               if(point.longitude >-81.30231902003288 &&  point.longitude < -81.30228951573372 && point.latitude < 28.595958634405854){
+                                   points.add(point);
+                               }
                            }
                        }
                    }
                 }
             }else{
-                if(Destination.latitude > 28.59595156933239 && Destination.longitude > -81.30241021513939){
+                if(Destination.latitude > 28.59596569947886 && Destination.longitude > -81.30241088569164 && Destination.longitude < -81.30215641111135){
                     points.add(Q3Building2UP.get(0));
                     points.add(Q3Building2UP.get(4));
                     points.add(Q3Building2UP.get(2));
                     points.add(Q3Building2UP.get(3));
                 }else {
-                    if(Destination.latitude > 28.596147036189763 && Destination.longitude < -81.30244106054306){
-                        for (LatLng point : Q3Building2UP){
-                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude <-81.30236964672804 ){
-                                points.add(point);
-                            }
-                        }
-                    }
-                    else if(Destination.longitude < -81.3025004044175)
-                    {
-                        for(LatLng point : Q3Building2UP){
-                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude < -81.30236964672804 &&point.longitude > -81.30248330533504 && point.latitude >= Destination.latitude){
-                                points.add(point);
-                            }
-                        }
-                    } else if (Destination.longitude  > -81.3025004044175 && Destination.latitude > 28.59595156933239) {
-                        for(LatLng point : Q3Building2UP){
-                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102 && point.longitude < -81.30234517157078&& point.latitude >= Destination.latitude){
-                                points.add(point);
-                            }
-                        }
-                    } else if (Destination.longitude <-81.30233678966759){
+                    if (Destination.latitude > 28.59613908799633 && Destination.longitude < -81.30245614796877) {
                         points.add(Q3Building2UP.get(0));
                         points.add(Q3Building2UP.get(4));
                         points.add(Q3Building2UP.get(5));
                         points.add(Q3Building2UP.get(6));
-                        for(int i = 9 ; i < Q3Building2UP.size(); i++){
-                             LatLng point = Q3Building2UP.get(i);
-                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102){
-                                points.add(point);
-                            }
-                        }
-                    }
-                    else {
+                        points.add(Q3Building2UP.get(7));
+                        points.add(Q3Building2UP.get(8));
+                    } else if (Destination.longitude < -81.3025004044175) {
                         points.add(Q3Building2UP.get(0));
                         points.add(Q3Building2UP.get(4));
                         points.add(Q3Building2UP.get(5));
                         points.add(Q3Building2UP.get(6));
-                        for(int i = 9 ; i < Q3Building2UP.size(); i++){
+                        for (LatLng point : Q3Building2UP) {
+                            if (point.longitude < -81.30237434 && point.latitude < Q3Building2UP.get(7).latitude) {
+                                points.add(point);
+                            }
+                        }
+                    } else if (Destination.longitude > -81.3025004044175 && Destination.latitude > 28.595958634405854) {
+                        points.add(Q3Building2UP.get(0));
+                        points.add(Q3Building2UP.get(4));
+                        points.add(Q3Building2UP.get(5));
+                        points.add(Q3Building2UP.get(6));
+                        for (LatLng point : Q3Building2UP) {
+                            if (point.latitude < Q3Building2UP.get(7).latitude && point.longitude > Q3Building2UP.get(11).longitude && point.latitude >= Destination.latitude) {
+                                points.add(point);
+                            }
+                        }
+                    } else if (Destination.longitude < -81.30231902003288) {
+                        points.add(Q3Building2UP.get(0));
+                        points.add(Q3Building2UP.get(4));
+                        points.add(Q3Building2UP.get(5));
+                        points.add(Q3Building2UP.get(6));
+                        for (LatLng point : Q3Building2UP) {
+                            if (point.latitude < Q3Building2UP.get(7).latitude && point.longitude > Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854) {
+                                points.add(point);
+                            }
+                        }
+                        for (int i = 13; i < Q3Building2UP.size() - 1; i++) {
                             LatLng point = Q3Building2UP.get(i);
-                            if(point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608 && point.longitude > -81.30245681852102 && point.latitude >= Destination.latitude){
+                            if (point.longitude < -81.30228951573372) {
                                 points.add(point);
+                            }
+                        }
+                    } else {
+                        if (Destination.latitude > 28.595902408183058) {
+                            points.add(Q3Building2UP.get(0));
+                            points.add(Q3Building2UP.get(4));
+                            points.add(Q3Building2UP.get(5));
+                            points.add(Q3Building2UP.get(6));
+                            for (LatLng point : Q3Building2UP) {
+                                if (point.latitude < Q3Building2UP.get(7).latitude && point.longitude > Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854) {
+                                    points.add(point);
+                                }
+                            }
+                            points.add(Q3Building2UP.get(13));
+                        } else {
+                            points.add(Q3Building2UP.get(0));
+                            points.add(Q3Building2UP.get(4));
+                            points.add(Q3Building2UP.get(5));
+                            points.add(Q3Building2UP.get(6));
+                            for (LatLng point : Q3Building2UP) {
+                                if (point.latitude < Q3Building2UP.get(7).latitude && point.longitude > Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854) {
+                                    points.add(point);
+                                }
+                            }
+                            points.add(Q3Building2UP.get(13));
+                            for (LatLng point : Q3Building2UP) {
+                                if (point.longitude > -81.30231902003288 && point.longitude < -81.30228951573372 && point.latitude < 28.595958634405854) {
+                                    points.add(point);
+                                }
                             }
                         }
                     }
@@ -2336,15 +2412,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         } else if (QuadrantDestination.equals("Q4")) {
             if (rightside) {
+                points.add(Q3Building2UP.get(1));
+                points.add(Q3Building2UP.get(2));
+                points.add(Q3Building2UP.get(4));
+                points.add(Q3Building2UP.get(5));
+                points.add(Q3Building2UP.get(6));
                 for (LatLng point : Q3Building2UP) {
-                    if (point.longitude > -81.30248330533504 &&
-                            point.latitude > 28.596147036189763 && point.latitude < 28.59622269118608) {
+                    if (point.latitude < Q3Building2UP.get(7).latitude && point.longitude > Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854) {
                         points.add(point);
                     }
                 }
-                for (int i = 9; i < Q3Building2UP.size(); i++) {
-                    LatLng point = Q1Building2UP.get(i);
-                    if (point.latitude >= 28.595911239528938 && point.longitude > -81.30245681852102) {
+                for (LatLng point : Q3Building2UP) {
+                    if (point.latitude < 28.59596569947886 && point.latitude > 28.595902408183058) {
                         points.add(point);
                     }
                 }
@@ -2352,20 +2431,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     points.add(Q4Building2UP.get(0));
                     points.add(Q4Building2UP.get(1));
                 } else {
-                    for (LatLng point1 : Q4Building2UP) {
-                        if (point1.longitude <= Destination.longitude) {
-                            points.add(point1);
-                        }
-                    }
+                    points.add(Q4Building2UP.get(0));
+                    points.add(Q4Building2UP.get(2));
+                    points.add(Q4Building2UP.get(3));
                 }
             } else {
                 points.add(Q3Building2UP.get(0));
                 points.add(Q3Building2UP.get(4));
                 points.add(Q3Building2UP.get(5));
                 points.add(Q3Building2UP.get(6));
-                for (int i = 9; i < Q3Building2UP.size(); i++) {
-                    LatLng point = Q1Building2UP.get(i);
-                    if (point.latitude >= 28.595911239528938 && point.longitude > -81.30245681852102) {
+                for (LatLng point : Q3Building2UP) {
+                    if (point.latitude < Q3Building2UP.get(7).latitude && point.longitude > Q3Building2UP.get(11).longitude && point.latitude > 28.595958634405854) {
+                        points.add(point);
+                    }
+                }
+                for (LatLng point : Q3Building2UP) {
+                    if (point.latitude < 28.59596569947886 && point.latitude >28.595902408183058) {
                         points.add(point);
                     }
                 }
@@ -2373,11 +2454,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     points.add(Q4Building2UP.get(0));
                     points.add(Q4Building2UP.get(1));
                 } else {
-                    for (LatLng point1 : Q4Building2UP) {
-                        if (point1.longitude <= Destination.longitude) {
-                            points.add(point1);
-                        }
-                    }
+                    points.add(Q4Building2UP.get(0));
+                    points.add(Q4Building2UP.get(2));
+                    points.add(Q4Building2UP.get(3));
                 }
             }
         }
@@ -3692,7 +3771,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (Longitued > -81.30276795476675) {
                 rightside = true;
             }
-            if(marker.getPosition().latitude > 28.596601259727045){
+            if(marker.getPosition().latitude > 28.59658124214005){
                 return new LatLng(28.5967084126279,-81.30242194980383);
             }
             else {
@@ -3820,10 +3899,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void doTheClick(ArrayList<Marker> ListToClick) {
         if (isNOTfUCKED) {
-
-            onMarkerClick(FindTheMarker(markerTitle2));
-            btnFavoritesAdd.setVisibility(View.GONE);
-            bntFavoritesRemove.setVisibility(View.VISIBLE);
+            Marker m = FindTheMarker(markerTitle2);
+            if(m != null) {
+                markerFragment.MTouch.ManualTouch(m);
+                btnFavoritesAdd.setVisibility(View.GONE);
+                bntFavoritesRemove.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -4125,7 +4206,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 if(isTraveling){
                     linesShowing.get(0).setVisible(false);
-                    linesShowing.get(1).setVisible(true);
+                    if(linesShowing.size()>1) {
+                        linesShowing.get(1).setVisible(true);
+                    }
                 }
                 removeAllOverlays();
                 String result = DoTheChecks();
