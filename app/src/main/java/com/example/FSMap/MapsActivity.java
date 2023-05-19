@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.PrecomputedText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -212,7 +214,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     StorageReference storageReference;
     LocationManager mLocationManager;
     String markerTitle2;
-    boolean isNOTfUCKED = false;
+    boolean isNOTfUCKED, isRouting = false;
     int floorPicked = 1;
     CameraPosition cameraLoad;
     int altitudesCollectedNumber;
@@ -231,6 +233,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     RelativeLayout loadingScreenMaps ;
     ArrayList<String> SearchList;
+    boolean isReady;
     View importPanel;
     LocationListener locationListener = new LocationListener() {
         @Override
@@ -3998,6 +4001,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
             case R.id.navgo:
+
                 if(!isTraveling) {
                     getDirectionPoly(markerFragment.MTouch.marker2);
                     isTraveling = true;
@@ -4056,6 +4060,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //Removes keyboard when Go is hit
                     InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     manager.hideSoftInputFromWindow(slideupview.getWindowToken(), 0);
+                } else {
+                    snack = Snackbar.make(findViewById(R.id.map), "Already routing, please cancel previous route", Snackbar.LENGTH_SHORT);
+                    snack.show();
+//                    Toast toast1 = Toast.makeText(this,"Already routing, please cancel previous route", Toast.LENGTH_LONG);
+////                    toast1.getView().setBackgroundResource(R.drawable.round_linearlayout);
+//                    toast1.show();
+
+
+
                 }
                 break;
 
@@ -4534,6 +4547,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(Marker marker) {
         dest = FindMarkerAreaForTravel(markerFragment.MTouch.marker2, 1);
+        new MarkerShowInfo().execute();
+
         return true;
     }
 
@@ -4788,6 +4803,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return responseString;
     }
 
+    private class MarkerShowInfo extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            while(!markerFragment.MTouch.markerready){
+
+            }
+            return "succ" ;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s.equals("succ")){
+                FindTheMarker(markerFragment.MTouch.marker2.getTitle()).showInfoWindow();
+                markerFragment.MTouch.markerready = false;
+            }
+        }
+    }
+
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
         Marker marker;
 
@@ -4925,26 +4961,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     snack = Snackbar.make(findViewById(R.id.map), "Directions Not Found", Snackbar.LENGTH_SHORT);
                     snack.show();
                 }
-            }
-        }
-
-        private class Overlays extends AsyncTask<Void, Void, String> {
-            GoogleMap maps;
-
-            public void sendMap(GoogleMap _maps) {
-                maps = _maps;
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                return "succ";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
             }
         }
     }
