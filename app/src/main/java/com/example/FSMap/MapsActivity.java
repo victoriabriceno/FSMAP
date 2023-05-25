@@ -203,7 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean isInMyFavorites = false;
     private FirebaseAuth firebaseAuth;
     Marker createdMarker;
-    boolean wasRemoveHit = false;
+    boolean wasRemoveHit, CMReady, FMReady, RemoveMarkerTrue= false;
     private boolean FollowUser = false;
     boolean wasMarkerClicked = false;
     LatLng LongClickPoint;
@@ -222,6 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Double lat_decimal = 0.0, lng_decimal = 0.0;
     boolean isTraveling = false;
     Marker usermarker;
+    String MarkerToRemoveTitle;
     Circle userLocationAccuracyCircle;
     Location currentLocation;
     String prevResult = "";
@@ -594,10 +595,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Extra bundle is null
                 isNOTfUCKED = false;
             } else {
-                markerTitle2 = extras.getString("marker_ToMap");
-                isNOTfUCKED = true;
+                if(extras.getString("marker_ToMap") != null) {
+                    markerTitle2 = extras.getString("marker_ToMap");
+                    isNOTfUCKED = true;
+                }
+                if (extras.getString("marker") != null){
+                    markerTitle2 = extras.getString("marker");
+                    isNOTfUCKED = true;
+                }
+                if (extras.getString("removeSpot") !=null){
+                    MarkerToRemoveTitle = extras.getString("removeSpot");
+                    RemoveMarkerTrue = true;
+                }
             }
         }
+
 
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
@@ -688,18 +700,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-        // FAVORITES
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-
-            if (extras == null) {
-                //Extra bundle is null
-                isNOTfUCKED = false;
-            } else {
-                markerTitle2 = extras.getString("marker");
-                isNOTfUCKED = true;
-            }
-        }
+//        // FAVORITES
+//        if (savedInstanceState == null) {
+//            Bundle extras = getIntent().getExtras();
+//
+//            if (extras == null) {
+//                //Extra bundle is null
+//                isNOTfUCKED = false;
+//            } else {
+//                markerTitle2 = extras.getString("marker");
+//                isNOTfUCKED = true;
+//            }
+//        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1109,6 +1121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 markerFragment.MTouch.FavoriteMarkers(favoritedMarkers);
+                FMReady = true;
             }
 
             @Override
@@ -1319,6 +1332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 loadingScreenMaps.setVisibility(View.GONE);
+                new DoDahClick().execute();
             }
         });
         SharedPreferences settings = getSharedPreferences("SOME_NAME", 0);
@@ -1539,7 +1553,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //For camera moving
         mMap.setOnCameraMoveListener(() ->
         {
-            if (groundOverlaysf1.size() > 0) {
+            if (groundOverlaysf1.size() > 0 && !markerFragment.MTouch.wasMarkerClicked) {
                 String result = DoTheChecks();
                 String FinerResult = secondCheckForFinerArea(result);
                 if (FinerResult == "3BConnected" || FinerResult == "FishBowl") {
@@ -1564,14 +1578,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
             }
-//            if (wasRemoveHit) {
-//                for (int i = 0; i < createdMarkers.size(); i++) {
-//                    if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
-//                        createdMarkers.get(i).remove();
-//                        createdMarkers.remove(i);
-//                    }
-//                }
-//            }
+
         });
 
         //On Marker Click Override
@@ -1581,6 +1588,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
                 return true;
             }
         });
@@ -1588,36 +1596,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(() -> {
 
-//            if (groundOverlaysf1.size() > 0) {
-//                String result = DoTheChecks();
-//                String FinerResult = secondCheckForFinerArea(result);
-//                if(FinerResult == "3BConnected" || FinerResult == "FishBowl")
-//                {
-//                    FinerResult = "3B";
-//                }
-//                if(prevResult != FinerResult)
-//                {
-//
-//                    prevResult = FinerResult;
-//                    if (!Filtering) {
-//                        HideAllOtherMarkers(FinerResult);
-//                        showMarkerInArea(FinerResult);
-//                    } else {
-//                        HideAllOtherMarkers(FinerResult);
-//                        ShowTheseMarkers();
-//                    }
-//                }
-//                if (CheckResultLoadType(result)) {
-//                    CheckResults(result);
-//                } else {
-//                    String secondResult = secondCheckForFinerArea(result);
-//                    if (!CheckResultLoadType(secondResult)) {
-//                        FirstLoad(result, secondResult);
-//                    }
-//                }
-//
-//            }
-            if (groundOverlaysf1.size() > 0) {
+            if (groundOverlaysf1.size() > 0 && !markerFragment.MTouch.wasMarkerClicked) {
                 String result = DoTheChecks();
                 String FinerResult = secondCheckForFinerArea(result);
                 if (FinerResult == "3BConnected" || FinerResult == "FishBowl") {
@@ -1647,19 +1626,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (FollowUser || wasMarkerClicked) {
                 navloc();
             }
-//            if (wasRemoveHit) {
-//                for (int i = 0; i < createdMarkers.size(); i++) {
-//                    if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
-//                        createdMarkers.get(i).remove();
-//                        createdMarkers.remove(i);
-//                    }
-//                }
-//                for (int i = 0; i < favoritedMarkers.size(); i++) {
-//                    if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
-//                        favoritedMarkers.remove(i);
-//                    }
-//                }
-//            }
+
         });
         //Slide up code setup
         slideupview = findViewById(R.id.design_bottom_sheet);
@@ -1801,11 +1768,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 markerFragment.MTouch.CustomMarkers(createdMarkers);
-                if (createdMarkers != null) {
-                    if (createdMarkers.size() > 0) {
-                        doTheClick(createdMarkers);
-                    }
-                }
+                CMReady =true;
+               if(RemoveMarkerTrue){
+                    new DoDahRemove().execute();
+               }
             }
 
             @Override
@@ -4004,6 +3970,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 if(!isTraveling) {
                     getDirectionPoly(markerFragment.MTouch.marker2);
+                    markerFragment.MTouch.marker2.setVisible(true);
                     isTraveling = true;
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
                     // checkDistPoint = new LatLng(Latitude, Longitued);
@@ -4079,7 +4046,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     markerFragment.MTouch.FilterMarker.setEnabled(true);
                 }
                 Filter.setEnabled(true);
-                wasMarkerClicked = false;
+                markerFragment.MTouch.wasMarkerClicked = false;
                 isTraveling = false;
                 FollowUser = false;
                 //Remove all lines
@@ -4091,6 +4058,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 //                checkIfMarkerNeedVisible();
                 onMapClick(new LatLng(28.595085, -81.308305));
+
+                showMarkerInArea(prevResult);
                 //Brings Searchbar back
                 Search.setVisibility(View.VISIBLE);
                 //Removes navdone button
@@ -4106,6 +4075,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             case R.id.RemoveSpot:
                 wasRemoveHit = true;
+
 
                 for (int i = 0; i < favoritedMarkers.size()-1; i++) {
                     if (favoritedMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
@@ -4315,6 +4285,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    public void removeSpot(String title){
+        wasRemoveHit = true;
+        Marker m = FindTheMarker(title);
+
+        for (int i = 0; i < favoritedMarkers.size()-1; i++) {
+            if (favoritedMarkers.get(i).getTitle().equals(title)) {
+                Favorites.removeFromFavorite(MapsActivity.this, m);
+                favoritedMarkers.remove(i);
+            }
+        }
+        for (int i = 0; i < createdMarkers.size(); i++) {
+            if (createdMarkers.get(i).getTitle().equals(title)) {
+                createdMarkers.get(i).remove();
+                CustomMarker.removeFromCustomMarkers(MapsActivity.this,m);
+                createdMarkers.get(i).setVisible(false);
+                CustomMarker.removeFromCustomMarkers(MapsActivity.this, m);
+                createdMarkers.remove(i);
+                if(i != markerFragment.MTouch.CM.size()) {
+                    if (markerFragment.MTouch.CM.get(i).getTitle().equals(title)) {
+                        markerFragment.MTouch.CM.get(i).remove();
+                        markerFragment.MTouch.CM.remove(i);
+                    }
+                }
+
+                break;
+            }
+        }
+        RemoveAllLines();
+        RemovePoint.setVisibility(View.GONE);
+        slideupview.setVisibility(View.GONE);
+    }
     private void FilteredMarkers(String type) {
         switch (type) {
             case "CR":
@@ -4547,6 +4548,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(Marker marker) {
         dest = FindMarkerAreaForTravel(markerFragment.MTouch.marker2, 1);
+        wasMarkerClicked = true;
         new MarkerShowInfo().execute();
 
         return true;
@@ -5008,5 +5010,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String results = DoTheChecks();
         CheckResults(results);
 
+    }
+    public class DoDahClick extends AsyncTask<Void,Void,String>{
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            while(!CMReady && !FMReady){
+
+            }
+            return "succ";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s.equals("succ")){
+                doTheClick(createdMarkers);
+            }
+        }
+    }
+    public class DoDahRemove extends AsyncTask<Void,Void,String>{
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            while(!CMReady && !FMReady && createdMarkers.size() > 0){
+
+            }
+            return "succ";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s.equals("succ")){
+                removeSpot(MarkerToRemoveTitle);
+            }
+        }
     }
 }

@@ -56,8 +56,8 @@ public class MarkerTouch extends FrameLayout {
     ArrayList<Marker> markersClicked = new ArrayList<>();
     public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
-    private boolean mLocationPermissionsGranted, wasRemoveHit, wasMarkerClicked, csvReady, cReady, fReady = false;
-    public boolean markerready = false;
+    private boolean mLocationPermissionsGranted, wasRemoveHit, csvReady, cReady, fReady = false;
+    public boolean markerready,wasMarkerClicked = false;
     private Context C;
     private Activity A;
     private double Latitude, Longitude;
@@ -68,6 +68,7 @@ public class MarkerTouch extends FrameLayout {
     boolean slideup = mapsActivity.slidepup;
 
     public Button FilterMarker;
+
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -148,13 +149,13 @@ public class MarkerTouch extends FrameLayout {
                 //Do marker stuff here
                 //vvvvvvvvvvvvvvvvvvv
                 if (marker.isVisible()){
+                    wasMarkerClicked = true;
                     getLocationPermission();
                     //If you have location, get device location
                     if (mLocationPermissionsGranted) {
                         getDeviceLocation();
                     }
-
-
+                    HideMarkersExcept(marker);
                     if (!wasRemoveHit) {
                         wasRemoveHit = true;
                     } else {
@@ -301,6 +302,8 @@ public class MarkerTouch extends FrameLayout {
         if (!marker.isVisible()){
             marker.setVisible(true);
         }
+        wasMarkerClicked = true;
+        HideMarkersExcept(marker);
         getLocationPermission();
         //If you have location, get device location
         if (mLocationPermissionsGranted) {
@@ -482,9 +485,11 @@ public class MarkerTouch extends FrameLayout {
     }
 
     public boolean isItInMyFavorites(Marker marker) {
-        for (int i = 0; i < Favs.size(); i++) {
-            if (Favs.get(i).getTitle().equals(marker.getTitle())) {
-                return true;
+        if (Favs !=null){
+            for (int i = 0; i < Favs.size(); i++) {
+                if (Favs.get(i).getTitle().equals(marker.getTitle())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -501,7 +506,28 @@ public class MarkerTouch extends FrameLayout {
         return isItCreatedMarker;
     }
 
-
+    public void HideMarkersExcept(Marker m){
+        for(Marker marker: CM){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+        for(Marker marker: AM){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+        for(Marker marker: Favs){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+        for (Marker marker: mMarkers){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+    }
     public void moveCamera(LatLng latLng) {
 
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
