@@ -69,14 +69,15 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             public void onClick(View v) {
 
                 String markerTitleCustom= holder.OriginalOfTheMarker.getText().toString();
-//                CustomMarker.removeFromCustom(context,markerTitleCustom);
+                String customremove = holder.TitleOfTheMarker.getText().toString();
+                CustomMarker.removeFromCustom(context,markerTitleCustom);
                 int size = listCustomMarkers.size();
                 listCustomMarkers.clear();
                 notifyItemRangeRemoved(0,size);
 
                 Intent intent = new Intent(context,MapsActivity.class);
-                intent.putExtra("removeSpot",markerTitleCustom);
-                context.startActivity(intent);
+                intent.putExtra("removeSpot",customremove);
+               context.startActivity(intent);
 
 
             }
