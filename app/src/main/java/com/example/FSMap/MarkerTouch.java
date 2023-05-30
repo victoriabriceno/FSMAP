@@ -214,8 +214,6 @@ public class MarkerTouch extends FrameLayout {
                 if (markersClicked.size() > 1) {
                     markersClicked.remove(0);
                 }
-                marker.showInfoWindow();
-
                 //Slide up code
 
                 FilterMarker = A.findViewById(R.id.FilterButton);
@@ -358,7 +356,6 @@ public class MarkerTouch extends FrameLayout {
         if (markersClicked.size() > 1) {
             markersClicked.remove(0);
         }
-        marker.showInfoWindow();
 
         //Slide up code
 

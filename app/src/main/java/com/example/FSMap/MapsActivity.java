@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -42,7 +41,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.FSMap.databinding.ActivityMapsBinding;
@@ -104,7 +102,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import de.javakaffee.kryoserializers.CollectionsEmptyListSerializer;
 
 //Main Maps Screen
 
@@ -167,12 +164,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Marker> FourGMarkers = new ArrayList<>();
     ArrayList<Marker> AboveThreeBuildings = new ArrayList<>();
     ArrayList<Marker> WaterZones = new ArrayList<>();
+    GroundOverlay ThreeA;
+    GroundOverlay ThreeB;
+    GroundOverlay ThreeBC;
+    GroundOverlay ThreeC;
+    GroundOverlay ThreeD;
+    GroundOverlay ThreeE;
+    GroundOverlay ThreeF;
+    GroundOverlay FourA;
+    GroundOverlay FourAWD2;
+    GroundOverlay FourAFC;
+    GroundOverlay FourB;
+    GroundOverlay FourC;
+    GroundOverlay FourD;
+    GroundOverlay FourE;
+    GroundOverlay FourF;
     ArrayList<GroundOverlay> B3U = new ArrayList<>();
     ArrayList<GroundOverlay> B3D = new ArrayList<>();
     ArrayList<GroundOverlay> B4U = new ArrayList<>();
     ArrayList<GroundOverlay> B4D = new ArrayList<>();
     ArrayList<GroundOverlay> B2 = new ArrayList<>();
     ArrayList<GroundOverlay> B1 = new ArrayList<>();
+    ArrayList<GroundOverlay> DaBigBois = new ArrayList<>();
+    ArrayList<GroundOverlay> AllFloorOneOverlays = new ArrayList<>();
+    ArrayList<GroundOverlay> AllSecondFloorOverlays = new ArrayList<>();
     int clickCount = 0;
     ArrayList<String> LinesTitles = new ArrayList<String>();
     List<PatternItem> pattern = Arrays.asList(
@@ -329,104 +344,127 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return "nun";
     }
 
-    protected void FirstLoad(String result, String firstLoadResults) {
-        switch (result) {
-            case "b3u"://check if result was building 3 top half.
-                if (firstLoadResults.equals("3A")) {
-                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(0)));
-                    B3U2 = mMap.addGroundOverlay(groundOverlaysf2.get(0));
-                    B3U.get(B3U.size() - 1).setDimensions(34, 28);
-                    B3U2.setDimensions(34, 28);
-                    if (floorPicked == 1) {
-                        B3U2.setVisible(false);
-                    } else {
-                        B3U.get(B3U.size() - 1).setVisible(false);
-                    }
-                } else if (firstLoadResults.equals("FishBowl")) {
-                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(1)));
-                    B3U.get(B3U.size() - 1).setDimensions(84, 62);
-                } else if (firstLoadResults.equals("3BConnected")) {
-                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(2)));
-                    B3U.get(B3U.size() - 1).setDimensions(64, 30);
-                }
+//    protected void FirstLoad(String result, String firstLoadResults) {
+//        switch (result) {
+//            case "b3u"://check if result was building 3 top half.
+////                if (firstLoadResults.equals("3A")) {
+////                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(0)));
+////                    B3U2 = mMap.addGroundOverlay(groundOverlaysf2.get(0));
+////                    B3U.get(B3U.size() - 1).setDimensions(34, 28);
+////                    AllFloorOneOverlays.add(B3U.get(B3U.size() - 1));
+////                    ThreeA = B3U.get(B3U.size()-1);
+////                    B3U2.setDimensions(34, 28);
+////                    AllSecondFloorOverlays.add(B3U2);
+////                    resultsList.add("3A");
+////                    if (floorPicked == 1) {
+////                        B3U2.setVisible(false);
+////                    } else {
+////                        B3U.get(B3U.size() - 1).setVisible(false);
+////                    }
+////                } else if (firstLoadResults.equals("FishBowl")) {
+//                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(1)));
+//                    B3U.get(B3U.size() - 1).setDimensions(84, 62);
+//                    ThreeB = B3U.get(B3U.size()-1);
+//                    AllFloorOneOverlays.add(B3U.get(B3U.size()-1));
+//                    resultsList.add("FishBowl");
+//                }
+//                else if (firstLoadResults.equals("3BConnected")) {
+//                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(2)));
+//                    B3U.get(B3U.size() - 1).setDimensions(64, 30);
+//                    ThreeBC = B3U.get(B3U.size()-1);
+//                    AllFloorOneOverlays.add(B3U.get(B3U.size()-1));
+//                    resultsList.add("3BConnected");
+//                }
+//
+//                break;
+//            case "b3d"://check if result was building 3 bottom half
+//                if (firstLoadResults.equals("3C")) {
+//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(3)));
+//                    B3D.get(B3D.size() - 1).setDimensions(40, 42);
+//                    ThreeC = B3D.get(B3D.size()-1);
+//                    AllFloorOneOverlays.add(B3D.get(B3D.size()-1));
+//                    resultsList.add("3C");
+//                }
+//                } else if (firstLoadResults.equals("3D")) {
+//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(4)));
+//                    B3D.get(B3D.size() - 1).setDimensions(40, 30);
+//                    AllFloorOneOverlays.add(B3D.get(B3D.size()-1));
+//                }
+//                } else if (firstLoadResults.equals("3E")) {
+//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(5)));
+//                    B3D.get(B3D.size() - 1).setDimensions(37, 28);}
+//                } else if (firstLoadResults.equals("3F")) {
+//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(6)));
+//                    B3D.get(B3D.size() - 1).setDimensions(100, 80);
+//                }
+//                break;
+//            case "b4u":
+//                if (firstLoadResults.equals("4A")) {
+//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(7)));
+//                    B4U.get(B4U.size() - 1).setDimensions(90, 50);
+//                    AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
+//                } else if (firstLoadResults.equals("4AWD2")) {
+//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(8)));
+//                    B4U.get(B4U.size() - 1).setDimensions(56, 43);
+//                 if (firstLoadResults.equals("4AFC")) {
+//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(9)));
+//                    B4U.get(B4U.size() - 1).setDimensions(70, 50);
+//                    AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
+//                } else
+//                if (firstLoadResults.equals("4B")) {
+//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(10)));
+//                    B4U.get(B4U.size() - 1).setDimensions(68, 48);
+//                    FourB = B4U.get(B4U.size()-1);
+//                    AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
+//                    resultsList.add("4B");
+//                }
+//                break;
+//            case "b4d":
+//                if (firstLoadResults.equals("4C")) {
+//                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(11)));
+//                    B4D.get(B4D.size() - 1).setDimensions(72, 54);}
+//                } else if (firstLoadResults.equals("4D")) {
+//                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(12)));
+//                    B4D.get(B4D.size() - 1).setDimensions(100, 60);
+//                } else if (firstLoadResults.equals("4E")) {
+//                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(13)));
+//                    B4D.get(B4D.size() - 1).setDimensions(100, 60);
+//                }
+//                break;
+//            case "b2":
+//                B2.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 1)));
+//                B2.get(B2.size() - 1).setDimensions(157, 95);
+//                B2.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 1)));
+//                B2.get(B2.size() - 1).setDimensions(157, 95);
+//                if (floorPicked == 1) {
+//                    B2.get(1).setVisible(false);
+//                } else {
+//                    B2.get(0).setVisible(false);
+//                }
 
-                break;
-            case "b3d"://check if result was building 3 bottom half
-                if (firstLoadResults.equals("3C")) {
-                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(3)));
-                    B3D.get(B3D.size() - 1).setDimensions(40, 42);
-                } else if (firstLoadResults.equals("3D")) {
-                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(4)));
-                    B3D.get(B3D.size() - 1).setDimensions(40, 30);
-                } else if (firstLoadResults.equals("3E")) {
-                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(5)));
-                    B3D.get(B3D.size() - 1).setDimensions(37, 28);
-                } else if (firstLoadResults.equals("3F")) {
-                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(6)));
-                    B3D.get(B3D.size() - 1).setDimensions(100, 80);
-                }
-                break;
-            case "b4u":
-                if (firstLoadResults.equals("4A")) {
-                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(7)));
-                    B4U.get(B4U.size() - 1).setDimensions(90, 50);
-                } else if (firstLoadResults.equals("4AWD2")) {
-                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(8)));
-                    B4U.get(B4U.size() - 1).setDimensions(56, 43);
-                } else if (firstLoadResults.equals("4AFC")) {
-                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(9)));
-                    B4U.get(B4U.size() - 1).setDimensions(70, 50);
-                } else if (firstLoadResults.equals("4B")) {
-                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(10)));
-                    B4U.get(B4U.size() - 1).setDimensions(68, 48);
-                }
-                break;
-            case "b4d":
-                if (firstLoadResults.equals("4C")) {
-                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(11)));
-                    B4D.get(B4D.size() - 1).setDimensions(72, 54);
-                } else if (firstLoadResults.equals("4D")) {
-                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(12)));
-                    B4D.get(B4D.size() - 1).setDimensions(100, 60);
-                } else if (firstLoadResults.equals("4E")) {
-                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(13)));
-                    B4D.get(B4D.size() - 1).setDimensions(100, 60);
-                }
-                break;
-            case "b2":
-                B2.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 1)));
-                B2.get(B2.size() - 1).setDimensions(157, 95);
-                B2.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 1)));
-                B2.get(B2.size() - 1).setDimensions(157, 95);
-                if (floorPicked == 1) {
-                    B2.get(1).setVisible(false);
-                } else {
-                    B2.get(0).setVisible(false);
-                }
-
-                break;
-            case "b1":
-                B1.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 2)));
-                B1.get(B1.size() - 1).setDimensions(140, 90);
-                B1.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 2)));
-                B1.get(B1.size() - 1).setDimensions(136, 94);
-                if (floorPicked == 1) {
-                    B1.get(1).setVisible(false);
-                } else {
-                    B1.get(0).setVisible(false);
-                }
-                break;
-
-        }
-    }
+//                break;
+//            case "b1":
+//                B1.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 2)));
+//                B1.get(B1.size() - 1).setDimensions(140, 90);
+//                B1.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 2)));
+//                B1.get(B1.size() - 1).setDimensions(136, 94);
+//                if (floorPicked == 1) {
+//                    B1.get(1).setVisible(false);
+//                } else {
+//                    B1.get(0).setVisible(false);
+//                }
+//                break;
+//
+//        }
+//    }
 
     protected void HideAllOverlays() {
-        if (B3U.size() > 0) {
+        if (B3U.size() > 0 ) {
             for (int i = 0; i < B3U.size(); i++) {
                 B3U.get(i).setVisible(false);
             }
         }
-        if (B3D.size() > 0) {
+        if (B3D.size() > 0 ) {
             for (int i = 0; i < B3D.size(); i++) {
                 B3D.get(i).setVisible(false);
             }
@@ -436,6 +474,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 B4U.get(i).setVisible(false);
             }
         }
+        //Not Hiding B4D anymore to try and fix lag
         if (B4D.size() > 0) {
             for (int i = 0; i < B4D.size(); i++) {
                 B4D.get(i).setVisible(false);
@@ -453,63 +492,102 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void CheckResults(String result) {
+    public void CheckResults(String result,String finerResults) {
         if (prevResult != result) {
             HideAllOverlays();
             prevResult = result;
         }
         switch (result) {
             case "b3u"://check if result was building 3 top half.
-                if (floorPicked == 1) {
-                    for (GroundOverlay overlay : B3U) {
-                        overlay.setVisible(true);
+                if (finerResults.equals("3A")) {
+                    if(ThreeA != null&& floorPicked == 1){
+                        ThreeA.setVisible(true);
+                    }else{
+                        if(B3U2 != null) {
+                            B3U2.setVisible(true);
+                        }
                     }
-                } else {
-                    HideAllOverlays();
-                    if (B3U2 != null) {
-                        B3U2.setVisible(true);
+                } else if (finerResults.equals("FishBowl")) {
+                    if(ThreeB != null&& floorPicked == 1){
+                        ThreeB.setVisible(true);
                     }
                 }
+                else if (finerResults.equals("3BConnected")) {
+                    if(ThreeBC != null&& floorPicked == 1){
+                        ThreeBC.setVisible(true);
+                    }
+                }
+
                 break;
             case "b3d"://check if result was building 3 bottom half
-                if (floorPicked == 1) {
-                    for (GroundOverlay overlay : B3D) {
-                        overlay.setVisible(true);
+                if (finerResults.equals("3C")) {
+                    if(ThreeC != null&& floorPicked == 1){
+                        ThreeC.setVisible(true);
+                    }
+                }
+                else if (finerResults.equals("3D")) {
+                    if(ThreeD != null&& floorPicked == 1){
+                        ThreeD.setVisible(true);
+                    }
+                }
+                else if (finerResults.equals("3E")) {
+                    if(ThreeE != null&& floorPicked == 1){
+                        ThreeE.setVisible(true);
+                    }
+                } else if (finerResults.equals("3F")) {
+                    if(ThreeF != null&& floorPicked == 1){
+                        ThreeF.setVisible(true);
                     }
                 }
                 break;
             case "b4u":
-                if (floorPicked == 1) {
-                    for (GroundOverlay overlay : B4U) {
-                        overlay.setVisible(true);
+                if (finerResults.equals("4A")) {
+                    if(FourA != null&& floorPicked == 1){
+                        FourA.setVisible(true);
+                    }
+                } else if (finerResults.equals("4AWD2")) {
+                    if(FourAWD2 != null&& floorPicked == 1){
+                        FourAWD2.setVisible(true);
+                    }
+                } if (finerResults.equals("4AFC")) {
+                    if(FourAFC != null&& floorPicked == 1){
+                        FourAFC.setVisible(true);
+                    }
+                } else if (finerResults.equals("4B")) {
+                    if(FourB != null&& floorPicked == 1){
+                        FourB.setVisible(true);
                     }
                 }
                 break;
             case "b4d":
-                if (floorPicked == 1) {
-                    for (GroundOverlay overlay : B4D) {
-                        overlay.setVisible(true);
+                if (finerResults.equals("4C")) {
+                    if(FourC != null && floorPicked == 1){
+                        FourC.setVisible(true);
+                    }
+                }
+                else if (finerResults.equals("4D")) {
+                    if(FourD != null && floorPicked == 1){
+                        FourD.setVisible(true);
+                    }
+                } else if (finerResults.equals("4E")) {
+                    if(FourE != null && floorPicked == 1) {
+                        FourE.setVisible(true);
                     }
                 }
                 break;
             case "b2":
-                if (B2.size() > 0) {
-                    if (floorPicked == 1) {
-                        B2.get(0).setVisible(true);
-                    } else {
-                        HideAllOverlays();
-                        B2.get(1).setVisible(true);
-                    }
+                if (floorPicked == 1) {
+                    B2.get(1).setVisible(true);
+                } else {
+                    B2.get(0).setVisible(true);
                 }
+
                 break;
             case "b1":
-                if (B1.size() > 0) {
-                    if (floorPicked == 1) {
-                        B1.get(0).setVisible(true);
-                    } else {
-                        HideAllOverlays();
-                        B1.get(1).setVisible(true);
-                    }
+                if (floorPicked == 1) {
+                    B1.get(1).setVisible(true);
+                } else {
+                    B1.get(0).setVisible(true);
                 }
                 break;
 
@@ -968,6 +1046,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         ThreeFMarkers.get(i).setVisible(true);
                     }
                 }
+            case("4A"):
+                if(floorPicked == 1){
+                    for(int i = 0; i < FourAMarkers.size(); i++){
+                        FourAMarkers.get(i).setVisible(true);
+                    }
+                }
                 break;
 
         }
@@ -1276,29 +1360,134 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .bearing(-117.5f)
                         .anchor(0.605f, 0.387f);
                 //add groundOverlay and create reference.
-                groundOverlaysf1.add(build3aOverlay);
-                groundOverlaysf2.add(build3aF2Overlay);
-                groundOverlaysf1.add(building3BOverlay);
-                groundOverlaysf1.add(build3BConnected);
-                groundOverlaysf1.add(build3COverlay);
-                groundOverlaysf1.add(build3DOverlay);
-                groundOverlaysf1.add(buildLibraryOverlay);
-                groundOverlaysf1.add(build3FOverlay);
-                groundOverlaysf1.add(build4AOverlay);
-                groundOverlaysf1.add(build4AWD2Overlay);
-                groundOverlaysf1.add(build4AFCOverlay);
-                groundOverlaysf1.add(build4BOverlay);
-                groundOverlaysf1.add(build4COverlay);
-                groundOverlaysf1.add(build4DOverlay);
-                groundOverlaysf1.add(build4EOverlay);
-                groundOverlaysf1.add(build1f1Overlay);
-                groundOverlaysf1.add(build2f1Overlay);
-                groundOverlaysf2.add(build1f2Overlay);
-                groundOverlaysf2.add(build2f2Overlay);
+                groundOverlaysf1.add(build3aOverlay);//0
+                groundOverlaysf2.add(build3aF2Overlay);//0f2
+                groundOverlaysf1.add(building3BOverlay);//1
+                groundOverlaysf1.add(build3BConnected);//2
+                groundOverlaysf1.add(build3COverlay);//3
+                groundOverlaysf1.add(build3DOverlay);//4
+                groundOverlaysf1.add(buildLibraryOverlay);//5
+                groundOverlaysf1.add(build3FOverlay);//6
+                groundOverlaysf1.add(build4AOverlay);//7
+                groundOverlaysf1.add(build4AWD2Overlay);//8
+                groundOverlaysf1.add(build4AFCOverlay);//9
+                groundOverlaysf1.add(build4BOverlay);//10
+                groundOverlaysf1.add(build4COverlay);//11
+                groundOverlaysf1.add(build4DOverlay);//12
+                groundOverlaysf1.add(build4EOverlay);//13
+                groundOverlaysf1.add(build1f1Overlay);//14
+                groundOverlaysf1.add(build2f1Overlay);//15
+                groundOverlaysf2.add(build1f2Overlay);//1f2
+                groundOverlaysf2.add(build2f2Overlay);//2f2
+                //B1
+                B1.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 2)));
+                B1.get(B1.size() - 1).setDimensions(140, 90);
+                AllFloorOneOverlays.add(B1.get(B1.size()-1));
+                B1.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 2)));
+                B1.get(B1.size() - 1).setDimensions(136, 94);
+                B1.get(B1.size()-1).setVisible(false);
+                AllSecondFloorOverlays.add(B1.get(B1.size()-1));
+                resultsList.add("B1");
+                //B2
+                B2.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 1)));
+                B2.get(B2.size() - 1).setDimensions(157, 95);
+                AllFloorOneOverlays.add(B2.get(B2.size()-1));
+                B2.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 1)));
+                B2.get(B2.size() - 1).setDimensions(157, 95);
+                B2.get(B2.size()-1).setVisible(false);
+                AllSecondFloorOverlays.add(B2.get(B2.size()-1));
+                resultsList.add("B2");
+                //4A
+                B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(7)));
+                B4U.get(B4U.size() - 1).setDimensions(90, 50);
+                FourA = B4U.get(B4U.size()-1);
+                AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
+                resultsList.add("4A");
+                //4AWD2
+                DaBigBois.add(mMap.addGroundOverlay(groundOverlaysf1.get(8)));
+                DaBigBois.get(DaBigBois.size() - 1).setDimensions(56, 43);
+                FourAWD2 = DaBigBois.get(DaBigBois.size()-1);
+                AllFloorOneOverlays.add(DaBigBois.get(DaBigBois.size()-1));
+                resultsList.add("4AWD2");
+                //4AFC
+                B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(9)));
+                B4U.get(B4U.size() - 1).setDimensions(70, 50);
+                FourAFC = B4U.get(B4U.size()-1);
+                AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
+                resultsList.add("4AFC");
+                //4c
+                B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(11)));
+                B4D.get(B4D.size() - 1).setDimensions(72, 54);
+                FourC = B4D.get(B4D.size()-1);
+                AllFloorOneOverlays.add(B4D.get(B4D.size()-1));
+                resultsList.add("4C");
+                //4e
+                B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(12)));
+                B4D.get(B4D.size() - 1).setDimensions(100, 60);
+                FourE = B4D.get(B4D.size()-1);
+                AllFloorOneOverlays.add(B4D.get(B4D.size()-1));
+                resultsList.add("4E");
+                //4f
+                B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(13)));
+                B4D.get(B4D.size() - 1).setDimensions(100, 60);
+                FourF = B4D.get(B4D.size()-1);
+                AllFloorOneOverlays.add(B4D.get(B4D.size()-1));
+                resultsList.add("4F");
+                //3A
+                B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(0)));
+                B3U2 = mMap.addGroundOverlay(groundOverlaysf2.get(0));
+                B3U.get(B3U.size() - 1).setDimensions(34, 28);
+                AllFloorOneOverlays.add(B3U.get(B3U.size() - 1));
+                ThreeA = B3U.get(B3U.size()-1);
+                B3U2.setDimensions(34, 28);
+                AllSecondFloorOverlays.add(B3U2);
+                resultsList.add("3A");
+                if (floorPicked == 1) {
+                    B3U2.setVisible(false);
+                } else {
+                    B3U.get(B3U.size() - 1).setVisible(false);
+                }
+                //3B
+                B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(1)));
+                B3U.get(B3U.size() - 1).setDimensions(84, 62);
+                ThreeB = B3U.get(B3U.size()-1);
+                AllFloorOneOverlays.add(B3U.get(B3U.size()-1));
+                resultsList.add("FishBowl");
+                //3BC
+                B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(2)));
+                B3U.get(B3U.size() - 1).setDimensions(64, 30);
+                ThreeBC = B3U.get(B3U.size()-1);
+                AllFloorOneOverlays.add(B3U.get(B3U.size()-1));
+                resultsList.add("3BConnected");
+                //3C
+                B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(3)));
+                B3D.get(B3D.size() - 1).setDimensions(40, 42);
+                ThreeC = B3D.get(B3D.size()-1);
+                AllFloorOneOverlays.add(B3D.get(B3D.size()-1));
+                resultsList.add("3C");
+                //3D
+                B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(4)));
+                B3D.get(B3D.size() - 1).setDimensions(40, 30);
+                ThreeD = B3D.get(B3D.size()-1);
+                AllFloorOneOverlays.add(B3D.get(B3D.size()-1));
+                resultsList.add("3D");
+                //3E
+                DaBigBois.add(mMap.addGroundOverlay(groundOverlaysf1.get(5)));
+                DaBigBois.get(DaBigBois.size() - 1).setDimensions(37, 28);
+                ThreeE = DaBigBois.get(DaBigBois.size()-1);
+                AllFloorOneOverlays.add(DaBigBois.get(DaBigBois.size()-1));
+                resultsList.add("3E");
+                //3F
+                DaBigBois.add(mMap.addGroundOverlay(groundOverlaysf1.get(6)));
+                DaBigBois.get(DaBigBois.size() - 1).setDimensions(100, 80);
+                ThreeF = DaBigBois.get(DaBigBois.size()-1);
+                AllFloorOneOverlays.add(DaBigBois.get(DaBigBois.size()-1));
+                resultsList.add("3F");
+
+
                 String result = DoTheChecks();
                 String secondResult = secondCheckForFinerArea(result);
-                FirstLoad(result, secondResult);
-//                CheckResults(result);
+                CheckResults(result,secondResult);
                 prevResult = result;
 
             }
@@ -1309,7 +1498,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float zoomload = settings.getFloat("zoom", zoom);
         floorPicked = settings.getInt("floorPicked", floorPicked);
 
-
+        if(zoomload <20){
+            zoomload  = 20;
+        }
         LatLng startPosition = new LatLng(latitude, longitude);
         cameraLoad = new CameraPosition.Builder()
                 .target(startPosition)
@@ -1521,31 +1712,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //For camera moving
         mMap.setOnCameraMoveListener(() ->
         {
-            if (groundOverlaysf1.size() > 0) {
-                String result = DoTheChecks();
-                String FinerResult = secondCheckForFinerArea(result);
-                if (FinerResult == "3BConnected" || FinerResult == "FishBowl") {
-                    FinerResult = "3B";
-                }
-                if (prevResult != FinerResult) {
-                    prevResult = FinerResult;
-                    if (!Filtering) {
-                        HideAllOtherMarkers(FinerResult);
-                        showMarkerInArea(FinerResult);
-                    } else {
-                        ShowTheseMarkers();
-                        HideAllOtherMarkers(FinerResult);
-                    }
-                }
-                if (CheckResultLoadType(result)) {
-                    CheckResults(result);
-                } else {
-                    String secondResult = secondCheckForFinerArea(result);
-                    if (!CheckResultLoadType(secondResult)) {
-                        FirstLoad(result, secondResult);
-                    }
-                }
+            if(mMap.getCameraPosition().zoom < 18){
+                HideAllOverlays();
             }
+//            if (groundOverlaysf1.size() > 0) {
+//                String result = DoTheChecks();
+//                String FinerResult = secondCheckForFinerArea(result);
+//                if (FinerResult == "3BConnected" || FinerResult == "FishBowl") {
+//                    FinerResult = "3B";
+//                }
+//                if (prevResult != FinerResult) {
+//                    prevResult = FinerResult;
+//                    if (!Filtering) {
+//                        HideAllOtherMarkers(FinerResult);
+//                        showMarkerInArea(FinerResult);
+//                    } else {
+//                        ShowTheseMarkers();
+//                        HideAllOtherMarkers(FinerResult);
+//                    }
+//                }
+//                if (CheckResultLoadType(result)) {
+//                    CheckResults(result);
+//                } else {
+//                    String secondResult = secondCheckForFinerArea(result);
+//                    if (!CheckResultLoadType(secondResult)) {
+//                        FirstLoad(result, secondResult);
+//                    }
+//                }
+//            }
 //            if (wasRemoveHit) {
 //                for (int i = 0; i < createdMarkers.size(); i++) {
 //                    if (createdMarkers.get(i).getTitle().equals(markerFragment.MTouch.createdMarker.getTitle())) {
@@ -1590,7 +1784,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                    }
 //                }
 //                if (CheckResultLoadType(result)) {
-//                    CheckResults(result);
+////                    CheckResults(result);
 //                } else {
 //                    String secondResult = secondCheckForFinerArea(result);
 //                    if (!CheckResultLoadType(secondResult)) {
@@ -1602,9 +1796,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (groundOverlaysf1.size() > 0) {
                 String result = DoTheChecks();
                 String FinerResult = secondCheckForFinerArea(result);
-                if (FinerResult == "3BConnected" || FinerResult == "FishBowl") {
-                    FinerResult = "3B";
-                }
                 if (prevResult != FinerResult) {
 
                     prevResult = FinerResult;
@@ -1615,16 +1806,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         HideAllOtherMarkers(FinerResult);
                         ShowTheseMarkers();
                     }
-                }
-                if (CheckResultLoadType(result)) {
-                    CheckResults(result);
-                } else {
-                    String secondResult = secondCheckForFinerArea(result);
-                    if (!CheckResultLoadType(secondResult)) {
-                        FirstLoad(result, secondResult);
+                    if(mMap.getCameraPosition().zoom >17) {
+                            CheckResults(result, FinerResult);
                     }
                 }
-
             }
             if (FollowUser || wasMarkerClicked) {
                 navloc();
@@ -1967,6 +2152,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         }
+        return points;
+    }
+    //Building4A
+    public ArrayList<LatLng> ChoosePointsToGrabOutsideToInsideBuilding4A(String QuadrantDestination, LatLng Destination){
+        ArrayList<LatLng> points = new ArrayList<>();
+
+        if(Latitude > 28.592680683693704){
+
+        }else{
+
+        }
+
+
+
+
         return points;
     }
     // VICTORIA BUILDING 2 UP
@@ -2589,10 +2789,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
             }
-
-
         } else if (QuadrantDestination.equals("Q3")) {
-
             if (Destination.longitude < -81.30236964672804) {
                 if (rightside) {
                     for (LatLng point : Q3Building3Down) {
@@ -2605,36 +2802,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                     for (LatLng point : Q3Building3Down) {
-
                         if (point.longitude > -81.30253527313471 && point.latitude < 28.596162638197345 && point.longitude < -81.30239512771368) {
-
                             if (point.latitude >= Destination.latitude) {
                                 points.add(point);
                             }
                         }
-
                     }
-
-
                 } else {
 
                     for (LatLng point : Q3Building3Down) {
-
                         if (point.longitude < -81.30239512771368 && point.latitude < 28.596162638197345) {
-
                             if (point.latitude >= Destination.latitude) {
                                 points.add(point);
                             }
-
                         }
-
                     }
-
                 }
             } else if (Destination.longitude > -81.30236964672804) {
                 if (rightside) {
                     for (LatLng point : Q3Building3Down) {
-
                         if (point.longitude > -81.30242429673672 && point.latitude >= Destination.latitude) {
                             points.add(point);
                         }
@@ -2781,38 +2967,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                     if (Destination.latitude > 28.595861783982404 && Destination.longitude < -81.30230896174908) {
-
                         for (LatLng point : Q4Building4Down) {
                             if (Destination.latitude <= point.latitude) {
                                 points.add(point);
                             }
                         }
                     } else if (Destination.latitude < 28.595861783982404 && Destination.longitude < -81.30230896174908) {
-
                         if (Destination.latitude > 28.595829991118773) {
-
                             for (LatLng point : Q4Building4Down) {
-
                                 if (point.longitude <= -81.30230896174908 && point.latitude >= 28.595829991118773) {
                                     points.add(point);
                                 } else {
                                     break;
                                 }
                             }
-
                         } else {
                             for (LatLng point : Q4Building4Down) {
-
                                 if (point.longitude <= -81.30230896174908) {
                                     points.add(point);
                                 }
                             }
-
                         }
-
                     } else {
-
-
                         for (LatLng point : Q4Building4Down) {
                             if (point.latitude > 28.595861783982404 && point.longitude <= -81.30230896174908) {
                                 points.add(point);
@@ -2823,7 +2999,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 if (point.longitude <= Destination.longitude) {
                                     points.add(point);
                                 }
-
                             }
                         }
                     }
@@ -2831,7 +3006,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         } else if (QuadrantDestination.equals("Q5")) {
-
             if (rightside) {
                 for (LatLng point : Q3Building3Down) {
                     if (point.longitude >= -81.30242429673672) {
@@ -2843,9 +3017,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         points.add(point);
                     }
                 }
-
                 if (Destination.latitude < 28.595902408183058 && Destination.longitude < -81.30203671753407) {
-
                     points.add(Q5Building5Down.get(0));
                     points.add(Q5Building5Down.get(1));
                 } else if (Destination.latitude > 28.59594891992973 && Destination.longitude < -81.30205381661654) {
@@ -2858,7 +3030,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             if (point.longitude < Destination.longitude) {
                                 points.add(point);
                             }
-
                         }
                     }
                 } else if (Destination.longitude < -81.30190093070269 && Destination.latitude > 28.595950391820107) {
@@ -3601,6 +3772,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ThreeBMarkers.get(i).setVisible(false);
             }
         }
+        if(!typeNotToHide.equals("3BC")){
+            for(int i = 0; i < ThreeBCMarkers.size(); i++){
+                ThreeBCMarkers.get(i).setVisible(false);
+            }
+        }
         if (!typeNotToHide.equals("3C")) {
             for (int i = 0; i < ThreeCMarkers.size(); i++) {
                 ThreeCMarkers.get(i).setVisible(false);
@@ -3623,74 +3799,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public boolean CheckResultLoadType(String Result) {
-        boolean wasFound = false;
-        if (!Result.equals("b3u") && !Result.equals("b3d") && !Result.equals("b4u") && !Result.equals("b4d") && !Result.equals("b1") && !Result.equals("b2")) {
-            for (int i = 0; i < resultsList.size(); i++) {
-                if (resultsList.get(i).equals(Result)) {
-                    wasFound = true;
-                    break;
-                }
-            }
-            if (!wasFound) {
-                resultsList.add(Result);
-            }
-        } else {
-            switch (Result) {
-                case "b3u":
-
-                    if (B3U.size() >= 3 && resultsList.contains("3A") && resultsList.contains("FishBowl") && resultsList.contains("3BConnected")) {
-                        if (!resultsList.contains("b3u")) {
-
-                            resultsList.add("b3u");
-                        }
-                        wasFound = true;
-                    }
-                    break;
-                case "b3d":
-
-                    if (B3D.size() >= 4 && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
-                        if (!resultsList.contains("b3d")) {
-                            resultsList.add("b3d");
-                        }
-                        wasFound = true;
-                    }
-                    break;
-                case "b4u":
-                    if (B4U.size() == 4) {
-                        if (!resultsList.contains("b4u")) {
-                            resultsList.add("b4u");
-                        }
-                        wasFound = true;
-                    }
-                    break;
-                case "b4d":
-                    if (B4D.size() >= 3 && resultsList.contains("4D") && resultsList.contains("4C") && resultsList.contains("4E")) {
-                        if (!resultsList.contains("b4d")) {
-                            resultsList.add("b4d");
-                        }
-                        wasFound = true;
-                    }
-                    break;
-                case "b1":
-                    if (B1.size() == 2) {
-                        if (!resultsList.contains("b1")) {
-                            resultsList.add("b1");
-                        }
-                        wasFound = true;
-                    }
-                    break;
-                case "b2":
-                    if (B2.size() == 2) {
-                        if (!resultsList.contains("b2")) {
-                            resultsList.add("b2");
-                        }
-                        wasFound = true;
-                    }
-            }
-        }
-        return wasFound;
-    }
+//    public boolean CheckResultLoadType(String Result) {
+//        boolean wasFound = false;
+//        if (!Result.equals("b3u") && !Result.equals("b3d") && !Result.equals("b4u") && !Result.equals("b4d") && !Result.equals("b1") && !Result.equals("b2")) {
+//            for (int i = 0; i < resultsList.size(); i++) {
+//                if (resultsList.get(i).equals(Result)) {
+//                    wasFound = true;
+//                    break;
+//                }
+//            }
+//            if (!wasFound) {
+//                resultsList.add(Result);
+//            }
+//        } else {
+//            switch (Result) {
+//                case "b3u":
+//
+//                    if (B3U.size() >= 3 && resultsList.contains("3A") && resultsList.contains("FishBowl") && resultsList.contains("3BConnected")) {
+//                        if (!resultsList.contains("b3u")) {
+//
+//                            resultsList.add("b3u");
+//                        }
+//                        wasFound = true;
+//                    }
+//                    break;
+//                case "b3d":
+//
+//                    if (B3D.size() >= 4 && resultsList.contains("3C") && resultsList.contains("3D") && resultsList.contains("3E") && resultsList.contains("3F")) {
+//                        if (!resultsList.contains("b3d")) {
+//                            resultsList.add("b3d");
+//                        }
+//                        wasFound = true;
+//                    }
+//                    break;
+//                case "b4u":
+//                    if (B4U.size() == 4 && resultsList.contains("4B")&& resultsList.contains("4AWD2")&& resultsList.contains("4AFC")&& resultsList.contains("4A")) {
+//                        if (!resultsList.contains("b4u")) {
+//                            resultsList.add("b4u");
+//                        }
+//                        wasFound = true;
+//                    }
+//                    break;
+//                case "b4d":
+//                    if (B4D.size() >= 3 && resultsList.contains("4D") && resultsList.contains("4C") && resultsList.contains("4E")) {
+//                        if (!resultsList.contains("b4d")) {
+//                            resultsList.add("b4d");
+//                        }
+//                        wasFound = true;
+//                    }
+//                    break;
+//                case "b1":
+//                    if (B1.size() == 2) {
+//                        if (!resultsList.contains("b1")) {
+//                            resultsList.add("b1");
+//                        }
+//                        wasFound = true;
+//                    }
+//                    break;
+//                case "b2":
+//                    if (B2.size() == 2) {
+//                        if (!resultsList.contains("b2")) {
+//                            resultsList.add("b2");
+//                        }
+//                        wasFound = true;
+//                    }
+//            }
+//        }
+//        return wasFound;
+//    }
 
     public void doTheClick(ArrayList<Marker> ListToClick) {
         if (isNOTfUCKED) {
@@ -3997,7 +4173,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 removeAllOverlays();
                 String result = DoTheChecks();
-                CheckResults(result);
+//                CheckResults(result);
                 break;
             case R.id.FloorDown:
                 floorPicked = 1;
@@ -4035,7 +4211,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 removeAllOverlays();
                 String results = DoTheChecks();
-                CheckResults(results);
+//                CheckResults(results);
             case R.id.FilterButton:
                 FilterShow = !FilterShow;
                 if (FilterShow) {
@@ -4276,7 +4452,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     protected void removeAllOverlays() {
-
+        if(floorPicked == 1){
+            for(GroundOverlay overlay: AllSecondFloorOverlays){
+                overlay.setVisible(false);
+            }
+            for(GroundOverlay overlay: AllFloorOneOverlays){
+                overlay.setVisible(true);
+            }
+        }else{
+            for(GroundOverlay overlay: AllFloorOneOverlays){
+                overlay.setVisible(false);
+            }
+            for(GroundOverlay overlay: AllSecondFloorOverlays){
+                overlay.setVisible(true);
+            }
+        }
     }
 
 
@@ -4314,6 +4504,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(Marker marker) {
         dest = FindMarkerAreaForTravel(markerFragment.MTouch.marker2, 1);
+        markerFragment.MTouch.marker2.showInfoWindow();
         return true;
     }
 
