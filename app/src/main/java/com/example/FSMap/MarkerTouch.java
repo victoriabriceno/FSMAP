@@ -35,8 +35,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import org.objectweb.asm.Handle;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 public class MarkerTouch extends FrameLayout {
 
@@ -53,7 +56,8 @@ public class MarkerTouch extends FrameLayout {
     ArrayList<Marker> markersClicked = new ArrayList<>();
     public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
-    private boolean mLocationPermissionsGranted, wasRemoveHit, wasMarkerClicked, csvReady, cReady, fReady = false;
+    private boolean mLocationPermissionsGranted, wasRemoveHit, csvReady, cReady, fReady = false;
+    public boolean markerready,wasMarkerClicked = false;
     private Context C;
     private Activity A;
     private double Latitude, Longitude;
@@ -64,6 +68,7 @@ public class MarkerTouch extends FrameLayout {
     boolean slideup = mapsActivity.slidepup;
 
     public Button FilterMarker;
+
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -140,143 +145,150 @@ public class MarkerTouch extends FrameLayout {
             }
 
             if (marker != null) {
+
                 //Do marker stuff here
                 //vvvvvvvvvvvvvvvvvvv
-                getLocationPermission();
-                //If you have location, get device location
-                if (mLocationPermissionsGranted) {
-                    getDeviceLocation();
-                }
+                if (marker.isVisible()){
+                    wasMarkerClicked = true;
+                    getLocationPermission();
+                    //If you have location, get device location
+                    if (mLocationPermissionsGranted) {
+                        getDeviceLocation();
+                    }
+                    HideMarkersExcept(marker);
+                    if (!wasRemoveHit) {
+                        wasRemoveHit = true;
+                    } else {
+                        marker.remove();
+                    }
 
+                    //Favorites star; is filled in or is empty
+                    ImageButton bntFavoritesRemove = (ImageButton) A.findViewById(R.id.btnRemoveFavorites);
+                    ImageButton btnFavoritesAdd = (ImageButton) A.findViewById(R.id.btnAddFavorites);
 
-                if (!wasRemoveHit) {
-                    wasRemoveHit = true;
-                } else {
-                    marker.remove();
-                }
+                    if (isItInMyFavorites(marker)) {
 
-                //Favorites star; is filled in or is empty
-                ImageButton bntFavoritesRemove = (ImageButton) A.findViewById(R.id.btnRemoveFavorites);
-                ImageButton btnFavoritesAdd = (ImageButton) A.findViewById(R.id.btnAddFavorites);
+                        btnFavoritesAdd.setVisibility(View.GONE);
+                        bntFavoritesRemove.setVisibility(View.VISIBLE);
+                    } else {
 
-                if (isItInMyFavorites(marker)) {
+                        bntFavoritesRemove.setVisibility(View.GONE);
+                        btnFavoritesAdd.setVisibility(View.VISIBLE);
+                    }
 
-                    btnFavoritesAdd.setVisibility(View.GONE);
-                    bntFavoritesRemove.setVisibility(View.VISIBLE);
-                } else {
+                    wasRemoveHit = false;
 
-                    bntFavoritesRemove.setVisibility(View.GONE);
-                    btnFavoritesAdd.setVisibility(View.VISIBLE);
-                }
-
-                wasRemoveHit = false;
-
-                wasMarkerClicked = true;
-                //NavDone button
-                Button NavDone = A.findViewById(R.id.NavDone);
-                NavDone.setVisibility(View.VISIBLE);
-                //check for marker in original Marker list
-                Button RemovePoint = A.findViewById(R.id.RemoveSpot);
-                if (isCreatedMarker(marker)) {
-                    RemovePoint.setVisibility(View.VISIBLE);
-                    createdMarker = marker;
-                } else {
-                    RemovePoint.setVisibility(View.GONE);
-                }
-                //Change camera, zoom if needed
-                if (mGoogleMap.getCameraPosition().zoom < 18) {
-                    moveCamera(marker.getPosition(), 20f);
-                } else {
-                    moveCamera(marker.getPosition());
-                }
-                //Keep track of how many times a marker is clicked
-                if (clickCount == 0) {
-                    clickCount++;
-                    //add marker to markersClicked
-                    markersClicked.add(marker);
-
-                }
-                //If clicking another marker, switch marker and line
-                if (markersClicked.size() != 0) {
-                    if (!markersClicked.get(0).equals(marker)) {
+                    wasMarkerClicked = true;
+                    //NavDone button
+                    Button NavDone = A.findViewById(R.id.NavDone);
+                    NavDone.setVisibility(View.VISIBLE);
+                    //check for marker in original Marker list
+                    Button RemovePoint = A.findViewById(R.id.RemoveSpot);
+                    if (isCreatedMarker(marker)) {
+                        RemovePoint.setVisibility(View.VISIBLE);
+                        createdMarker = marker;
+                    } else {
+                        RemovePoint.setVisibility(View.GONE);
+                    }
+                    //Change camera, zoom if needed
+                    if (mGoogleMap.getCameraPosition().zoom < 18) {
+                        moveCamera(marker.getPosition(), 20f);
+                    } else {
+                        moveCamera(marker.getPosition());
+                    }
+                    //Keep track of how many times a marker is clicked
+                    if (clickCount == 0) {
                         clickCount++;
+                        //add marker to markersClicked
+                        markersClicked.add(marker);
+
+                    }
+                    //If clicking another marker, switch marker and line
+                    if (markersClicked.size() != 0) {
+                        if (!markersClicked.get(0).equals(marker)) {
+                            clickCount++;
 //                        RemoveAllLines();
+                            markersClicked.add(marker);
+                        }
+                        //triggers if user clicks on same marker twice
+                        else {
+                        }
+                    } else {
+//                    RemoveAllLines();
                         markersClicked.add(marker);
                     }
-                    //triggers if user clicks on same marker twice
-                    else {
+                    //Remove marker from markers clicked when more than 1 marker has been clicked
+                    if (markersClicked.size() > 1) {
+                        markersClicked.remove(0);
                     }
-                } else {
-//                    RemoveAllLines();
-                    markersClicked.add(marker);
-                }
-                //Remove marker from markers clicked when more than 1 marker has been clicked
-                if (markersClicked.size() > 1) {
-                    markersClicked.remove(0);
-                }
-                //Slide up code
+                    //Slide up code
 
-                FilterMarker = A.findViewById(R.id.FilterButton);
-                LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
-                bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
-                TextView text = slideupview.findViewById(R.id.roomnumber);
-                text.setText(marker.getTitle());
+                    FilterMarker = A.findViewById(R.id.FilterButton);
+                    LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
+                    bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
+                    TextView text = slideupview.findViewById(R.id.roomnumber);
+                    text.setText(marker.getTitle());
 
-                if (!slideup || bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    bottomSheetBehavior.setFitToContents(false);
-                    slideupview.setVisibility(View.VISIBLE);
-                    slideup = true;
-                    FilterMarker.setEnabled(false);
+                    if (!slideup || bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        bottomSheetBehavior.setFitToContents(false);
+                        slideupview.setVisibility(View.VISIBLE);
+                        slideup = true;
+                        FilterMarker.setEnabled(false);
 
-                }else{
-                   FilterMarker.setEnabled(true);
-                }
-
-
-                //Creates list of all marker titles
-                ArrayList<String> listfornav = new ArrayList<String>();
-                for (Marker m : AM) {
-                    if (m.getTitle() != null) {
-                        listfornav.add(m.getTitle());
+                    }else{
+                        FilterMarker.setEnabled(true);
                     }
-                }
-                AutoCompleteTextView from = A.findViewById(R.id.From);
-                AutoCompleteTextView To = A.findViewById(R.id.Destination);
-                if (!isCreatedMarker(marker)) {
-                    from.setEnabled(true);
-                    from.setFocusableInTouchMode(true);
-                    from.setBackgroundColor(Color.GRAY);
-                    To.setBackgroundColor(Color.GRAY);
-                    To.setEnabled(true);
-                    To.setFocusableInTouchMode(true);
-                    //Creating Suggestions for text boxes in nav
-                    ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(A, android.R.layout.simple_dropdown_item_1line, listfornav);
-                    from = A.findViewById(R.id.From);
-                    from.setText("");//Blank "from"
-                    from.setAdapter(adapterlist);//set dropdown
-                    AutoCompleteTextView destination = A.findViewById(R.id.Destination);
-                    destination.setAdapter(adapterlist);//set dropdown
-                    //Autofill Destination
-                    destination.setText(markersClicked.get(0).getTitle());
-                } else {
-                    from.setEnabled(false);
-                    from.setText("Current Location");
-                    from.setFocusable(false);
-                    from.setBackgroundColor(Color.TRANSPARENT);
-                    To.setEnabled(false);
-                    To.setText(marker.getTitle());
-                    To.setFocusable(false);
-                    To.setBackgroundColor(Color.TRANSPARENT);
-                }
-                //hide markers after one is clicked
+
+
+                    //Creates list of all marker titles
+                    ArrayList<String> listfornav = new ArrayList<String>();
+                    for (Marker m : AM) {
+                        if (m.getTitle() != null) {
+                            listfornav.add(m.getTitle());
+                        }
+                    }
+                    AutoCompleteTextView from = A.findViewById(R.id.From);
+                    AutoCompleteTextView To = A.findViewById(R.id.Destination);
+                    if (!isCreatedMarker(marker)) {
+                        from.setEnabled(true);
+                        from.setFocusableInTouchMode(true);
+                        from.setBackgroundColor(Color.GRAY);
+                        To.setBackgroundColor(Color.GRAY);
+                        To.setEnabled(true);
+                        To.setFocusableInTouchMode(true);
+                        //Creating Suggestions for text boxes in nav
+                        ArrayAdapter<String> adapterlist = new ArrayAdapter<String>(A, android.R.layout.simple_dropdown_item_1line, listfornav);
+                        from = A.findViewById(R.id.From);
+                        from.setText("");//Blank "from"
+                        from.setAdapter(adapterlist);//set dropdown
+                        AutoCompleteTextView destination = A.findViewById(R.id.Destination);
+                        destination.setAdapter(adapterlist);//set dropdown
+                        //Autofill Destination
+                        destination.setText(markersClicked.get(0).getTitle());
+                    } else {
+                        from.setEnabled(false);
+                        from.setText("Current Location");
+                        from.setFocusable(false);
+                        from.setBackgroundColor(Color.TRANSPARENT);
+                        To.setEnabled(false);
+                        To.setText(marker.getTitle());
+                        To.setFocusable(false);
+                        To.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                    //hide markers after one is clicked
 //                for (Marker m : AM)
 //                {
 //                    if(!m.getTitle().equals(marker.getTitle())) {
 //                        m.setVisible(false);
 //                    }
 //                }
-                marker2 = marker;
+                    marker2 = marker;
+                    markerready = true;
+
+                } else {
+                    return true;
+                }
 
             }
         }
@@ -285,6 +297,11 @@ public class MarkerTouch extends FrameLayout {
     }
 
     public void ManualTouch(Marker marker) {
+        if (!marker.isVisible()){
+            marker.setVisible(true);
+        }
+        wasMarkerClicked = true;
+        HideMarkersExcept(marker);
         getLocationPermission();
         //If you have location, get device location
         if (mLocationPermissionsGranted) {
@@ -418,6 +435,7 @@ public class MarkerTouch extends FrameLayout {
 //                    }
 //                }
         marker2 = marker;
+        markerready = true;
     }
 
     private void getDeviceLocation() {
@@ -466,9 +484,11 @@ public class MarkerTouch extends FrameLayout {
     }
 
     public boolean isItInMyFavorites(Marker marker) {
-        for (int i = 0; i < Favs.size(); i++) {
-            if (Favs.get(i).getTitle().equals(marker.getTitle())) {
-                return true;
+        if (Favs !=null){
+            for (int i = 0; i < Favs.size(); i++) {
+                if (Favs.get(i).getTitle().equals(marker.getTitle())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -485,7 +505,28 @@ public class MarkerTouch extends FrameLayout {
         return isItCreatedMarker;
     }
 
-
+    public void HideMarkersExcept(Marker m){
+        for(Marker marker: CM){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+        for(Marker marker: AM){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+        for(Marker marker: Favs){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+        for (Marker marker: mMarkers){
+            if(!marker.equals(m)){
+                marker.setVisible(false);
+            }
+        }
+    }
     public void moveCamera(LatLng latLng) {
 
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

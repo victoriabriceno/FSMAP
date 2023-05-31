@@ -224,9 +224,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 Intent intent = new Intent(view.getContext(), EditProfile.class);
                 intent.putExtra("fullName", userNameSettings.getText().toString());
                 startActivity(intent);
+                finish();
+
                 break;
 
             case R.id.backBTN:
+                startActivity(new Intent(getApplicationContext(),MapsActivity.class));
                 onBackPressed();
                 break;
 

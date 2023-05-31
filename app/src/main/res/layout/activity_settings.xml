@@ -27,23 +27,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.107" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"
-            android:background="@null"
-            android:contentDescription="DarkMode"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.845"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/userNamesettings"
-            android:layout_width="333dp"
-            android:layout_height="44dp"
+            android:layout_width="322dp"
+            android:layout_height="38dp"
             android:fontFamily="@font/questrialregular"
             android:text="User name"
             android:textAlignment="center"
@@ -51,9 +39,10 @@
             android:textSize="25sp"
             app:layout_constraintBottom_toTopOf="@+id/row1"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userSettings"
-            app:layout_constraintVertical_bias="0.583" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userSettings"
@@ -69,7 +58,7 @@
             android:id="@+id/row1"
             android:layout_width="399dp"
             android:layout_height="167dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="48dp"
             android:orientation="horizontal"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -236,6 +225,17 @@
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/Switch"
+            android:layout_width="148dp"
+            android:layout_height="71dp"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/row2"
+            app:track="@drawable/track" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.FSMap">
+    package="com.example.FSMap" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -21,21 +21,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginTesting"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".OnBoarding"
+            android:exported="false" />
         <activity
             android:name=".EditProfile"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.Favorites"
+            android:name=".Favorites"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.CustomMarker"
+            android:name=".CustomMarker"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.FSMapAbout"
+            android:name=".FSMapAbout"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.Settings"
+            android:name=".Settings"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -53,29 +56,32 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name="com.example.FSMap.MapsActivity"
+            android:name=".MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.FSMap.ForgotPassword"
+            android:name=".ForgotPassword"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.RegisterUser"
+            android:name=".RegisterUser"
             android:exported="false" />
         <activity
-            android:name="com.example.FSMap.MainActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
 
-        ...
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
     </application>
 
 </manifest>

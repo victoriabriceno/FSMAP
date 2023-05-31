@@ -64,6 +64,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 editor.putString("remember","false");
                 editor.apply();
                 startActivity(i);
+                finish();
             }
         });
         editEmail =  findViewById(R.id.registerEmailAddress);
@@ -301,6 +302,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                                 editor.putString("remember","false");
                                                 editor.apply();
                                                 startActivity(i);
+                                                finish();
                                             }else{
                                                 Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
                                             }

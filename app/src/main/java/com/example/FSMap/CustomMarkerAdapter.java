@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapter.CustomMarkerViewHolder> {
 
@@ -68,10 +69,16 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             public void onClick(View v) {
 
                 String markerTitleCustom= holder.OriginalOfTheMarker.getText().toString();
+                String customremove = holder.TitleOfTheMarker.getText().toString();
                 CustomMarker.removeFromCustom(context,markerTitleCustom);
                 int size = listCustomMarkers.size();
                 listCustomMarkers.clear();
                 notifyItemRangeRemoved(0,size);
+
+                Intent intent = new Intent(context,MapsActivity.class);
+                intent.putExtra("removeSpot",customremove);
+               context.startActivity(intent);
+
 
             }
         });

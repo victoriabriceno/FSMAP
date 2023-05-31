@@ -94,6 +94,8 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+                startActivity(new Intent(getApplicationContext(),Settings.class));
+                finish();
             }
         });
 
