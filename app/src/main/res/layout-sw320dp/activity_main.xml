@@ -56,6 +56,7 @@
                 android:drawableStart="@drawable/mail_icon_phone"
                 android:inputType="textEmailAddress"
                 android:drawablePadding="10dp"
+                android:textColor="@color/black"
                 android:paddingStart="5dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,6 +83,7 @@
                 android:drawableStart="@drawable/padlock_iphone"
                 android:drawablePadding="6dp"
                 android:inputType="textPassword"
+                android:textColor="@color/black"
                 android:paddingStart="1dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
