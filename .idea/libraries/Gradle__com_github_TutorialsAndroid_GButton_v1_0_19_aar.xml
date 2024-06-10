@@ -1,13 +1,13 @@
 <component name="libraryTable">
-  <library name="Gradle: com.github.TutorialsAndroid:GButton:v1.0.19@aar">
+  <library name="Gradle: com.github.TutorialsAndroid:GButton:v1.0.19@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/ffef1859910b519c0aa4711b59971047/transformed/jetified-GButton-v1.0.19/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/ffef1859910b519c0aa4711b59971047/transformed/jetified-GButton-v1.0.19/res" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/ffef1859910b519c0aa4711b59971047/transformed/jetified-GButton-v1.0.19/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/7d419226652c40f11bff054e20746f40/transformed/jetified-GButton-v1.0.19/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/7d419226652c40f11bff054e20746f40/transformed/jetified-GButton-v1.0.19/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/7d419226652c40f11bff054e20746f40/transformed/jetified-GButton-v1.0.19/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/com.github.TutorialsAndroid/GButton/v1.0.19/5ab303588ec3a43e7c2a572dbf7adf6d7a56c4ff/GButton-v1.0.19-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.TutorialsAndroid/GButton/v1.0.19/5ab303588ec3a43e7c2a572dbf7adf6d7a56c4ff/GButton-v1.0.19-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

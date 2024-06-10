@@ -1,13 +1,13 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.core:core-ktx:1.9.0@aar">
+  <library name="Gradle: androidx.core:core-ktx:1.9.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/5b6718aab2ee82166397103ae84d880c/transformed/jetified-core-ktx-1.9.0/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/5b6718aab2ee82166397103ae84d880c/transformed/jetified-core-ktx-1.9.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/5b6718aab2ee82166397103ae84d880c/transformed/jetified-core-ktx-1.9.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/c95d615b52ade292241cedd517ff44ed/transformed/jetified-core-ktx-1.9.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/c95d615b52ade292241cedd517ff44ed/transformed/jetified-core-ktx-1.9.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/c95d615b52ade292241cedd517ff44ed/transformed/jetified-core-ktx-1.9.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/androidx.core/core-ktx/1.9.0/90bc3081943b41096717f4f6ce07351f4de007cc/core-ktx-1.9.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.core/core-ktx/1.9.0/90bc3081943b41096717f4f6ce07351f4de007cc/core-ktx-1.9.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

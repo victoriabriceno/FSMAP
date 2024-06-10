@@ -1,15 +1,15 @@
 <component name="libraryTable">
-  <library name="Gradle: com.google.maps.android:android-maps-utils:3.1.1@aar">
+  <library name="Gradle: com.google.maps.android:android-maps-utils:3.1.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/cd91d6aff78ed20793cea448bee55c15/transformed/jetified-android-maps-utils-3.1.1/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/cd91d6aff78ed20793cea448bee55c15/transformed/jetified-android-maps-utils-3.1.1/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/transforms-3/cd91d6aff78ed20793cea448bee55c15/transformed/jetified-android-maps-utils-3.1.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/5edf1a4a105663dbd4bfc38ce919c06b/transformed/jetified-android-maps-utils-3.1.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/5edf1a4a105663dbd4bfc38ce919c06b/transformed/jetified-android-maps-utils-3.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/5edf1a4a105663dbd4bfc38ce919c06b/transformed/jetified-android-maps-utils-3.1.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/3.1.1/dcd9ec8053e63bf490c911976dd50156fa6eb304/android-maps-utils-3.1.1-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/3.1.1/dcd9ec8053e63bf490c911976dd50156fa6eb304/android-maps-utils-3.1.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/apks_from_bundle/debug/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/3.1.1/aeec72d852ff21b5b0217db038d3e42120184d8c/android-maps-utils-3.1.1-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/3.1.1/aeec72d852ff21b5b0217db038d3e42120184d8c/android-maps-utils-3.1.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
