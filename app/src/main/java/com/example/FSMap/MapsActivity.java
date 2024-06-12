@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -1215,6 +1217,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -1240,10 +1282,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapLoaded() {
 
+                
 
-                BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_1f_rotated);
+                //BITMAP  CREATIONS
+                Bitmap newBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3a_blackmoore_1f);
+                Bitmap newBitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.buildinglibrary_rotated_1_left);
+                Bitmap newBitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3a_blackmoore_2f);
+                Bitmap newBitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3b_fishbowl);
+                Bitmap newBitmap5 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3c_gd);
+                Bitmap newBitmap6 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3c_mp);
+                Bitmap newBitmap7 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3f_1f);
+                Bitmap newBitmap8 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4c);
+                Bitmap newBitmap9 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4b_1f);
+                Bitmap newBitmap10 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4a_wd1);
+                Bitmap newBitmap11 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4a_wd2);
+                Bitmap newBitmap12 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4a_fc);
+                Bitmap newBitmap13 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4d_1f);
+                Bitmap newBitmap14 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4e_distrubution);
+                Bitmap newBitmap15 = BitmapFactory.decodeResource(getResources(),R.drawable.building_1_1f);
+                Bitmap newBitmap16 = BitmapFactory.decodeResource(getResources(),R.drawable.building_1_2f);
+                Bitmap newBitmap17 = BitmapFactory.decodeResource(getResources(),R.drawable.building_2_1f);
+                Bitmap newBitmap18 = BitmapFactory.decodeResource(getResources(),R.drawable.building_2_2f);
+                Bitmap newBitmap19 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3b_gd); // THIS IS 3BGD
 
-                //Set the bounds for overlays
+                BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromBitmap(newBitmap1);
+                BitmapDescriptor buildingLibrary = BitmapDescriptorFactory.fromBitmap(newBitmap2);
+                BitmapDescriptor build3aF2Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap3);
+                BitmapDescriptor build3bFishbowlBitmap = BitmapDescriptorFactory.fromBitmap(newBitmap4);
+                BitmapDescriptor build3bGDBitmap = BitmapDescriptorFactory.fromBitmap(newBitmap19); // THIS IS 3BGD
+                BitmapDescriptor build3cGDBitmap = BitmapDescriptorFactory.fromBitmap(newBitmap5);
+                BitmapDescriptor build3cMPBitmap = BitmapDescriptorFactory.fromBitmap(newBitmap6);
+                BitmapDescriptor build3fF1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap7);
+                BitmapDescriptor build4CBitmap = BitmapDescriptorFactory.fromBitmap(newBitmap8);
+                BitmapDescriptor build4BF1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap9);
+                BitmapDescriptor build4aWD1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap10);
+                BitmapDescriptor build4aWD2Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap11);
+                BitmapDescriptor build4aFCBitmap= BitmapDescriptorFactory.fromBitmap(newBitmap12);
+                BitmapDescriptor build4dF1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap13);
+                BitmapDescriptor build4eDistrubutionBitmap = BitmapDescriptorFactory.fromBitmap(newBitmap14);
+                BitmapDescriptor build1F1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap15);
+                BitmapDescriptor build1F2Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap16);
+                BitmapDescriptor build2F1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap17);
+                BitmapDescriptor build2F2Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap18);
+
+
+
+
+
+                // region  Boundaries
                 LatLngBounds buildLibrary = new LatLngBounds(
                         new LatLng(28.59379993356988, -81.30450729197996),
                         new LatLng(28.594005193975605, -81.30415971195876));
@@ -1305,10 +1391,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         new LatLng(28.59575016558735, -81.30298761430296),
                         new LatLng(28.596852313396923, -81.30218295162292)
                 );
-                //create map overlayoptions
+                // endregion
+
                 GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
                         .positionFromBounds(buildLibrary)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.buildinglibrary_rotated_1_left))
+                        .image(buildingLibrary)
                         .anchor(0.43f, 0.45f);
                 GroundOverlayOptions build3aOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3A)
@@ -1317,77 +1404,79 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .bearing(-2);
                 GroundOverlayOptions build3aF2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build3AF2)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3a_blackmoore_2f))
+                        .image(build3aF2Bitmap)
                         .anchor(1.0f, -0.1f)
                         .bearing(-2);
                 GroundOverlayOptions building3BOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3B)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_fishbowl))
+                        .image(build3bFishbowlBitmap)
                         .anchor(0.45f, 0.45f);
                 GroundOverlayOptions build3BConnected = new GroundOverlayOptions()
                         .positionFromBounds(build3BConnect)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3b_gd))
+                        .image(build3bGDBitmap)
                         .anchor(0.08f, 0.77f);
                 GroundOverlayOptions build3COverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3C)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_gd));
+                        .image(build3cGDBitmap);
                 GroundOverlayOptions build3DOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3CMP)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3c_mp))
+                        .image(build3cMPBitmap)
                         .anchor(0.7f, 0.7f);
                 GroundOverlayOptions build3FOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build3F)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_3f_1f));
+                        .image(build3fF1Bitmap);
                 GroundOverlayOptions build4COverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4C)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4c))
+                        .image(build4CBitmap)
                         .bearing(135)
                         .anchor(0.48f, 0.62f);
                 GroundOverlayOptions build4BOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4B)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4b_1f));
+                        .image(build4BF1Bitmap);
                 GroundOverlayOptions build4AOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4A)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd1));
+                        .image(build4aWD1Bitmap);
                 GroundOverlayOptions build4AWD2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build4AWD2)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_wd2))
+                        .image(build4aWD2Bitmap)
                         .bearing(44)
                         .anchor(0.6f, 0.75f);
                 GroundOverlayOptions build4AFCOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4AFC)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4a_fc))
+                        .image(build4aFCBitmap)
                         .bearing(-46);
                 GroundOverlayOptions build4DOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4D)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4d_1f))
+                        .image(build4dF1Bitmap)
                         .bearing(45);
                 GroundOverlayOptions build4EOverlay = new GroundOverlayOptions()
                         .positionFromBounds(build4E)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_4e_distrubution))
+                        .image(build4eDistrubutionBitmap)
                         .bearing(45)
                         .anchor(0.5f, 0.5f);
                 GroundOverlayOptions build1f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build1_1f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_1f))
+                        .image(build1F1Bitmap)
                         .bearing(180)
                         .anchor(0.56f, 0.5f);
                 GroundOverlayOptions build1f2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build1_2f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_1_2f))
+                        .image(build1F2Bitmap)
                         .bearing(180)
                         .anchor(0.558f, 0.485f);
 
                 GroundOverlayOptions build2f1Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_1f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_1f))
+                        .image(build2F1Bitmap)
                         .bearing(-117.5f)
                         .anchor(0.605f, 0.387f);
                 GroundOverlayOptions build2f2Overlay = new GroundOverlayOptions()
                         .positionFromBounds(build2_2f)
-                        .image(BitmapDescriptorFactory.fromResource(R.drawable.building_2_2f))
+                        .image(build2F2Bitmap)
                         .bearing(-117.5f)
                         .anchor(0.605f, 0.387f);
+
+
                 //add groundOverlay and create reference.
                 groundOverlaysf1.add(build3aOverlay);//0
                 groundOverlaysf2.add(build3aF2Overlay);//0f2
