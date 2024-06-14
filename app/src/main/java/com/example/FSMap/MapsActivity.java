@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.PrecomputedText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -36,7 +34,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +46,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.FSMap.databinding.ActivityMapsBinding;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -100,7 +96,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -551,6 +546,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 break;
+
             case "b4u":
                 if (finerResults.equals("4A")) {
                     if(FourA != null&& floorPicked == 1){
@@ -601,6 +597,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     B1.get(0).setVisible(true);
                 }
                 break;
+
 
         }
     }
@@ -1217,45 +1214,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, resId, options);
 
-        // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
-        // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
+        options.inScaled = true; // Enable scaling
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888; // High quality color
+        options.inDither = true; // Optional, to improve color depth on some devices
 
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
+            // This while loop determines a scaled down size that maintains the aspect ratio
+            // and ensures neither width nor height is smaller than the requested width and height.
+            while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth) {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
+
+
+
+
 
     /**
      * Manipulates the map once available.
@@ -1276,34 +1270,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-
         loadingScreenMaps.setVisibility(View.VISIBLE);
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
 
-                
-
+                // region Bitmap Creations
                 //BITMAP  CREATIONS
-                Bitmap newBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3a_blackmoore_1f);
-                Bitmap newBitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.buildinglibrary_rotated_1_left);
-                Bitmap newBitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3a_blackmoore_2f);
-                Bitmap newBitmap4 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3b_fishbowl);
-                Bitmap newBitmap5 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3c_gd);
-                Bitmap newBitmap6 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3c_mp);
-                Bitmap newBitmap7 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3f_1f);
-                Bitmap newBitmap8 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4c);
-                Bitmap newBitmap9 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4b_1f);
-                Bitmap newBitmap10 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4a_wd1);
-                Bitmap newBitmap11 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4a_wd2);
-                Bitmap newBitmap12 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4a_fc);
-                Bitmap newBitmap13 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4d_1f);
-                Bitmap newBitmap14 = BitmapFactory.decodeResource(getResources(),R.drawable.building_4e_distrubution);
-                Bitmap newBitmap15 = BitmapFactory.decodeResource(getResources(),R.drawable.building_1_1f);
-                Bitmap newBitmap16 = BitmapFactory.decodeResource(getResources(),R.drawable.building_1_2f);
-                Bitmap newBitmap17 = BitmapFactory.decodeResource(getResources(),R.drawable.building_2_1f);
-                Bitmap newBitmap18 = BitmapFactory.decodeResource(getResources(),R.drawable.building_2_2f);
-                Bitmap newBitmap19 = BitmapFactory.decodeResource(getResources(),R.drawable.building_3b_gd); // THIS IS 3BGD
+
+                Bitmap newBitmap1 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3a_blackmoore_1f,512,512);
+                Bitmap newBitmap2 = decodeSampledBitmapFromResource(getResources(),R.drawable.buildinglibrary_rotated_1_left, 512,512);
+                Bitmap newBitmap3 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3a_blackmoore_2f, 512,512);
+                Bitmap newBitmap4 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3b_fishbowl,512,512);
+                Bitmap newBitmap5 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3c_gd,512,512);
+                Bitmap newBitmap6 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3c_mp,512,512);
+                Bitmap newBitmap7 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3f_1f,512,512);
+                Bitmap newBitmap8 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4c,512,512);
+                Bitmap newBitmap9 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4b_1f,512,512);
+                Bitmap newBitmap10 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4a_wd1,512,512);
+                Bitmap newBitmap11 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4a_wd2,512,512);
+                Bitmap newBitmap12 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4a_fc,512,512);
+                Bitmap newBitmap13 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4d_1f,512,512);
+                Bitmap newBitmap14 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_4e_distrubution,512,512);
+                Bitmap newBitmap15 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_1_1f,512,512);
+                Bitmap newBitmap16 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_1_2f,512,512);
+                Bitmap newBitmap17 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_2_1f,512,512);
+                Bitmap newBitmap18 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_2_2f,512,512);
+                Bitmap newBitmap19 = decodeSampledBitmapFromResource(getResources(),R.drawable.building_3b_gd,512,512); // THIS IS 3BGD
+
 
                 BitmapDescriptor build3aF1BitMap = BitmapDescriptorFactory.fromBitmap(newBitmap1);
                 BitmapDescriptor buildingLibrary = BitmapDescriptorFactory.fromBitmap(newBitmap2);
@@ -1324,15 +1318,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 BitmapDescriptor build1F2Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap16);
                 BitmapDescriptor build2F1Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap17);
                 BitmapDescriptor build2F2Bitmap = BitmapDescriptorFactory.fromBitmap(newBitmap18);
-
-
-
-
+                // endregion
 
                 // region  Boundaries
-                LatLngBounds buildLibrary = new LatLngBounds(
-                        new LatLng(28.59379993356988, -81.30450729197996),
-                        new LatLng(28.594005193975605, -81.30415971195876));
+
+                 LatLngBounds buildLibrary = new LatLngBounds(
+                 new LatLng(28.59379993356988, -81.30450729197996),
+                 new LatLng(28.594005193975605, -81.30415971195876));
+
                 LatLngBounds build3A = new LatLngBounds(
                         new LatLng(28.595392200538452, -81.30425629914613),
                         new LatLng(28.59565596435769, -81.30393979848783));
@@ -1391,8 +1384,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         new LatLng(28.59575016558735, -81.30298761430296),
                         new LatLng(28.596852313396923, -81.30218295162292)
                 );
-                // endregion
 
+                // endregion
                 GroundOverlayOptions buildLibraryOverlay = new GroundOverlayOptions()
                         .positionFromBounds(buildLibrary)
                         .image(buildingLibrary)
@@ -1477,6 +1470,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .anchor(0.605f, 0.387f);
 
 
+
                 //add groundOverlay and create reference.
                 groundOverlaysf1.add(build3aOverlay);//0
                 groundOverlaysf2.add(build3aF2Overlay);//0f2
@@ -1497,6 +1491,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 groundOverlaysf1.add(build2f1Overlay);//15
                 groundOverlaysf2.add(build1f2Overlay);//1f2
                 groundOverlaysf2.add(build2f2Overlay);//2f2
+
+
                 //B1
                 B1.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 2)));
                 B1.get(B1.size() - 1).setDimensions(140, 90);
@@ -4246,7 +4242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     markerFragment.MTouch.marker2.setVisible(true);
                     isTraveling = true;
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitued), 20f));
-                    // checkDistPoint = new LatLng(Latitude, Longitued);
+                    checkDistPoint = new LatLng(Latitude, Longitued);
                     //Setting curlocation and final destination to text boxes
                     AutoCompleteTextView curlocation = findViewById(R.id.From);
                     AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
