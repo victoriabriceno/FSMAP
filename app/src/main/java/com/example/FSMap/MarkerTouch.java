@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public class MarkerTouch extends FrameLayout {
     private static final int ClickRadius = 50;
 
     private GoogleMap mGoogleMap;
-    public List<Marker> mMarkers, Favs, CM, AM;
+    public List<Marker> mMarkers, Favs, CM, AM,ThreeA,ThreeB;
     ArrayList<Marker> markersClicked = new ArrayList<>();
     public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
@@ -68,6 +69,7 @@ public class MarkerTouch extends FrameLayout {
     boolean slideup = mapsActivity.slidepup;
 
     public Button FilterMarker;
+
 
 
     BottomSheetBehavior bottomSheetBehavior;
@@ -113,7 +115,43 @@ public class MarkerTouch extends FrameLayout {
             MakeList();
         }
     }
+    protected String FindDestinationArea(Marker m){
+       // if(BuildingOne.contains(m)) {
 
+        //} else if (BuildingOneF2.contains(m)) {
+
+       // } else if (BuildingTwo.contains(m)) {
+
+       // }else if(BuildingTwoF2.contains(m)){
+
+         if (ThreeA.contains(m)) {
+
+            ImageView photoForSlideup = (ImageView) findViewById(R.id.imageForMarkers);
+            photoForSlideup.setImageResource(R.drawable.fishbowl);
+            String photoDrwable = photoForSlideup.getDrawable().toString();
+
+            if (photoDrwable.isEmpty());
+
+
+
+
+        //} else if (ThreeAMarkersF2.contains(m)) {
+
+       // } else if (ThreeBMarkers.contains(m)) {
+
+       // }else if(ThreeBCMarkers.contains(m)){
+
+       // } else if (ThreeCMarkers.contains(m)) {
+
+       // } else if (ThreeDMarkers.contains(m)) {
+
+        //}else if(ThreeEMarkers.contains(m)){
+
+       // }else if(FourAMarkers.contains(m)){
+
+        }
+        return "NotFound";
+    }
 
     //Marker Click
     @Override
@@ -203,6 +241,7 @@ public class MarkerTouch extends FrameLayout {
                         markersClicked.add(marker);
 
                     }
+
                     //If clicking another marker, switch marker and line
                     if (markersClicked.size() != 0) {
                         if (!markersClicked.get(0).equals(marker)) {
@@ -229,12 +268,15 @@ public class MarkerTouch extends FrameLayout {
                     TextView text = slideupview.findViewById(R.id.roomnumber);
                     text.setText(marker.getTitle());
 
-                    if (!slideup || bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED) {
+                    FindDestinationArea(marker);
+
+                    if (!slideup) {
+                        slideupview.setVisibility(View.VISIBLE);
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         bottomSheetBehavior.setFitToContents(false);
-                        slideupview.setVisibility(View.VISIBLE);
-                        slideup = true;
                         FilterMarker.setEnabled(false);
+                        slideup = true;
+
 
                     }else{
                         FilterMarker.setEnabled(true);
@@ -285,6 +327,7 @@ public class MarkerTouch extends FrameLayout {
 //                }
                     marker2 = marker;
                     markerready = true;
+
 
                 } else {
                     return true;
@@ -382,12 +425,13 @@ public class MarkerTouch extends FrameLayout {
         TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
 
-        if (!slideup || bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED) {
+        if (!slideup ) {
+            slideupview.setVisibility(View.VISIBLE);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             bottomSheetBehavior.setFitToContents(false);
-            slideupview.setVisibility(View.VISIBLE);
+            FilterMarker.setEnabled(false);
             slideup = true;
-           FilterMarker.setEnabled(false);
+
 
         }else{
             FilterMarker.setEnabled(true);

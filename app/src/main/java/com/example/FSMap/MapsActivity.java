@@ -1697,6 +1697,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bitmap b5 = bitmapdraw5.getBitmap();
         Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
 
+        //On Marker Click Override
+        markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
+
+        // disable marker click processing
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                return true;
+            }
+        });
+
         CSVReader creader = new CSVReader();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference sr = storage.getReference();
@@ -1868,18 +1880,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
 
-        //On Marker Click Override
-        markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
-
-        // disable marker click processing
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                return true;
-            }
-        });
-
         //when camera is still (used for searchbar since it doesn't count as camera moving)
         mMap.setOnCameraIdleListener(() -> {
 
@@ -2046,6 +2046,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 markerFragment.MTouch.CustomMarkers(createdMarkers);
+                markerFragment.MTouch.ThreeA = ThreeAMarkers;
                 CMReady =true;
                if(RemoveMarkerTrue){
                     new DoDahRemove().execute();
@@ -4687,6 +4688,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else if(BuildingTwoF2.contains(m)){
             return "B2F2";
         } else if (ThreeAMarkers.contains(m)) {
+
+            ImageView photoForSlideup = (ImageView) findViewById(R.id.imageForMarkers);
+            photoForSlideup.setImageResource(R.drawable.fishbowl);
+            String photoDrwable = photoForSlideup.getDrawable().toString();
+
+            if (photoDrwable.isEmpty());
+
+
+
             return "3A";
         } else if (ThreeAMarkersF2.contains(m)) {
             return "3AF2";
@@ -4829,9 +4839,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+
+    String photoCode;
     @Override
     public boolean onMarkerClick(Marker marker) {
+
+
         dest = FindMarkerAreaForTravel(markerFragment.MTouch.marker2, 1);
+        photoCode = FindDestinationArea(marker);
         wasMarkerClicked = true;
         new MarkerShowInfo().execute();
         return true;
