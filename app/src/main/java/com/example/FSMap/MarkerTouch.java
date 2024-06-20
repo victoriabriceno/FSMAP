@@ -23,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.exifinterface.media.ExifInterface;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,6 +41,7 @@ import org.objectweb.asm.Handle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Handler;
 
 public class MarkerTouch extends FrameLayout {
@@ -70,7 +72,7 @@ public class MarkerTouch extends FrameLayout {
 
     public Button FilterMarker;
 
-
+    LinearLayout slideupview;
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -115,7 +117,7 @@ public class MarkerTouch extends FrameLayout {
             MakeList();
         }
     }
-    protected String FindDestinationArea(Marker m){
+    protected String Marker(Marker m){
        // if(BuildingOne.contains(m)) {
 
         //} else if (BuildingOneF2.contains(m)) {
@@ -126,11 +128,13 @@ public class MarkerTouch extends FrameLayout {
 
          if (ThreeA.contains(m)) {
 
-            ImageView photoForSlideup = (ImageView) findViewById(R.id.imageForMarkers);
-            photoForSlideup.setImageResource(R.drawable.fishbowl);
-            String photoDrwable = photoForSlideup.getDrawable().toString();
+            ImageView image = slideupview.findViewById(R.id.imageForMarkers);
+            image.setImageResource(R.drawable.buildingb);
 
-            if (photoDrwable.isEmpty());
+
+           // String photoDrwable = photoForSlideup.getDrawable().toString();
+
+            //if (photoDrwable.isEmpty());
 
 
 
@@ -263,12 +267,16 @@ public class MarkerTouch extends FrameLayout {
                     //Slide up code
 
                     FilterMarker = A.findViewById(R.id.FilterButton);
-                    LinearLayout slideupview = A.findViewById(R.id.design_bottom_sheet);
+                    slideupview = A.findViewById(R.id.design_bottom_sheet);
                     bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
                     TextView text = slideupview.findViewById(R.id.roomnumber);
                     text.setText(marker.getTitle());
 
-                    FindDestinationArea(marker);
+                    // It looks for an specific marker for the image
+                    if (Objects.requireNonNull(marker.getTitle()).contains("FS3B")){
+                        ImageView image = slideupview.findViewById(R.id.imageForMarkers);
+                        image.setImageResource(R.drawable.buildingb);
+                    }
 
                     if (!slideup) {
                         slideupview.setVisibility(View.VISIBLE);
@@ -424,6 +432,7 @@ public class MarkerTouch extends FrameLayout {
         bottomSheetBehavior = BottomSheetBehavior.from(slideupview);
         TextView text = slideupview.findViewById(R.id.roomnumber);
         text.setText(marker.getTitle());
+
 
         if (!slideup ) {
             slideupview.setVisibility(View.VISIBLE);

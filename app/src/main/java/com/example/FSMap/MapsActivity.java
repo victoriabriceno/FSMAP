@@ -4688,15 +4688,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else if(BuildingTwoF2.contains(m)){
             return "B2F2";
         } else if (ThreeAMarkers.contains(m)) {
-
-            ImageView photoForSlideup = (ImageView) findViewById(R.id.imageForMarkers);
-            photoForSlideup.setImageResource(R.drawable.fishbowl);
-            String photoDrwable = photoForSlideup.getDrawable().toString();
-
-            if (photoDrwable.isEmpty());
-
-
-
             return "3A";
         } else if (ThreeAMarkersF2.contains(m)) {
             return "3AF2";

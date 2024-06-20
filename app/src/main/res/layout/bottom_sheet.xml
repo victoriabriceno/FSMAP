@@ -30,7 +30,7 @@
         android:padding="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <View
@@ -38,29 +38,33 @@
                 android:layout_width="30dp"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="24dp"
                 android:background="@color/FS_ORANGE"
                 android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.011">
 
             </View>
 
             <TextView
                 android:id="@+id/roomnumber"
-                android:layout_width="232dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="227dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="144dp"
                 android:fontFamily="@font/questrialregular"
+
                 android:paddingLeft="10dp"
-                android:text="Potato Holder"
+                android:text="Marker Name"
                 android:textColor="@color/FS_dark_gray"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.054"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,8 +72,6 @@
                 android:id="@+id/From"
                 android:layout_width="252dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/questrialregular"
                 android:hint="From"
@@ -78,15 +80,16 @@
                 android:textColorHint="@color/FS_dark_gray"
                 app:backgroundTint="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.062"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.128" />
+                app:layout_constraintVertical_bias="0.11" />
 
             <AutoCompleteTextView
                 android:id="@+id/Destination"
                 android:layout_width="254dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_input"
                 android:hint="To"
@@ -95,9 +98,11 @@
                 android:textColorHint="@color/FS_dark_gray"
                 app:backgroundTint="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.064"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.245" />
+                app:layout_constraintVertical_bias="0.162" />
 
             <ImageButton
                 android:id="@+id/btnAddFavorites"
@@ -127,20 +132,25 @@
                 android:text="GO"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/Destination"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.271" />
+                app:layout_constraintVertical_bias="0.203" />
 
             <ImageButton
                 android:id="@+id/btnRemoveFavorites"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="280dp"
-                android:layout_marginTop="92dp"
                 android:layout_marginEnd="52dp"
                 android:background="@null"
                 android:foreground="@drawable/starfull"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintHorizontal_bias="0.992"
+                app:layout_constraintStart_toStartOf="@+id/From"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.107" />
 
             <Button
                 android:id="@+id/RemoveSpot"
@@ -149,14 +159,15 @@
                 android:layout_alignWithParentIfMissing="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="552dp"
-                android:layout_marginEnd="104dp"
                 android:background="@drawable/custom_input"
                 android:backgroundTint="@color/FS_ORANGE"
                 android:gravity="center"
                 android:text="Remove Spot"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.839" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -166,23 +177,23 @@
 Just don't enter in places that you can't."
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.837"
-                tools:layout_editor_absoluteX="0dp">
+                app:layout_constraintVertical_bias="0.743">
 
             </TextView>
 
             <ImageView
                 android:id="@+id/imageForMarkers"
-                android:layout_width="300dp"
-                android:layout_height="210dp"
+                android:layout_width="298dp"
+                android:layout_height="252dp"
+                android:src="@drawable/campusimage"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.544"
+                app:layout_constraintHorizontal_bias="0.555"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.587"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintVertical_bias="0.458" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
