@@ -1,6 +1,6 @@
 package com.example.FSMap;
-//Woohoo, imports
 
+//Broken Imports as of 6/18/24
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -623,11 +623,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
+    //Reloads saved state when returning to the app
     @Override
     protected void onResume() {
         super.onResume();
     }
 
+    //Saves user's previous map position when unfocusing the app to return them to that location
     @Override
     protected void onPause() {
         super.onPause();
@@ -651,15 +653,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void dismissSplashScreen() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //change the boolean
-                isAndroidReady = true;
-            }
-        }, 5000);
-    }
+//    private void dismissSplashScreen() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //change the boolean
+//                isAndroidReady = true;
+//            }
+//        }, 5000);
+//    }
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -777,21 +779,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Manifest.permission.ACCESS_COARSE_LOCATION, false);
                     }
                 });
-
-//        // FAVORITES
-//        if (savedInstanceState == null) {
-//            Bundle extras = getIntent().getExtras();
-//
-//            if (extras == null) {
-//                //Extra bundle is null
-//                isNOTfUCKED = false;
-//            } else {
-//                markerTitle2 = extras.getString("marker");
-//                isNOTfUCKED = true;
-//            }
-//        }
     }
 
+    //
     @SuppressLint("MissingPermission")
     public void registerLocationManager() {
         mLocationManager = (LocationManager) MapsActivity.this.getSystemService(LOCATION_SERVICE);
@@ -808,6 +798,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    //Creates a custom marker on the user's current location
     private void setUserLocationMarker(Location location) {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         if (usermarker == null) {

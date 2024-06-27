@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.MapFragment;
 
+//This class handles updating information across the app based on the current marker
 public class MarkerFragment extends MapFragment {
     public View originalContentView;
     public MarkerTouch MTouch;

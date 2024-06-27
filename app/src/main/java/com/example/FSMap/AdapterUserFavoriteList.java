@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+//Broken Import as of 6/18/24
 import android.content.Context;
 import android.content.Intent;
 import android.text.method.KeyListener;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+//This class handles some of the functionality of the favorites class
 public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFavoriteList.FavoriteViewHolder> {
 
 
@@ -45,6 +47,8 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
         return new FavoriteViewHolder(v);
     }
 
+    //Function use: Takes user from the favorites screen to the marker they clicked on in favorites
+    // on the map
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
 
@@ -59,6 +63,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
                String markerTitle = holder.orginalName.getText().toString();
 
+               //Intent to open the Map screen and go to the marker
                Intent intent = new Intent(context, MapsActivity.class);
                intent.putExtra("marker_ToMap",markerTitle);
                context.startActivity(intent);
@@ -84,6 +89,7 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
 
 
+        //This function handles renaming of a favorited marker
         holder.TitleOfTheMarker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -95,18 +101,13 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
 
 
                     Favorites.renameMarker(context,holder.TitleOfTheMarker.getText().toString(),holder.orginalName.getText().toString());
-//                    int size = listFavorite.size();
-//                    listFavorite.clear();
-//                    notifyItemRangeInserted(0,size);
-
-
-
                 }
 
                 return false;
             }
         });
 
+        //If the keyboard is no longer in focus, hide the keyboard and lock the marker name again
         holder.TitleOfTheMarker.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -120,11 +121,10 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
             }
         });
 
+        //When clicking the edit button on a favorite, focus on the text and allow it to be changed
         holder.editFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 holder.TitleOfTheMarker.setKeyListener(holder.originalKeyListener);
                 holder.TitleOfTheMarker.requestFocus();
                 InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -147,6 +147,8 @@ public class AdapterUserFavoriteList extends RecyclerView.Adapter<AdapterUserFav
     public int getItemCount() {
         return listFavorite.size();
     }
+
+    //RecyclerView to reuse the layout for all favorites
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
 
         EditText TitleOfTheMarker,orginalName;

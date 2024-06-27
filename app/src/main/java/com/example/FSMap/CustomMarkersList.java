@@ -2,6 +2,7 @@ package com.example.FSMap;
 
 import com.google.android.gms.maps.model.LatLng;
 
+//Class to store Custom Marker Data
 public class CustomMarkersList {
     String markerTitle;
 

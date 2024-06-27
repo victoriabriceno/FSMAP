@@ -36,14 +36,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+//Starting screen
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register, forgetPassword;
     private TextInputLayout editTextEmail, editTextPassword;
     private Button login;
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
+    GoogleSignInOptions gso; //Deprecated as of 6/18/2024
+    GoogleSignInClient gsc; //Deprecated as of 6/18/2024
 
     private FirebaseAuth mAuth;
     //Save email and password
@@ -272,16 +273,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
-//        if (cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-//                cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-//            connected = true;
-//        else
-//            connected= false;
-//        if (!connected){
-//            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-//
-//        }
-//        else{
         switch (view.getId()) {
 
             case R.id.RegisterBTN:
@@ -296,16 +287,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, ForgotPassword.class));
                 break;
         }
-//        }
     }
 
+    //This function handles everything that happens after pressing "log in"
     private void userLogin() {
         String email = editTextEmail.getEditText().getText().toString();
         String password = editTextPassword.getEditText().getText().toString();
 
-
+        //These If blocks make sure everything is valid before signing in
         if (email.isEmpty()) {
-            Toast.makeText(this, "Email is require!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Email is required!", Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();
             return;
         }
@@ -316,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         if (password.isEmpty()) {
-            Toast.makeText(this, "Password is require!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password is required!", Toast.LENGTH_SHORT).show();
             editTextPassword.requestFocus();
             return;
         }
@@ -329,6 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
 
+        //If it is the first time running the app on the device, the user will go through a tutorial once they log in
         boolean isFirsTime = onBoardingScreen.getBoolean("firsTime", true);
 
         relativeLayoutLoading.setVisibility(View.VISIBLE);
@@ -349,14 +341,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
 
 
-
+                    //If the email hasn't been verified, they will be sent a verification link
                     } else {
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this, "Check your email box to verify the email!", Toast.LENGTH_LONG).show();
                         relativeLayoutLoading.setVisibility(View.GONE);
                     }
 
-
+                //This runs if the email is verified but the password is wrong.
                 } else {
                     Toast.makeText(MainActivity.this, "Check your email box to verify the email or you have the incorrect information", Toast.LENGTH_SHORT).show();
                     relativeLayoutLoading.setVisibility(View.GONE);

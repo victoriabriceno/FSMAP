@@ -1,6 +1,5 @@
 package com.example.FSMap;
 
-//BY SEBASTIAN JAZMIN
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+//This class is the About screen in the app.
 public class FSMapAbout extends AppCompatActivity {
 
     ImageView backAbout;

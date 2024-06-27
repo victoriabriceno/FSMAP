@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+//Broken Imports as of 6/18/24
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//This class handles editing the user's profile name and image
 public class EditProfile extends AppCompatActivity {
 
     CircleImageView profileImage;

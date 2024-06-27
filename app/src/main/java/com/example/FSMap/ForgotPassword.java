@@ -18,14 +18,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+//This class handles the Forgot Password screen
 public class ForgotPassword extends AppCompatActivity {
 
     private TextInputLayout emailEditText;
     private Button resetPassword;
     private ProgressBar progressbar;
     ImageView backForgot;
+    FirebaseAuth auth;
 
-FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ FirebaseAuth auth;
 
         auth = FirebaseAuth.getInstance();
 
+        //Run the function when reset password is clicked
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +48,7 @@ FirebaseAuth auth;
             }
         });
 
+        //Run the function when the back button is clicked
         backForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +58,7 @@ FirebaseAuth auth;
         });
 
     }
+    //Function handles checking and then sending the email to reset the password of the account
     private void resetpassword(){
 
         String email = emailEditText.getEditText().getText().toString().trim();
@@ -71,8 +75,10 @@ FirebaseAuth auth;
         }
 
         progressbar.setVisibility(View.VISIBLE);
+        //Send the email to reset the password.
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
+            //Verifying if the email was successfully sent or not.
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(ForgotPassword.this,"Check your email to reset your password!",Toast.LENGTH_LONG).show();

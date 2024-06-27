@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+//Broken Imports as of 6/18/24
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.dynamic.IFragmentWrapper;
 
+//Onboarding screen for new users
 public class OnBoarding extends AppCompatActivity {
 
     ViewPager viewPager;
@@ -34,6 +36,7 @@ public class OnBoarding extends AppCompatActivity {
     int currentPosition;
 
 
+    //Create the screen for the user to go through.
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class OnBoarding extends AppCompatActivity {
         dotsLayout = findViewById(R.id.dots);
         letsGetStarted = findViewById(R.id.get_started_btn);
 
-        // Call adapter
+        // Call SliderAdapter
         sliderAdapter = new SliderAdapter(this);
 
 
@@ -60,17 +63,20 @@ public class OnBoarding extends AppCompatActivity {
 
     }
 
+    //Skip to maps screen on pressing skip
     public void skip(View view) {
 
         startActivity(new Intent(getApplicationContext(), MapsActivity.class));
         finish();
     }
 
+    //Goes to next slide
     public void next(View view) {
 
         viewPager.setCurrentItem(currentPosition + 1);
     }
 
+    //Creates the dots to show progress at the bottom of the onboarding slide
     private void addDots(int position) {
 
         dots = new TextView[4];

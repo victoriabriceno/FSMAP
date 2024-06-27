@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+//Broken Imports as of 6/18/24
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//This class handles the Custom Markers Screen
 public class CustomMarker extends AppCompatActivity {
 
 
@@ -68,6 +70,7 @@ public class CustomMarker extends AppCompatActivity {
             }
         });
 
+        //Pull the list of Custom Markers from Firebase
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/CustomMarkers/");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,6 +123,7 @@ public class CustomMarker extends AppCompatActivity {
 
 
     }
+    //Return to settings screen when pressing back
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -127,6 +131,7 @@ public class CustomMarker extends AppCompatActivity {
     }
 
 
+    //Add Custom Markers to firebase
     public static void addToCustomMarkers(Context context, Marker marker, int floor) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -181,6 +186,7 @@ public class CustomMarker extends AppCompatActivity {
         }
     }
 
+    //Function to rename a custom marker
     public static void renameCUstomMarkers(Context context,String titleCustom, String OriginalCustomTitle, int floor, LatLng position) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -194,22 +200,11 @@ public class CustomMarker extends AppCompatActivity {
             HashMap<String,Object> hashMap2 = new HashMap<>();
             hashMap2.put("CustomName",titleCustom);
 
-            //Save to db
+            //Save to database
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
 
-//            ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(OriginalCustomTitle).setValue(titleCustom).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    Toast.makeText(context, "Added to Markers.", Toast.LENGTH_SHORT).show();
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(context, "Failed to add to you Marker list due to " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                }
-//            });
 
+            //Providing feedback to user on if task was successful
             ref.child(firebaseAuth.getUid()).child("CustomMarkers").child(OriginalCustomTitle).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
@@ -252,6 +247,7 @@ public class CustomMarker extends AppCompatActivity {
         }
     }
 
+    //Removing the Marker from the database
     public static void removeFromCustomMarkers(Context context, Marker marker) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -275,6 +271,7 @@ public class CustomMarker extends AppCompatActivity {
         }
     }
 
+    //Remove Marker from custom markers
     public static void removeFromCustom(Context context, String title) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -298,6 +295,7 @@ public class CustomMarker extends AppCompatActivity {
         }
     }
 
+    //Remove all custom markers from the user's database
     public static void removeAllFromCustomMarkers(Context context) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {

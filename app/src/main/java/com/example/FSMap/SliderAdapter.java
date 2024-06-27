@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+//Broken Imports as of 6/18/24
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
+//This class handles the tutorial of the app on the onboarding screen
 public class SliderAdapter extends PagerAdapter {
 
     Context context;
@@ -54,10 +56,9 @@ public class SliderAdapter extends PagerAdapter {
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
 
         return view == (ConstraintLayout)object;
-
-
-
     }
+
+    //Unused as of 6/19/24
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -79,6 +80,7 @@ public class SliderAdapter extends PagerAdapter {
         return view;
     }
 
+    //Unused as of 6/19/24
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
        container.removeView((ConstraintLayout)object);

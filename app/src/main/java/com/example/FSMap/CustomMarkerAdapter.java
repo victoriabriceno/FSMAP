@@ -1,5 +1,6 @@
 package com.example.FSMap;
 
+//Broken Imports as of 6/18/24
 import android.content.Context;
 import android.content.Intent;
 import android.text.method.KeyListener;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Map;
 
+//Stores Custom Marker information across screens.
 public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapter.CustomMarkerViewHolder> {
 
 
@@ -64,6 +66,7 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             }
         });
 
+        //Delete custom marker when clicking trash
         holder.trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +86,7 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             }
         });
 
+        //Saves custom marker name
         holder.TitleOfTheMarker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -94,18 +98,12 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
 
 
                    CustomMarker.renameCUstomMarkers(context,holder.TitleOfTheMarker.getText().toString(),holder.OriginalOfTheMarker.getText().toString(),floor ,postionCustom);
-//                    int size = listFavorite.size();
-//                    listFavorite.clear();
-//                    notifyItemRangeInserted(0,size);
-
-
-
                 }
-
                 return false;
             }
         });
 
+        //Turn off editing when tapping off of marker
         holder.TitleOfTheMarker.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -113,12 +111,13 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
                     // Hide soft keyboard.
                     InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(holder.TitleOfTheMarker.getWindowToken(), 0);
-                    // Make it non-editable again.
+                    // Lock Marker title
                     holder.TitleOfTheMarker.setKeyListener(null);
                 }
             }
         });
 
+        //Open up keyboard when pressing pencil on a cusotm marker
         holder.pencil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,8 +159,6 @@ public class CustomMarkerAdapter extends RecyclerView.Adapter<CustomMarkerAdapte
             markerclick = itemView.findViewById(R.id.marker);
             originalKeyListener = TitleOfTheMarker.getKeyListener();
             TitleOfTheMarker.setKeyListener(null);
-            //removeStar = itemView.findViewById(R.id.removeFromFavorites);
-
         }
     }
 

@@ -40,6 +40,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     CheckBox checkBox;
     RelativeLayout loadingRegister;
     MaterialAlertDialogBuilder materialAlertDialogBuilder;
+
+    //Register Screen
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         registerUser.setEnabled(false);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            //TOS
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 

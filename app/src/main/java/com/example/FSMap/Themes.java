@@ -21,21 +21,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.HashMap;
 import java.util.Map;
 
-//Themes screen
+//NO LONGER USED
 
+//This class is the Themes screen, where the user can change their app to use light or dark mode in the app
 public class Themes extends AppCompatActivity implements View.OnClickListener {
 
 
+    //Creation of Themes Screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
 
-        //Setting up buttons
+        //Setting up buttons for the Themes screen to display
         ImageButton LightMode;
         ImageButton DarkMode;
         ImageView backThemes;
 
+        //Back button on themes screen to exit the screen
         backThemes = findViewById(R.id.backBTN);
         backThemes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,7 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        //Create map for firebase data
+        //Create map data structure to save to Firebase
         Map<String, Object> DarkMode = new HashMap<>();
 
         DatabaseReference tdatabase;
@@ -61,16 +64,16 @@ public class Themes extends AppCompatActivity implements View.OnClickListener {
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         tdatabase = FirebaseDatabase.getInstance().getReference("/Users/" + userID);
 
+        //Runs when Light Mode is clicked
         if (view.getId() == R.id.LightModeButton) {
-            //Need to find alternative to below
-            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             setTheme(AppCompatDelegate.MODE_NIGHT_NO);
 
             //Add data to firebase
             DarkMode.put("DarkMode", Boolean.FALSE);
             tdatabase.updateChildren(DarkMode);
+
+        //Runs when Dark Mode is clicked
         } else if (view.getId() == R.id.DarkModeButton) {
-            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             setTheme((AppCompatDelegate.MODE_NIGHT_YES));
             //Add data to firebase
             DarkMode.put("DarkMode", Boolean.TRUE);

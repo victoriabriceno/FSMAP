@@ -2,6 +2,7 @@ package com.example.FSMap;
 
 //Settings Screen
 
+//Broken Imports as of 6/18/24
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -38,12 +39,13 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+//This class handles the settings screen
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
 
     TextView userNameSettings;
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
+    GoogleSignInOptions gso; //Deprecated
+    GoogleSignInClient gsc; //Deprecated
 
     SharedPreferences sharedPreferences;
 
@@ -52,8 +54,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //Binding Buttons
-        //CircleImageView userProfileSetting;
+        //Settings Screen button variables
         CardView About;
         CardView CreatedMarkers;
         CardView Favorites;
@@ -63,13 +64,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         CircleImageView userProfileSetting;
         ImageView backButton;
 
-        //FIREBASE
+        //Firebase Variables
         FirebaseAuth fAuth;
         StorageReference storageReference;
         FirebaseUser userFirebase;
         DatabaseReference reference;
         String useriD;
 
+        //Binding Buttons on settings screen to their function
         About = findViewById(R.id.AboutButton);
         About.setOnClickListener(this);
 
@@ -78,22 +80,25 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         Favorites = findViewById(R.id.FavoritesButton);
         Favorites.setOnClickListener(this);
+
         Logout = findViewById(R.id.LogoutButton);
         Logout.setOnClickListener(this);
+
         userProfileSetting = findViewById(R.id.userSettings);
         userProfileSetting.setOnClickListener(this);
+
         backButton = (ImageView) findViewById(R.id.backBTN);
         backButton.setOnClickListener(this);
 
         userNameSettings = findViewById(R.id.userNamesettings);
 
 
-        //FIREBASE
+        //Grabbing Firebase data of the user
         userFirebase = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         useriD = userFirebase.getUid();
 
-        //PROFILE PICTURE THIS CODE IS GOOD IF EVERYTHING GOES TO SHIT UNCOMMENT THIS
+        //Grabbing and updating user's profile picture on settings screen
         fAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("Users/" + fAuth.getCurrentUser().getUid() + "/ProfilePicture.jpg");
@@ -104,6 +109,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+        //Update user's name on change
         reference.child(useriD).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -120,7 +126,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 }
 
             }
-
+            //Error handling
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Settings.this, "Something wrong happened! ", Toast.LENGTH_SHORT).show();
@@ -134,7 +140,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         gsc = GoogleSignIn.getClient(this, gso);
 
 
-        // SWITCH
+        // Light mode Dark mode switch
         SwitchCompat switchCompat;
         switchCompat = findViewById(R.id.Switch);
 
@@ -190,6 +196,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         this.finish();
     }
 
+    //Handle what happens on click
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -207,7 +214,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 //Logs user out and returns to login
                 gsc.signOut();
                 FirebaseAuth.getInstance().signOut();
-                // Returns to specified Screen
+                // Returns to log in Screen and sets up the screen and saved information
                 Intent i = new Intent(Settings.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

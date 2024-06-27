@@ -1,8 +1,9 @@
 package com.example.FSMap;
 
 
-//Favorites Screen
 
+
+//Broken Imports as of 6/18/24
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//Favorites Screen
 public class Favorites extends AppCompatActivity {
 
  RecyclerView recyclerView;
@@ -61,7 +63,6 @@ public class Favorites extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.markersRV);
-       // DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorites");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
