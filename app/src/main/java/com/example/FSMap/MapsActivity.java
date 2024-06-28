@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -4247,6 +4248,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //Setting curlocation and final destination to text boxes
                     AutoCompleteTextView curlocation = findViewById(R.id.From);
                     AutoCompleteTextView finaldestination = findViewById(R.id.Destination);
+
                     //create strings from textboxes
                     String stringcurlocation = curlocation.getText().toString();
                     String stringfinaldestination = finaldestination.getText().toString();

@@ -29,176 +29,144 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+        <View
+            android:id="@+id/view2"
+            android:layout_width="30dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:background="@color/FS_ORANGE"
+            android:foregroundGravity="center" />
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="30dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center"
-                android:background="@color/FS_ORANGE"
-                android:foregroundGravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.011">
+        <TextView
+            android:id="@+id/roomnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/questrialregular"
+            android:paddingLeft="10dp"
+            android:text="Marker Name"
+            android:textColor="@color/FS_dark_gray"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            </View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:background="@color/FS_light_gray">
 
-            <TextView
-                android:id="@+id/roomnumber"
-                android:layout_width="227dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="144dp"
-                android:fontFamily="@font/questrialregular"
-
-                android:paddingLeft="10dp"
-                android:text="Marker Name"
-                android:textColor="@color/FS_dark_gray"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <AutoCompleteTextView
                 android:id="@+id/From"
-                android:layout_width="252dp"
-                android:layout_height="48dp"
-                android:background="@drawable/custom_input"
-                android:fontFamily="@font/questrialregular"
+                android:layout_width="275dp"
+                android:layout_height="60dp"
                 android:hint="From"
                 android:padding="10dp"
                 android:textColor="@color/FS_dark_gray"
                 android:textColorHint="@color/FS_dark_gray"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.062"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.11" />
-
-            <AutoCompleteTextView
-                android:id="@+id/Destination"
-                android:layout_width="254dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_input"
-                android:hint="To"
-                android:padding="10dp"
-                android:textColor="@color/FS_dark_gray"
-                android:textColorHint="@color/FS_dark_gray"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.064"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.162" />
+                />
+
 
             <ImageButton
                 android:id="@+id/btnAddFavorites"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginHorizontal="280dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="36dp"
+                android:layout_marginEnd="8dp"
                 android:background="@null"
                 android:foreground="@drawable/star"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <Button
-                android:id="@+id/navgo"
-                android:layout_width="66dp"
-                android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginEnd="36dp"
-                android:layout_toRightOf="@id/From"
-                android:background="@drawable/custom_imput2"
-                android:backgroundTint="@color/FS_ORANGE"
-                android:fontFamily="@font/questrialregular"
-                android:text="GO"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/Destination"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.203" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"/>
 
             <ImageButton
                 android:id="@+id/btnRemoveFavorites"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginHorizontal="280dp"
-                android:layout_marginEnd="52dp"
+                android:layout_marginEnd="8dp"
                 android:background="@null"
                 android:foreground="@drawable/starfull"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.992"
-                app:layout_constraintStart_toStartOf="@+id/From"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.107" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+
+            <AutoCompleteTextView
+                android:id="@+id/Destination"
+                android:layout_width="276dp"
+                android:layout_height="60dp"
+                android:hint="To"
+                android:padding="10dp"
+                android:textColor="@color/FS_dark_gray"
+                android:textColorHint="@color/FS_dark_gray"
+                android:background="@drawable/custom_input"
+               />
 
             <Button
-                android:id="@+id/RemoveSpot"
-                android:layout_width="167dp"
-                android:layout_height="48dp"
-                android:layout_alignWithParentIfMissing="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/custom_input"
-                android:backgroundTint="@color/FS_ORANGE"
-                android:gravity="center"
-                android:text="Remove Spot"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.839" />
-
-            <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/navgo"
+                android:layout_width="64dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/custom_imput2"
+                android:backgroundTint="@color/FS_ORANGE"
                 android:fontFamily="@font/questrialregular"
-                android:text="Swift King wish you the best navigating through campus!
-Just don't enter in places that you can't."
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.743">
+                android:text="GO"
+                android:layout_marginStart="10dp"
+                />
+        </LinearLayout>
 
-            </TextView>
+
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/imageForMarkers"
-                android:layout_width="298dp"
-                android:layout_height="252dp"
-                android:src="@drawable/campusimage"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.555"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.458" />
+                android:layout_width="340dp"
+                android:layout_height="270dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/campusexplorermap"
+               />
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="@font/questrialregular"
+            android:text="Swift King wish you the best navigating through campus! Just don't enter in places that you can't."
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/RemoveSpot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_imput2"
+            android:backgroundTint="@color/FS_ORANGE"
+            android:gravity="center"
+            android:text="Remove Spot" />
 
 
     </LinearLayout>
 
 
 </LinearLayout>
+
+
+

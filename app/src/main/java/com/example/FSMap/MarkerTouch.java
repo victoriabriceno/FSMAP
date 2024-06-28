@@ -117,44 +117,27 @@ public class MarkerTouch extends FrameLayout {
             MakeList();
         }
     }
-    protected String Marker(Marker m){
-       // if(BuildingOne.contains(m)) {
+    protected String getMarkerImage(Marker m){
 
-        //} else if (BuildingOneF2.contains(m)) {
+        ImageView image = slideupview.findViewById(R.id.imageForMarkers);
+        // It looks for an specific marker for the image
+        if (Objects.requireNonNull(m.getTitle()).contains("FS3A")){
 
-       // } else if (BuildingTwo.contains(m)) {
+            image.setImageResource(R.drawable.buildinga);
 
-       // }else if(BuildingTwoF2.contains(m)){
-
-         if (ThreeA.contains(m)) {
-
-            ImageView image = slideupview.findViewById(R.id.imageForMarkers);
+        }else if (Objects.requireNonNull(m.getTitle()).contains("FS3B")){
             image.setImageResource(R.drawable.buildingb);
-
-
-           // String photoDrwable = photoForSlideup.getDrawable().toString();
-
-            //if (photoDrwable.isEmpty());
-
-
-
-
-        //} else if (ThreeAMarkersF2.contains(m)) {
-
-       // } else if (ThreeBMarkers.contains(m)) {
-
-       // }else if(ThreeBCMarkers.contains(m)){
-
-       // } else if (ThreeCMarkers.contains(m)) {
-
-       // } else if (ThreeDMarkers.contains(m)) {
-
-        //}else if(ThreeEMarkers.contains(m)){
-
-       // }else if(FourAMarkers.contains(m)){
-
+        }else if (Objects.requireNonNull(m.getTitle()).contains("FS3C")){
+           
+        }else if (Objects.requireNonNull(m.getTitle()).contains("FS3D")){
+            
+        } else if (Objects.requireNonNull(m.getTitle()).contains("FS3E")) {
+            image.setImageResource(R.drawable.buildinge);
+        }else{
+            image.setImageResource(R.drawable.campusexplorermap);
         }
-        return "NotFound";
+
+        return "Not found";
     }
 
     //Marker Click
@@ -205,8 +188,8 @@ public class MarkerTouch extends FrameLayout {
                     }
 
                     //Favorites star; is filled in or is empty
-                    ImageButton bntFavoritesRemove = (ImageButton) A.findViewById(R.id.btnRemoveFavorites);
-                    ImageButton btnFavoritesAdd = (ImageButton) A.findViewById(R.id.btnAddFavorites);
+                    ImageButton bntFavoritesRemove = A.findViewById(R.id.btnRemoveFavorites);
+                    ImageButton btnFavoritesAdd = A.findViewById(R.id.btnAddFavorites);
 
                     if (isItInMyFavorites(marker)) {
 
@@ -272,6 +255,8 @@ public class MarkerTouch extends FrameLayout {
                     TextView text = slideupview.findViewById(R.id.roomnumber);
                     text.setText(marker.getTitle());
 
+                    getMarkerImage(marker);
+
                     // It looks for an specific marker for the image
                     if (Objects.requireNonNull(marker.getTitle()).contains("FS3B")){
                         ImageView image = slideupview.findViewById(R.id.imageForMarkers);
@@ -303,8 +288,7 @@ public class MarkerTouch extends FrameLayout {
                     if (!isCreatedMarker(marker)) {
                         from.setEnabled(true);
                         from.setFocusableInTouchMode(true);
-                        from.setBackgroundColor(Color.GRAY);
-                        To.setBackgroundColor(Color.GRAY);
+
                         To.setEnabled(true);
                         To.setFocusableInTouchMode(true);
                         //Creating Suggestions for text boxes in nav
@@ -320,11 +304,11 @@ public class MarkerTouch extends FrameLayout {
                         from.setEnabled(false);
                         from.setText("Current Location");
                         from.setFocusable(false);
-                        from.setBackgroundColor(Color.TRANSPARENT);
+                        //from.setBackgroundColor(Color.TRANSPARENT);
                         To.setEnabled(false);
                         To.setText(marker.getTitle());
                         To.setFocusable(false);
-                        To.setBackgroundColor(Color.TRANSPARENT);
+                        //To.setBackgroundColor(Color.TRANSPARENT);
                     }
                     //hide markers after one is clicked
 //                for (Marker m : AM)
@@ -366,8 +350,8 @@ public class MarkerTouch extends FrameLayout {
         }
 
         //Favorites star; is filled in or is empty
-        ImageButton bntFavoritesRemove = (ImageButton) A.findViewById(R.id.btnRemoveFavorites);
-        ImageButton btnFavoritesAdd = (ImageButton) A.findViewById(R.id.btnAddFavorites);
+        ImageButton bntFavoritesRemove = A.findViewById(R.id.btnRemoveFavorites);
+        ImageButton btnFavoritesAdd = A.findViewById(R.id.btnAddFavorites);
 
         if (isItInMyFavorites(marker)) {
 
@@ -457,8 +441,6 @@ public class MarkerTouch extends FrameLayout {
         if (!isCreatedMarker(marker)) {
             from.setEnabled(true);
             from.setFocusableInTouchMode(true);
-            from.setBackgroundColor(Color.GRAY);
-            To.setBackgroundColor(Color.GRAY);
             To.setEnabled(true);
             To.setFocusableInTouchMode(true);
             //Creating Suggestions for text boxes in nav
@@ -474,11 +456,10 @@ public class MarkerTouch extends FrameLayout {
             from.setEnabled(false);
             from.setText("Current Location");
             from.setFocusable(false);
-            from.setBackgroundColor(Color.TRANSPARENT);
             To.setEnabled(false);
             To.setText(marker.getTitle());
             To.setFocusable(false);
-            To.setBackgroundColor(Color.TRANSPARENT);
+
         }
         //hide markers after one is clicked
 //                for (Marker m : AM)
