@@ -164,7 +164,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                     editor.apply();
                     switchCompat.setChecked(true);
 
-                    //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     setTheme((AppCompatDelegate.MODE_NIGHT_YES));
                     //Add data to firebase
                     DarkMode.put("DarkMode", Boolean.TRUE);
@@ -176,8 +175,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                     editor.apply();
                     switchCompat.setChecked(false);
 
-                    //Need to find alternative to below
-                    //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     setTheme(AppCompatDelegate.MODE_NIGHT_NO);
 
                     //Add data to firebase

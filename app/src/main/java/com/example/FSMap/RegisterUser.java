@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 
+//This screen handles registering the user
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
@@ -83,7 +84,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         registerUser.setEnabled(false);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-            //TOS
+            //Prompt the user with TOS, they must accept it before their account can be created.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -218,6 +219,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -227,51 +229,60 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //Performs all the checks required to create an account before attempting to create the account
     private void registerUser() {
 
+        //Grabbing all the inputs
         String userName = editUser.getEditText().getText().toString();
         String email = editEmail.getEditText().getText().toString();
         String password = editPassword.getEditText().getText().toString();
         String confirmP = confirmPassword.getEditText().getText().toString();
 
-
+        //Check for empty usernam field
         if (userName.isEmpty()){
             Toast.makeText(this, "An username is required!", Toast.LENGTH_SHORT).show();
             editUser.requestFocus();
             return;
         }
+        //Check for empty email field
         if(email.isEmpty()){
 
             Toast.makeText(this, "An email is required!", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
+        //Check for valid email
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
             Toast.makeText(this, "Please provide a valid email", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
+        //Check for empty password field
         if (password.isEmpty()){
             Toast.makeText(this, "A password is require!", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
+        //Check for empty confirm password field
         if (confirmP.isEmpty()){
             Toast.makeText(this, "You need to confirm the password", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
+        //Check for a password longer than 6 characters
         if (password.length() < 6 ){
             Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
+        //Check for a password longer than 6 characters
         if (confirmP.length()<6){
             Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
+        //Check both passwords match
         if(!password.equals(confirmP)){
             Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
@@ -280,6 +291,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "The password match", Toast.LENGTH_SHORT).show();
         }
 
+        //Attempt account creation with the provided username and password.
         loadingRegister.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
