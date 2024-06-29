@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-installations-interop:17.1.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/96fa924cb7f8302c2eb7aa9d9c686995/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/96fa924cb7f8302c2eb7aa9d9c686995/transformed/jetified-firebase-installations-interop-17.1.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/3bdf96ddc5a108acc957ebcb4852c3c9/transformed/jetified-firebase-installations-interop-17.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/3bdf96ddc5a108acc957ebcb4852c3c9/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

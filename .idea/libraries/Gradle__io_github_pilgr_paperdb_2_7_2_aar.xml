@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: io.github.pilgr:paperdb:2.7.2@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/23b58ee9275c6bfd47a7656ce041f2f1/transformed/jetified-paperdb-2.7.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/23b58ee9275c6bfd47a7656ce041f2f1/transformed/jetified-paperdb-2.7.2/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/72cffcac8c6e2eb0a2e812909368679f/transformed/jetified-paperdb-2.7.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/72cffcac8c6e2eb0a2e812909368679f/transformed/jetified-paperdb-2.7.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
