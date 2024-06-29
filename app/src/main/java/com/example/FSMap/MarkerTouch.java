@@ -117,6 +117,8 @@ public class MarkerTouch extends FrameLayout {
             MakeList();
         }
     }
+
+    // This method insert the image of the Slide up window for the markers
     protected String getMarkerImage(Marker m){
 
         ImageView image = slideupview.findViewById(R.id.imageForMarkers);
