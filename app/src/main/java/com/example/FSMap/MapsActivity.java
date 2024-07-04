@@ -1025,10 +1025,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 break;
-            case ("3B"):
+            case ("FishBowl"):
                 if (floorPicked == 1) {
                     for (int i = 0; i < ThreeBMarkers.size(); i++) {
                         ThreeBMarkers.get(i).setVisible(true);
+                    }
+                }
+                break;
+            case ("3BConnected"):
+                if (floorPicked == 1) {
+                    for (int i = 0; i < ThreeBCMarkers.size(); i++) {
+                        ThreeBCMarkers.get(i).setVisible(true);
                     }
                 }
                 break;
@@ -4027,12 +4034,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ThreeAMarkers.get(i).setVisible(false);
             }
         }
-        if (!typeNotToHide.equals("3B")) {
+        if (!typeNotToHide.equals("FishBowl")) {
             for (int i = 0; i < ThreeBMarkers.size(); i++) {
                 ThreeBMarkers.get(i).setVisible(false);
             }
         }
-        if(!typeNotToHide.equals("3BC")){
+        if(!typeNotToHide.equals("3BConnected")){
             for(int i = 0; i < ThreeBCMarkers.size(); i++){
                 ThreeBCMarkers.get(i).setVisible(false);
             }
