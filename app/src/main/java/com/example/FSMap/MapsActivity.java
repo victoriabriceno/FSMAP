@@ -1672,29 +1672,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Marker stuffs
         //Markers for classrooms
-        BitmapDrawable bitmapdraw1 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing);
-        Bitmap b1 = bitmapdraw1.getBitmap();
-        Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
+
+        Bitmap bitmapdraw1 = decodeSampledBitmapFromResource(getResources(),R.drawable.pixilart_drawing, 512,512);
+        Bitmap smallMarker1 = Bitmap.createScaledBitmap(bitmapdraw1, 100, 100, false);
 
         //Markers for Bathrooms
-        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixil_frame_0);
-        Bitmap b2 = bitmapdraw2.getBitmap();
-        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
+        Bitmap bitmapdraw2 = decodeSampledBitmapFromResource(getResources(), R.drawable.pixil_frame_0,512, 512 );
+        Bitmap smallMarker2 = Bitmap.createScaledBitmap(bitmapdraw2, 100, 100, false);
 
         //Markers for WaterZones
-        BitmapDrawable bitmapdraw3 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing__1_);
-        Bitmap b3 = bitmapdraw3.getBitmap();
-        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
+        Bitmap bitmapdraw3 = decodeSampledBitmapFromResource(getResources(),R.drawable.pixilart_drawing__1_,512,512);
+        Bitmap smallMarker3 = Bitmap.createScaledBitmap(bitmapdraw3, 100, 100, false);
 
         //Markers for ETCRooms
-        BitmapDrawable bitmapdraw4 = (BitmapDrawable) getResources().getDrawable(R.drawable.etc_marker);
-        Bitmap b4 = bitmapdraw4.getBitmap();
-        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
+        Bitmap bitmapdraw4 = decodeSampledBitmapFromResource(getResources(), R.drawable.etc_marker, 512,512);
+        Bitmap smallMarker4 = Bitmap.createScaledBitmap(bitmapdraw4, 100, 100, false);
 
         //Markers for OFRooms
-        BitmapDrawable bitmapdraw5 = (BitmapDrawable) getResources().getDrawable(R.drawable.office_marker);
-        Bitmap b5 = bitmapdraw5.getBitmap();
-        Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
+        Bitmap bitmapdraw5 = decodeSampledBitmapFromResource(getResources(), R.drawable.office_marker, 512,512);
+        Bitmap smallMarker5 = Bitmap.createScaledBitmap(bitmapdraw5, 100, 100, false);
 
         //On Marker Click Override
         markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
