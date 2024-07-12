@@ -1,6 +1,6 @@
 package com.example.FSMap;
+//Woohoo, imports
 
-//Broken Imports as of 6/18/24
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -623,13 +623,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
-    //Reloads saved state when returning to the app
     @Override
     protected void onResume() {
         super.onResume();
     }
 
-    //Saves user's previous map position when unfocusing the app to return them to that location
     @Override
     protected void onPause() {
         super.onPause();
@@ -653,15 +651,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-//    private void dismissSplashScreen() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                //change the boolean
-//                isAndroidReady = true;
-//            }
-//        }, 5000);
-//    }
+    private void dismissSplashScreen() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //change the boolean
+                isAndroidReady = true;
+            }
+        }, 5000);
+    }
 
     //onCreate gets rebuilt each time the map is created
     @Override
@@ -779,9 +777,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Manifest.permission.ACCESS_COARSE_LOCATION, false);
                     }
                 });
+
+//        // FAVORITES
+//        if (savedInstanceState == null) {
+//            Bundle extras = getIntent().getExtras();
+//
+//            if (extras == null) {
+//                //Extra bundle is null
+//                isNOTfUCKED = false;
+//            } else {
+//                markerTitle2 = extras.getString("marker");
+//                isNOTfUCKED = true;
+//            }
+//        }
     }
 
-    //
     @SuppressLint("MissingPermission")
     public void registerLocationManager() {
         mLocationManager = (LocationManager) MapsActivity.this.getSystemService(LOCATION_SERVICE);
@@ -798,7 +808,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    //Creates a custom marker on the user's current location
     private void setUserLocationMarker(Location location) {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         if (usermarker == null) {
@@ -1025,17 +1034,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
                 break;
-            case ("FishBowl"):
+            case ("3B"):
                 if (floorPicked == 1) {
                     for (int i = 0; i < ThreeBMarkers.size(); i++) {
                         ThreeBMarkers.get(i).setVisible(true);
-                    }
-                }
-                break;
-            case ("3BConnected"):
-                if (floorPicked == 1) {
-                    for (int i = 0; i < ThreeBCMarkers.size(); i++) {
-                        ThreeBCMarkers.get(i).setVisible(true);
                     }
                 }
                 break;
@@ -1245,9 +1247,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return inSampleSize;
     }
+    private Bitmap decodeAndScaleBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
+        // Decodifica el bitmap a un tamaño aproximado
+        Bitmap sampledBitmap = decodeSampledBitmapFromResource(res, resId, reqWidth, reqHeight);
 
-
-
+        // Escala el bitmap al tamaño exacto
+        return Bitmap.createScaledBitmap(sampledBitmap, reqWidth, reqHeight, true);
+    }
 
 
     /**
@@ -1672,25 +1678,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Marker stuffs
         //Markers for classrooms
-
-        Bitmap bitmapdraw1 = decodeSampledBitmapFromResource(getResources(),R.drawable.pixilart_drawing, 512,512);
-        Bitmap smallMarker1 = Bitmap.createScaledBitmap(bitmapdraw1, 100, 100, false);
+        Bitmap bitmapdraw1 = decodeAndScaleBitmapFromResource(getResources(), R.drawable.pixilart_drawing, 100, 100);
 
         //Markers for Bathrooms
-        Bitmap bitmapdraw2 = decodeSampledBitmapFromResource(getResources(), R.drawable.pixil_frame_0,512, 512 );
-        Bitmap smallMarker2 = Bitmap.createScaledBitmap(bitmapdraw2, 100, 100, false);
+        Bitmap bitmapdraw2 = decodeAndScaleBitmapFromResource(getResources(), R.drawable.pixil_frame_0, 100, 100);
+        //Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
 
         //Markers for WaterZones
-        Bitmap bitmapdraw3 = decodeSampledBitmapFromResource(getResources(),R.drawable.pixilart_drawing__1_,512,512);
-        Bitmap smallMarker3 = Bitmap.createScaledBitmap(bitmapdraw3, 100, 100, false);
+        Bitmap bitmapdraw3 = decodeAndScaleBitmapFromResource(getResources(),R.drawable.pixilart_drawing__1_, 100, 100);
+        //Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
 
         //Markers for ETCRooms
-        Bitmap bitmapdraw4 = decodeSampledBitmapFromResource(getResources(), R.drawable.etc_marker, 512,512);
-        Bitmap smallMarker4 = Bitmap.createScaledBitmap(bitmapdraw4, 100, 100, false);
+        Bitmap bitmapdraw4 = decodeAndScaleBitmapFromResource(getResources(),R.drawable.etc_marker,100,100);
+       // Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
 
         //Markers for OFRooms
-        Bitmap bitmapdraw5 = decodeSampledBitmapFromResource(getResources(), R.drawable.office_marker, 512,512);
-        Bitmap smallMarker5 = Bitmap.createScaledBitmap(bitmapdraw5, 100, 100, false);
+        Bitmap bitmapdraw5 = decodeAndScaleBitmapFromResource(getResources(),R.drawable.office_marker,100,100);
+        //Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
 
         //On Marker Click Override
         markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
@@ -1794,25 +1798,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //Set Markers image for classrooms
                 for (Marker ClassRoom : ClassRoomMarkers) {
-                    ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
+                    ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(bitmapdraw1));
                 }
 
                 //Set Markers image for bathrooms
                 for (Marker Bathrooms : BathroomMarkers) {
-                    Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+                    Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(bitmapdraw2));
                 }
 
                 //Set Markers image for Waterzones
                 for (Marker WaterStation : WaterZones) {
-                    WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+                    WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(bitmapdraw3));
                 }
                 //Set Markers image for ETC rooms
                 for (Marker etc : ETCRooms) {
-                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
+                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((bitmapdraw4)));
                 }
                 //Set Marker image for OF rooms
                 for (Marker etc : OFRooms) {
-                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
+                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((bitmapdraw5)));
                 }
                 markerFragment.MTouch.CSVMarkers(MarkersList);
 
@@ -4030,12 +4034,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ThreeAMarkers.get(i).setVisible(false);
             }
         }
-        if (!typeNotToHide.equals("FishBowl")) {
+        if (!typeNotToHide.equals("3B")) {
             for (int i = 0; i < ThreeBMarkers.size(); i++) {
                 ThreeBMarkers.get(i).setVisible(false);
             }
         }
-        if(!typeNotToHide.equals("3BConnected")){
+        if(!typeNotToHide.equals("3BC")){
             for(int i = 0; i < ThreeBCMarkers.size(); i++){
                 ThreeBCMarkers.get(i).setVisible(false);
             }

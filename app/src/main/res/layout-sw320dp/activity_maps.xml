@@ -40,6 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="210dp" />
 
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userMaps"
             android:layout_width="wrap_content"
@@ -47,13 +48,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="326dp"
-            android:layout_marginRight="5dp"
             android:src="@drawable/userprofilefinalexpanded" />
-
 
         <ImageView
             android:id="@+id/gps"
@@ -74,11 +71,12 @@
 
         <RelativeLayout
             android:id="@+id/search_bar"
-            android:layout_width="308dp"
+            android:layout_width="317dp"
             android:layout_height="58dp"
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="6dp"
             android:layout_marginVertical="20dp"
+            android:layout_marginRight="19dp"
             android:background="@drawable/white_boarder"
             android:elevation="15dp">
 
@@ -89,16 +87,16 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="-1dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="0dp"
-                android:padding="10dp"
+                android:layout_marginRight="3dp"
                 android:background="@null"
                 android:drawableStart="@drawable/search"
                 android:drawablePadding="10dp"
                 android:hint="Enter a classroom"
                 android:imeOptions="actionDone"
                 android:inputType="text"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:translationZ="90dp" />

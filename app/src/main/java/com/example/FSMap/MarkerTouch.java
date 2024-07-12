@@ -6,8 +6,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,12 +59,12 @@ public class MarkerTouch extends FrameLayout {
     private static final int ClickRadius = 50;
 
     private GoogleMap mGoogleMap;
-    public List<Marker> mMarkers, Favs, CM, AM,ThreeA,ThreeB;
+    public List<Marker> mMarkers, Favs, CM, AM, ThreeA, ThreeB;
     ArrayList<Marker> markersClicked = new ArrayList<>();
     public Marker createdMarker, marker2;
     private FusedLocationProviderClient fusedLocationClient;
     private boolean mLocationPermissionsGranted, wasRemoveHit, csvReady, cReady, fReady = false;
-    public boolean markerready,wasMarkerClicked = false;
+    public boolean markerready, wasMarkerClicked = false;
     private Context C;
     private Activity A;
     private double Latitude, Longitude;
@@ -118,25 +122,78 @@ public class MarkerTouch extends FrameLayout {
         }
     }
 
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        options.inJustDecodeBounds = false;
+        options.inScaled = true; // Enable scaling
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888; // High quality color
+        options.inDither = true; // Optional, to improve color depth on some devices
+
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // This while loop determines a scaled down size that maintains the aspect ratio
+            // and ensures neither width nor height is smaller than the requested width and height.
+            while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
+    }
+    private Bitmap decodeAndScaleBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
+        // Decodifica el bitmap a un tamaño aproximado
+        Bitmap sampledBitmap = decodeSampledBitmapFromResource(res, resId, reqWidth, reqHeight);
+
+        // Escala el bitmap al tamaño exacto
+        return Bitmap.createScaledBitmap(sampledBitmap, reqWidth, reqHeight, true);
+    }
+
     // This method insert the image of the Slide up window for the markers
-    protected String getMarkerImage(Marker m){
+    protected String getMarkerImage(Marker m) {
+
+        String title = Objects.requireNonNull(m.getTitle());
+
+        Bitmap building1Bitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.bulding1, 1000, 800);
+        //Bitmap building1 = Bitmap.createScaledBitmap(building1Bitmap, 1000, 800, false);
+        Bitmap building2Bitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.building2,1000,800);
+        Bitmap buildingcBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.buildingc,1000,800);
+        Bitmap buildingdBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.buildingd,1000,800);
+        Bitmap libraryBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.library,1000,800);
+        Bitmap buildingfBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.buildingf,1000,800);
+        Bitmap campusExplorationMapBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.campusexplorermap,1000,800);
+
+
 
         ImageView image = slideupview.findViewById(R.id.imageForMarkers);
         // It looks for an specific marker for the image
-        if (Objects.requireNonNull(m.getTitle()).contains("FS3A")){
-
-            image.setImageResource(R.drawable.buildinga);
-
-        }else if (Objects.requireNonNull(m.getTitle()).contains("FS3B")){
-            image.setImageResource(R.drawable.buildingb);
-        }else if (Objects.requireNonNull(m.getTitle()).contains("FS3C")){
-           
-        }else if (Objects.requireNonNull(m.getTitle()).contains("FS3D")){
-            
-        } else if (Objects.requireNonNull(m.getTitle()).contains("FS3E")) {
-            image.setImageResource(R.drawable.buildinge);
-        }else{
-            image.setImageResource(R.drawable.campusexplorermap);
+        if (title.contains("FS3A")) {
+            image.setImageBitmap(building1Bitmap);
+        } else if (title.contains("FS3B")) {
+            image.setImageBitmap(building2Bitmap);
+        } else if (title.contains("FS3C")) {
+            image.setImageBitmap(buildingcBitmap);
+        } else if (title.contains("FS3D")) {
+            image.setImageBitmap(buildingdBitmap);
+        } else if (title.contains("FS3E")) {
+            image.setImageBitmap(libraryBitmap);
+        } else if (title.contains("FS3F")) {
+            image.setImageBitmap(buildingfBitmap);
+        } else {
+            image.setImageBitmap(campusExplorationMapBitmap);
         }
 
         return "Not found";
@@ -175,7 +232,7 @@ public class MarkerTouch extends FrameLayout {
 
                 //Do marker stuff here
                 //vvvvvvvvvvvvvvvvvvv
-                if (marker.isVisible()){
+                if (marker.isVisible()) {
                     wasMarkerClicked = true;
                     getLocationPermission();
                     //If you have location, get device location
@@ -259,11 +316,6 @@ public class MarkerTouch extends FrameLayout {
 
                     getMarkerImage(marker);
 
-                    // It looks for an specific marker for the image
-                    if (Objects.requireNonNull(marker.getTitle()).contains("FS3B")){
-                        ImageView image = slideupview.findViewById(R.id.imageForMarkers);
-                        image.setImageResource(R.drawable.buildingb);
-                    }
 
                     if (!slideup) {
                         slideupview.setVisibility(View.VISIBLE);
@@ -273,7 +325,7 @@ public class MarkerTouch extends FrameLayout {
                         slideup = true;
 
 
-                    }else{
+                    } else {
                         FilterMarker.setEnabled(true);
                     }
 
@@ -334,7 +386,7 @@ public class MarkerTouch extends FrameLayout {
     }
 
     public void ManualTouch(Marker marker) {
-        if (!marker.isVisible()){
+        if (!marker.isVisible()) {
             marker.setVisible(true);
         }
         wasMarkerClicked = true;
@@ -420,7 +472,7 @@ public class MarkerTouch extends FrameLayout {
         text.setText(marker.getTitle());
 
 
-        if (!slideup ) {
+        if (!slideup) {
             slideupview.setVisibility(View.VISIBLE);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             bottomSheetBehavior.setFitToContents(false);
@@ -428,7 +480,7 @@ public class MarkerTouch extends FrameLayout {
             slideup = true;
 
 
-        }else{
+        } else {
             FilterMarker.setEnabled(true);
         }
         //Creates list of all marker titles
@@ -520,7 +572,7 @@ public class MarkerTouch extends FrameLayout {
     }
 
     public boolean isItInMyFavorites(Marker marker) {
-        if (Favs !=null){
+        if (Favs != null) {
             for (int i = 0; i < Favs.size(); i++) {
                 if (Favs.get(i).getTitle().equals(marker.getTitle())) {
                     return true;
@@ -541,28 +593,29 @@ public class MarkerTouch extends FrameLayout {
         return isItCreatedMarker;
     }
 
-    public void HideMarkersExcept(Marker m){
-        for(Marker marker: CM){
-            if(!marker.equals(m)){
+    public void HideMarkersExcept(Marker m) {
+        for (Marker marker : CM) {
+            if (!marker.equals(m)) {
                 marker.setVisible(false);
             }
         }
-        for(Marker marker: AM){
-            if(!marker.equals(m)){
+        for (Marker marker : AM) {
+            if (!marker.equals(m)) {
                 marker.setVisible(false);
             }
         }
-        for(Marker marker: Favs){
-            if(!marker.equals(m)){
+        for (Marker marker : Favs) {
+            if (!marker.equals(m)) {
                 marker.setVisible(false);
             }
         }
-        for (Marker marker: mMarkers){
-            if(!marker.equals(m)){
+        for (Marker marker : mMarkers) {
+            if (!marker.equals(m)) {
                 marker.setVisible(false);
             }
         }
     }
+
     public void moveCamera(LatLng latLng) {
 
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
