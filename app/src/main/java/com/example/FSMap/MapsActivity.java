@@ -1247,9 +1247,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return inSampleSize;
     }
+    private Bitmap decodeAndScaleBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
+        // Decodifica el bitmap a un tamaño aproximado
+        Bitmap sampledBitmap = decodeSampledBitmapFromResource(res, resId, reqWidth, reqHeight);
 
-
-
+        // Escala el bitmap al tamaño exacto
+        return Bitmap.createScaledBitmap(sampledBitmap, reqWidth, reqHeight, true);
+    }
 
 
     /**
@@ -1674,29 +1678,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Marker stuffs
         //Markers for classrooms
-        BitmapDrawable bitmapdraw1 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing);
-        Bitmap b1 = bitmapdraw1.getBitmap();
-        Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
+        Bitmap bitmapdraw1 = decodeAndScaleBitmapFromResource(getResources(), R.drawable.pixilart_drawing, 100, 100);
 
         //Markers for Bathrooms
-        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixil_frame_0);
-        Bitmap b2 = bitmapdraw2.getBitmap();
-        Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
+        Bitmap bitmapdraw2 = decodeAndScaleBitmapFromResource(getResources(), R.drawable.pixil_frame_0, 100, 100);
+        //Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
 
         //Markers for WaterZones
-        BitmapDrawable bitmapdraw3 = (BitmapDrawable) getResources().getDrawable(R.drawable.pixilart_drawing__1_);
-        Bitmap b3 = bitmapdraw3.getBitmap();
-        Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
+        Bitmap bitmapdraw3 = decodeAndScaleBitmapFromResource(getResources(),R.drawable.pixilart_drawing__1_, 100, 100);
+        //Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
 
         //Markers for ETCRooms
-        BitmapDrawable bitmapdraw4 = (BitmapDrawable) getResources().getDrawable(R.drawable.etc_marker);
-        Bitmap b4 = bitmapdraw4.getBitmap();
-        Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
+        Bitmap bitmapdraw4 = decodeAndScaleBitmapFromResource(getResources(),R.drawable.etc_marker,100,100);
+       // Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
 
         //Markers for OFRooms
-        BitmapDrawable bitmapdraw5 = (BitmapDrawable) getResources().getDrawable(R.drawable.office_marker);
-        Bitmap b5 = bitmapdraw5.getBitmap();
-        Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
+        Bitmap bitmapdraw5 = decodeAndScaleBitmapFromResource(getResources(),R.drawable.office_marker,100,100);
+        //Bitmap smallMarker5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
 
         //On Marker Click Override
         markerFragment.MTouch.setGoogleMap(mMap, linesShowing, this.getApplicationContext(), this);
@@ -1800,25 +1798,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //Set Markers image for classrooms
                 for (Marker ClassRoom : ClassRoomMarkers) {
-                    ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
+                    ClassRoom.setIcon(BitmapDescriptorFactory.fromBitmap(bitmapdraw1));
                 }
 
                 //Set Markers image for bathrooms
                 for (Marker Bathrooms : BathroomMarkers) {
-                    Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+                    Bathrooms.setIcon(BitmapDescriptorFactory.fromBitmap(bitmapdraw2));
                 }
 
                 //Set Markers image for Waterzones
                 for (Marker WaterStation : WaterZones) {
-                    WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+                    WaterStation.setIcon(BitmapDescriptorFactory.fromBitmap(bitmapdraw3));
                 }
                 //Set Markers image for ETC rooms
                 for (Marker etc : ETCRooms) {
-                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker4)));
+                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((bitmapdraw4)));
                 }
                 //Set Marker image for OF rooms
                 for (Marker etc : OFRooms) {
-                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((smallMarker5)));
+                    etc.setIcon(BitmapDescriptorFactory.fromBitmap((bitmapdraw5)));
                 }
                 markerFragment.MTouch.CSVMarkers(MarkersList);
 
