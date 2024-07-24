@@ -302,9 +302,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case "b3u"://check if result was building 3 top half.
             {
                 if (checklat < 28.594907405128183) {
-                    return "3BConnected";
+                    return "3BC";
                 } else if (checklat < 28.59533160728655) {
-                    return "FishBowl";
+                    return "3B";
                 } else {
                     return "3A";
                 }
@@ -351,119 +351,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return "nun";
     }
 
-//    protected void FirstLoad(String result, String firstLoadResults) {
-//        switch (result) {
-//            case "b3u"://check if result was building 3 top half.
-////                if (firstLoadResults.equals("3A")) {
-////                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(0)));
-////                    B3U2 = mMap.addGroundOverlay(groundOverlaysf2.get(0));
-////                    B3U.get(B3U.size() - 1).setDimensions(34, 28);
-////                    AllFloorOneOverlays.add(B3U.get(B3U.size() - 1));
-////                    ThreeA = B3U.get(B3U.size()-1);
-////                    B3U2.setDimensions(34, 28);
-////                    AllSecondFloorOverlays.add(B3U2);
-////                    resultsList.add("3A");
-////                    if (floorPicked == 1) {
-////                        B3U2.setVisible(false);
-////                    } else {
-////                        B3U.get(B3U.size() - 1).setVisible(false);
-////                    }
-////                } else if (firstLoadResults.equals("FishBowl")) {
-//                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(1)));
-//                    B3U.get(B3U.size() - 1).setDimensions(84, 62);
-//                    ThreeB = B3U.get(B3U.size()-1);
-//                    AllFloorOneOverlays.add(B3U.get(B3U.size()-1));
-//                    resultsList.add("FishBowl");
-//                }
-//                else if (firstLoadResults.equals("3BConnected")) {
-//                    B3U.add(mMap.addGroundOverlay(groundOverlaysf1.get(2)));
-//                    B3U.get(B3U.size() - 1).setDimensions(64, 30);
-//                    ThreeBC = B3U.get(B3U.size()-1);
-//                    AllFloorOneOverlays.add(B3U.get(B3U.size()-1));
-//                    resultsList.add("3BConnected");
-//                }
-//
-//                break;
-//            case "b3d"://check if result was building 3 bottom half
-//                if (firstLoadResults.equals("3C")) {
-//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(3)));
-//                    B3D.get(B3D.size() - 1).setDimensions(40, 42);
-//                    ThreeC = B3D.get(B3D.size()-1);
-//                    AllFloorOneOverlays.add(B3D.get(B3D.size()-1));
-//                    resultsList.add("3C");
-//                }
-//                } else if (firstLoadResults.equals("3D")) {
-//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(4)));
-//                    B3D.get(B3D.size() - 1).setDimensions(40, 30);
-//                    AllFloorOneOverlays.add(B3D.get(B3D.size()-1));
-//                }
-//                } else if (firstLoadResults.equals("3E")) {
-//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(5)));
-//                    B3D.get(B3D.size() - 1).setDimensions(37, 28);}
-//                } else if (firstLoadResults.equals("3F")) {
-//                    B3D.add(mMap.addGroundOverlay(groundOverlaysf1.get(6)));
-//                    B3D.get(B3D.size() - 1).setDimensions(100, 80);
-//                }
-//                break;
-//            case "b4u":
-//                if (firstLoadResults.equals("4A")) {
-//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(7)));
-//                    B4U.get(B4U.size() - 1).setDimensions(90, 50);
-//                    AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
-//                } else if (firstLoadResults.equals("4AWD2")) {
-//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(8)));
-//                    B4U.get(B4U.size() - 1).setDimensions(56, 43);
-//                 if (firstLoadResults.equals("4AFC")) {
-//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(9)));
-//                    B4U.get(B4U.size() - 1).setDimensions(70, 50);
-//                    AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
-//                } else
-//                if (firstLoadResults.equals("4B")) {
-//                    B4U.add(mMap.addGroundOverlay(groundOverlaysf1.get(10)));
-//                    B4U.get(B4U.size() - 1).setDimensions(68, 48);
-//                    FourB = B4U.get(B4U.size()-1);
-//                    AllFloorOneOverlays.add(B4U.get(B4U.size()-1));
-//                    resultsList.add("4B");
-//                }
-//                break;
-//            case "b4d":
-//                if (firstLoadResults.equals("4C")) {
-//                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(11)));
-//                    B4D.get(B4D.size() - 1).setDimensions(72, 54);}
-//                } else if (firstLoadResults.equals("4D")) {
-//                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(12)));
-//                    B4D.get(B4D.size() - 1).setDimensions(100, 60);
-//                } else if (firstLoadResults.equals("4E")) {
-//                    B4D.add(mMap.addGroundOverlay(groundOverlaysf1.get(13)));
-//                    B4D.get(B4D.size() - 1).setDimensions(100, 60);
-//                }
-//                break;
-//            case "b2":
-//                B2.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 1)));
-//                B2.get(B2.size() - 1).setDimensions(157, 95);
-//                B2.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 1)));
-//                B2.get(B2.size() - 1).setDimensions(157, 95);
-//                if (floorPicked == 1) {
-//                    B2.get(1).setVisible(false);
-//                } else {
-//                    B2.get(0).setVisible(false);
-//                }
 
-//                break;
-//            case "b1":
-//                B1.add(mMap.addGroundOverlay(groundOverlaysf1.get(groundOverlaysf1.size() - 2)));
-//                B1.get(B1.size() - 1).setDimensions(140, 90);
-//                B1.add(mMap.addGroundOverlay(groundOverlaysf2.get(groundOverlaysf2.size() - 2)));
-//                B1.get(B1.size() - 1).setDimensions(136, 94);
-//                if (floorPicked == 1) {
-//                    B1.get(1).setVisible(false);
-//                } else {
-//                    B1.get(0).setVisible(false);
-//                }
-//                break;
-//
-//        }
-//    }
 
     protected void HideAllOverlays() {
         if (B3U.size() > 0 ) {
@@ -514,12 +402,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             B3U2.setVisible(true);
                         }
                     }
-                } else if (finerResults.equals("FishBowl")) {
+                } else if (finerResults.equals("3B")) {
                     if(ThreeB != null&& floorPicked == 1){
                         ThreeB.setVisible(true);
                     }
                 }
-                else if (finerResults.equals("3BConnected")) {
+                else if (finerResults.equals("3BC")) {
                     if(ThreeBC != null&& floorPicked == 1){
                         ThreeBC.setVisible(true);
                     }
@@ -1038,6 +926,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (floorPicked == 1) {
                     for (int i = 0; i < ThreeBMarkers.size(); i++) {
                         ThreeBMarkers.get(i).setVisible(true);
+                    }
+                }
+                break;
+            case ("3BC"):
+                if (floorPicked == 1) {
+                    for (int i = 0; i < ThreeBCMarkers.size(); i++) {
+                        ThreeBCMarkers.get(i).setVisible(true);
                     }
                 }
                 break;
