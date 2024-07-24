@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.CallbackManager;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean connected;
     ConnectivityManager cm;
 
-    // Facebook
-    CallbackManager mCallbackManager;
+
+
 
     ProgressBar progressBar;
     RelativeLayout relativeLayoutLoading;
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 e.printStackTrace();
             }
         } else {
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
             relativeLayoutLoading.setVisibility(View.GONE);
         }
 
