@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ConnectivityManager cm;
 
 
-
-
     ProgressBar progressBar;
     RelativeLayout relativeLayoutLoading;
 
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button googleButton = findViewById(R.id.google_login);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-                requestIdToken(getString(R.string.default_web_client_id))
+                requestIdToken(getString(R.string.Google_Client_ID))
                 .requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
 

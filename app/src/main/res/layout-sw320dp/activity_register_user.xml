@@ -247,10 +247,10 @@
         android:id="@+id/backBTN"
         android:layout_width="30dp"
         android:layout_height="29dp"
+        android:layout_above="@+id/constrainLayout"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="349dp"
-        android:layout_marginBottom="593dp"
+        android:layout_marginEnd="383dp"
+        android:layout_marginBottom="165dp"
         android:background="@drawable/back"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="24dp" />

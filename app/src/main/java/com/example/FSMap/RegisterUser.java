@@ -34,7 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private Button registerUser;
-    private TextInputLayout editEmail, editPassword,confirmEmail , confirmPassword, editUser;
+    private TextInputLayout editEmail, editPassword, confirmEmail, confirmPassword, editUser;
     private ProgressBar progressBar;
     private Button registerBack;
     ImageView registerBackButton;
@@ -62,18 +62,18 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(RegisterUser.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences("checkBox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember","false");
+                editor.putString("remember", "false");
                 editor.apply();
                 startActivity(i);
                 finish();
             }
         });
-        editEmail =  findViewById(R.id.registerEmailAddress);
-        editPassword =  findViewById(R.id.registerPassword);
+        editEmail = findViewById(R.id.registerEmailAddress);
+        editPassword = findViewById(R.id.registerPassword);
         confirmPassword = findViewById(R.id.ConfirmPassword);
-        editUser  =findViewById(R.id.Username) ;
+        editUser = findViewById(R.id.Username);
 
         progressBar = (ProgressBar) findViewById(R.id.ProgressBar);
         loadingRegister = (RelativeLayout) findViewById(R.id.LoadingDesignRegister);
@@ -211,7 +211,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     });
 
                     materialAlertDialogBuilder.show();
-                }else{
+                } else {
                     registerUser.setEnabled(false);
                 }
             }
@@ -222,7 +222,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.RegisterUser:
                 registerUser();
                 break;
@@ -239,96 +239,96 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String confirmP = confirmPassword.getEditText().getText().toString();
 
         //Check for empty usernam field
-        if (userName.isEmpty()){
+        if (userName.isEmpty()) {
             Toast.makeText(this, "An username is required!", Toast.LENGTH_SHORT).show();
             editUser.requestFocus();
             return;
         }
         //Check for empty email field
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
 
             Toast.makeText(this, "An email is required!", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
         //Check for valid email
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
             Toast.makeText(this, "Please provide a valid email", Toast.LENGTH_SHORT).show();
             editEmail.requestFocus();
             return;
         }
         //Check for empty password field
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             Toast.makeText(this, "A password is require!", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
         //Check for empty confirm password field
-        if (confirmP.isEmpty()){
+        if (confirmP.isEmpty()) {
             Toast.makeText(this, "You need to confirm the password", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
         //Check for a password longer than 6 characters
-        if (password.length() < 6 ){
+        if (password.length() < 6) {
             Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             editPassword.requestFocus();
             return;
         }
         //Check for a password longer than 6 characters
-        if (confirmP.length()<6){
+        if (confirmP.length() < 6) {
             Toast.makeText(this, "The password should be at least 6 characters", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
         }
         //Check both passwords match
-        if(!password.equals(confirmP)){
+        if (!password.equals(confirmP)) {
             Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
             confirmPassword.requestFocus();
             return;
-        }else{
-            Toast.makeText(this, "The password match", Toast.LENGTH_SHORT).show();
+        } else {
+            //Toast.makeText(this, "The password match", Toast.LENGTH_SHORT).show();
         }
 
         //Attempt account creation with the provided username and password.
         loadingRegister.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(email,password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            User user = new User(email,userName);
+                        if (task.isSuccessful()) {
+                            User user = new User(email, userName);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-
-                                            if(task.isSuccessful()){
-                                                FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
+                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                            if (task.isSuccessful()) {
                                                 user.sendEmailVerification();
                                                 FirebaseAuth.getInstance().signOut();
-                                                Toast.makeText(RegisterUser.this,"Check your email box to verify the email!",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(RegisterUser.this, "Check your email box to verify the email!", Toast.LENGTH_LONG).show();
                                                 Intent i = new Intent(RegisterUser.this, MainActivity.class);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                SharedPreferences preferences = getSharedPreferences("checkBox",MODE_PRIVATE);
+                                                SharedPreferences preferences = getSharedPreferences("checkBox", MODE_PRIVATE);
                                                 SharedPreferences.Editor editor = preferences.edit();
-                                                editor.putString("remember","false");
+                                                editor.putString("remember", "false");
                                                 editor.apply();
                                                 startActivity(i);
                                                 finish();
-                                            }else{
-                                                Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
+
+
+                                            } else {
+                                                Toast.makeText(RegisterUser.this, "Failed to register user or account already exist!", Toast.LENGTH_LONG).show();
                                             }
                                             loadingRegister.setVisibility(View.GONE);
 
                                         }
                                     });
-                        }
-                        else{
-                            Toast.makeText(RegisterUser.this,"Failed to register user! Try again!",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(RegisterUser.this, "Failed to register user or account already exist!", Toast.LENGTH_LONG).show();
                             loadingRegister.setVisibility(View.GONE);
                         }
                     }

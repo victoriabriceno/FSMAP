@@ -18,9 +18,8 @@
     <string name="LightMode">Light mode</string>
     <string name="DarkMode">Dark mode</string>
 
-    <string name="facebook_app_id">1245373456395769</string>
-    <string name="fb_login_protocol_scheme">fb1245373456395769</string>
-    <string name="facebook_client_token">2e2a90c24e9e971a3d808d2b4f4f58b9</string>
+    //Google
+    <string name="Google_Client_ID">186094249184-q6fdlfe7pkp5cnk6dtnl08bek0uo3ltg.apps.googleusercontent.com</string>
 
     <string name="title_activity_loading_screen">LoadingScreenActivity</string>
     <!-- Strings used for fragments for navigation -->

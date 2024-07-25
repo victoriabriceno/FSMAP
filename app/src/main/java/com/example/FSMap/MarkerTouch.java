@@ -175,7 +175,8 @@ public class MarkerTouch extends FrameLayout {
         Bitmap libraryBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.library,1000,800);
         Bitmap buildingfBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.buildingf,1000,800);
         Bitmap campusExplorationMapBitmap = decodeAndScaleBitmapFromResource(getResources(), R.drawable.campusexplorermap,1000,800);
-
+        Bitmap fs1bitmap= decodeAndScaleBitmapFromResource(getResources(), R.drawable.fs1,1000,800);
+        Bitmap fs2bitmap= decodeAndScaleBitmapFromResource(getResources(), R.drawable.fs2,1000,800);
 
 
         ImageView image = slideupview.findViewById(R.id.imageForMarkers);
@@ -192,6 +193,10 @@ public class MarkerTouch extends FrameLayout {
             image.setImageBitmap(libraryBitmap);
         } else if (title.contains("FS3F")) {
             image.setImageBitmap(buildingfBitmap);
+        }else if(title.contains("FS1")){
+            image.setImageBitmap(fs1bitmap);
+        }else if(title.contains("FS2")){
+            image.setImageBitmap(fs2bitmap);
         } else {
             image.setImageBitmap(campusExplorationMapBitmap);
         }
