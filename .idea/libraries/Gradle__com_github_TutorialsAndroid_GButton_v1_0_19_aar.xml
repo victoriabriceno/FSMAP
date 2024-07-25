@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.TutorialsAndroid:GButton:v1.0.19@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/c855a9519bb7b35d17dbf33fbb4c512b/transformed/jetified-GButton-v1.0.19/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/c855a9519bb7b35d17dbf33fbb4c512b/transformed/jetified-GButton-v1.0.19/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/c855a9519bb7b35d17dbf33fbb4c512b/transformed/jetified-GButton-v1.0.19/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/c9b14359e858e7a1ce7e870c6bd4ece2/transformed/jetified-GButton-v1.0.19/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/c9b14359e858e7a1ce7e870c6bd4ece2/transformed/jetified-GButton-v1.0.19/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/c9b14359e858e7a1ce7e870c6bd4ece2/transformed/jetified-GButton-v1.0.19/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

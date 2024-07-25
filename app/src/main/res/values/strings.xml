@@ -19,7 +19,7 @@
     <string name="DarkMode">Dark mode</string>
 
     //Google
-    <string name="Google_Client_ID">186094249184-q6fdlfe7pkp5cnk6dtnl08bek0uo3ltg.apps.googleusercontent.com</string>
+    <string name="Google_Client_ID">186094249184-t8kqn1fo8h5etp3rf0o3ml3qcvtkp60r.apps.googleusercontent.com</string>
 
     <string name="title_activity_loading_screen">LoadingScreenActivity</string>
     <!-- Strings used for fragments for navigation -->

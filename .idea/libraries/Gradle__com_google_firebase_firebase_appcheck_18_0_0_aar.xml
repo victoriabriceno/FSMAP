@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-appcheck:18.0.0@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/caf0a07a883bb295c803c20255a3da52/transformed/jetified-firebase-appcheck-18.0.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/7d1ddca285a4eb0513716d65bdf49e23/transformed/jetified-firebase-appcheck-18.0.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/caf0a07a883bb295c803c20255a3da52/transformed/jetified-firebase-appcheck-18.0.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/caf0a07a883bb295c803c20255a3da52/transformed/jetified-firebase-appcheck-18.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/7d1ddca285a4eb0513716d65bdf49e23/transformed/jetified-firebase-appcheck-18.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/7d1ddca285a4eb0513716d65bdf49e23/transformed/jetified-firebase-appcheck-18.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
