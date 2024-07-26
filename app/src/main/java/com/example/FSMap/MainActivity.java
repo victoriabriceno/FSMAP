@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             connected = false;
         }
 
-        // GOOGLE
+        // GOOGLE ANOTHER WAY TO FIX IT IF IT BROKES BUT IT IS IMPORTANT TO FIX THE KEYS
         Button googleButton = findViewById(R.id.google_login);
 
         /*
