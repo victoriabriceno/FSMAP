@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: com.esotericsoftware:kryo:4.0.1">
+  <library name="Gradle: com.esotericsoftware:kryo:4.0.1" external-system-id="GRADLE">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.esotericsoftware/kryo/4.0.1/5053899c213a6ce50a800d4902c5a9de49fe0098/kryo-4.0.1.jar!/" />
     </CLASSES>

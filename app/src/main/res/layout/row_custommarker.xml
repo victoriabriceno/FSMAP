@@ -10,29 +10,81 @@
     app:contentPadding="5dp">
 
     <RelativeLayout
-        android:layout_width="412dp"
-        android:layout_height="58dp">
+        android:layout_width="wrap_content"
+        android:layout_height="53dp">
 
         <RelativeLayout
             android:id="@+id/marker"
-            android:layout_width="51dp"
-            android:layout_height="51dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/location_marker_favoritedesign">
+            android:layout_width="41dp"
+            android:layout_height="39dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="289dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/location_pin">
 
         </RelativeLayout>
 
-        <TextView
+        <EditText
             android:id="@+id/TitleMarker1"
-            android:layout_width="match_parent"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-1dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/marker"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="27dp"
+            android:background="@null"
             android:fontFamily="@font/questrialregular"
+            android:imeOptions="actionDone"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="Title"
-            android:textColor="@color/gray"
+            android:textColor="@color/FS_gray"
+            android:textSize="15dp" /> />
+
+        <EditText
+            android:id="@+id/TitleMarker2"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="133dp"
+            android:layout_marginBottom="25dp"
+            android:background="@null"
+            android:fontFamily="@font/questrialregular"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Title"
+            android:textColor="@color/FS_gray"
+            android:textSize="15dp"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/trashCustom"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="62dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/trash"
+            android:fontFamily="@font/questrialregular"
+            android:textSize="15dp" />
+
+        <ImageButton
+
+            android:id="@+id/editCustom"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="94dp"
+            android:layout_marginBottom="13dp"
+            android:background="@drawable/pencil"
+            android:fontFamily="@font/questrialregular"
+            android:onClick="store_input"
             android:textSize="15dp" />
 
     </RelativeLayout>

@@ -301,11 +301,6 @@
         </entry>
         <entry key="vectorWizard">
           <value>
-            <PersistentState />
-          </value>
-        </entry>
-        <entry key="vectorWizard">
-          <value>
             <PersistentState>
               <option name="children">
                 <map>
@@ -319,7 +314,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/location_on/baseline_location_on_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/done_all/baseline_done_all_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -329,9 +324,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="e87630" />
-                            <entry key="outputName" value="location_marker_favoritedesign" />
-                            <entry key="sourceFile" value="C:\Users\victo\OneDrive\Desktop\FSMAP\LoginTesting - Copy" />
+                            <entry key="color" value="e89e30" />
+                            <entry key="outputName" value="skip_icon" />
+                            <entry key="sourceFile" value="C:\Users\victo\Downloads\splashscreen.svg" />
                           </map>
                         </option>
                       </PersistentState>

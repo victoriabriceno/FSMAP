@@ -1,12 +1,8 @@
 <component name="libraryTable">
-  <library name="Gradle: io.github.pilgr:paperdb:2.7.2@aar">
+  <library name="Gradle: io.github.pilgr:paperdb:2.7.2@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc587cc936c7b0d9fec8c95fdb317f2d/transformed/paperdb-2.7.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2fb1c197582fbadb2e8132fe6ec92351/transformed/paperdb-2.7.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8d98c05f1230f896c8a77a73919956e1/transformed/paperdb-2.7.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8e49126ba3b45c86f49bc589d4a26884/transformed/paperdb-2.7.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/8e49126ba3b45c86f49bc589d4a26884/transformed/paperdb-2.7.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8e49126ba3b45c86f49bc589d4a26884/transformed/paperdb-2.7.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/d614b7f50688c4bca47bc86915336fb2/transformed/jetified-paperdb-2.7.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/d614b7f50688c4bca47bc86915336fb2/transformed/jetified-paperdb-2.7.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

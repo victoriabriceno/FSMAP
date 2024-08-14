@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: de.javakaffee:kryo-serializers:0.40">
+  <library name="Gradle: de.javakaffee:kryo-serializers:0.40" external-system-id="GRADLE">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.javakaffee/kryo-serializers/0.40/562cb61898302da4e8d3fd141c821edb1bc6b36d/kryo-serializers-0.40.jar!/" />
     </CLASSES>

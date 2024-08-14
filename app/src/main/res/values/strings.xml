@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LoginTesting</string>
+    <string name="app_name">FS Map</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="AboutText">App created by Swift Kings:\n
         Victoria Briceño\n
@@ -17,4 +17,28 @@
     </string>
     <string name="LightMode">Light mode</string>
     <string name="DarkMode">Dark mode</string>
+
+    //Google
+    <string name="Google_Client_ID">186094249184-t8kqn1fo8h5etp3rf0o3ml3qcvtkp60r.apps.googleusercontent.com</string>
+
+    <string name="title_activity_loading_screen">LoadingScreenActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="message">Already routing, please cancel previous route</string>
+
+
+
+    //String for Onboarding screens
+    <string name="fist_slide_title">Navigate Through Campus</string>
+    <string name="second_slide_title">Make Custom Markers</string>
+    <string name="third_slide_title">Add To Favorites</string>
+    <string name="fourth_slide_title">Manage Your Profile</string>
+
+
+    <string name="first_slide_desc">Fs map shows the route from your current location to any classroom at Full Sail. Click on a marker to get started.</string>
+    <string name="second_slide_desc">Press and hold at any location on the map to create a custom marker.</string>
+    <string name="third_slide_desc">To save to favorites just click the marker to see the slide-up and click the star to add it to your list</string>
+    <string name="fourth_slide_desc">To see your custom markers, favorites or change your profile click on the icon in the top left of the map.</string>
+
 </resources>

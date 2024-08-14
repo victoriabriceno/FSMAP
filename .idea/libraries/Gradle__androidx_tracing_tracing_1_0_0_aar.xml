@@ -1,10 +1,8 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.tracing:tracing:1.0.0@aar">
+  <library name="Gradle: androidx.tracing:tracing:1.0.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f9f87b811c2609de4d15acb8ea76f18c/transformed/tracing-1.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e3812a46cdef4f65f39d8aea99b397cd/transformed/tracing-1.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e3812a46cdef4f65f39d8aea99b397cd/transformed/tracing-1.0.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e3812a46cdef4f65f39d8aea99b397cd/transformed/tracing-1.0.0/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/12b07a95982eefefb4d9bf5dab31ba8d/transformed/jetified-tracing-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/12b07a95982eefefb4d9bf5dab31ba8d/transformed/jetified-tracing-1.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
